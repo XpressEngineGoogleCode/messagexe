@@ -1,0 +1,6 @@
+<table name="mobilemessage_mapping">
+	<column name="user_id" type="varchar"  size="80" notnull="notnull" index="idx_user_id" />
+	<column name="phone_num" type="varchar" size="20" notnull="notnull" index="idx_phone_num" />
+	<column name="country" type="varchar" size="10" notnull="notnull" index="idx_country" />
+	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
+</table>

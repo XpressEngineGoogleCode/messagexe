@@ -1,0 +1,19 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<style>
+	td { mso-number-format:\@; }
+</style>
+<table>
+	<tr>
+		<th>아이디</th>
+		<th>이름</th>
+		<th>폰번호</th>
+	</tr>
+<!--@while($row = $dbtool->fetch($result))-->
+{@$obj = $extra->getResponseObject($row)}
+	<tr>
+		<td>{$obj->user_id}</td>
+		<td>{$obj->user_name}</td>
+		<td>{str_replace("|@|", "-", $obj->cellphone)}</td>
+	</tr>
+<!--@end-->
+</table>

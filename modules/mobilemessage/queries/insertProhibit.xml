@@ -1,0 +1,12 @@
+<query id="insertProhibit" action="insert">
+	<tables>
+		<table name="mobilemessage_prohibit" />
+	</tables>
+	<columns>
+		<column name="phone_num" var="phone_num" notnull="notnull" />
+		<column name="country" var="country" default="82" />
+		<column name="limit_date" var="limit_date" />
+		<column name="memo" var="memo" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>

@@ -1,0 +1,59 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--#include("header.html")-->
+
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+    <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+    <thead>
+        <tr>
+            <th scope="col"><div>{$lang->no}</div></th>
+            <th scope="col"><div><input type="checkbox" value="" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
+            <th scope="col" class=""><div>알림내용</div></th>
+            <th scope="col" class="quarter_wide"><div>대상모듈</div></th>
+            <th scope="col" class=""><div>게시자 알림</div></th>
+            <th scope="col" class=""><div>상위댓글자 알림</div></th>
+            <th scope="col" class=""><div>알림받는 아이디</div></th>
+            <th scope="col" class=""><div>알림받는 그룹</div></th>
+            <th scope="col" class=""><div>게시판 관리자</div></th>
+            <th scope="col"><div>&nbsp;</div></th>
+            <th scope="col"><div>&nbsp;</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--@foreach($notification_list as $no => $val)-->
+        <tr class="row{$cycle_idx}">
+            <td>{$val->no}</td>
+            <td><input type="checkbox" name="cart" value="{$val->notification_srl}" /></td>
+            <td>{htmlspecialchars(substr($val->content, 0, 24))}..</td>
+            <td>{@$mod_mid=array()}<!--@foreach($val->module_info as $mod)-->{@$mod_mid[]=$mod->mid}<!--@end-->{join(', ', $mod_mid)}</td>
+            <td>{$val->registrant}</td>
+            <td>{$val->replier}</td>
+            <td>{$val->id_list}</td>
+            <td>{@$group_list=array()}<!--@foreach($val->selected_group_list as $group)-->{@$group_list[]=$group->title}<!--@end-->{join(', ', $group_list)}</td>
+            <td>{$val->manager}</td>
+            <td><a href="{getUrl('act','dispMobilemessageAdminNotiComModify','notification_srl',$val->notification_srl)}" class="buttonSet buttonSetting"><span>{$lang->cmd_setup}</span></a></td>
+            <td><a href="{getUrl('act','dispMobilemessageAdminNotiComDelete','notification_srl', $val->notification_srl)}" class="buttonSet buttonDelete"><span>{$lang->cmd_delete}</span></a></td>
+        </tr>
+        <!--@end-->
+    </tbody>
+    </table>
+
+    <!-- 버튼 -->
+    <div class="clear">
+        <div class="fl">
+        </div>
+        <div class="fr">
+            <a href="{getUrl('act', 'dispMobilemessageAdminNotiComAppend')}" class="button black"><span>{$lang->cmd_append}</span></a>
+        </div>
+    </div>
+    <!-- 페이지 네비게이션 -->
+    <div class="pagination a1">
+        <a href="{getUrl('page','','module_srl','')}" class="prevEnd">{$lang->first_page}</a> 
+        <!--@while($page_no = $page_navigation->getNextPage())-->
+            <!--@if($page == $page_no)-->
+                <strong>{$page_no}</strong> 
+            <!--@else-->
+                <a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
+            <!--@end-->
+        <!--@end-->
+        <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
+    </div>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants />
+    <permissions>
+        <permission action="procMobilemessageUpdateResult" target="guest" />
+    </permissions>
+    <actions>
+        <action name="dispMobilemessageValidation" type="view" standalone="true" />
+
+        <action name="dispMobilemessageAdminList" type="view" standalone="true" admin_index="true" />
+        <action name="dispMobilemessageAdminFiles" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminConfig" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminLogView" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminMappingList" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminDeleteLog" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminDeleteGroup" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminDeleteMapping" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminCancel" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminCancelGroup" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminProhibit" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminProhibitAppend" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminProhibitDelete" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminNotiDocList" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminNotiDocAppend" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminNotiDocModify" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminNotiDocDelete" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminNotiComList" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminNotiComAppend" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminNotiComModify" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminNotiComDelete" type="view" standalone="true" />
+
+        <action name="dispMobilemessageAdminRecentMessages" type="view" standalone="true" />
+        <action name="dispMobilemessageAdminRecentReceivers" type="view" standalone="true" />
+
+        <action name="dispMobilemessageGroupList" type="view" />
+        <action name="dispMobilemessageMembersInGroupPaging" type="view" />
+        <action name="dispMobilemessageMembersInGroup" type="view" />
+        <action name="dispMobilemessageDetectFieldName" type="view" />
+        <action name="dispMobilemessageJSON" type="view" />
+        <action name="dispMobilemessageGetCashInfo" type="view" />
+        <action name="dispMobilemessageGetPointInfo" type="view" />
+        <action name="dispMobilemessageExcelDownload" type="view" standalone="true" />
+        <action name="dispMobilemessagePurplebookDownload" type="view" standalone="true" />
+        <action name="dispMobilemessageLogGroupDownload" type="view" standalone="true" />
+        <action name="dispMobilemessageLogListDownload" type="view" standalone="true" />
+        <action name="dispMobilemessageMemberMessageGroupList" type="view" standalone="true" />
+        <action name="dispMobilemessageMemberMessageList" type="view" standalone="true" />
+        <action name="dispMobilemessageMessageInfo" type="view" standalone="true" />
+        <action name="dispMobilemessageCancelGroupMessages" type="view" standalone="true" />
+        <action name="dispMobilemessageCancelMessages" type="view" standalone="true" />
+        <action name="dispMobilemessageSendAuthCode" type="view" standalone="true" />
+        <action name="dispMobilemessageSendUserID" type="view" standalone="true" />
+        <action name="dispMobilemessageChangePassword" type="view" standalone="true" />
+        <action name="dispMobilemessageLatestNumbers" type="view" standalone="true" />
+        <action name="dispMobilemessageLatestMessages" type="view" standalone="true" />
+        <action name="dispMobilemessageKeepContent" type="view" standalone="true" />
+        <action name="dispMobilemessageInsertRecentReceiver" type="view" standalone="true" />
+        <action name="dispMobilemessageFilePicker" type="view" standalone="true" />
+
+        <action name="dispMobilemessagePurplebookAddNode" type="view" standalone="true" />
+        <action name="dispMobilemessagePurplebookRenameNode" type="view" standalone="true" />
+        <action name="dispMobilemessagePurplebookList" type="view" standalone="true" />
+        <action name="dispMobilemessagePurplebookListPaging" type="view" standalone="true" />
+        <action name="dispMobilemessagePurplebookDeleteNode" type="view" standalone="true" />
+        <action name="dispMobilemessagePurplebookDeleteList" type="view" standalone="true" />
+        <action name="dispMobilemessagePurplebookUpdateRoute" type="view" standalone="true" />
+        <action name="dispMobilemessagePurplebookCopy" type="view" standalone="true" />
+        <action name="dispMobilemessagePurplebookRegister" type="view" standalone="true" />
+
+
+        <action name="getMobilemessageCashInfo" type="model" standalone="true" />
+        <action name="getMobilemessagePointInfo" type="model" standalone="true" />
+        <action name="getMobilemessageGroupList" type="model" standalone="true" />
+        <action name="getMobilemessageMessageInfo" type="model" standalone="true" />
+        <action name="getMobilemessageMemberMessageList" type="model" standalone="true" />
+        <action name="getMobilemessageMemberMessageGroupList" type="model" standalone="true" />
+        <action name="getMobilemessageListByMessageId" type="model" standalone="true" />
+        <action name="getMobilemessageCallbackNumbers" type="model" standalone="true" />
+        <action name="getMobilemessageLatestNumbers" type="model" standalone="true" />
+        <action name="getMobilemessageSavedMessages" type="model" standalone="true" />
+
+        <action name="getMobilemessagePurplebookList" type="model" standalone="true" />
+        <action name="getMobilemessagePurplebookSearch" type="model" standalone="true" />
+        <action name="getMobilemessagePurplebookSearchFolder" type="model" standalone="true" />
+        <action name="getMobilemessagePurplebookSharedUsers" type="model" standalone="true" />
+        <action name="getMobilemessagePurplebookProperties" type="model" standalone="true" />
+
+        <action name="procMobilemessagePurplebookUpdateName" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookUpdatePhone" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookAddNode" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookAddList" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookRenameNode" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookMoveNode" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookDeleteNode" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookShareNode" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookUnshareNode" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookMoveList" type="controller" standalone="true" />
+        <action name="procMobilemessagePurplebookCopy" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminUpdateSubnodeCount" type="controller" standalone="true" />
+
+        <action name="procMobilemessageSend" type="controller" standalone="true" />
+        <action name="procMobilemessageSendMsg" type="controller" standalone="true" />
+        <action name="procMobilemessageSendMessage" type="controller" standalone="true" />
+        <action name="procMobilemessageSendUserID" type="controller" standalone="true" />
+        <action name="procMobilemessageSyncResult" type="controller" standalone="true" />
+        <action name="procMobilemessageUpdateResult" type="controller" standalone="true" />
+        <action name="procMobilemessageFilePicker" type="controller" standalone="true" />
+        <action name="procMobilemessageKeepContent" type="controller" standalone="true" />
+        <action name="procMobilemessageCancelGroupMessages" type="controller" standalone="true" />
+        <action name="procMobilemessageCancelMessages" type="controller" standalone="true" />
+        <action name="procMobilemessageCallbackNumberInsert" type="controller" standalone="true" />
+        <action name="procMobilemessageCallbackNumberDelete" type="controller" standalone="true" />
+        <action name="procMobilemessageSetDefaultCallbackNumber" type="controller" standalone="true" />
+        <action name="procMobilemessageInsertRecentReceiver" type="controller" standalone="true" />
+        <action name="procMobilemessageKeepContent" type="controller" standalone="true" />
+        <action name="procMobilemessageDeleteRecentNumber" type="controller" standalone="true" />
+        <action name="procMobilemessageDeleteRecentContent" type="controller" standalone="true" />
+
+        <!-- 웹폰위젯 v0.5 이하 버젼 지원, 삭제 예정 -->
+        <action name="procMobilemessageSendUsingPoint" type="controller" standalone="true" />
+        <action name="procMobilemessageCellphoneSend" type="controller" standalone="true" />
+
+
+        <action name="procMobilemessageAdminInsertConfig" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminDeleteLog" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminDeleteGroup" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminDeleteMapping" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminDeleteFiles" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminDeleteRecentMessages" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminDeleteRecentReceivers" type="controller" standalone="true" />
+
+        <action name="procMobilemessageAdminCancel" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminCancelGroup" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminSyncMapping" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminProhibitInsert" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminProhibitDelete" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminNotiDocAppend" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminNotiDocDelete" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminNotiComAppend" type="controller" standalone="true" />
+        <action name="procMobilemessageAdminNotiComDelete" type="controller" standalone="true" />
+    </actions>
+</module>

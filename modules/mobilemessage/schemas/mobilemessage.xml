@@ -1,0 +1,22 @@
+<table name="mobilemessage">
+	<column name="mobilemessage_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+	<column name="gid" type="varchar" size="30" notnull="notnull" index="idx_gid" />
+	<column name="mid" type="varchar" size="30" notnull="notnull" index="idx_mid" />
+	<column name="mtype" type="varchar" size="3" default="SMS" notnull="notnull" />
+	<column name="userid" type="varchar" size="80" notnull="notnull" />
+	<column name="country" type="varchar" size="10" default="82" notnull="notnull" />
+	<column name="callno" type="varchar" size="20" notnull="notnull" />
+	<column name="callback" type="varchar" size="20" notnull="notnull" />
+	<column name="subject" type="varchar" size="40" notnull="notnull" />
+	<column name="content" type="varchar" size="4000" notnull="notnull" />
+	<column name="reservflag" type="char" size="1" default="N" notnull="notnull" />
+	<column name="reservdate" type="varchar" size="14" notnull="notnull" />
+	<column name="ref_userid" type="varchar" size="80" />
+	<column name="ref_username" type="varchar" size="40" />
+	<column name="ref_nickname" type="varchar" size="40" />
+	<column name="mstat" type="char" size="1" default="0" notnull="notnull" />
+	<column name="rcode" type="varchar" size="2" default="99" notnull="notnull" />
+	<column name="senddate" type="varchar" size="14" />
+	<column name="carrier" type="varchar" size="3" />
+	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
+</table>

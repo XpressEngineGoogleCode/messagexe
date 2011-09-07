@@ -1,0 +1,58 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--#include("header.html")-->
+<!--%import("js/admin.js")-->
+<!--%import("filter/sync_mapping.xml")-->
+
+<!-- 목록 -->
+<!--#include("mapping_search.html")-->
+<form method="get" action="./" id="mobilemessage_fo">
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+    <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+    <thead>
+        <tr>
+            <th scope="col"><div>{$lang->no}</div></th>
+            <th scope="col"><div><input type="checkbox" value="" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->user_id}</div></th>
+	        <th scope="col" class="quarter_wide"><div>{$lang->cellphone_number}</div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->regdate}</div></th>
+            <th scope="col"><div>&nbsp;</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--@foreach($mapping_list as $no => $val)-->
+        <tr class="row{$cycle_idx}">
+            <td>{$no}</td>
+	        <td><input type="checkbox" name="cart" value="{$val->user_id}" /></td>
+            <td>{htmlspecialchars($val->user_id)}</td>
+            <td><!--@if($config->display_country=='Y')-->{htmlspecialchars($csutil->dispFullnumber($val->country, $val->phone_num))}<!--@else-->{htmlspecialchars($val->phone_num)}<!--@end--></td>
+            <td>{zdate($val->regdate, "Y-m-d H:i:s")}</td>
+            <td class="nowrap"></td>
+        </tr>
+        <!--@end-->
+    </tbody>
+    </table>
+
+
+    <!-- 버튼 -->
+    <div class="clear">
+        <div class="fl">
+            <a href="#" onclick="deleteMappingList(); return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
+        </div>
+        <div class="fr">
+            <span class="button blue"><input type="button" class="button" onclick="if(confirm('기존정보는 삭제되고 회원정보로부터 새로 가져옵니다.\n시간이 오래걸릴 수 있습니다.\n실행하시겠습니까?')) { procFilter(this.form, sync_mapping); } return false;" title="전체 회원을 상대로 읽어오므로 시간이 오래걸릴 수 있습니다." value="회원정보에서 가져오기" /></span>
+        </div>
+    </div>
+
+    <!-- 페이지 네비게이션 -->
+    <div class="pagination a1">
+        <a href="{getUrl('page','','module_srl','')}" class="prevEnd">{$lang->first_page}</a> 
+        <!--@while($page_no = $page_navigation->getNextPage())-->
+            <!--@if($page == $page_no)-->
+                <strong>{$page_no}</strong> 
+            <!--@else-->
+                <a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
+            <!--@end-->
+        <!--@end-->
+        <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
+    </div>
+</form>

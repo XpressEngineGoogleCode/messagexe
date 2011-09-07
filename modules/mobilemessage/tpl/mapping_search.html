@@ -1,0 +1,14 @@
+<style>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</style>
+<form id="smsMappingSearch" class="smsMappingSearch">
+    <input type="hidden" name="module" value="{$module}" />
+    <input type="hidden" name="act" value="{$act}" />
+    <fieldset>
+        <select name="search_target">
+            <option value="">{$lang->search_target}</option>
+            <option value="user_id" <!--@if($search_target=='user_id')-->selected="selected"<!--@end-->>아이디</option>
+            <option value="phone_num" <!--@if($search_target=='phone_num')-->selected="selected"<!--@end-->>폰번호</option>
+        </select>
+        <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputTypeText" />
+        <span class="button black"><button id="btnMappingSearch">{$lang->cmd_search}</button></span>
+    </fieldset>
+</form>

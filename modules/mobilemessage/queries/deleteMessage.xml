@@ -1,0 +1,8 @@
+<query id="deleteMessage" action="delete">
+	<tables>
+		<table name="mobilemessage" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="mobilemessage_srl" var="mobilemessage_srl" notnull="notnull" />
+	</conditions>
+</query>

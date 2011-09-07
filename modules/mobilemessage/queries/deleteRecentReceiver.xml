@@ -1,0 +1,9 @@
+<query id="deleteRecentReceiver" action="delete">
+	<tables>
+		<table name="mobilemessage_recent_receiver" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="member_srl" var="member_srl" notnull="notnull" pipe="and" />
+		<condition operation="equal" column="phone_num" var="phone_num" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

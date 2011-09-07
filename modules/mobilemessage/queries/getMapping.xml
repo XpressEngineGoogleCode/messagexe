@@ -1,0 +1,12 @@
+<query id="getMapping" action="select">
+	<tables>
+		<table name="mobilemessage_mapping" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="phone_num" var="phone_num" notnull="notnull" />
+		<condition operation="equal" column="country" var="country" default="82" pipe="and" />
+	</conditions>
+</query>

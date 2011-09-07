@@ -1,0 +1,8 @@
+<query id="deleteSharedFolders" action="delete">
+	<tables>
+		<table name="purplebook_share" />
+	</tables>
+	<conditions>
+        <condition operation="in" column="node_id" var="node_ids" notnull="notnull" />
+	</conditions>
+</query>

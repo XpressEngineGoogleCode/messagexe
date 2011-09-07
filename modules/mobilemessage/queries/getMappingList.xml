@@ -1,0 +1,21 @@
+<query id="getMappingList" action="select">
+    <tables>
+        <table name="mobilemessage_mapping" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="like" column="user_id" var="user_id" />
+        <condition operation="like" column="phone_num" var="phone_num" pipe="or" />
+        <condition operation="more" column="regdate" var="regdate_more" pipe="or" />
+        <condition operation="less" column="regdate" var="regdate_less" pipe="or" />
+	<condition operation="in" column="user_id" var="user_ids" filter="text" pipe="or" />
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="regdate" order="desc" />
+        <list_count var="list_count" default="40" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

@@ -1,0 +1,11 @@
+<query id="insertValCode" action="insert">
+	<tables>
+		<table name="mobilemessage_validation" />
+	</tables>
+	<columns>
+		<column name="callno" var="callno" notnull="notnull" />
+		<column name="country" var="country" default="82" />
+		<column name="valcode" var="valcode" notnull="notnull" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>

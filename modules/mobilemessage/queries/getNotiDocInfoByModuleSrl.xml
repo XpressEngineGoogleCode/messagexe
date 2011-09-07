@@ -1,0 +1,13 @@
+<query id="getNotiDocInfoByModuleSrl" action="select">
+	<tables>
+		<table name="mobilemessage_notidoc" alias="notidoc" />
+		<table name="mobilemessage_notification_modules" alias="modules" />
+	</tables>
+	<columns>
+		<column name="notidoc.*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="modules.module_srl" var="module_srl" />
+		<condition operation="equal" column="notidoc.notification_srl" default="modules.notification_srl" pipe="and" />
+	</conditions>
+</query>

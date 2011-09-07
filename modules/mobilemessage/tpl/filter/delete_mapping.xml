@@ -1,0 +1,9 @@
+<filter name="delete_mapping" module="mobilemessage" act="procMobilemessageAdminDeleteMapping">
+    <form />
+    <parameter />
+    <response callback_func="completeDeleteMapping">
+        <tag name="error" />
+        <tag name="message" />
+        <tag name="page" />
+    </response>
+</filter>

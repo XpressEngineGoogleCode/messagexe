@@ -1,0 +1,10 @@
+<query id="getAllMembers" action="select">
+    <tables>
+        <table name="member" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions />
+    <navigation />
+</query>

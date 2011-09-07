@@ -1,0 +1,9 @@
+<filter name="cancel_group" module="mobilemessage" act="procMobilemessageAdminCancelGroup">
+    <form />
+    <parameter />
+    <response callback_func="completeCancelGroupMessages">
+        <tag name="error" />
+        <tag name="message" />
+        <tag name="page" />
+    </response>
+</filter>

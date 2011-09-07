@@ -1,0 +1,93 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--%import("js/target.js")-->
+            <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+            <tr>
+                {@$id_list = 'id_list'}
+                <th scope="row">아이디 설정</th>
+                <td>
+                    <input type="hidden" id="{$id_list}" name="{$id_list}" value="{$notification_info->id_list}" />
+                    <table cellspacing="0" class="rowTable">
+                    <tr>
+                        <th scope="row" rowspan="2"><div>아이디 목록</div></th>
+                        <td class="wide">
+                            <select id="sel_{$id_list}" multiple="multiple" size="{count($member_list)?count($member_list):1}" class="w200">
+                            <!--@foreach($member_list as $key => $val)-->
+                                <option value="{$val->user_id}">{$val->nick_name} ({$val->user_id})</option>
+                            <!--@end-->
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="wide">
+                            <input type="text" id="{$id_list}_input" class="inputTypeText w100" />
+                            <span class="button black strong"><button type="button" onclick="doInsertAdmin('{$id_list}')">{$lang->cmd_insert}</button></span>
+                            <span class="button"><button type="button" onclick="doDeleteAdmin('{$id_list}')">{$lang->cmd_delete}</button></span>
+                        </th>
+                    </tr>
+                    </table>
+                    <p>설정된 아이디의 폰번호로 발송합니다.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">그룹 설정</th>
+                <td>
+                    <input type="hidden" name="group_srl_list" value="" />
+                    <!--@foreach($group_list as $key => $val)-->
+                    <input type="checkbox" name="group_srl_list_{$key}" id="group_srl_list_{$key}" value="{$key}" <!--@if(in_array($key, $group_srl_list))-->checked<!--@end--> />
+                    <label for="group_srl_list_{$key}">{$val->title}</label>
+                    <!--@end-->
+                    <p>선택된 그룹의 멤버들이 알림문자를 받도록 설정합니다. 그룹멤버 전원에게 문자가 발송되므로  신중히 설정하세요.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">게시판 관리자 알림</th>
+                <td>
+                    <input type="checkbox" name="manager" id="manager" value="Y" <!--@if($notification_info->manager=='Y')-->checked<!--@end--> />
+                    <label for="manager">알림</label>
+                    <p>게시판의 권한 관리에서 관리자ID로 설정된 회원에게 알림문자를 발송합니다.</p>
+                </td>
+            </tr>
+            <tr class="row2">
+                <th scope="row"><div>직접입력</div></th>
+                <td>
+                    <ul id="inputDirectNumbers">
+                        <!--@foreach($notification_info->direct_numbers as $phone)-->
+                        <!--@if($phone)--><li><span class="phone">{htmlspecialchars($phone)}</span><button class="btnDelPhone">삭제</button></li><!--@end-->
+                        <!--@end-->
+                    </ul>
+                    <input type="text" id="admin_phone_1" value="" size="4" maxlength="4" class="inputTypeText" />-
+                    <input type="text" id="admin_phone_2" value="" size="4" maxlength="4" class="inputTypeText" />-
+                    <input type="text" id="admin_phone_3" value="" size="4" maxlength="4" class="inputTypeText" />
+                    <span class="button black strong"><button id="btnAddPhone">추가</button></span>
+                    <input type="hidden" id="direct_numbers" name="direct_numbers" value="" />
+                    <p>직접입력한 폰번호로 알림문자가 가도록 합니다. 여러개 지정 가능합니다.</p>
+                </td>
+            </tr>
+            <tr>
+                {@$id_list = 'except_id_list'}
+                <th scope="row">알림예외 작성자ID</th>
+                <td>
+                    <input type="hidden" id="{$id_list}" name="{$id_list}" value="{$notification_info->except_id_list}" />
+                    <table cellspacing="0" class="rowTable">
+                    <tr>
+                        <th scope="row" rowspan="2"><div>아이디 목록</div></th>
+                        <td class="wide">
+                            <select id="sel_{$id_list}" multiple="multiple" size="{count($except_member_list)?count($except_member_list):1}" class="w200">
+                            <!--@foreach($except_member_list as $key => $val)-->
+                                <option value="{$val->user_id}">{$val->nick_name} ({$val->user_id})</option>
+                            <!--@end-->
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="wide">
+                            <input type="text" id="{$id_list}_input" class="inputTypeText w100" />
+                            <span class="button black strong"><button type="button" onclick="doInsertAdmin('{$id_list}')">{$lang->cmd_insert}</button></span>
+                            <span class="button"><button type="button" onclick="doDeleteAdmin('{$id_list}')">{$lang->cmd_delete}</button></span>
+                        </th>
+                    </tr>
+                    </table>
+                    <p>설정된 아이디로 작성된 게시물에 대해서 알림문자를 발송하지 않습니다.</p>
+                </td>
+            </tr>
+            </table>

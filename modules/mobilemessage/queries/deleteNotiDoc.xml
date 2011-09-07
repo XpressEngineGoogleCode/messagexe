@@ -1,0 +1,8 @@
+<query id="deleteNotiDoc" action="delete">
+	<tables>
+		<table name="mobilemessage_notidoc" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="notification_srl" var="notification_srl" notnull="notnull" />
+	</conditions>
+</query>

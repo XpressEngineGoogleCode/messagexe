@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+.smsReservationPane { display:none; position:relative; left:-356px; top:-190px; background-color:#fff; border:solid #e7e7e7 1px; padding:0; }
+.smsReservationPane .smsReservationArea { font-family:돋움; font-size:8pt; color: #333; width:344px; height:220px; padding:0; margin:1px; background-color:#f7f7f7; overflow:hidden; }
+.smsReservationPane .smsReservationArea .areaTit {float:left;font:bold 11px/13px 돋움, dotum;padding:6px 0 5px 6px;}
+.smsReservationPane .smsReservationArea .areaTit span {float:none; display:inline; padding-left:3px;}
+.smsReservationPane .smsReservationArea .areaClose {float:right;padding:5px 6px 0 0;}
+.smsReservationPane .smsReservationArea .tabReservation {overflow:hidden;clear:both;margin:0 10px 0 0;}
+.smsReservationPane .smsReservationArea .tabReservation .reservtime {padding:0 0 0 10px;}
+.smsReservationPane .smsReservationArea .inputReservationDate { width:80px; font-size:8pt; }
+.smsReservationPane .smsReservationArea .boundary_line { height:10px; border-bottom:solid #aaa 1px; margin-bottom:10px; }
+.smsReservationPane .smsReservationArea input { font-size:8pt; margin:0 0 6px 0; }
+.smsReservationPane .smsReservationArea select { font-family:Arial; font-size:8pt; }

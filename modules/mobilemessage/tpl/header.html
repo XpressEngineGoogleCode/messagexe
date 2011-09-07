@@ -1,0 +1,41 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<h3 <!--@if($current_version_int > $version_115)-->class="xeAdmin"<!--@end-->>{$lang->mobilemessage} <span class="gray">{$lang->cmd_management}</span></h3>
+
+<div class="infoText">
+    <!--@if($act=='dispMobilemessageAdminMappingList')-->
+	    {nl2br($lang->about_mappinglist)}
+    <!--@else if($act=='dispMobilemessageAdminLogView')-->
+	    {nl2br($lang->about_logview)}
+    <!--@else if($act=='dispMobilemessageAdminList')-->
+	    {nl2br($lang->about_sendsms)}
+    <!--@else if($act=='dispMobilemessageAdminProhibit' || $act=='dispMobilemessageAdminProhibitAppend')-->
+	    {nl2br($lang->about_prohibit)}
+    <!--@else-->
+	    {nl2br($lang->about_mobilemessage)}
+    <!--@end-->
+
+    <!--@if($act=='dispMobilemessageAdminList' || $act=='dispMobilemessageAdminConfig')-->
+        <!--@if($cs_is_logged)-->
+	    <p>
+        {$lang->cash}: {number_format($cs_cash)} {$lang->point}: {number_format($cs_point)} <!--@if(!$sln_reg_key)-->{$lang->mdrop}: {number_format($cs_mdrop)}<!--@end--> - <a href="<!--@if($sln_reg_key)-->http://www.sendsms.kr/?mid=recharge<!--@else-->http://www.coolsms.co.kr/chg/<!--@end-->" target="_blank">충전소</a>
+        <!--@else-->
+        {$cs_error_message}
+        <!--@end-->
+	    </p>
+    <!--@end-->
+</div>
+
+<div class="header4">
+    <ul class="localNavigation">
+        <li <!--@if($act=='dispMobilemessageAdminConfig')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminConfig')}">설정</a></li>
+        <li <!--@if($act=='dispMobilemessageAdminNotiDocList' || $act=='dispMobilemessageAdminNotiDocAppend' || $act=='dispMobilemessageAdminNotiDocModify')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminNotiDocList')}">{$lang->cmd_notidoc_setup}</a></li>
+        <li <!--@if($act=='dispMobilemessageAdminNotiComList' || $act=='dispMobilemessageAdminNotiComAppend' || $act=='dispMobilemessageAdminNotiComModify')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminNotiComList')}">{$lang->cmd_noticom_setup}</a></li>
+        <li <!--@if($act=='dispMobilemessageAdminList')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminList')}">{$lang->cmd_mobilemessage_texting}</a></li>
+        <li <!--@if($act=='dispMobilemessageAdminLogView')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminLogView')}">{$lang->cmd_mobilemessage_logview}</a></li>
+        <li <!--@if($act=='dispMobilemessageAdminMappingList')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminMappingList')}">{$lang->cmd_mapping_list}</a></li>
+        <li <!--@if($act=='dispMobilemessageAdminProhibit' || $act=='dispMobilemessageAdminProhibitAppend')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminProhibit')}">{$lang->cmd_prohibit}</a></li>
+        <li <!--@if($act=='dispMobilemessageAdminFiles')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminFiles')}">업로드파일</a></li>
+        <li <!--@if($act=='dispMobilemessageAdminRecentMessages')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminRecentMessages')}">최근저장내용</a></li>
+        <li <!--@if($act=='dispMobilemessageAdminRecentReceivers')-->class="on"<!--@end-->><a href="{getUrl('act','dispMobilemessageAdminRecentReceivers')}">최근발송번호</a></li>
+    </ul>
+</div>

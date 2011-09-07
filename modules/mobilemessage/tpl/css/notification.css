@@ -1,0 +1,9 @@
+@charset "utf-8";
+/* vi:set ts=4 sw=4 expandtab enc=utf8: */
+ul.midCommand { float:left; margin:0 0 0 10px;; padding:0; *zoom:1; }
+ul.midCommand li { display:block; margin-bottom:5px; list-style:none;}
+
+ul#inputDirectNumbers { margin:6px 0 6px 0; padding:0; }
+ul#inputDirectNumbers li { margin:0; padding:0; list-style:none; }
+ul#inputDirectNumbers li span.phone { margin:0; padding:0; } 
+ul#inputDirectNumbers li button.btnDelPhone { position:relative; top:3px; cursor:pointer; text-indent: -1000em; padding:0; border:0; margin: 4px 0px 0px 10px; width: 9px; background:url('../img/btn_delete.gif') no-repeat; } 

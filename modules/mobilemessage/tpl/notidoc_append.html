@@ -1,0 +1,116 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--%import("css/phone.css")-->
+<!--%import("css/notification.css")-->
+<!--%import("css/config.css")-->
+<!--%import("js/notification.js")-->
+<!--%import("filter/notidoc_append.xml")-->
+<!--#include("header.html")-->
+
+<form id="fo_notidoc_append" action="./" method="get">
+    <input type="hidden" name="notification_srl" value="{$notification_info->notification_srl}" />
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="row">알림내용</th>
+        <td>
+            <div class="pscreen_bg">
+                <textarea name="content" class="pscreen" style="border:solid #eee 1px;"><!--@if(!$notification_info->content)-->[새글알림]{"\n"}%browser_title%{"\n"}%nick_name%{"\n"}%title%<!--@else-->{$notification_info->content}<!--@end--></textarea>
+            </div>
+            <div>
+                <span class="button green small"><button class="notiReplaceVar" var="title">제목</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="content">글내용</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="user_id">글쓴이 아이디</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="user_name">글쓴이 이름</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="nick_name">글쓴이 닉네임</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="browser_title">브라우저 제목</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="mid">모듈 아이디</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="extra_vars1">확장변수1</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="extra_vars2">확장변수2</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="extra_vars3">확장변수3</button></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">전송방식</th>
+        <td>
+            <input type="radio" name="msgtype" id="msgtype_sms" value="SMS" <!--@if($notification_info->msgtype=='SMS'||!$notification_info->msgtype)-->checked<!--@end--> /><label for="msgtype_sms">단문(SMS)</label>
+            <input type="radio" name="msgtype" id="msgtype_lms" value="LMS" <!--@if($notification_info->msgtype=='LMS')-->checked<!--@end--> /><label for="msgtype_lms">장문(LMS)</label>
+            <input type="radio" name="msgtype" id="msgtype_mms" value="MMS" <!--@if($notification_info->msgtype=='MMS')-->checked<!--@end--> /><label for="msgtype_mms">멀티(MMS)</label>
+            <p>장문(LMS)으로 선택하시면 문장의 길이에 따라 단문 혹은 장문으로 발송됩니다.</p>
+            <p>멀티(MMS)으로 선택하시면 문장의 길이, 첨부된 이미지에 따라서 단문, 장문 혹은 멀티(MMS)로 발송됩니다.</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">대상모듈</th>
+        <td>
+            <div>
+                {@$id="module_srls"}
+                <input type="hidden" name="{$id}" id="{$id}" value="{$notification_info->module_srls}" />
+                <select name="_{$id}" id="_{$id}" size="8" class="w200 fl"></select>
+                <ul class="midCommand">
+                    <li><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></li>
+                    <li><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></li>
+                    <li><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></li>
+                    <li><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></li>
+                </ul>
+                <script type="text/javascript">
+                    if(typeof(getModuleSrlList)!=='undefined') {
+                        doAddWindowLoadEventLoader( function() { getModuleSrlList('{$id}'); } );
+                    }
+                </script>
+            </div>
+            <p>적용할 모듈을 선택하세요.</p>
+        </td>
+    </tr>
+    <tr>
+        <th>알림받을 대상</th>
+        <td>
+            <!--#include("notification_target.html")-->
+        </td>
+    </tr>
+    <tr>
+        <th>회신번호 설정</th>
+        <td>
+            <input type="radio" name="callback_number_type" id="callback_number_type_1" value="self" <!--@if($notification_info->callback_number_type=='self'||!$notification_info->callback_number_type)-->checked<!--@end--> /><label for="callback_number_type_1">받는사람 자신의 폰번호</label>
+            <input type="radio" name="callback_number_type" id="callback_number_type_2" value="writer" <!--@if($notification_info->callback_number_type=='writer'||!$notification_info->callback_number_type)-->checked<!--@end--> /><label for="callback_number_type_2">글쓴이(게시자)의 폰번호</label>
+            <input type="radio" name="callback_number_type" id="callback_number_type_3" value="basic" <!--@if($notification_info->callback_number_type=='basic')-->checked<!--@end--> /><label for="callback_number_type_3">기본회신번호</label>
+            <input type="radio" name="callback_number_type" id="callback_number_type_4" value="direct" <!--@if($notification_info->callback_number_type=='direct')-->checked<!--@end--> /><label for="callback_number_type_4">직접입력</label>
+            <span class="inputCallbackNumberDirect">
+                <input type="text" name="callback_number_direct" value="{$notification_info->callback_number_direct[0]}" size="4" maxlength="4" class="inputTypeText" />-
+                <input type="text" name="callback_number_direct" value="{$notification_info->callback_number_direct[1]}" size="4" maxlength="4" class="inputTypeText" />-
+                <input type="text" name="callback_number_direct" value="{$notification_info->callback_number_direct[2]}" size="4" maxlength="4" class="inputTypeText" />
+            </span>
+            <table id="notidocNonmemberIndex">
+                <tr>
+                    <th scope="row">비회원 폰번호</th>
+                    <td>
+                        <select name="nonmember_index">
+                            <option value="0">사용하지 않음</option>
+                            <!--@for($i=1;$i<10;$i++)-->
+                            <option value="{$i}" <!--@if($notification_info->nonmember_index==$i)-->selected="selected"<!--@end-->>{$i}번째 확장변수를 폰번호로 사용</option>
+                            <!--@end-->
+                        </select>
+                        <p>게시판의 확장변수를 통하여 비회원의 폰번호를 입력받을 수 있습니다. 확장변수는 게시판에서 직접 생성하셔야 합니다.</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th>시간설정</th>
+        <td>
+            <!--#include("notification_time.html")-->
+        </td>
+    </tr>
+    </table>
+
+    <table cellspacing="0" class="rowTable">
+    <tbody>
+    <tr>
+        <th class="button">
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+            <a href="{getUrl('act','dispMobilemessageAdminNotiDocList')}" class="button"><span>{$lang->cmd_cancel}</span></a>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</form>

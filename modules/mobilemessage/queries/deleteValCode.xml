@@ -1,0 +1,8 @@
+<query id="deleteValCode" action="delete">
+	<tables>
+		<table name="mobilemessage_validation" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="callno" var="callno" notnull="notnull" />
+	</conditions>
+</query>

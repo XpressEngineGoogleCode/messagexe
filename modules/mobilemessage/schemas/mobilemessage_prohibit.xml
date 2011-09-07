@@ -1,0 +1,7 @@
+<table name="mobilemessage_prohibit">
+	<column name="phone_num" type="varchar" size="20" notnull="notnull" primary_key="primary_key" />
+	<column name="country" type="varchar" size="10" notnull="notnull" default="82" />
+	<column name="limit_date" type="date" index="idx_limit_date" />
+	<column name="memo" type="varchar" size="250" />
+	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
+</table>

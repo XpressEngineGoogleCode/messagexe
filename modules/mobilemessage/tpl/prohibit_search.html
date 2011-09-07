@@ -1,0 +1,15 @@
+<style>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</style>
+<form id="smsProhibitSearch" class="smsProhibitSearch">
+    <input type="hidden" name="module" value="{$module}" />
+    <input type="hidden" name="act" value="{$act}" />
+    <fieldset>
+        <select name="search_target">
+            <option value="">{$lang->search_target}</option>
+            <option value="phone_num" <!--@if($search_target=='phone_num')-->selected="selected"<!--@end-->>폰번호</option>
+            <option value="limit_date_more" <!--@if($search_target=='limit_date_more')-->selected="selected"<!--@end-->>제한일(이상)</option>
+            <option value="limit_date_less" <!--@if($search_target=='limit_date_less')-->selected="selected"<!--@end-->>제한일(이하)</option>
+        </select>
+        <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputTypeText" />
+        <span class="button black"><button id="btnMappingSearch">{$lang->cmd_search}</button></span>
+    </fieldset>
+</form>

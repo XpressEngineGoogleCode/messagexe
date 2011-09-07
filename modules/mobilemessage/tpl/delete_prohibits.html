@@ -1,0 +1,37 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--%import("filter/prohibit_delete.xml")-->
+<!--%import("js/admin.js")-->
+
+<div id="popHeader" class="wide">
+    <h3 class="xeAdmin">{$lang->cmd_delete} ({$lang->target} : {count($prohibit_list)})</h3>
+</div>
+
+<form action="./" method="get" id="fo_management" onsubmit="return procFilter(this, prohibit_delete);">
+<input type="hidden" name="target_phone_nums" value="{$phonenums}" />
+
+<div id="popBody">
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="col" class="half_wide"><div>{$lang->phone_number}</div></th>
+        <th scope="col" class="half_wide"><div>{$lang->limit_date}</div></th>
+        <th scope="col" class="half_wide"><div>{$lang->memo}</div></th>
+        <th scope="col"><div>{$lang->regdate}</div></th>
+    </tr>
+    <!--@foreach($prohibit_list as $key => $val)-->
+    <tr>
+        <td>{htmlspecialchars($val->phone_num)}</td>
+        <td>{zdate($val->limit_date, "Y-m-d")}</td>
+        <td>{htmlspecialchars($val->memo)}</td>
+        <td class="date center nowrap">{zdate($val->regdate, "Y-m-d H:i")}</td>
+    </tr>
+    <!--@end-->
+    </table>
+</div>
+
+<!--@if(count($prohibit_list))-->
+<div id="popFooter">
+        <span class="button black strong"><input type="submit" value="{$lang->cmd_delete}" /></span>
+</div>
+<!--@end-->
+
+</form>

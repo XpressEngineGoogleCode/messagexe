@@ -1,0 +1,39 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--%import("filter/delete_log.xml")-->
+<!--%import("js/admin.js")-->
+
+<div id="popHeader" class="wide">
+    <h3 class="xeAdmin">{$lang->cmd_delete} ({$lang->target} : {count($mobilemessage_list)})</h3>
+</div>
+
+<form action="./" method="get" id="fo_management" onsubmit="return procFilter(this, delete_log);">
+<input type="hidden" name="target_mobilemessage_srls" value="{$mobilemessage_srls}" />
+
+<div id="popBody">
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="col"><div>{$lang->regdate}</div></th>
+        <th scope="col" class="half_wide"><div>{$lang->callno}</div></th>
+        <th scope="col" class="half_wide"><div>{$lang->callback}</div></th>
+        <th scope="col" class="half_wide"><div>{$lang->mstat}</div></th>
+        <th scope="col" class="half_wide"><div>{$lang->rcode}</div></th>
+    </tr>
+    <!--@foreach($mobilemessage_list as $key => $val)-->
+    <tr>
+        <td class="date center nowrap">{zdate($val->regdate, "Y-m-d H:i")}</td>
+        <td>{$val->callno}</td>
+        <td><div class="mobilemessage_{$val->member_srl}">{$val->callback}</div></td>
+        <td>{$csutil->dispStatus($val->mstat)}</td>
+        <td <!--@if($val->rcode != '00')-->style="color: #ee7989;"<!--@end-->>{$val->rcode}:{$csutil->dispResultCode($val->rcode)}</td>
+    </tr>
+    <!--@end-->
+    </table>
+</div>
+
+<!--@if(count($mobilemessage_list))-->
+<div id="popFooter">
+        <span class="button black strong"><input type="submit" value="{$lang->cmd_delete}" /></span>
+</div>
+<!--@end-->
+
+</form>

@@ -1,0 +1,8 @@
+<query id="deleteRecentMessages" action="delete">
+	<tables>
+		<table name="mobilemessage_keeping" />
+	</tables>
+	<conditions>
+		<condition operation="in" column="keeping_srl" var="keeping_srls" notnull="notnull" />
+	</conditions>
+</query>

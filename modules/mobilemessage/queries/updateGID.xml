@@ -1,0 +1,11 @@
+<query id="updateGID" action="update">
+	<tables>
+		<table name="mobilemessage" />
+	</tables>
+	<columns>
+		<column name="gid" default="1234567890123456789012345" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="gid" default="" />
+	</conditions>
+</query>

@@ -1,0 +1,148 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--%import("css/phone.css")-->
+<!--%import("css/notification.css")-->
+<!--%import("css/config.css")-->
+<!--%import("js/notification.js")-->
+<!--%import("filter/noticom_append.xml")-->
+<!--#include("header.html")-->
+
+<form id="fo_noticom_append" action="./" method="get">
+    <input type="hidden" name="notification_srl" value="{$notification_info->notification_srl}" />
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="row">알림내용</th>
+        <td>
+            <div class="pscreen_bg">
+                <textarea name="content" class="pscreen" style="border:solid #eee 1px;"><!--@if(!$notification_info->content)-->[댓글알림]{"\n"}%browser_title%{"\n"}%nick_name%{"\n"}%content%<!--@else-->{$notification_info->content}<!--@end--></textarea>
+            </div>
+            <div>
+                <span class="button green small"><button class="notiReplaceVar" var="content">댓글내용</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="user_id">댓글자 아이디</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="user_name">댓글자 이름</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="nick_name">댓글자 닉네임</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="browser_title">브라우저 제목</button></span>
+                <span class="button green small"><button class="notiReplaceVar" var="mid">모듈 아이디</button></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">전송방식</th>
+        <td>
+            <input type="radio" name="msgtype" id="msgtype_sms" value="SMS" <!--@if($notification_info->msgtype=='SMS'||!$notification_info->msgtype)-->checked<!--@end--> /><label for="msgtype_sms">단문(SMS)</label>
+            <input type="radio" name="msgtype" id="msgtype_lms" value="LMS" <!--@if($notification_info->msgtype=='LMS')-->checked<!--@end--> /><label for="msgtype_lms">장문(LMS)</label>
+            <input type="radio" name="msgtype" id="msgtype_mms" value="MMS" <!--@if($notification_info->msgtype=='MMS')-->checked<!--@end--> /><label for="msgtype_mms">멀티(MMS)</label>
+            <p>장문(LMS)으로 선택하시면 문장의 길이에 따라 단문 혹은 장문으로 발송됩니다.</p>
+            <p>멀티(MMS)으로 선택하시면 문장의 길이, 첨부된 이미지에 따라서 단문, 장문 혹은 멀티(MMS)로 발송됩니다.</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">대상모듈</th>
+        <td>
+            <div>
+                {@$id="module_srls"}
+                <input type="hidden" name="{$id}" id="{$id}" value="{$notification_info->module_srls}" />
+                <select name="_{$id}" id="_{$id}" size="8" class="w200 fl"></select>
+                <ul class="midCommand">
+                    <li><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></li>
+                    <li><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></li>
+                    <li><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></li>
+                    <li><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></li>
+                </ul>
+                <script type="text/javascript">
+                    if(typeof(getModuleSrlList)!=='undefined') {
+                        doAddWindowLoadEventLoader( function() { getModuleSrlList('{$id}'); } );
+                    }
+                </script>
+            </div>
+            <p>적용할 모듈을 선택하세요.</p>
+        </td>
+    </tr>
+    <tr>
+        <th>알림설정</th>
+        <td>
+            <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+            <tr>
+                <th scope="row">게시자에게 알림</th>
+                <td>
+                    <input type="checkbox" name="registrant" id="registrant" value="Y" <!--@if($notification_info->registrant=='Y'||!$notification_info->registrant)-->checked<!--@end--> />
+                    <label for="registrant">알림</label>
+                    <p>글 작성자에게 알림문자를 발송합니다.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">상위 댓글자에게 알림</th>
+                <td>
+                    <input type="checkbox" name="replier" id="replier" value="Y" <!--@if($notification_info->replier=='Y'||!$notification_info->replier)-->checked<!--@end--> />
+                    <label for="replier">알림</label>
+                    <p>상위 댓글자가 있는 경우 상위 댓글자에게 알림문자를 발송합니다. 게시자에게 알림과 중복발송하지 않습니다.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">쪽지알림 연동</th>
+                <td>
+                    <input type="checkbox" name="message_link" id="message_link" value="Y" <!--@if($notification_info->message_link=='Y')-->checked<!--@end--> /><label for="message_link">연동</label>
+                    <p>글쓰기, 댓글쓰기 할때 알림에 체크하면 누군가 자신의 글(글 혹은 댓글)에 댓글을 달면 문자가 발송되도록 설정합니다.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">역알림 사용</th>
+                <td>
+                    <input type="checkbox" name="reverse_notify" id="reverse_notify" value="Y" <!--@if($notification_info->reverse_notify=='Y')-->checked<!--@end--> /><label for="reverse_notify">사용</label>
+                    <p>쪽지알림과 반대로 댓글자가 알림 체크를 통해 문자발송여부를 선택할 수 있습니다.<br />
+                    알림에 체크하여 댓글을 등록하면 게시자와 상위 댓글자에게 문자를 발송합니다.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">비회원 알림 설정</th>
+                <td>
+                    <select name="nonmember_index">
+                        <option value="0">사용하지 않음</option>
+                        <!--@for($i=1;$i<10;$i++)-->
+                        <option value="{$i}" <!--@if($notification_info->nonmember_index==$i)-->selected="selected"<!--@end-->>{$i}번째 확장변수를 폰번호로 사용</option>
+                        <!--@end-->
+                    </select>
+                    <p>비회원이 작성한 글에도 댓글알림 문자가 전송되도록 합니다. 입력받고 있는 폰번호의 확장변수를 선택하세요.</p>
+                </td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th>관리자 알림설정</th>
+        <td>
+            <!--#include("notification_target.html")-->
+        </td>
+    </tr>
+    <tr>
+        <th>회신번호 설정</th>
+        <td>
+            <input type="radio" name="callback_number_type" id="callback_number_type_1" value="self" <!--@if($notification_info->callback_number_type=='self'||!$notification_info->callback_number_type)-->checked<!--@end--> /><label for="callback_number_type_1">받는사람 자신의 폰번호</label>
+            <input type="radio" name="callback_number_type" id="callback_number_type_2" value="writer" <!--@if($notification_info->callback_number_type=='writer'||!$notification_info->callback_number_type)-->checked<!--@end--> /><label for="callback_number_type_2">글쓴이(댓글자)의 폰번호</label>
+            <input type="radio" name="callback_number_type" id="callback_number_type_3" value="basic" <!--@if($notification_info->callback_number_type=='basic')-->checked<!--@end--> /><label for="callback_number_type_3">기본회신번호</label>
+            <input type="radio" name="callback_number_type" id="callback_number_type_4" value="direct" <!--@if($notification_info->callback_number_type=='direct')-->checked<!--@end--> /><label for="callback_number_type_4">직접입력</label>
+            <span class="inputCallbackNumberDirect">
+                <input type="text" name="callback_number_direct" value="{$notification_info->callback_number_direct[0]}" size="4" maxlength="4" class="inputTypeText" />-
+                <input type="text" name="callback_number_direct" value="{$notification_info->callback_number_direct[1]}" size="4" maxlength="4" class="inputTypeText" />-
+                <input type="text" name="callback_number_direct" value="{$notification_info->callback_number_direct[2]}" size="4" maxlength="4" class="inputTypeText" />
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <th>시간설정</th>
+        <td>
+            <!--#include("notification_time.html")-->
+        </td>
+    </tr>
+    </table>
+
+    <table cellspacing="0" class="rowTable">
+    <tbody>
+    <tr>
+        <th class="button">
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+            <a href="{getUrl('act','dispMobilemessageAdminNotiComList')}" class="button"><span>{$lang->cmd_cancel}</span></a>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</form>

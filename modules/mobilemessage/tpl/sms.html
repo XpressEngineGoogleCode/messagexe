@@ -1,0 +1,47 @@
+<style>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</style>
+<!--%import("js/json2.js")-->
+<!--%import("js/texting.js")-->
+<!--%import("js/textareainsert.js")-->
+<!--%import("js/jquery.simplemodal-1.3.js")-->
+<!--%import("js/jquery.tipsy.js")-->
+<!--%import("css/specialchars.css")-->
+<!--%import("css/common.css")-->
+<!--%import("css/reservation.css")-->
+<!--%import("css/tipsy.css")-->
+<!--%import("js/ui.datepicker.js")-->
+<!--%import("css/ui.datepicker.css")-->
+<!--#include("header.html")-->
+
+<form action="./" id="fo_dummy" method="get">
+    <input type="hidden" name="module" value="{$module}" />
+    <input type="hidden" name="mid" value="{$mid}" />
+    <input type="hidden" name="act" value="{$act}" />
+    <input type="hidden" id="use_point" name="use_point" value="{$use_point}" />
+    <input type="hidden" id="sms_point" name="sms_point" value="{$sms_point}" />
+    <input type="hidden" id="lms_point" name="lms_point" value="{$lms_point}" />
+    <input type="hidden" id="ticket" name="ticket" value="{$ticket}" />
+</form>
+
+<div id="progressModal" class="progressModal">
+    <div class="text">잠시만 기다려주세요...</div>
+    <div class="ani"></div>
+</div>
+<div id="smsMenu" class="smsMenu">
+    <div id="smsBox" class="smsBox">
+        <div id="smsResource" class="smsResource">
+            <div id="smsResourceTab" class="smsResourceTab">
+                <button id="btnMembers" class="btnMembers">회원목록</button>
+            </div>
+            <!--#include("organization.html")-->
+        </div>
+        <div class="middleLayer">
+            <button class="btn_add" id="addGroupToRecipient" title="왼쪽에 체크된 그룹 멤버들을 추가합니다.">선택추가</button>
+        </div>
+        <!--#include("target_list.html")-->
+        <div class="middleLayer2">
+            <button class="btn_add" id="addMemberToRecipient" title="왼쪽에 체크된 멤버들을 추가합니다.">선택추가</button>
+        </div>
+        <!--#include("simple_phone.html")-->
+        <!--#include("bulkadd.html")-->
+    </div>
+</div>

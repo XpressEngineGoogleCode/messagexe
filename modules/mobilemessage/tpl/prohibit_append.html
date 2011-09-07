@@ -1,0 +1,65 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--#include("header.html")-->
+<!--%import("filter/prohibit_insert.xml")-->
+<!--%import("js/admin.js")-->
+<!--%load_js_plugin("ui.datepicker")-->
+
+<form id="fo_prohibit_append" action="./" method="get" onsubmit="return procFilter(this, prohibit_insert)">
+    <input type="hidden" name="page" value="{$page}" />
+
+    <table cellspacing="0" class="rowTable">
+    <tr>
+        <th scope="row"><div>{$lang->phone_number}</div></th>
+        <td class="wide">
+            <!--@if($prohibit_info->phone_num)-->
+            {htmlspecialchars($prohibit_info->phone_num)}
+            <!--@else-->
+            <input type="text" name="phone_num" value="" class="inputTypeText" />
+            <p>- 기호를 제외한 번호만 입력하세요.</p>
+            <!--@end-->
+        </td>
+    </tr>
+    <tr class="row2">
+        <th scope="row"><div>{$lang->limit_date}</div></th>
+        <td>
+            <input type="hidden" name="limit_date" id="limit_date" value="{$prohibit_info->limit_date}" />
+            <input type="text" class="inputDate" value="{zdate($prohibit_info->limit_date,'Y-m-d')}" readonly="readonly" />
+            <p>제한일까지 금지되며 이후에 자동으로 풀립니다.</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>{$lang->memo}</div></th>
+        <td>
+            <textarea name="memo" class="inputTypeTextArea fullWidth">{htmlspecialchars($prohibit_info->memo)}</textarea>
+            <p>관리용 메모를 입력하세요.</p>
+        </td>
+    </tr>
+
+    <table cellspacing="0" class="rowTable">
+    <tbody>
+    <tr>
+        <th class="button">
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+            <!--@if($member_srl)-->
+            <a href="{getUrl('act','dispMemberAdminInfo')}" class="button"><span>{$lang->cmd_cancel}</span></a>
+            <!--@else-->
+            <a href="{getUrl('act','dispMemberAdminList')}" class="button"><span>{$lang->cmd_cancel}</span></a>
+            <!--@end-->
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</form>
+
+<script type="text/javascript">
+(function($){
+    $(function(){
+        var option = { gotoCurrent: false,yearRange:'-100:+10', onSelect:function(){
+
+            $(this).prev('input[type="hidden"]').val(this.value.replace(/-/g,""))}
+        };
+        $.extend(option,$.datepicker.regional['{$lang_type}']);
+        $(".inputDate").datepicker(option);
+    });
+})(jQuery);
+</script>

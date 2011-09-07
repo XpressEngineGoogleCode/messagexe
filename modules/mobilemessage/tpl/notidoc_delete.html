@@ -1,0 +1,29 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--%import("filter/delete_notidoc.xml")-->
+<!--%import("js/notification.js")-->
+<!--#include("header.html")-->
+
+<form action="./" method="get" onsubmit="return procFilter(this, delete_notidoc)">
+<input type="hidden" name="page" value="{$page}" />
+<input type="hidden" name="notification_srl" value="{$notification_srl}" />
+
+    <h3 class="xeAdmin">{$lang->confirm_delete}</h3>
+    <table cellspacing="0" class="rowTable">
+    <tr>
+        <th scope="row"><div>알림내용</div></th>
+        <td class="wide">{htmlspecialchars($notification_info->content)}</td>
+    </tr>
+    <tr>
+        <th scope="row"><div>대상모듈</div></th>
+        <td class="wide">{htmlspecialchars($notification_info->mid_list)}</td>
+    </tr>
+    <tr>
+        <th colspan="2" class="button">
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_delete}" /></span>
+            <span class="button"><input type="button" value="{$lang->cmd_back}" onclick="history.back(); return false;" /></span>
+        </th>
+    </tr>
+    </table>
+
+
+</form>
