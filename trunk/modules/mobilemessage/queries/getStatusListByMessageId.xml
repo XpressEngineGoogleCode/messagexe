@@ -1,0 +1,16 @@
+<query id="getMobilemessageListByMessageId" action="select">
+    <tables>
+        <table name="mobilemessage" />
+    </tables>
+    <columns>
+        <column name="mid" />
+        <column name="callno" />
+        <column name="mstat" />
+        <column name="rcode" />
+        <column name="senddate" />
+        <column name="carrier" />
+    </columns>
+    <conditions>
+        <condition operation="in" column="mid" var="message_ids" notnull="notnull" />
+    </conditions>
+</query>

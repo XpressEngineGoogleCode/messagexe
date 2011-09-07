@@ -1,0 +1,20 @@
+<query id="insertNotiDoc" action="insert">
+	<tables>
+		<table name="mobilemessage_notidoc" />
+	</tables>
+	<columns>
+		<column name="notification_srl" var="notification_srl" filter="number" notnull="notnull" />
+		<column name="content" var="content" notnull="notnull" />
+		<column name="msgtype" var="msgtype" notnull="notnull" />
+		<column name="id_list" var="id_list" default="" />
+		<column name="except_id_list" var="except_id_list" default="" />
+		<column name="group_srl_list" var="group_srl_list" default="" />
+		<column name="manager" var="manager" default="N" />
+		<column name="direct_numbers" var="direct_numbers" default="" />
+		<column name="callback_number_type" var="callback_number_type" notnull="notnull" />
+		<column name="callback_number_direct" var="callback_number_direct" default="" />
+        <column name="nonmember_index" var="nonmember_index" default="0" />
+        <column name="extra_vars" var="extra_vars" default="" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>

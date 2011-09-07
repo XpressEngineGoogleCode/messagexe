@@ -1,0 +1,77 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--#include("header.html")-->
+<!--%import("filter/sync_result.xml")-->
+<!--%import("js/admin.js")-->
+<!--%import("css/message_list.css")-->
+
+<form method="get" action="./" id="mobilemessage_fo">
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+    <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+    <thead>
+        <tr>
+            <th scope="col"><div>{$lang->no}</div></th>
+            <th scope="col"><div><input type="checkbox" value="" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
+            <th scope="col" class=""><div>{$lang->mtype}</div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->regdate}</div></th>
+            <th scope="col" class=""><div>{$lang->sender}</div></th>
+            <th scope="col" class=""><div>{$lang->receiver}</div></th>
+            <th scope="col" class=""><div>{$lang->callno}</div></th>
+            <th scope="col" class=""><div>{$lang->callback}</div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->content}</div></th>
+            <th scope="col" class=""><div>{$lang->reservation_date}</div></th>
+            <th scope="col" class=""><div>{$lang->mstat}</div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->rcode}</div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->carrier}</div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->senddate}</div></th>
+            <th scope="col"><div>&nbsp;</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--@foreach($message_list as $no => $val)-->
+        <tr class="row{$cycle_idx}">
+            <td>{$no}</td>
+            <td><input type="checkbox" name="cart" value="{$val->mobilemessage_srl}" /></td>
+            <td>{$val->mtype}</td>
+            <td>{zdate($val->regdate, "Y-m-d H:i:s")}</td>
+            <td><!--@if(!$val->userid)-->-<!--@else-->{htmlspecialchars($val->userid)}<!--@end--></td>
+            <td><!--@if(!$val->ref_username)-->-<!--@else-->{htmlspecialchars($val->ref_username)}<!--@end--></td>
+            <td><!--@if($config->display_country=='Y')-->{htmlspecialchars($csutil->dispFullnumber($val->country, $val->callno))}<!--@else-->{htmlspecialchars($val->callno)}<!--@end--></td>
+        <td>{$val->callback}</td>
+        <td title="{htmlspecialchars($val->content)}">{htmlspecialchars($csutil->dispContent($val->content))}</td>
+        <td><!--@if($val->reservflag == "Y")--><span class="reservdate">{zdate($val->reservdate, "Y-m-d H:i")}</span><!--@else-->-<!--@end--></td>
+        <td>{$csutil->dispStatus($val->mstat)}</td>
+        <td <!--@if($val->rcode != '00')-->style="color: #ee7989;"<!--@end-->>{$val->rcode}:{htmlspecialchars($csutil->dispResultCode($val->rcode))}</td>
+        <td>{$val->carrier}</td>
+            <td>{zdate($val->senddate, "Y-m-d H:i:s")}</td>
+            <td class="nowrap"></td>
+        </tr>
+        <!--@end-->
+    </tbody>
+    </table>
+
+    <!-- 버튼 -->
+    <div class="clear">
+        <div class="fl">
+            <a href="#" onclick="deleteMobilemessageLog(); return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
+            <a href="#" onclick="cancelMobilemessage(); return false;" class="button green"><span>{$lang->cmd_reserv_cancel}</span></a>
+            <span class="button blue"><button onclick="javascript:if(!prepare_syncdata()) return false; procFilter(this.form, sync_result); return false;">{$lang->cmd_report_all}</button></span>
+        </div>
+        <div class="fr">
+            <a href="?module={$module}&act={$act}" class="button black"><span>상위목록</span></a>
+        </div>
+    </div>
+
+    <!-- 페이지 네비게이션 -->
+    <div class="pagination a1">
+        <a href="{getUrl('page','','module_srl','')}" class="prevEnd">{$lang->first_page}</a> 
+        <!--@while($page_no = $page_navigation->getNextPage())-->
+            <!--@if($page == $page_no)-->
+                <strong>{$page_no}</strong> 
+            <!--@else-->
+                <a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
+            <!--@end-->
+        <!--@end-->
+        <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
+    </div>
+    <input type="hidden" id="mobilemessage_srls" name="mobilemessage_srls" value="12345" />
+</form>

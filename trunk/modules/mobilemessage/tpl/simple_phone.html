@@ -1,0 +1,50 @@
+<style>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</style>
+    <input type="hidden" id="cs_cash" value="{$cs_cash}" />
+    <input type="hidden" id="cs_point" value="{$cs_point}" />
+    <input type="hidden" id="cs_mdrop" value="{$cs_mdrop}" />
+
+    <div class="smsSimplePhone">
+        <div class="smsSimplePhonePane">
+            <form method="post" id="formPurplebookSimplePhone" onsubmit="return false;">
+                <div class="smsSimplePhonePaneTitle">
+                    <button class="btnSimplePhoneSpecial" id="btnSimplePhoneSpecial">특수문자</button>
+                    <div class="smsSimplePhoneSwitch">
+                        <button id="btnSimplePhoneMMS">MMS</button>
+                        <button id="btnSimplePhoneSMS">SMS분할</button>
+                    </div>
+                </div>
+                <!--#include("specialchars.html")-->
+                
+                <div class="smsPurplebookTextMessagePane">
+                    <textarea class="scroll" id="smsPurplebookTextMessage" name="smsPurplebookTextMessage"></textarea>
+                </div>
+                <div class="smsPurplebookByteArea">
+                    <strong><span>0</span></strong>bytes
+                </div>
+                <div class="smsPurplebookCallbackPane">
+                    보내는사람 <input type="text" id="smsPurplebookCallback" name="smsPurplebookCallback" maxLength="13" value="{$callback}" />
+                </div>
+                <div class="smsSimplePhoneButtonPane">
+                    <button class="btnSimplePhoneReserv" id="btnSimplePhoneReserv" title="메시지를 예약합니다.">예약하기</button>
+                    <!--@if($cs_notuserset)-->
+                    <button class="btnSimplePhoneSend" type="submit" id="btnSimplePhoneSend" onclick="alert('서비스 아이디/패스워드를 설정하세요.'); return false;">보내기</button>
+                    <!--@else-->
+                    <button class="btnSimplePhoneSend" type="submit" id="btnSimplePhoneSEnd" onclick="javascript:prepare_direct();">보내기</button>
+                    <!--@end-->
+                    <!--#include("reservation.html")-->
+                </div>
+                <input type="hidden" value="0" name="smsPurplebookReservFlag" id="smsPurplebookReservFlag" />
+            </form>    
+        </div>
+        <div class="smsReplaceVar">
+            <ul>
+                <li><span class="button green small"><button id="smsReplaceVarName" title="이름으로 치환됩니다.">이름</button></span></li>
+                <li><span class="button green small"><button id="smsReplaceVarNickname" title="닉네임으로 치환됩니다.">닉네임</button></span></li>
+                <li><span class="button green small"><button id="smsReplaceVarId" title="아이디로 치환됩니다.">아이디</button></span></li>
+                <li><span class="button green small"><button id="smsReplaceVarEmail" title="이메일주소로 치환됩니다.">이메일</button></span></li>
+                <li><span class="button green small"><button id="smsReplaceVarHomepage" title="홈페이지로 치환됩니다.">홈페이지</button></span></li>
+                <li><span class="button green small"><button id="smsReplaceVarBlog" title="블로그로 치환됩니다.">블로그</button></span></li>
+                <li><span class="button green small"><button id="smsReplaceVarBirthday" title="생일로 치환됩니다.">생일</button></span></li>
+            </ul>
+        </div>
+    </div>

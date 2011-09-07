@@ -1,0 +1,28 @@
+<style>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</style>
+	<div class="targetList">
+		<div class="container_title">
+			받는사람 <span>(총</span><span id="receiver_num">0</span><span>/명)</span>
+		</div>
+		<div class="direct_numAdder">
+            <label>이름:</label><input type="text" id="inputDirectName" name="inputDirectName" maxlength="10" value="" />
+            <label>폰번호:</label><input type="text" id="inputDirectNumber" maxLength="13" name="inputDirectNumber" value="" />
+            <button class="btn_addNum" id="btnDirectAdd" title="직접추가">추가</button>
+		</div>
+		
+		<div class="list_header">
+			<span class="chkRecipient" id="selRnum_toggle" title="선택전환"></span>
+            <span class="name">{$lang->user_name}</span>
+            <span class="number">{$lang->cellphone}</span>
+            <span class="del">{$lang->cmd_delete}</span>
+		</div>
+		<div class="rnumlist_body scroll">
+			<ul id="rnumlist">
+			</ul>
+		</div>
+		<div class="list_footer">
+			<button class="btn_allNum" id="sel_allNum">전체선택</button>
+			<button class="btn_delNum" id="del_selNum">선택삭제</button>
+			<button id="btn_delDup">중복제거</button>
+			<button class="btn_bulkAdd" id="btn_bulkAdd">대량추가</button>
+		</div>
+	</div>

@@ -1,0 +1,24 @@
+<query id="insertNotiCom" action="insert">
+	<tables>
+		<table name="mobilemessage_noticom" />
+	</tables>
+	<columns>
+		<column name="notification_srl" var="notification_srl" filter="number" notnull="notnull" />
+		<column name="content" var="content" notnull="notnull" />
+		<column name="msgtype" var="msgtype" default="SMS" />
+		<column name="registrant" var="registrant" default="N" />
+		<column name="replier" var="replier" default="N" />
+		<column name="nonmember_index" var="nonmember_index" default="0" />
+		<column name="id_list" var="id_list" default="" />
+		<column name="except_id_list" var="except_id_list" default="" />
+		<column name="group_srl_list" var="group_srl_list" default="" />
+		<column name="manager" var="manager" default="N" />
+		<column name="direct_numbers" var="direct_numbers" default="" />
+		<column name="callback_number_type" var="callback_number_type" default="self" />
+		<column name="callback_number_direct" var="callback_number_direct" default="" />
+		<column name="message_link" var="message_link" default="N" />
+		<column name="reverse_notify" var="reverse_notify" default="N" />
+		<column name="extra_vars" var="extra_vars" default="" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>

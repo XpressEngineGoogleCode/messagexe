@@ -1,0 +1,12 @@
+<query id="getSubnode" action="select">
+	<tables>
+		<table name="purplebook" />
+	</tables>
+	<columns>
+		<column name="COUNT(*)" alias="subnode" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="node_route" var="node_route" notnull="notnull" />
+		<condition operation="equal" column="node_type" default="2" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

@@ -1,0 +1,15 @@
+<query id="getMembersInGroup" action="select">
+    <tables>
+        <table name="member" alias="member"/>
+        <table name="member_group_member" alias="member_group"/>
+    </tables>
+    <columns />
+    <conditions>
+        <condition operation="equal" column="member_group.group_srl" var="group_srl" notnull="notnull" />
+	<condition operation="equal" column="member.member_srl" var="member_group.member_srl" pipe="and" notnull="notnull" />
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="member.member_srl" order="desc" />
+    </navigation>
+</query>
+

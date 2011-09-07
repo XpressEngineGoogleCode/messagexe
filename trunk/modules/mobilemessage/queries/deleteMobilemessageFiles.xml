@@ -1,0 +1,8 @@
+<query id="deleteMobilemessageFiles" action="delete">
+	<tables>
+		<table name="mobilemessage_files" />
+	</tables>
+	<conditions>
+		<condition operation="in" column="mobilemessage_file_srl" var="mobilemessage_file_srls" notnull="notnull" />
+	</conditions>
+</query>

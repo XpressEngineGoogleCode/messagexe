@@ -1,0 +1,8 @@
+<filter name="sync_result" module="mobilemessage" act="procMobilemessageSyncResult">
+    <form />
+    <parameter />
+    <response>
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>

@@ -1,0 +1,20 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<style>
+	td { mso-number-format:\@; }
+</style>
+<table>
+	<tr>
+		<th>등록일시</th>
+		<th>내용</th>
+		<th>예약일시</th>
+		<th>수신상태</th>
+	</tr>
+<!--@foreach($data as $row)-->
+	<tr>
+		<td>{zdate($row->regdate)}</td>
+		<td>{$row->content}</td>
+		<td>{zdate($row->reservdate)}</td>
+		<td>{$row->success_count} / {$row->subcount}</td>
+	</tr>
+<!--@end-->
+</table>

@@ -1,0 +1,9 @@
+<filter name="delete_log" module="mobilemessage" act="procMobilemessageAdminDeleteLog">
+    <form />
+    <parameter />
+    <response callback_func="completeDeleteMobilemessageLog">
+        <tag name="error" />
+        <tag name="message" />
+        <tag name="page" />
+    </response>
+</filter>

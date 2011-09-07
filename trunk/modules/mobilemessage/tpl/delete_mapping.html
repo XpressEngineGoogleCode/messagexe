@@ -1,0 +1,35 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--%import("filter/delete_mapping.xml")-->
+<!--%import("js/admin.js")-->
+
+<div id="popHeader" class="wide">
+    <h3 class="xeAdmin">{$lang->cmd_delete} ({$lang->target} : {count($mapping_list)})</h3>
+</div>
+
+<form action="./" method="get" id="fo_management" onsubmit="return procFilter(this, delete_mapping);">
+<input type="hidden" name="target_user_ids" value="{$user_ids}" />
+
+<div id="popBody">
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="col"><div>{$lang->regdate}</div></th>
+        <th scope="col" class="half_wide"><div>아이디</div></th>
+        <th scope="col" class="half_wide"><div>폰번호</div></th>
+    </tr>
+    <!--@foreach($mapping_list as $key => $val)-->
+    <tr>
+        <td class="date center nowrap">{zdate($val->regdate, "Y-m-d H:i")}</td>
+        <td>{$val->user_id}</td>
+        <td>{$val->phone_num}</td>
+    </tr>
+    <!--@end-->
+    </table>
+</div>
+
+<!--@if(count($mapping_list))-->
+<div id="popFooter">
+        <span class="button black strong"><input type="submit" value="{$lang->cmd_delete}" /></span>
+</div>
+<!--@end-->
+
+</form>

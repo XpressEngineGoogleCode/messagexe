@@ -1,0 +1,16 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<style>
+	td { mso-number-format:\@; }
+</style>
+<table>
+	<tr>
+		<th>이름</th>
+		<th>폰번호</th>
+	</tr>
+<!--@foreach($data as $row)-->
+	<tr>
+		<td>{$row->node_name}</td>
+		<td>{$csutil->getDashTel($row->phone_num)}</td>
+	</tr>
+<!--@end-->
+</table>

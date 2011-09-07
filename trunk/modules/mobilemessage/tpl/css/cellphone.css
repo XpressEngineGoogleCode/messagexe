@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* vi:set ts=4 sw=4 expandtab enc=utf8: */
+
+#phonescreen_tab {
+    background-color: #f9f9ff;
+    border: solid #01669a 5px;
+    border-top: 0;
+    border-collapse: collapse;
+}
+
+#cellphone_telnumlist {
+    font-size: 10pt;
+    width: 182px;
+    height: 160px;
+    line-height: 16px;
+    overflow: -moz-scrollbars-vertical;
+    overflow-y: scroll;
+}
+
+#cellphone_callback {
+    width: 80px;
+    margin: 0px 0px 0px 4px;
+    font-size: 9pt;
+}
+#cellphone_callback_bar_td_0 {
+    padding: 3px 0px 0px 0px;
+}
+
+
+#cellphone_instant_flag {
+    padding: 2px 4px 2px 4px;
+}
+
+#cellphone_date {
+    padding: 4px 0px 1px 0px;
+}
+#cellphone_time {
+    padding: 2px 0px 6px 0px;
+}
+
+#cellphone_bytes {
+    border: 0;
+    font-size: 8pt;
+    background-color: #f9f9ff;
+    text-align: center;
+}
+
+#cellphone_listcount {
+    border: 0;
+    width: 80px;
+}

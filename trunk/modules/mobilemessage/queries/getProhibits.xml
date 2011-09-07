@@ -1,0 +1,17 @@
+<query id="getProhibitList" action="select">
+    <tables>
+        <table name="mobilemessage_prohibit" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="in" column="phone_num" var="phone_nums" filter="text" />
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="regdate" order="desc" />
+        <list_count var="list_count" default="40" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

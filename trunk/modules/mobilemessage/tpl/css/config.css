@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* vi:set ts=4 sw=4 expandtab enc=utf8: */
+.configWelcomeMessages { float:left; }
+.descReplacementVariables { float:left; margin:8px 0 0 0; position:relative; left:20px; }
+.descReplacementVariables ul { float:left; margin:2px 16px 0 0; padding:0; }
+.descReplacementVariables ul li { margin:0; padding:0; list-style:none; }
+.descReplacementFooter { clear:both; float:left; position:relative; top:6px; width:100%; }
+.configAdminPhones ul { margin:6px 0 6px 0; padding:0; }
+.configAdminPhones input { position:relative; top:2px; }
+.configAdminPhones ul li { margin:0; padding:0; list-style:none; }
+.configAdminPhones ul li span.phone { margin:0; padding:0; } 
+.configAdminPhones ul li button.btnDelPhone { position:relative; top:3px; cursor:pointer; text-indent: -1000em; padding:0; border:0; margin: 4px 0px 0px 10px; width: 9px; background:url('../img/btn_delete.gif') no-repeat; } 
+.required { color:#ee3333; padding-right:5px; }
+.new { background:url(../img/new.gif) no-repeat; padding-left:14px; }

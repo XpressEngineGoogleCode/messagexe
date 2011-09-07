@@ -1,0 +1,39 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--%import("filter/cancel_group.xml")-->
+<!--%import("js/admin.js")-->
+
+<div id="popHeader" class="wide">
+    <h3 class="xeAdmin">{$lang->cmd_reserv_cancel} ({$lang->target} : {count($group_list)})</h3>
+</div>
+
+<form action="./" method="get" id="fo_management" onsubmit="return procFilter(this, cancel_group);">
+<input type="hidden" name="target_group_ids" value="{$group_ids}" />
+
+<div id="popBody">
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="col"><div>{$lang->regdate}</div></th>
+        <th scope="col" class="half_wide"><div>발송자</div></th>
+        <th scope="col" class="half_wide"><div>메시지내용</div></th>
+        <th scope="col" class="half_wide"><div>예약상태</div></th>
+        <th scope="col" class="half_wide"><div>수신현황</div></th>
+    </tr>
+    <!--@foreach($group_list as $key => $val)-->
+    <tr>
+        <td class="date center nowrap">{zdate($val->regdate, "Y-m-d H:i")}</td>
+        <td>{$val->userid}</td>
+        <td>{htmlspecialchars($csutil->dispContent($val->content))}</td>
+        <td><!--@if($val->reservflag == "Y")--><span class="reservdate">{zdate($val->reservdate, "Y-m-d H:i")} 에 예약됨</span><!--@else-->-<!--@end--></td>
+        <td>{$val->success_count} / {$val->subcount}</td>
+    </tr>
+    <!--@end-->
+    </table>
+</div>
+
+<!--@if(count($group_list))-->
+<div id="popFooter">
+        <span class="button black strong"><input type="submit" value="{$lang->cmd_reserv_cancel}" /></span>
+</div>
+<!--@end-->
+
+</form>

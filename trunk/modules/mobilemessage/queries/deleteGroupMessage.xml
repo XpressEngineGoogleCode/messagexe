@@ -1,0 +1,8 @@
+<query id="deleteGroupMessage" action="delete">
+	<tables>
+		<table name="mobilemessage" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="gid" var="gid" notnull="notnull" />
+	</conditions>
+</query>

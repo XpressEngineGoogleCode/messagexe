@@ -1,0 +1,26 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<style>
+	td { mso-number-format:\@; }
+</style>
+<table>
+	<tr>
+		<th>접수일시</th>
+		<th>수신번호</th>
+		<th>이름</th>
+		<th>회신번호</th>
+		<th>내용</th>
+		<th>예약일시</th>
+		<th>결과</th>
+	</tr>
+<!--@foreach($data as $row)-->
+	<tr>
+		<td>{zdate($row->regdate)}</td>
+		<td>{$row->callno}</td>
+		<td>{$row->ref_username}</td>
+		<td>{$row->callback}</td>
+		<td>{$row->content}</td>
+		<td>{zdate($row->reservdate)}</td>
+		<td>{$csutil->dispStatus($row->mstat)}/{$csutil->dispResultCode($row->rcode)}</td>
+	</tr>
+<!--@end-->
+</table>

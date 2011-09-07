@@ -1,0 +1,8 @@
+<query id="deleteKeeping" action="delete">
+	<tables>
+		<table name="mobilemessage_keeping" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="keeping_srl" var="keeping_srl" notnull="notnull" />
+	</conditions>
+</query>

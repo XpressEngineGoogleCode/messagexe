@@ -1,0 +1,364 @@
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<!--@if($current_version_int <= $version_115)-->
+<!--%import("js/jquery-1.3.2.js")-->
+<!--@end-->
+<!--%import("filter/insert_config.xml")-->
+<!--%import("css/config.css")-->
+<!--%import("css/phone.css")-->
+<!--%import("js/config.js")-->
+<!--%import("js/target.js")-->
+<!--#include("header.html")-->
+
+<form id="fo_config" action="./" method="get">
+    <h4 class="xeAdmin">기본 설정</h4>
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+    <tr>
+    <th scope="row"><div><span class="required">*</span>{$lang->serviceid}</div></th>
+        <td>
+            <input type="text" name="cs_userid" value="{$mobilemessage_config->cs_userid}" class="inputTypeText w200" />
+            <p><!--@if($sln_reg_key)-->{$lang->about_msol_serviceid}<!--@else-->{$lang->about_serviceid}<!--@end--></p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div><span class="required">*</span>{$lang->password}</div></th>
+        <td>
+            <input type="password" name="cs_passwd" value="{$mobilemessage_config->cs_passwd}" class="inputTypeText w200" />
+            <p><!--@if($sln_reg_key)-->{$lang->about_msol_service_password}<!--@else-->{$lang->about_service_password}<!--@end--></p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>기본 URL 설정</div></th>
+        <td>
+            <input type="text" {$callback_url_style} name="callback_url" value="{$callback_url}" class="inputTypeText w400" />
+            <p>
+            <i>http://도메인/설치경로</i> 형태로 입력하세요. 예) http://www.example.org/xe/<br />
+            잘못된 URL을 설정하시면 [전송결과 자동갱신] 및 [엑셀다운로드 기능]이 오작동 할 수 있습니다.<br />
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>{$lang->cellphone_fieldname}</div></th>
+        <td>
+            <input type="text" id="cellphone_fieldname" name="cellphone_fieldname" value="{$mobilemessage_config->cellphone_fieldname}" class="inputTypeText w200" />
+            <span class="button black strong"><button id="btnAutoDetect">자동검색</button></span>
+        <p>{$lang->about_cellphone_fieldname}</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>{$lang->default_callback}</div></th>
+        <td>
+            <input type="text" name="callback" value="{htmlspecialchars($mobilemessage_config->a_callback[0])}" size="4" maxlength="4" class="inputTypeText" />-
+            <input type="text" name="callback" value="{htmlspecialchars($mobilemessage_config->a_callback[1])}" size="4" maxlength="4" class="inputTypeText" />-
+            <input type="text" name="callback" value="{htmlspecialchars($mobilemessage_config->a_callback[2])}" size="4" maxlength="4" class="inputTypeText" />
+            <p>일반적으로 고객센터 번호와 같은 대표번호로 입력합니다.<br />1588-1234 와 같이 지역번호가 없는 경우 1588을 첫필드, 1234를 마지막 필드에 입력하고 중간필드에 - 기호를 입력하세요.</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">{$lang->default_country}</th>
+        <td>
+            <input type="text" name="default_country" value="{htmlspecialchars($mobilemessage_config->default_country)}" maxlength="10" class="inputTypeText" />
+            <p>문자가 기본 국가번호로 설정된 나라로 문자를 발송하게 합니다. 미국내에서 사용할 경우 1, 일본 81, 중국은 86<br />기본은 82 한국입니다.</p>
+        </td>
+    </tr>
+    </table>
+
+    <h4 class="xeAdmin">글로벌</h4>
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="row">UTF-16 전송</th>
+        <td>
+            <input type="checkbox" name="encode_utf16" id="encode_utf16" <!--@if($mobilemessage_config->encode_utf16=='Y')-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="encode_utf16">사용</label>
+            <p>영어 이외의 텍스트도 손실없이 전송할 수 있습니다. 단, 알파벳 포함 모든 캐릭터(character)는 2바이트로 전송되며 건당 70개의 캐릭터(140바이트)를 전송하실 수 있습니다. (한국 제외)</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">{$lang->countrycode_fieldname}</th>
+        <td>
+            <input type="text" id="countrycode_fieldname" name="countrycode_fieldname" value="{$mobilemessage_config->countrycode_fieldname}" class="inputTypeText w200" />
+            <span class="button black strong"><button id="btnDetectCountryCodeField">자동검색</button></span>
+            <p>{$lang->about_countrycode_fieldname}</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">국가번호 표시</th>
+        <td>
+            <input type="checkbox" name="display_country" id="display_country" <!--@if($mobilemessage_config->display_country=='Y')-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="display_country">표시</label>
+            <p>전송내역, 매핑정보, 금지번호 등에서 국가번호가 노출되도록 합니다.</p>
+        </td>
+    </tr>
+    </table>
+
+    <h4 class="xeAdmin">핸드폰인증</h4>
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="row"><div>{$lang->validationcode_fieldname}</div></th>
+        <td>
+            <input type="text" id="validationcode_fieldname" name="validationcode_fieldname" value="{$mobilemessage_config->validationcode_fieldname}" class="inputTypeText w200" />
+            <span class="button black strong"><button id="btnDetectAuthField">자동검색</button></span>
+            <p>{$lang->about_validationcode_fieldname}</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">인증완료시 그룹추가</th>
+        <td>
+            <input type="hidden" name="change_group_srl_list" value="" />
+            <!--@foreach($group_list as $key => $val)-->
+            <input type="checkbox" name="change_group_srl_list_{$key}" id="change_group_srl_list_{$key}" value="{$key}" <!--@if(in_array($key, $change_group_srl_list))-->checked<!--@end--> />
+            <label for="change_group_srl_list_{$key}">{$val->title}</label>
+            <!--@end-->
+            <p>회원가입 혹은 회원정보 수정할 때 인증을 받으면 선택된 그룹이 자동 추가되도록 설정합니다.</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">그룹추가 알림문자</th>
+        <td>
+            <table cellspacing="0" border="0" class="configWelcomeMessages">
+                <tr>
+                    <td style="border:0">
+                        <input type="checkbox" name="inform_group_change" id="inform_group_change" <!--@if($mobilemessage_config->inform_group_change)-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="inform_group_change">발송</label>
+                        <input type="checkbox" name="allow_lms_group_change" id="allow_lms_group_change" <!--@if($mobilemessage_config->allow_lms_group_change)-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="allow_lms_group_change">장문허용</label>
+                        <div class="pscreen_bg" style="width:120px; border:solid #eee 1px;">
+                            <textarea name="group_change_message" class="pscreen">{$mobilemessage_config->group_change_message}</textarea>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+            <div class="descReplacementVariables">
+                <div>[치환변수]</div>
+                <ul>
+                    <li>%user_id% : 아이디</li>
+                    <li>%user_name% : 이름</li>
+                    <li>%nick_name% : 닉네임</li>
+                    <li>%email_address% : 이메일 주소</li>
+                    <li>%homepage% : 홈페이지</li>
+                    <li>%blog% : 블로그</li>
+                    <li>%birthday% : 생일</li>
+                </ul>
+                <ul>
+                    <li>%groups% : 변경될 그룹명</li>
+                    <li>%{확장필드명}% : 기타 확장필드의 필드값</li>
+                </ul>
+            </div>
+            <div class="descReplacementFooter">
+                그룹이 자동 추가된 경우 안내문자를 발송하도록 합니다. 발송 체크박스에 체크하시고 적절한 문구를 기입하세요.<br />
+                장문허용에 체크하시면 메시지 내용이 80바이트를 넘으면 장문(LMS, 최대 2,000바이트)으로 전송됩니다.<br />
+            </div>
+        </td>
+    </tr>
+    </table>
+
+    <h4 class="xeAdmin">회원가입 알림</h4>
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="row"><div>가입환영 메시지</div></th>
+        <td>
+            <table cellspacing="0" border="0" class="configWelcomeMessages">
+                <tr>
+                    <td style="border:0">
+                        <input type="checkbox" name="flag_welcome_member" id="flag_welcome_member" <!--@if($mobilemessage_config->flag_welcome_member)-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="flag_welcome_member">발송</label>
+                        <input type="checkbox" name="allow_lms_member" id="allow_lms_member" <!--@if($mobilemessage_config->allow_lms_member)-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="allow_lms_member">장문허용</label>
+                        <div class="pscreen_bg" style="width:120px; border:solid #eee 1px;">
+                            <textarea name="welcome_member" class="pscreen">{$mobilemessage_config->welcome_member}</textarea>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+            <div class="descReplacementVariables">
+                <div>[치환변수]</div>
+                <ul>
+                    <li>%user_id% : 아이디</li>
+                    <li>%user_name% : 이름</li>
+                    <li>%nick_name% : 닉네임</li>
+                    <li>%email_address% : 이메일 주소</li>
+                    <li>%homepage% : 홈페이지</li>
+                    <li>%blog% : 블로그</li>
+                    <li>%birthday% : 생일</li>
+                </ul>
+                <ul>
+                    <li>%{확장필드명}% : 기타 확장필드의 필드값</li>
+                </ul>
+            </div>
+            <div class="descReplacementFooter">
+                회원가입 완료 후 가입자에게 환영메시지를 발송합니다. 발송을 원하시면 발송 체크박스에 체크하시고 적절한 문구를 기입하세요.<br />
+                장문허용에 체크하시면 메시지 내용이 80바이트를 넘으면 장문(LMS, 최대 2,000바이트)으로 전송됩니다.<br />
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>관리자 알림</div></th>
+        <td>
+            <!--
+            <div class="configAdminPhones">
+                <ul id="inputAdminPhones">
+                    <!--@foreach($mobilemessage_config->admin_phones as $phone)-->
+                    <!--@if($phone)--><li><span class="phone">{htmlspecialchars($phone)}</span><button class="btnDelPhone">삭제</button></li><!--@end-->
+                    <!--@end-->
+                </ul>
+                <input type="text" id="admin_phone_1" value="" size="4" maxlength="4" class="inputTypeText" />-
+                <input type="text" id="admin_phone_2" value="" size="4" maxlength="4" class="inputTypeText" />-
+                <input type="text" id="admin_phone_3" value="" size="4" maxlength="4" class="inputTypeText" />
+                <span class="button black strong"><button id="btnAddPhone">추가</button></span>
+                <input type="hidden" id="admin_phones" name="admin_phones" value="" />
+                <p>알림문자(가입환영메시지 관리자항목)를 받을 관리자의 핸드폰번호를 입력합니다.</p>
+            </div>
+            -->
+
+            <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+            <tr>
+                <th scope="row">메시지 내용</th>
+                <td style="border:0">
+                    <div class="configWelcomeMessages">
+                        <input type="checkbox" name="flag_welcome_admin" id="flag_welcome_admin" <!--@if($mobilemessage_config->flag_welcome_admin)-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="flag_welcome_admin">발송</label>
+                        <input type="checkbox" name="allow_lms_admin" id="allow_lms_admin" <!--@if($mobilemessage_config->allow_lms_admin)-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="allow_lms_admin">장문허용</label>
+                        <div class="pscreen_bg" style="border:solid #eee 1px; width:124px;">
+                            <textarea name="welcome_admin" class="pscreen">{$mobilemessage_config->welcome_admin}</textarea>
+                        </div>
+                    </div>
+                    <div class="descReplacementVariables">
+                        <div>[치환변수]</div>
+                        <ul>
+                            <li>%user_id% : 아이디</li>
+                            <li>%user_name% : 이름</li>
+                            <li>%nick_name% : 닉네임</li>
+                            <li>%email_address% : 이메일 주소</li>
+                            <li>%homepage% : 홈페이지</li>
+                            <li>%blog% : 블로그</li>
+                            <li>%birthday% : 생일</li>
+                        </ul>
+                        <ul>
+                            <li>%{확장필드명}% : 기타 확장필드의 필드값</li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">아이디 설정</th>
+                <td>
+                    {@$id_list = 'id_list'}
+                    <input type="hidden" id="{$id_list}" name="{$id_list}" value="{$mobilemessage_config->id_list}" />
+                    <table cellspacing="0" class="rowTable">
+                    <tr>
+                        <th scope="row" rowspan="2"><div>아이디 목록</div></th>
+                        <td class="wide">
+                            <select id="sel_{$id_list}" multiple="multiple" size="{count($member_list)?count($member_list):1}" class="w200">
+                            <!--@foreach($member_list as $key => $val)-->
+                                <option value="{$val->user_id}">{$val->nick_name} ({$val->user_id})</option>
+                            <!--@end-->
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="wide">
+                            <input type="text" id="{$id_list}_input" class="inputTypeText w100" />
+                            <span class="button black strong"><button type="button" onclick="doInsertAdmin('{$id_list}')">{$lang->cmd_insert}</button></span>
+                            <span class="button"><button type="button" onclick="doDeleteAdmin('{$id_list}')">{$lang->cmd_delete}</button></span>
+                        </th>
+                    </tr>
+                    </table>
+                    <p>설정된 아이디로 가입알림 문자를 발송합니다.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">그룹 설정</th>
+                <td>
+                    <input type="hidden" name="group_srl_list" value="" />
+                    <!--@foreach($group_list as $key => $val)-->
+                    <input type="checkbox" name="group_srl_list_{$key}" id="group_srl_list_{$key}" value="{$key}" <!--@if(in_array($key, $group_srl_list))-->checked<!--@end--> />
+                    <label for="group_srl_list_{$key}">{$val->title}</label>
+                    <!--@end-->
+                    <p>선택된 그룹의 멤버들이 알림문자를 받도록 설정합니다. 그룹멤버 전원에게 문자가 발송되므로  신중히 설정하세요.</p>
+                </td>
+            </tr>
+            <tr class="row2">
+                <th scope="row"><div>직접입력</div></th>
+                <td>
+                    <div class="configAdminPhones">
+                        <ul id="inputAdminPhones">
+                            <!--@foreach($mobilemessage_config->admin_phones as $phone)-->
+                            <!--@if($phone)--><li><span class="phone">{htmlspecialchars($phone)}</span><button class="btnDelPhone">삭제</button></li><!--@end-->
+                            <!--@end-->
+                        </ul>
+                        <input type="text" id="admin_phone_1" value="" size="4" maxlength="4" class="inputTypeText" />-
+                        <input type="text" id="admin_phone_2" value="" size="4" maxlength="4" class="inputTypeText" />-
+                        <input type="text" id="admin_phone_3" value="" size="4" maxlength="4" class="inputTypeText" />
+                        <span class="button black strong"><button id="btnAddPhone">추가</button></span>
+                        <input type="hidden" id="admin_phones" name="admin_phones" value="" />
+                        <p>직접입력한 폰번호로 알림문자가 가도록 합니다. 여러개 지정 가능합니다.</p>
+                    </div>
+                </td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th>회신번호 설정</th>
+        <td>
+            <input type="radio" name="callback_number_type" id="callback_number_type_1" value="self" <!--@if($mobilemessage_config->callback_number_type=='self'||!$mobilemessage_config->callback_number_type)-->checked<!--@end--> /><label for="callback_number_type_1">받는사람 자신의 폰번호</label>
+            <input type="radio" name="callback_number_type" id="callback_number_type_2" value="writer" <!--@if($mobilemessage_config->callback_number_type=='writer')-->checked<!--@end--> /><label for="callback_number_type_2">가입자의 폰번호</label>
+            <input type="radio" name="callback_number_type" id="callback_number_type_3" value="basic" <!--@if($mobilemessage_config->callback_number_type=='basic')-->checked<!--@end--> /><label for="callback_number_type_3">기본회신번호</label>
+            <input type="radio" name="callback_number_type" id="callback_number_type_4" value="direct" <!--@if($mobilemessage_config->callback_number_type=='direct')-->checked<!--@end--> /><label for="callback_number_type_4">직접입력</label>
+            <span class="inputCallbackNumberDirect">
+                <input type="text" name="callback_number_direct" value="{$mobilemessage_config->callback_number_direct[0]}" size="4" maxlength="4" class="inputTypeText" />-
+                <input type="text" name="callback_number_direct" value="{$mobilemessage_config->callback_number_direct[1]}" size="4" maxlength="4" class="inputTypeText" />-
+                <input type="text" name="callback_number_direct" value="{$mobilemessage_config->callback_number_direct[2]}" size="4" maxlength="4" class="inputTypeText" />
+            </span>
+        </td>
+    </tr>
+    </table>
+
+    <h4 class="xeAdmin">금지 번호</h4>
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="row">탈퇴시 금지번호로 넘김<div></div></th>
+        <td>
+            <input type="checkbox" name="keep_mapping" id="keep_mapping" <!--@if($mobilemessage_config->keep_mapping=='Y')-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="keep_mapping">사용</label>
+            <p>체크하시면 회원탈퇴시 폰번호를 금지번호로 넘겨서 한번 가입된 폰번호로 다시 가입할 수 없게됩니다.(금지번호관리에서 폰번호로 검색 후 삭제하면 다시 가입가능)<br />회원가입 후 스팸게시물을 남기고 탈퇴하는 경우에 스팸방지용으로 사용될 수 있습니다.</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>제한일 설정</div></th>
+        <td>
+            탈퇴일로부터 <input type="text" name="keep_mapping_days" value="{$mobilemessage_config->keep_mapping_days}" class="w40" />일간 가입제한
+            <p>탈퇴시 금지번호로 넘김을 사용으로 설정해야 동작합니다.</p>
+        </td>
+    </tr>
+    </table>
+
+    <h4 class="xeAdmin">기타</h4>
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th scope="row"><div>JSON 디코딩 보정</div></th>
+        <td>
+            <input type="checkbox" name="force_strip" id="force_strip" <!--@if($mobilemessage_config->force_strip=='Y')-->checked="checked"<!--@end--> value="Y" class="checkbox" /><label for="force_strip">보정</label>
+            <p>직접 문자 발송시 전송결과 48번으로 실패가 떨어지는 문제가 발생한다면 체크해 주세요.</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>차감 포인트 설정</div></th>
+        <td>
+            단문(SMS) 사용시 <input type="text" name="point_for_sms" value="{$mobilemessage_config->point_for_sms}" class="inputTypeText w40" /> 포인트 차감<br />
+            장문(LMS) 사용시 <input type="text" name="point_for_lms" value="{$mobilemessage_config->point_for_lms}" class="inputTypeText w40" /> 포인트 차감<br />
+            <p>웹폰 위젯 v0.5 미만 버젼의 위젯 사용시 차감되는 포인트를 설정하세요.<br />최신 웹폰, 주소록 위젯에는 각각의 위젯설정에서 설정하실 수 있습니다.</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>주소록 데이터정리</div></th>
+        <td>
+            <span class="button black strong"><button id="btnCleanupPurplebook">정리하기</button></span>
+            <p>정리하기 버튼을 눌러주세요.</p>
+        </td>
+    </tr>
+    </table>
+
+    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable gap1<!--@else-->adminTable<!--@end-->">
+    <tr>
+        <th colspan="2" class="button">
+            <span class="button strong black"><input type="submit" value="{$lang->cmd_registration}" /></span>
+        </th>
+    </tr>
+    </table>
+
+</form>
+

@@ -1,0 +1,11 @@
+<query id="updatePurplebookPhone" action="update">
+	<tables>
+		<table name="purplebook" />
+	</tables>
+	<columns>
+		<column name="phone_num" var="phone_num" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="node_id" var="node_id" notnull="notnull" />
+	</conditions>
+</query>

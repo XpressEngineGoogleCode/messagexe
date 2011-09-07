@@ -1,0 +1,14 @@
+<query id="updateMobilemessage" action="update">
+	<tables>
+		<table name="mobilemessage" />
+	</tables>
+	<columns>
+		<column name="mstat" var="mstat" default="9" />
+		<column name="rcode" var="rcode" default="99" />
+		<column name="senddate" var="senddate" default="" />
+		<column name="carrier" var="carrier" default="" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="mid" var="mid" notnull="notnull" />
+	</conditions>
+</query>

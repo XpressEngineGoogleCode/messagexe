@@ -1,0 +1,35 @@
+<style>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</style>
+<!--%import("js/reservation.js")-->
+
+<div id="smsReservationPane" class="smsReservationPane" style="position:absolute; display:none;">
+    <div class="smsReservationArea">
+        <div class="areaTit">예약전송<span><img src="img/icon_n.gif" /></span></div>
+       	<div class="areaClose"><a href="javascript:close_reservation_display();"><img src="img/btn_popup_close.gif" /></a></div>
+        <table class="tabReservation">
+            <tr>
+                <td>
+                    <div id="smsReservationInputDate"></div>
+                </td>
+                <td class="reservtime">
+                    예약전송시간<br />
+                    <div class="boundary_line"></div>
+                    <input id="inputReservationDate" name="inputReservationDate" class="inputReservationDate" readonly="readonly" value="{zdate('Ymd', date('Y-m-d'))}" /><br />
+                    <select name="inputReservationHour" id="inputReservationHour">
+                        <!--@for($i = 0;$i < 24; $i++)-->
+                        <option value="{$i}"<!--@if(intval(date('H'))==$i)--> selected="selected"<!--@end-->>{$i}</option>
+                        <!--@end-->
+                    </select>시 
+                    <select name="inputReservationMinute" id="inputReservationMinute">
+                        <!--@for($i = 0;$i < 60; $i++)-->
+                        <option value="{$i}"<!--@if(intval(date('i'))==$i)--> selected="selected"<!--@end-->>{$i}</option>
+                        <!--@end-->
+                    </select>분
+                    <div class="boundary_line"></div>
+                    <input type="image" src="img/btn_reservation.gif" onclick="javascript:prepare_reservation();" />
+                    <input type="image" src="img/btn_cancel.gif" onclick="javascript:close_reservation_display(); return false;" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+

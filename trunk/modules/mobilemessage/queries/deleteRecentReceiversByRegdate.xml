@@ -1,0 +1,8 @@
+<query id="deleteRecentReceiversByRegdate" action="delete">
+	<tables>
+		<table name="mobilemessage_recent_receiver" />
+	</tables>
+	<conditions>
+		<condition operation="less" column="regdate" var="regdate" notnull="notnull" />
+	</conditions>
+</query>

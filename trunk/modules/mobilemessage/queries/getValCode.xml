@@ -1,0 +1,12 @@
+<query id="getValCode" action="select">
+	<tables>
+		<table name="mobilemessage_validation" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="callno" var="callno" notnull="notnull" />
+		<condition operation="equal" column="country" var="country" default="82" pipe="and" />
+	</conditions>
+</query>

@@ -1,0 +1,38 @@
+<style>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</style>
+<div id="smsOrganization" class="smsOrganization">
+	<div class="smsOrgGroup">
+		<div class="smsOrgGroupHeader">
+			<span class="sequence">No.</span>
+			<span class="chkGroup" id="selGroup_toggle" title="선택전환"></span>
+			<span class="groupName">그룹명</span>
+		</div>
+        <div class="smsOrgGroupBody">
+            <ul id="grouplist"></ul>
+        </div>
+            <!--
+		<div class="smsOrgGroupFooter">
+            <input type="text" id="smsSearchWord" name="smsSearchWord" class="inputTypeText w80" />
+			<button id="btnSearch">검색</button>
+		</div>
+            -->
+	</div>
+	<div id="smsMembers" class="smsMembers">
+        <div class="smsMemberSearch">
+            <!--#include("member_search.html")-->
+        </div>
+		<div class="smsMembersHeader">
+			<span class="sequence">No.</span>
+			<span class="chkMembers" id="selCustomer_toggle" title="선택전환"></span>
+            <span class="id">{$lang->user_id}</span>
+            <span class="name">{$lang->user_name}</span>
+            <span class="number">{$lang->cellphone}</span>
+		</div>
+		<div class="smsMembersBody">
+			<ul id="custlist"></ul>
+		</div>
+        <div class="smsMembersFooter">
+            <ul id="smsMembersFooterPages"></ul>
+            <a id="excelDownload" title="엑셀다운로드">엑셀다운로드</a>
+        </div>
+	</div>
+</div>

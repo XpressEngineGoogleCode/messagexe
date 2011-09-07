@@ -1,0 +1,19 @@
+<query id="getMobilemessageFiles" action="select">
+	<tables>
+		<table name="mobilemessage_files" alias="files" />
+		<table name="member" alias="member" />
+	</tables>
+	<columns>
+		<column name="files.*" />
+		<column name="member.user_id" />
+	</columns>
+    <conditions>
+        <condition operation="equal" column="files.member_srl" default="member.member_srl" filter="number" />
+    </conditions>
+	<navigation>
+		<index var="sort_index" default="files.mobilemessage_file_srl" order="desc" />
+		<list_count var="list_count" default="20" />
+		<page_count var="page_count" default="10" />
+		<page var="page" default="1" />
+	</navigation>
+</query>

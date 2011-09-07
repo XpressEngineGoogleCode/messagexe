@@ -1,0 +1,15 @@
+<table name="mobilemessage_notidoc">
+	<column name="notification_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+	<column name="content" type="varchar" size="250" notnull="notnull" />
+	<column name="msgtype" type="varchar" size="5" default="SMS" notnull="notnull" />
+	<column name="id_list" type="varchar" size="250" default="N" notnull="notnull" />
+	<column name="except_id_list" type="varchar" size="250" default="N" notnull="notnull" />
+	<column name="group_srl_list" type="varchar" size="250" default="N" notnull="notnull" />
+	<column name="manager" type="char" size="1" default="N" notnull="notnull" />
+	<column name="direct_numbers" type="varchar" size="250" default="" notnull="notnull" />
+	<column name="callback_number_type" type="varchar" size="10" default="self" notnull="notnull" />
+	<column name="callback_number_direct" type="varchar" size="50" default="" notnull="notnull" />
+	<column name="nonmember_index" type="number" size="11" default="0" notnull="notnull" />
+    <column name="extra_vars" type="text" />
+	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
+</table>

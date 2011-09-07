@@ -1,0 +1,9 @@
+<filter name="delete_group" module="mobilemessage" act="procMobilemessageAdminDeleteGroup">
+    <form />
+    <parameter />
+    <response callback_func="completeDeleteGroupMessages">
+        <tag name="error" />
+        <tag name="message" />
+        <tag name="page" />
+    </response>
+</filter>

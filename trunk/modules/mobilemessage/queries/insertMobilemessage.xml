@@ -1,0 +1,24 @@
+<query id="insertMobilemessage" action="insert">
+	<tables>
+		<table name="mobilemessage" />
+	</tables>
+	<columns>
+		<column name="mobilemessage_srl" var="mobilemessage_srl" filter="number" notnull="notnull" />
+		<column name="gid" var="gid" notnull="notnull" />
+		<column name="mid" var="mid" notnull="notnull" />
+		<column name="mtype" var="mtype" notnull="notnull" />
+		<column name="userid" var="userid" default="" />
+		<column name="country" var="country" default="82" notnull="notnull" />
+		<column name="callno" var="callno" notnull="notnull" />
+		<column name="callback" var="callback" notnull="notnull" />
+		<column name="subject" var="subject" default="" />
+		<column name="content" var="content" notnull="notnull" />
+		<column name="ref_userid" var="ref_userid" default="" />
+		<column name="ref_username" var="ref_username" default="" />
+		<column name="reservflag" var="reservflag" default="N" />
+		<column name="reservdate" var="reservdate" default="" />
+		<column name="mstat" var="mstat" default="9" />
+		<column name="rcode" var="rcode" default="99" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>

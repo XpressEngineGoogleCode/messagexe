@@ -1,0 +1,61 @@
+            <table>
+            <tr>
+                <th scope="row">시간</th>
+                <td>
+                    <p><input type="checkbox" name="time_use" id="time_use" value="Y" <!--@if($notification_info->time_use=='Y')-->checked="checked"<!--@end--> /><label for="time_use">{$lang->use}</label></p>
+                    <select name="ft_hour">
+                    <!--@for($i = 0; $i < 24; $i++)-->
+                        <option value="{sprintf('%02u', $i)}" <!--@if(intval($notification_info->ft_hour)==$i)-->selected="selected"<!--@end-->>{sprintf('%02u', $i)}</option>
+                    <!--@end-->
+                    </select>시
+                    <select name="ft_min">
+                    <!--@for($i = 0; $i < 60; $i++)-->
+                        <option value="{sprintf('%02u', $i)}" <!--@if(intval($notification_info->ft_min)==$i)-->selected="selected"<!--@end-->>{sprintf('%02u', $i)}</option>
+                    <!--@end-->
+                    </select>분 부터
+
+                    <select name="tt_hour">
+                    <!--@for($i = 0; $i < 24; $i++)-->
+                        <option value="{sprintf('%02u', $i)}" <!--@if(intval($notification_info->tt_hour)==$i)-->selected="selected"<!--@end-->>{sprintf('%02u', $i)}</option>
+                    <!--@end-->
+                    </select>시
+                    <select name="tt_min">
+                    <!--@for($i = 0; $i < 60; $i++)-->
+                        <option value="{sprintf('%02u', $i)}" <!--@if(intval($notification_info->tt_min)==$i)-->selected="selected"<!--@end-->>{sprintf('%02u', $i)}</option>
+                    <!--@end-->
+                    </select>분 까지
+                    <p>
+                    설정된 시간 안에서만 알림문자가 발송되도록 설정합니다.
+                    20:00 ~ 06:00 (오늘 밤 10시부터 다음날 6시까지) 와 같은 설정도 가능합니다.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">요일</th>
+                <td>
+                    <p><input type="checkbox" name="week_use" id="week_use" value="Y" <!--@if($notification_info->week_use=='Y')-->checked="checked"<!--@end--> /><label for="week_use">{$lang->use}</label></p>
+                    <input type="checkbox" name="mon" id="mon" value="Y" <!--@if($notification_info->mon=='Y')-->checked="checked"<!--@end--> /><label for="mon">{$lang->mon}</label>
+                    <input type="checkbox" name="tue" id="tue" value="Y" <!--@if($notification_info->tue=='Y')-->checked="checked"<!--@end--> /><label for="tue">{$lang->tue}</label>
+                    <input type="checkbox" name="wed" id="wed" value="Y" <!--@if($notification_info->wed=='Y')-->checked="checked"<!--@end--> /><label for="wed">{$lang->wed}</label>
+                    <input type="checkbox" name="thu" id="thu" value="Y" <!--@if($notification_info->thu=='Y')-->checked="checked"<!--@end--> /><label for="thu">{$lang->thu}</label>
+                    <input type="checkbox" name="fri" id="fri" value="Y" <!--@if($notification_info->fri=='Y')-->checked="checked"<!--@end--> /><label for="fri">{$lang->fri}</label>
+                    <input type="checkbox" name="sat" id="sat" value="Y" <!--@if($notification_info->sat=='Y')-->checked="checked"<!--@end--> /><label for="sat">{$lang->sat}</label>
+                    <input type="checkbox" name="sun" id="sun" value="Y" <!--@if($notification_info->sun=='Y')-->checked="checked"<!--@end--> /><label for="sun">{$lang->sun}</label>
+                    <p>
+                    선택된 요일만 알림문자가 발송되도록 설정합니다.
+                    </p>
+                </td>
+            </tr>
+            <!--@if(in_array($act,array('dispMobilemessageAdminNotiComAppend','dispMobilemessageAdminNotiComModify')))-->
+            <tr>
+                <th scope="row">기간</th>
+                <td>
+                    <span><input type="text" name="limit_hours" value="{$notification_info->limit_hours}" /> 시간(Hour)</span>
+                    <p>
+                    설정된 기간내에 등록된 글에 한해서만 알림문자를 발송합니다. 값이 0일때 제한을 두지 않습니다.
+                    </p>
+                </td>
+            </tr>
+            <!--@end-->
+            </table>
+
