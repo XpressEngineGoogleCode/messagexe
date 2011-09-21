@@ -1402,7 +1402,7 @@
                 }
 
                 // 게시자 본인이면 보내지 않음
-                if ($logged_info && $document_member_srl == $logged_info->member_srl) $flagSend = false;
+                if ($document_member_srl == $obj->member_srl) $flagSend = false;
 
                 if ($flagSend) {
                     $phonenum = false;
