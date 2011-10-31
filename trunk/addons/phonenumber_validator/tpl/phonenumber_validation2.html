@@ -1,0 +1,36 @@
+<!--%import("js/validation.js")-->
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<script>
+    <!--@if($alert_message)-->alert("{$alert_message}");<!--@end-->
+</script>
+<div class="title">{$lang->cmd_input_authcode}</div>
+
+<form name="f" method="get">
+    <div id="popBody">
+        <table cellspacing="0" class="rowTable">
+        <tr>
+            <th scope="col"><div>{$lang->validation_code}</div></th>
+            <td>
+                <input type="text" id="validation_code" name="validation_code" value="" class="inputTypeText w200" />
+                <p><b>
+                    <!--@if($country_code)-->({$country_code}) <!--@end-->{$cellphone_number1}-{$cellphone_number2}-{$cellphone_number3}</b> 으로 전송된 숫자를 정확히 입력합니다.<br />핸드폰번호가 틀린 경우 이 창을 닫고 다시 시작하세요.<br />인증번호 수신이 지연될 경우 [재전송] 버턴을 눌러주세요.</p>
+            </td>
+        </tr>
+        </table>
+    </div>
+    <div id="popFooter">
+        <span class="button black strong"><input type="submit" value="확인" onclick="return check_input_fields2();" /></span>
+        <span class="button black strong"><input type="submit" value="재전송" onclick="this.form.validation_code.value = '';" /></span>
+    </div>
+    <input type="hidden" name="country_code" value="{$country_code}" />
+    <input type="hidden" name="cellphone_number1" value="{$cellphone_number1}" />
+    <input type="hidden" name="cellphone_number2" value="{$cellphone_number2}" />
+    <input type="hidden" name="cellphone_number3" value="{$cellphone_number3}" />
+    <input type="hidden" name="module" value="{$module}" />
+    <input type="hidden" name="act" value="{$act}" />
+    <input type="hidden" name="authcode" value="{$authcode}">
+</form>
+<script>
+    obj = document.getElementById("validation_code");
+    obj.focus();
+</script>

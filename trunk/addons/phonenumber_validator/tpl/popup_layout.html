@@ -1,0 +1,11 @@
+<!--%import("css/layout.css")-->
+<div id="xePopup">
+    <div id="popup_content">
+        <button class="xButton" type="button" onclick="window.close();return false;"><span>{$lang->cmd_close}</span></button>
+        {$content}
+    </div>
+</div>
+<script type="text/javascript">
+    xAddEventListener(window, 'load', setFixedPopupSize); 
+    var _isPoped = true;
+</script>

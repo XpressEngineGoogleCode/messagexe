@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+#xePopup .title { white-space:nowrap; margin:0;padding:0; border-top:solid #113864 3px; background-color:#4783ae; color:#fff; font-family:돋움,Dotum; font-size:12pt; font-weight:bold; padding:12px 12px; }
+#xePopup button.text{ background:none; border:0; color:#0000ee;}
+
+.crossTable{ width:80%; border:0; margin:0 0 20px 0; padding:0;}
+.crossTable th div { white-space:nowrap; }
+.crossTable th,
+.crossTable td{ border:0; padding:5px 10px; vertical-align:top;}
+.crossTable th{ background:#f4f4f4;}
+.crossTable thead th{ border-top:2px solid #cfcfcf; border-bottom:1px solid #e5e5e5; background-image:url(../img/lineVrText.gif); background-repeat:no-repeat; background-position:left center;}
+.crossTable thead th:first-child{ background-image:none;}
+.crossTable tbody th{ border-bottom:1px solid #e5e5e5; text-align:left;}
+.crossTable td{ border-bottom:1px solid #f0f0f0;}
+
+.colTable{ width:80%; border:0; margin:0; padding:0;}
+.colTable th div { white-space:nowrap; }
+.colTable tr.bg0{ background:#fff;}
+.colTable tr.bg1{ background:#f8f8f8;}
+.colTable th,
+.colTable td{ border:0; padding:5px 10px; vertical-align:top;}
+.colTable th{ border-top:2px solid #cfcfcf; border-bottom:1px solid #e5e5e5; background:#f4f4f4; background-image:url(../img/lineVrText.gif); background-repeat:no-repeat; background-position:left center;}
+.colTable th:first-child{ background-image:none;}
+.colTable td{ border-bottom:1px solid #f0f0f0;}
+
+.rowTable{ width:80%; border:0; border-top:1px solid #d2d2d2; padding:0; margin:30px auto 0 auto; }
+.rowTable th div { white-space:nowrap; }
+.rowTable tr.bg0{ background:#fff;}
+.rowTable tr.bg1{ background:#f8f8f8;}
+.rowTable th,
+.rowTable td{ border:0; padding:5px 10px; text-align:left; vertical-align:top;}
+.rowTable th{ font-weight:normal; background:#ebebeb;}
+.rowTable tbody th{ border-bottom:1px solid #d2d2d2;}
+.rowTable td{ border-bottom:1px solid #d2d2e2;}
+
+.rowTable th.button, .colTable th.button, .crossTable th.button { text-align:right; }
+.rowTable td.alert, .colTable td.alert, .crossTable td.alert  { color:red !important; }
+.rowTable td.alert a, .colTable td.alert a, .crossTable td.alert a { text-decoration:none; color:red !important; }
+
+.colTable td.wide, .rowTable td.wide, .crossTable td.wide { width:100%;}
+
+#popup_content { border:0; margin:0; font-size:12px; background:#fff; border-bottom:solid #113864 3px;}
+#popup_content .xButton { position:absolute; top:16px; right:18px; width:15px; height:14px; padding:0; background-color:transparent; background:url(../img/buttonClose.gif) no-repeat; border:0; cursor:pointer; overflow:hidden; }
+#popup_content .xButton span { position:relative; z-index:-1; visibility:hidden; }
+#popup_content * { font-size:12px; }
+#popBody { margin:10px !important;}
+#popFooter { margin-bottom:30px; text-align:center; }
