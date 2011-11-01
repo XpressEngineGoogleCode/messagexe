@@ -363,7 +363,8 @@
             $default_country = $config->default_country;
 
         // 가입자가 입력한 폰번호 및 인증번호 확보
-        $numbers = explode('|@|', Context::get($config->cellphone_fieldname));
+        $numbers = Context::get($config->cellphone_fieldname);
+        if (!is_array($numbers)) $numbers = explode('|@|', $numbers);
         $phonenumber = join($numbers);
         $valcode = Context::get($config->validationcode_fieldname);	
         $country = $default_country;
