@@ -676,7 +676,6 @@
 
             $oMobilemessageModel = &getModel('mobilemessage');
             $output = executeQueryArray('mobilemessage.getPurplebookByNodeRoute', $args);
-            debugPrint('purplebook list: ' . serialize($output));
 
             require_once('mobilemessage.utility.php');
             $csutil = new CSUtility();

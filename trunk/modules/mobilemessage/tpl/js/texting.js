@@ -616,7 +616,15 @@ function initGroupList() {
 
     function addMember(seq, obj)
     {
-        $('#custlist').append('<li class="memberInfo"><span class="sequence">' + seq + '</span><span class="chkMember"></span><span class="id">' + obj.user_id + '</span><span class="name" member_srl="' + obj.member_srl + '">' + obj.user_name + '</span><span class="number">' + getSimpleDashTel(obj.cellphone.replace(/\|\@\|/g, '')) + '</span></li>');
+        var phonenum;
+        if (jQuery.isArray(obj.cellphone)) {
+            phonenum = obj.cellphone.join();
+        } else {
+            phonenum = obj.cellphone.replace(/\|\@\|/g, '');
+        }
+        phonenum = getSimpleDashTel(phonenum)
+
+        $('#custlist').append('<li class="memberInfo"><span class="sequence">' + seq + '</span><span class="chkMember"></span><span class="id">' + obj.user_id + '</span><span class="name" member_srl="' + obj.member_srl + '">' + obj.user_name + '</span><span class="number">' + phonenum + '</span></li>');
     }
 
     function parseJSON(data) {
