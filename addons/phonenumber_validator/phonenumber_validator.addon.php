@@ -90,7 +90,7 @@
                 flag.options.add(objOpt);
             }
             $(flag).css('margin-right', 4);
-            var phonenum = $('input[name={$config->cellphone_fieldname}]:first');
+            var phonenum = $('input[name^={$config->cellphone_fieldname}]:first');
             phonenum.before($(flag));
 
 
@@ -111,9 +111,10 @@
             var fo_obj = $('#fo_insert_member');
             if (!fo_obj.attr('id')) return;
 
-            var phonenum = $('input[name={$config->cellphone_fieldname}]:last');
+            var phonenum = $('input[name^={$config->cellphone_fieldname}]:last');
             var authcode = $('input[name={$config->validationcode_fieldname}]');
 
+            console.log(phonenum);
             if (!phonenum.attr('name')) {
                 alert('[핸드폰인증 애드온] 제어판 > 부가 기능 설정 > 핸드폰 문자 > 설정 > 폰번호 필드를 설정해 주세요.');
                 return;
@@ -156,7 +157,7 @@
             }
 
             // max length
-            var phonenums = $('input[name={$config->cellphone_fieldname}]');
+            var phonenums = $('input[name^={$config->cellphone_fieldname}]');
             phonenums.attr('maxlength', '4');
         });
     }) (jQuery);

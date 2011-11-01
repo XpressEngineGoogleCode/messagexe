@@ -37,7 +37,9 @@
     var cn2 = document.getElementById("cellphone_number2");
     var cn3 = document.getElementById("cellphone_number3");
 
-    var phonenum_arr = window.opener.document.getElementsByName("{$phonenumber_fieldname}");
+    //var phonenum_arr = window.opener.document.getElementsByName("{$phonenumber_fieldname}");
+    var phonenum_arr = jQuery('input[name^={$phonenumber_fieldname}]', window.opener.document);
+    console.log(phonenum_arr);
     if (phonenum_arr.length < 3)
     {
         alert("{$lang->alert_check_cellphone_fieldname}");
