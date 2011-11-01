@@ -657,14 +657,12 @@
             // delete
             $query_id = "mobilemessage.deleteMapping";
             $output = executeQuery($query_id, $args);
-            if (!$output->toBool())
-                return $output;
+            if (!$output->toBool()) return $output;
 
             // insert
             $query_id = "mobilemessage.insertMapping";
             $output = executeQuery($query_id, $args);
-            if (!$output->toBool())
-                return $output;
+            if (!$output->toBool()) return $output;
 
             return new Object();
         }
@@ -744,7 +742,7 @@
 
             $extra_vars = unserialize($obj->extra_vars);
 
-            $callno = $oMobilemessageModel->getConfigValue($obj, "cellphone_fieldname");
+            $callno = $oMobilemessageModel->getConfigValue($obj, "cellphone_fieldname", 'tel');
             if (!$callno) $callno = "";
             else $callno = str_replace("|@|", "", $callno);
 
