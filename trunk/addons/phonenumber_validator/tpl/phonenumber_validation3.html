@@ -53,7 +53,8 @@ function post_validation()
     }
 
 	// 폰번호 필드 가져오기
-	objs = window.opener.document.getElementsByName("{$phonenumber_fieldname}");
+	//objs = window.opener.document.getElementsByName("{$phonenumber_fieldname}");
+    objs = jQuery('input[name^={$phonenumber_fieldname}]', window.opener.document);
 
 	// 폰번호 필드 존재 확인
 	if (objs.length < 3)
