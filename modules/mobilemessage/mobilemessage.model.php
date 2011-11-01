@@ -561,9 +561,7 @@
          **/
         function getMobilemessagePurplebookList() {
             $node_id = Context::get('node_id');
-            debugPrint('node_id:' . $node_id);
             $node_type = Context::get('node_type');
-            debugPrint('node-thype:' . $node_type);
             $rel = Context::get('rel');
 
             $logged_info = Context::get('logged_info');
@@ -585,6 +583,7 @@
                 $obj->data = '주소록 폴더';
                 $data[] = $obj;
                 $this->add('data', $data);
+                return;
             }
 
             if ($node_id=='all') {
@@ -632,13 +631,11 @@
 
             if ($node_type=='1'&&$node_id=='s.') {
                 $output = $this->getSharedNodes($logged_info->member_srl);
-                debugPrint('getSharedNodes output: ' . serialize($output));
                 if (!$output->toBool()) return $output;
                 if ($output->data) {
                     foreach ($output->data as $no => $val) {
                         $args->node_id = $val->node_id;
                         $out2 = executeQuery('mobilemessage.getNodeInfoByNodeId', $args);
-                        debugPrint('out2:' . serialize($out2));
                         if (!$out2->toBool()) return $out2;
                         $row = $out2->data;
                         $obj = new StdClass();
@@ -701,7 +698,6 @@
             $output = executeQueryArray($query_id, $args);
              */
             $output = $this->getPurplebookList($args);
-            debugPrint('getPurplebookList:' . serialize($output));
 
             if ((!is_array($output->data) || !count($output->data)) && $args->node_type == '1' && $args->node_route == '.') {
                 return;
@@ -749,7 +745,6 @@
             if (!$logged_info) return false;
             $args->member_srl = $logged_info->member_srl;
             $output = executeQueryArray('mobilemessage.getDefaultCallbackNumber', $args);
-            debugPrint('output:' . serialize($output));
             if (!$output->toBool()) return false;
             if ($output->data && count($output->data) > 0) return $output->data[0]->phonenum;
             return false;
@@ -958,7 +953,6 @@
             $latest_messages = array();
             if ($output->data) {
                 foreach ($output->data as $no => $row) {
-                    debugPrint('row:' . serialize($row));
                     $obj = new stdclass();
                     $obj->keeping_srl = $row->keeping_srl;
                     $obj->content = $row->content;

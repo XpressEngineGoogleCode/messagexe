@@ -332,17 +332,23 @@
              */
             $oDB = &DB::getInstance();
             $db_info = Context::getDBInfo();
+            if ($db_info->db_table_prefix) $db_table_prefix = $db_info->db_table_prefix;
+            else $db_table_prefix = $db_info->master_db["db_table_prefix"];
 
             // delete mapping info
-            $query = sprintf("DELETE FROM %s_mobilemessage_mapping", $db_info->db_table_prefix);
+            $query = sprintf("DELETE FROM %smobilemessage_mapping", $db_table_prefix);
             $oDB->_query($query);
 
             // query for member info
-            $query = sprintf("SELECT * FROM %s_member", $db_info->db_table_prefix);
+            $query = sprintf("SELECT * FROM %smember", $db_table_prefix);
             $result = $oDB->_query($query);
 
             // fetcher
-            require_once($this->module_path.'zMigration.class.php');
+            if (version_compare(__ZBXE_VERSION__,'1.5.0')==-1) {
+                require_once($this->module_path.'zMigration.class.php');
+            } else {
+                require_once($this->module_path.'zMigration15.class.php');
+            }
             $dbtool = new zMigration();
             $dbtool->setDBInfo($db_info);
 
@@ -359,13 +365,14 @@
                 } else if ($extra_vars->{$config->cellphone_fieldname}) {
                     $args->phone_num = $extra_vars->{$config->cellphone_fieldname};
                 }
+                if (is_array($args->phone_num)) $args->phone_num = implode($args->phone_num);
                 $args->phone_num = str_replace('|@|', '', $args->phone_num);
                 if ($args->phone_num == "") $empty_count++;
                 $total_count++;
                 //$oController->insertMapping($args);
-                $query = sprintf("INSERT INTO %s_mobilemessage_mapping (user_id, phone_num, regdate)"
+                $query = sprintf("INSERT INTO %smobilemessage_mapping (user_id, phone_num, regdate)"
                     ." VALUES ('{$args->user_id}', '{$args->phone_num}', '{$curdate}')"
-                    , $db_info->db_table_prefix);
+                    , $db_table_prefix);
                 $dbtool->query($query);
                 unset($query);
                 unset($args);
