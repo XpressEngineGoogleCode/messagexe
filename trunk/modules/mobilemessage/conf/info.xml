@@ -2,8 +2,8 @@
 <module version="0.2">
     <title xml:lang="ko">핸드폰 문자</title>
     <description xml:lang="ko">SMS, LMS, MMS 등의 모바일 메시지와 연계하여 관리자 및 사용자 편의를 제공하고 다른 모듈, 위젯, 애드온에 연동 지원</description>
-    <version>1.1.6.3</version>
-    <date>2011-08-03</date>
+    <version>1.1.6.4</version>
+    <date>2011-11-02</date>
     <category>accessory</category>
     <author email_address="wiley@nurigo.net" link="http://www.coolsms.co.kr">
         <name xml:lang="ko">wiley</name>
