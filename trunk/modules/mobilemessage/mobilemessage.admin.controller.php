@@ -354,7 +354,6 @@
 
             $total_count=0;
             $empty_count=0;
-            $curdate = date('YmdHMS');
             while ($row = $dbtool->fetch($result)) {
                 $args = new stdClass();
                 $extra_vars = unserialize($row->extra_vars);
@@ -368,10 +367,18 @@
                 if (is_array($args->phone_num)) $args->phone_num = implode($args->phone_num);
                 $args->phone_num = str_replace('|@|', '', $args->phone_num);
                 if ($args->phone_num == "") $empty_count++;
+                $args->country = "";
+                if ($row->{$config->countrycode_fieldname}) {
+                    $args->country = $row->{$config->countrycode_fieldname};
+                } else if ($extra_vars->{$config->countrycode_fieldname}) {
+                    $args->country = $extra_vars->{$config->countrycode_fieldname};
+                }
                 $total_count++;
+                if (!$args->country) $args->country = '82';
                 //$oController->insertMapping($args);
-                $query = sprintf("INSERT INTO %smobilemessage_mapping (user_id, phone_num, regdate)"
-                    ." VALUES ('{$args->user_id}', '{$args->phone_num}', '{$curdate}')"
+                $regdate = date('YmdHis');
+                $query = sprintf("INSERT INTO %smobilemessage_mapping (user_id, phone_num, country, regdate)"
+                    ." VALUES ('{$args->user_id}', '{$args->phone_num}', '{$args->country}', '{$regdate}')"
                     , $db_table_prefix);
                 $dbtool->query($query);
                 unset($query);
