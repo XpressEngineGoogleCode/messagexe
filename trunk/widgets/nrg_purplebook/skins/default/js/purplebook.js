@@ -1,5 +1,5 @@
 /**
- * vi:set ts=4 sw=4 expandtab enc=utf8: 
+ * vi:set ts=4 sw=4 expandtab fileencoding=utf8: 
  **/
 
 var DDD = new Array("02", "031", "033", "032", "042", "043", "041", "053", "054", "055", "052", "051", "063", "061", "062", "064", "011", "012", "013", "014", "015", "016", "017", "018", "019", "010", "070");
@@ -7,6 +7,7 @@ var texting_bytes_limit = 2000;
 var max_screen = 3;
 var initial_content;
 var GROUPID_SEED_SIZE = 10;
+var timeoutHandle = null;
 
 function getRandomNumber(range)
 {
@@ -1676,7 +1677,9 @@ function display_bytes() {
             if (sliceByte.length > 1) {
                 $textarea.blur();
                 $textarea.val(sliceByte[0]);
-                bytes = getTextBytes($textarea.val())[0];
+                bytes_idx = getTextBytes($textarea.val());
+                bytes = bytes_idx[0];
+                lastidx = bytes_idx[1];
             }
         }
 
@@ -3585,7 +3588,8 @@ function updateExceptListCount() {
 	
         // 문자내용의 byte를 세어 출력함 
         $('.phonescreen','#smsPurplebookContentInput').live('keyup', function(event) { 
-            update_screen();
+            if (timeoutHandle) clearTimeout(timeoutHandle);
+            timeoutHandle = setTimeout(function() { update_screen(); timeoutHandle = null; }, 200);
         });
 
         $('.phonescreen','#smsPurplebookContentInput').live('click', function(event) { 
