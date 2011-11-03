@@ -114,7 +114,6 @@
             var phonenum = $('input[name^={$config->cellphone_fieldname}]:last');
             var authcode = $('input[name={$config->validationcode_fieldname}]');
 
-            console.log(phonenum);
             if (!phonenum.attr('name')) {
                 alert('[핸드폰인증 애드온] 제어판 > 부가 기능 설정 > 핸드폰 문자 > 설정 > 폰번호 필드를 설정해 주세요.');
                 return;
