@@ -148,6 +148,7 @@
                     $obj->cellphone = $extra_vars->{$this->config->cellphone_fieldname};
                 else
                     $obj->cellphone = $row->{$this->config->cellphone_fieldname};
+                if (is_array($obj->cellphone)) $obj->cellphone = implode($obj->cellphone);
             }
             foreach ($fields as $f) {
                 if (isset($row->{$f})) $obj->{$f} = $row->{$f};

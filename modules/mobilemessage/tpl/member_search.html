@@ -1,5 +1,6 @@
 <style>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</style>
 <form id="smsMemberSearchForm" class="smsMemberSearchForm" onsubmit="return false;">
+    <input type="hidden" name="act" value="dispMobilemessageMembersInGroupPaging" />
     <fieldset>
         <select name="is_admin">
             <option value="" <!--@if($is_admin!='Y')-->selected="selected"<!--@end-->>{$lang->total}</option>
