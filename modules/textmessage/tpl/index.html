@@ -1,3 +1,50 @@
-<ul>
-	<li loop="$news=>$key,$val">{$val->title} {$val->date} {$val->url}</li>
-</ul>
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+<!--@if(!$isSetupCompleted)-->
+<form action="./" method="post" class="message info">
+	<input type="hidden" name="module" value="textmessage" />
+	<input type="hidden" name="act" value="procTextmessageAdminSetUser" />
+	<h2>서비스설정</h2>
+	<p>
+	서비스 사용을 위해서 가입하신 쿨에스엠에스 아이디 및 비밀번호를 올바르게 입력해 주세요.
+	</p>
+	<ul>
+		<li><p>서비스ID</p><input type="text" value="" /></li>
+		<li><p>비밀번호</p><input type="password" value="" /></li>
+	</ul>
+	<div class="btnArea">
+		<span class="btn"><button type="submit" name="is_agree" value="true">저장</button></span>
+	</div>
+</form>
+<!--@end-->
+
+<div class="section">
+	<div class="portlet">
+		<h2 class="h2">충전내역</h2>
+		<ul class="lined">
+			<!--@foreach($news AS $key=>$value)-->
+			<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
+			<!--@end-->
+			<li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
+		</ul>
+	</div>
+	<div class="portlet">
+		<h2 class="h2">사용현황</h2>
+		<ul class="lined">
+			<!--@foreach($news AS $key=>$value)-->
+			<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
+			<!--@end-->
+			<li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
+		</ul>
+	</div>
+	<div class="portlet">
+		<h2 class="h2">{$lang->notice}</h2>
+		<ul class="lined">
+			<!--@foreach($news AS $key=>$value)-->
+			<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
+			<!--@end-->
+			<li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
+		</ul>
+	</div>
+</div>
