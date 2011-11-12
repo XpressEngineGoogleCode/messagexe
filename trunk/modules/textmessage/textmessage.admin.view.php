@@ -25,6 +25,7 @@
 		 * @return none
 		 **/
 		function dispTextmessageAdminIndex() {
+			Context::set('isSetupCompleted', false);
 
 			//Retrieve recent news and set them into context
 			$newest_news_url = sprintf("http://news.xpressengine.com/%s/news.php?version=%s&package=%s", _XE_LOCATION_, __ZBXE_VERSION__, _XE_PACKAGE_);
