@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+	<title xml:lang="ko">핸드폰 문자 II</title>
+	<title xml:lang="en">Text Messaging II</title>
+	<description xml:lang="ko">SMS, LMS, MMS 등의 핸드폰 문자전송에 대한 기본기능을 제공하고 모듈, 위젯, 애드온의 연동을 지원합니다.</description>
+	<description xml:lang="en">This module provides for SMS, LMS, MMS connections.</description>
+	<version>2.0</version>
+	<date>2011-11-12</date>
+	<category>service</category>
+	<author email_address="wiley@nurigo.net" link="http://www.nurigo.net/">
+		<name xml:lang="ko">wiley</name>
+		<name xml:lang="en">wiley</name>
+	</author>
+</module>
