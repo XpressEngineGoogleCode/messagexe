@@ -1,0 +1,42 @@
+<include target="header.html" />
+
+<form action="./" method="post" class="form" ruleset="insert_config">
+	<input type="hidden" name="module" value="textmessage" />
+	<input type="hidden" name="act" value="procTextmessageAdminInsertConfig" />
+	<h1 class="h1">설정</h1>
+	<fieldset class="section">
+		<h2 class="h2">기본설정</h2>
+		<ul>
+			<li>
+				<p class="q">{$lang->about_service_id}</p>
+				<p class="a">
+					<input id="service_id" type="text" name="service_id" value="{$config->service_id}" />
+				</p>
+			</li>
+			<li>
+				<p class="q">{$lang->about_service_password}</p>
+				<p class="a">
+					<input id="password" type="password" name="password" value="{$config->password}" />
+				</p>
+			</li>
+			<li>
+				<p class="q">{$lang->about_callback_url}</th>
+				<p class="a">
+					<input id="callback_url" type="text" {$callback_url_style} name="callback_url" value="{$callback_url}" />
+				</p>
+			</li>
+			<li>
+				<p class="q">{$lang->about_utf16}</p>
+				<p class="a">
+					<input type="radio" name="encode_utf16" id="encode_utf16_Y" value="Y" /><label for="encode_utf16_Y">사용</label>
+					<input type="radio" name="encode_utf16" id="encode_utf16_N" value="N" checked="checked" /><label for="encode_utf16_N">사용안함</label>
+				</p>
+			</li>
+		</tr>
+		</ul>
+	</fieldset>
+	<div class="btnArea">
+		<span class="btn"><input type="submit" value="{$lang->cmd_save}" /></span>
+	</div>
+</form>
+
