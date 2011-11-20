@@ -1,15 +1,11 @@
 <?php
 	/**
 	 * @class  textmessageAdminView
-	 * @author NHN (developers@xpressengine.com)
+	 * @author wiley (wiley@nurigo.net)
 	 * @brief  textmessage view class of textmessage module
 	 **/
 
 	class textmessageAdminView extends textmessage {
-
-		var $layout_list;
-		var $easyinstallCheckFile = './files/env/easyinstall_last';
-
 		/**
 		 * @brief Initilization
 		 * @return none
@@ -25,7 +21,14 @@
 		 * @return none
 		 **/
 		function dispTextmessageAdminIndex() {
-			Context::set('isSetupCompleted', false);
+			$oTextmessageModel = &getModel('textmessage');
+			$config = $oTextmessageModel->getConfig();
+			Context::set('config', $config);
+			if (!$config->service_id || !$config->password) {
+				Context::set('isSetupCompleted', false);
+			} else {
+				Context::set('isSetupCompleted', true);
+			}
 
 			//Retrieve recent news and set them into context
 			$newest_news_url = sprintf("http://news.xpressengine.com/%s/news.php?version=%s&package=%s", _XE_LOCATION_, __ZBXE_VERSION__, _XE_PACKAGE_);
@@ -60,4 +63,56 @@
 
 			$this->setTemplateFile('index');
 		}
+
+        /**
+         * 기본설정
+         */
+        function dispTextmessageAdminConfig() {
+			$oTextmessageModel = &getModel('textmessage');
+			$config = $oTextmessageModel->getConfig();
+
+			$callback_url = Context::getDefaultUrl();
+			$callback_url_style = "";
+			if ($config->callback_url) $callback_url = $config->callback_url;
+			else $callback_url_style = 'style="color:red;"';
+
+			Context::set('callback_url', $callback_url);
+			Context::set('callback_url_style', $callback_url_style);
+			Context::set('config', $config);
+
+            // 템플릿 파일 지정
+            $this->setTemplateFile('config');
+		}
+
+        function dispTextmessageAdminLogView() {
+            $oTextmessageModel = &getModel('textmessage');
+            $config = $oTextmessageModel->getModuleConfig();
+
+            if (Context::get('group_id'))
+            {
+                $args->group_id = Context::get('group_id');
+                $output = $oTextmessageModel->getMessagesInGroup($args);
+                $this->setTemplateFile('message_list');
+            }
+            else
+            {
+                $args = new StdClass();
+                $output = $oTextmessageModel->getMessagesGrouping($args);
+                $this->setTemplateFile('message_grouping');
+            }
+
+
+            // 템플릿에 쓰기 위해서 context::set
+            Context::set('total_count', $output->total_count);
+            Context::set('total_page', $output->total_page);
+            Context::set('page', $output->page);
+            Context::set('message_list', $output->data);
+            Context::set('page_navigation', $output->page_navigation);
+
+            require_once('textmessage.utility.php');
+            $csutil = new CSUtility();
+            Context::set('csutil', $csutil);
+            Context::set('config', $config);
+
+        }
 	}

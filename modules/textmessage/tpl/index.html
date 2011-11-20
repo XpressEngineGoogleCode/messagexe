@@ -1,50 +1,55 @@
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-<p>{$XE_VALIDATOR_MESSAGE}</p>
-</div>
-<!--@if(!$isSetupCompleted)-->
-<form action="./" method="post" class="message info">
-	<input type="hidden" name="module" value="textmessage" />
-	<input type="hidden" name="act" value="procTextmessageAdminSetUser" />
-	<h2>서비스설정</h2>
-	<p>
-	서비스 사용을 위해서 가입하신 쿨에스엠에스 아이디 및 비밀번호를 올바르게 입력해 주세요.
-	</p>
-	<ul>
-		<li><p>서비스ID</p><input type="text" value="" /></li>
-		<li><p>비밀번호</p><input type="password" value="" /></li>
-	</ul>
-	<div class="btnArea">
-		<span class="btn"><button type="submit" name="is_agree" value="true">저장</button></span>
-	</div>
-</form>
-<!--@end-->
+<include target="header.html" />
 
-<div class="section">
-	<div class="portlet">
-		<h2 class="h2">충전내역</h2>
-		<ul class="lined">
-			<!--@foreach($news AS $key=>$value)-->
-			<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
-			<!--@end-->
-			<li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
-		</ul>
-	</div>
-	<div class="portlet">
-		<h2 class="h2">사용현황</h2>
-		<ul class="lined">
-			<!--@foreach($news AS $key=>$value)-->
-			<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
-			<!--@end-->
-			<li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
-		</ul>
-	</div>
-	<div class="portlet">
-		<h2 class="h2">{$lang->notice}</h2>
-		<ul class="lined">
-			<!--@foreach($news AS $key=>$value)-->
-			<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
-			<!--@end-->
-			<li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
-		</ul>
+<div class="x">
+	<div class="body">
+		<div class="content dashboard" id="content">
+			<div cond="!$isSetupCompleted" class="message info">
+				<p>설정이 완료되지 않았습니다.</p>
+				<p><a href="{getUrl('act','dispTextmessageAdminConfig')}">설정하러가기</a></p>
+			</div>
+			<div class="section">
+
+				<div cond="$isSetupCompleted" class="portlet">
+					<h2 class="h2">충전내역</h2>
+					<ul class="lined">
+						<li>서비스ID : {$config->service_id} <span class="side"><a href="{getUrl('act','dispTextmessageAdminConfig')}">설정변경</a></span></li>
+						<li>잔액 : <b title="SMS : {(int)($config->cs_cash / $config->sms_price)}, 장문 : {(int)($config->cs_cash / $config->lms_price)}, 포토 : {(int)($config->cs_cash / $config->mms_price)}">{number_format($config->cs_cash)}</b> 원<span class="side"><a href="http://www.coolsms.co.kr/chg/" target="_blank">충전하기</a></span></li>
+						<li>포인트 : <b title="SMS : {(int)($config->cs_point / $config->sms_price)}, 장문 : {(int)($config->cs_point / $config->lms_price)}, 포토 : {(int)($config->cs_point / $config->mms_price)}">{number_format($config->cs_point)}</b> 점 (잔액 소진 후 건당 {$config->sms_price} 포인트씩 자동차감)</li>
+						<li cond="$config->cs_mdrop">문자방울 : <b>{number_format($config->cs_mdrop)}</b> 개 (SMS 1개, 장문 3개, 포토 10개 차감)</li>
+						<li>SMS건수 : <b style="color:red"|cond="$config->sms_volume < 100">{number_format($config->sms_volume)}</b> 개 발송가능 (건당 {$config->sms_price}원 차감)</li>
+						<li>MMS장문 : <b>{number_format($config->lms_volume)}</b> 개 발송가능 (건당 {$config->lms_price}원 차감)</li>
+						<li>MMS포토 : <b>{number_format($config->mms_volume)}</b> 개 발송가능 (건당 {$config->mms_price}원 차감)</li>
+					</ul>
+				</div>
+
+				<div class="portlet">
+					<h2 class="h2">사용현황</h2>
+					<ul class="lined">
+						<!--@foreach($news AS $key=>$value)-->
+						<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
+						<!--@end-->
+						<li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
+					</ul>
+				</div>
+				<div class="portlet">
+					<h2 class="h2">{$lang->notice}</h2>
+					<ul class="lined">
+						<!--@foreach($news AS $key=>$value)-->
+						<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
+						<!--@end-->
+						<li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
+					</ul>
+				</div>
+				<div class="portlet">
+					<h2 class="h2">{$lang->notice}</h2>
+					<ul class="lined">
+						<!--@foreach($news AS $key=>$value)-->
+						<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
+						<!--@end-->
+						<li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

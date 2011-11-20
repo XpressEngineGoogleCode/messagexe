@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<lang>
+	<item name="service_id">
+		<value xml:lang="ko"><![CDATA[서비스ID]]></value>
+		<value xml:lang="en"><![CDATA[Service ID]]></value>
+	</item>
+	<item name="about_service_id">
+		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a> 에서 회원가입한 아이디를 입력합니다.]]></value>
+		<value xml:lang="en"><![CDATA[Input the ID you registered on <a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a>]]></value>
+	</item>
+	<item name="about_service_password">
+		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a> 에서 회원가입때 입력한 비밀번호를 입력합니다.]]></value>
+		<value xml:lang="en"><![CDATA[Input the password you registered on <a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a>]]></value>
+	</item>
+	<item name="about_callback_url">
+		<value xml:lang="ko"><![CDATA[<i>http://도메인/설치경로</i> 형태로 입력하세요. 예) http://www.example.org/xe/<br />잘못된 URL을 설정하시면 [전송결과 자동갱신] 및 [엑셀다운로드 기능]이 오작동 할 수 있습니다.<br />]]></value>
+		<value xml:lang="en"><![CDATA[Input the password you registered on <a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a>]]></value>
+	</item>
+	<item name="about_utf16">
+		<value xml:lang="ko"><![CDATA[영어 이외의 텍스트도 손실없이 전송할 수 있습니다. 단, 알파벳 포함 모든 캐릭터(character)는 2바이트로 전송되며 건당 70개의 캐릭터(140바이트)를 전송하실 수 있습니다. (한국 제외)]]></value>
+		<value xml:lang="en"><![CDATA[Input the password you registered on <a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a>]]></value>
+	</item>
+</lang>

@@ -4,7 +4,9 @@
     <permissions />
     <actions>
         <action name="dispTextmessageAdminIndex" type="view" admin_index="true" />
+        <action name="dispTextmessageAdminConfig" type="view" />
+        <action name="dispTextmessageAdminLogView" type="view" />
 
-        <action name="procTextmessageAdminSetUser" type="controller" />
+        <action name="procTextmessageAdminInsertConfig" type="controller" ruleset="insert_config"/>
     </actions>
 </module>
