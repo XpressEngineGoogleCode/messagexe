@@ -23,12 +23,9 @@
 		function dispTextmessageAdminIndex() {
 			$oTextmessageModel = &getModel('textmessage');
 			$config = $oTextmessageModel->getConfig();
-			Context::set('config', $config);
-			if (!$config->service_id || !$config->password) {
-				Context::set('isSetupCompleted', false);
-			} else {
-				Context::set('isSetupCompleted', true);
-			}
+			if (!$config) Context::set('isSetupCompleted', false);
+			else Context::set('isSetupCompleted', true);
+			Context::set('config',$config);
 
 			//Retrieve recent news and set them into context
 			$newest_news_url = sprintf("http://news.xpressengine.com/%s/news.php?version=%s&package=%s", _XE_LOCATION_, __ZBXE_VERSION__, _XE_PACKAGE_);
