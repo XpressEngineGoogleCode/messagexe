@@ -94,7 +94,7 @@
             else
             {
                 $args = new StdClass();
-                $output = $oTextmessageModel->getMessagesGrouping($args);
+                $output = $oTextmessageModel->getMessageGroups($args);
                 $this->setTemplateFile('message_grouping');
             }
 

@@ -1,0 +1,18 @@
+<query id="getTextmessagesInGroup" action="select">
+	<tables>
+		<table name="textmessages" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="group_id" var="group_id" notnull="notnull" />
+		<condition operation="equal" column="member_srl" var="member_srl" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="group_id" order="desc" />
+		<list_count var="list_count" default="20" />
+		<page_count var="page_count" default="10" />
+		<page var="page" default="1" />
+	</navigation>
+</query>

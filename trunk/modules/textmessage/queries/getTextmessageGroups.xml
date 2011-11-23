@@ -1,15 +1,15 @@
-<query id="getMobilemessagesInGroup" action="select">
+<query id="getTextmessageGroups" action="select">
 	<tables>
-		<table name="mobilemessage" />
+		<table name="textmessage_groups" />
 	</tables>
 	<columns>
 		<column name="*" />
 	</columns>
 	<conditions>
-		<condition operation="equal" column="gid" var="gid" />
+		<condition operation="equal" column="member_srl" var="member_srl" />
 	</conditions>
 	<navigation>
-		<index var="sort_index" default="mobilemessage_srl" order="desc" />
+		<index var="sort_index" default="group_id" order="desc" />
 		<list_count var="list_count" default="20" />
 		<page_count var="page_count" default="10" />
 		<page var="page" default="1" />

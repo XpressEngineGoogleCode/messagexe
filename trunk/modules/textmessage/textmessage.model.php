@@ -173,49 +173,18 @@
 			return $obj;
 		}
 
-        function getMessagesInGroup($args) {
-            $query_id = 'textmessage.getMobilemessagesInGroup';
+		function getMessageGroups($args) {
+            if (!$args->page) $args->page = Context::get('page');
+            if (!$args->list_count) $args->list_count = 40;
+            if (!$args->page_count) $args->page_count = 10;
+            return executeQueryArray('textmessage.getTextmessageGroups', $args);
+		}
 
-            if (!$args->page)
-                $args->page = Context::get('page');
-            if (!$args->list_count)
-                $args->list_count = 40;
-            if (!$args->page_count)
-                $args->page_count = 10;
-
-            return executeQuery($query_id, $args);
-        }
-
-        function getMessagesGrouping($args) {
-            $db_info = Context::getDBInfo();
-            if (strtolower(substr($db_info->db_type, 0, 5)) == 'mysql')
-                $query_id = 'textmessage.getMobilemessageGrouping_MySQL';
-            else
-                $query_id = 'textmessage.getMobilemessageGrouping';
-
-            if (!$args->page)
-                $args->page = Context::get('page');
-            if (!$args->list_count)
-                $args->list_count = 40;
-            if (!$args->page_count)
-                $args->page_count = 10;
-
-            $output = executeQueryArray($query_id, $args);
-            if (!$output->toBool() || !$output->data) return $output;
-
-            if (strtolower(substr($db_info->db_type, 0, 5)) != 'mysql') {
-                foreach ($output->data as $no => $row) {
-                    unset($args);
-                    $args->gid = $row->gid;
-                    $msginfo = executeQueryArray('textmessage.getMobilemessageGroupMsgInfo', $args);
-                    $output->data[$no]->regdate = $msginfo->data[1]->regdate;
-                    $output->data[$no]->userid = $msginfo->data[1]->userid;
-                    $output->data[$no]->content = $msginfo->data[1]->content;
-                    $output->data[$no]->reservdate = $msginfo->data[1]->reservdate;
-                }
-            }
-            return $output;
-        }
-
+		function getMessagesInGroup($args) {
+            if (!$args->page) $args->page = Context::get('page');
+            if (!$args->list_count) $args->list_count = 40;
+            if (!$args->page_count) $args->page_count = 10;
+            return executeQueryArray('textmessage.getTextmessagesInGroup', $args);
+		}
 }
 ?>
