@@ -54,6 +54,10 @@
 		 */
 		function getConfig() {
 			$config = $this->getModuleConfig('textmessage');
+			if (!$config->service_id || !$config->password) {
+				return false;
+			}
+
 			// get balance information.
 			$config->cs_cash=0;
 			$config->cs_point=0;
