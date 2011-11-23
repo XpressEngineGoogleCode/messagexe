@@ -2,7 +2,8 @@
 	<column name="message_id" type="varchar" size="30" notnull="notnull" primary_key="primary_key" />
 	<column name="group_id" type="varchar" size="30" notnull="notnull" index="idx_group_id" />
 	<column name="mtype" type="varchar" size="3" default="SMS" notnull="notnull" />
-	<column name="user_id" type="varchar" size="80" notnull="notnull" />
+	<column name="member_srl" type="number" size="11" default="0" index="idx_member_srl" />
+	<column name="user_id" type="varchar" size="80" />
 	<column name="country_code" type="varchar" size="10" default="82" notnull="notnull" />
 	<column name="recipient_no" type="varchar" size="20" notnull="notnull" />
 	<column name="sender_no" type="varchar" size="20" notnull="notnull" />
