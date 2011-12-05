@@ -9,6 +9,7 @@
         <action name="dispTextmessageAdminStatisticsDaily" type="view" />
         <action name="dispTextmessageAdminStatisticsMonthly" type="view" />
 
-        <action name="procTextmessageAdminInsertConfig" type="controller" ruleset="insert_config"/>
+        <action name="procTextmessageAdminInsertConfig" type="controller" ruleset="insert_config" />
+        <action name="procTextmessageAdminStatistics" type="controller" />
     </actions>
 </module>
