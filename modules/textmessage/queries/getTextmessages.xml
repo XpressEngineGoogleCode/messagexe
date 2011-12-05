@@ -6,6 +6,7 @@
 		<column name="*" />
 	</columns>
 	<conditions>
+		<condition operation="like_prefix" column="regdate" var="regdate" notnull="notnull" />
 	</conditions>
 	<navigation>
 	</navigation>
