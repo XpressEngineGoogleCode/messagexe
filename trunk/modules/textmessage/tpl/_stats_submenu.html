@@ -1,0 +1,10 @@
+<!--%import("css/style.css")-->
+<!--@if(!$act)-->
+{@$act='dispStatisticsDaily'}
+<!--@end-->
+<div style="margin-top:10px;">
+    <ul class="menuTab">
+        <li <!--@if($act=='dispTextmessageAdminStatisticsDaily')-->class="active"<!--@end-->><a href="{getUrl('act','dispTextmessageAdminStatisticsDaily')}">Daily</a></li>
+        <li <!--@if($act=='dispTextmessageAdminStatisticsMonthly')-->class="active"<!--@end-->><a href="{getUrl('act','dispTextmessageAdminStatisticsMonthly')}">Monthly</a></li>
+    </ul>
+</div>

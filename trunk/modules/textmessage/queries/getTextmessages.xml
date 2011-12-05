@@ -1,0 +1,12 @@
+<query id="getTextmessages" action="select">
+	<tables>
+		<table name="textmessages" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+	</conditions>
+	<navigation>
+	</navigation>
+</query>

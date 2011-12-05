@@ -27,7 +27,8 @@ define("CSCPPARAM_ID_ATTACHMENT", "AT");
 class coolsms 
 {
 	// host address
-	var $cool_gateways = array("alpha.coolsms.co.kr"=>80, "bravo.coolsms.co.kr"=>80, "delta.coolsms.co.kr"=>80);
+	//var $cool_gateways = array("alpha.coolsms.co.kr"=>80, "bravo.coolsms.co.kr"=>80, "delta.coolsms.co.kr"=>80);
+	var $cool_gateways = array("222.122.81.208"=>7806);
     // character set : only support for utf8, euckr
     var $_charset = "euckr";
     // module version
