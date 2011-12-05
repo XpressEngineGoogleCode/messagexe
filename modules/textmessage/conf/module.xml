@@ -5,7 +5,9 @@
     <actions>
         <action name="dispTextmessageAdminIndex" type="view" admin_index="true" />
         <action name="dispTextmessageAdminConfig" type="view" />
-        <action name="dispTextmessageAdminLogView" type="view" />
+        <action name="dispTextmessageAdminUsageStatement" type="view" />
+        <action name="dispTextmessageAdminStatisticsDaily" type="view" />
+        <action name="dispTextmessageAdminStatisticsMonthly" type="view" />
 
         <action name="procTextmessageAdminInsertConfig" type="controller" ruleset="insert_config"/>
     </actions>

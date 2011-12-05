@@ -1,0 +1,23 @@
+<table name="textmessage_statistics">
+	<column name="stats_srl" type="number" size="11" notnull="notnull" auto_increment="auto_increment" primary_key="primary_key" />
+	<column name="stats_year" type="varchar" size="4" notnull="notnull" index="idx_stats_year" />
+	<column name="stats_month" type="varchar" size="2" notnull="notnull" index="idx_stats_month" />
+	<column name="stats_day" type="varchar" size="2" notnull="notnull" index="idx_stats_day" />
+	<column name="stats_dayofweek" type="char" size="1" default="1" notnull="notnull" />
+	<column name="stats_hour" type="varchar" size="2" notnull="notnull" />
+	<column name="sms_sk_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="sms_kt_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="sms_lg_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="lms_sk_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="lms_kt_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="lms_lg_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="mms_sk_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="mms_kt_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="mms_lg_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="oversea_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="sms_total_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="lms_total_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="mms_total_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="oversea_total_count" type="number" size="11" default="0" notnull="notnull" />
+	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
+</table>

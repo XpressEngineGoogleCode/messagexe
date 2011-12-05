@@ -1,53 +1,44 @@
-<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
 <!--#include("header.html")-->
 <!--%import("filter/sync_result.xml")-->
 <!--%import("js/admin.js")-->
 <!--%import("css/message_list.css")-->
 
-<form method="get" action="./" id="mobilemessage_fo">
-    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
-    <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
-    <thead>
-        <tr>
-            <th scope="col"><div>{$lang->no}</div></th>
-            <th scope="col"><div><input type="checkbox" value="" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
-            <th scope="col" class=""><div>{$lang->mtype}</div></th>
-            <th scope="col" class="quarter_wide"><div>{$lang->regdate}</div></th>
-            <th scope="col" class=""><div>{$lang->sender}</div></th>
-            <th scope="col" class=""><div>{$lang->receiver}</div></th>
-            <th scope="col" class=""><div>{$lang->callno}</div></th>
-            <th scope="col" class=""><div>{$lang->callback}</div></th>
-            <th scope="col" class="quarter_wide"><div>{$lang->content}</div></th>
-            <th scope="col" class=""><div>{$lang->reservation_date}</div></th>
-            <th scope="col" class=""><div>{$lang->mstat}</div></th>
-            <th scope="col" class="quarter_wide"><div>{$lang->rcode}</div></th>
-            <th scope="col" class="quarter_wide"><div>{$lang->carrier}</div></th>
-            <th scope="col" class="quarter_wide"><div>{$lang->senddate}</div></th>
-            <th scope="col"><div>&nbsp;</div></th>
-        </tr>
-    </thead>
-    <tbody>
-        <!--@foreach($message_list as $no => $val)-->
-        <tr class="row{$cycle_idx}">
-            <td>{$no}</td>
-            <td><input type="checkbox" name="cart" value="{$val->mobilemessage_srl}" /></td>
-            <td>{$val->mtype}</td>
-            <td>{zdate($val->regdate, "Y-m-d H:i:s")}</td>
-            <td><!--@if(!$val->userid)-->-<!--@else-->{htmlspecialchars($val->userid)}<!--@end--></td>
-            <td><!--@if(!$val->ref_username)-->-<!--@else-->{htmlspecialchars($val->ref_username)}<!--@end--></td>
-            <td><!--@if($config->display_country=='Y')-->{htmlspecialchars($csutil->dispFullnumber($val->country, $val->callno))}<!--@else-->{htmlspecialchars($val->callno)}<!--@end--></td>
-        <td>{$val->callback}</td>
-        <td title="{htmlspecialchars($val->content)}">{htmlspecialchars($csutil->dispContent($val->content))}</td>
-        <td><!--@if($val->reservflag == "Y")--><span class="reservdate">{zdate($val->reservdate, "Y-m-d H:i")}</span><!--@else-->-<!--@end--></td>
-        <td>{$csutil->dispStatus($val->mstat)}</td>
-        <td <!--@if($val->rcode != '00')-->style="color: #ee7989;"<!--@end-->>{$val->rcode}:{htmlspecialchars($csutil->dispResultCode($val->rcode))}</td>
-        <td>{$val->carrier}</td>
-            <td>{zdate($val->senddate, "Y-m-d H:i:s")}</td>
-            <td class="nowrap"></td>
-        </tr>
-        <!--@end-->
-    </tbody>
-    </table>
+<form method="get" action="./" id="mobilemessage_fo" class="form">
+    <div class="table even easyList">
+        <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+        <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+        <thead>
+            <tr>
+                <th scope="col"><div>{$lang->no}</div></th>
+                <th scope="col"><div><input type="checkbox" value="" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
+                <th scope="col" class=""><div>{$lang->mtype}</div></th>
+                <th scope="col" class="quarter_wide"><div>받는번호</div></th>
+                <th scope="col" class=""><div>이름</div></th>
+                <th scope="col" class=""><div>예약</div></th>
+                <th scope="col" class="quarter_wide"><div>{$lang->content}</div></th>
+                <th scope="col" class=""><div>상태</div></th>
+                <th scope="col" class="quarter_wide"><div>전송(취소)일시</div></th>
+                <th scope="col" class="quarter_wide"><div>결과</div></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--@foreach($message_list as $no => $val)-->
+            <tr class="row{$cycle_idx}">
+                <td>{$no}</td>
+                <td><input type="checkbox" name="cart" value="{$val->message_id}" /></td>
+                <td>{$val->mtype}</td>
+                <td>{htmlspecialchars($val->recipient_no)}</td>
+                <td><!--@if(!$val->ref_username)-->-<!--@else-->{htmlspecialchars($val->ref_username)}<!--@end--></td>
+				<td><span cond="$val->reservflag=='Y'" class="reservdate">{zdate($val->reservdate, "Y-m-d H:i")}</span><span cond="$val->reservflag=='N'">-</span></td>
+				<td title="{htmlspecialchars($val->content)}">{htmlspecialchars($csutil->dispContent($val->content))}</td>
+				<td>{$csutil->dispStatus($val->mstat)}</td>
+				<td>{zdate($val->senddate, "Y-m-d H:i:s")}</td>
+				<td <!--@if($val->rcode != '00')-->style="color: #ee7989;"<!--@end-->>{$val->rcode}:{htmlspecialchars($csutil->dispResultCode($val->rcode))}</td>
+            </tr>
+            <!--@end-->
+        </tbody>
+        </table>
+    </div>
 
     <!-- 버튼 -->
     <div class="clear">

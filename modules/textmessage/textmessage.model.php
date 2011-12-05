@@ -46,6 +46,7 @@
 			if ($config->service_id && $config->password) {
 				$sms->setuser($config->service_id, $config->password);
 			}
+			$sms->charset('utf8');
 			return $sms;
 		}
 

@@ -4,6 +4,14 @@
 		<value xml:lang="ko"><![CDATA[서비스ID]]></value>
 		<value xml:lang="en"><![CDATA[Service ID]]></value>
 	</item>
+	<item name="service_password">
+		<value xml:lang="ko"><![CDATA[비밀번호]]></value>
+		<value xml:lang="en"><![CDATA[Password]]></value>
+	</item>
+	<item name="callback_url">
+		<value xml:lang="ko"><![CDATA[콜백 URL]]></value>
+		<value xml:lang="en"><![CDATA[Callback URL]]></value>
+	</item>
 	<item name="about_service_id">
 		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a> 에서 회원가입한 아이디를 입력합니다.]]></value>
 		<value xml:lang="en"><![CDATA[Input the ID you registered on <a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a>]]></value>

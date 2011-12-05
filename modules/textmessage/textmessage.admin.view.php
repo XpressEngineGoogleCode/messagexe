@@ -28,8 +28,8 @@
 			Context::set('config',$config);
 
 			//Retrieve recent news and set them into context
-			$newest_news_url = sprintf("http://news.xpressengine.com/%s/news.php?version=%s&package=%s", _XE_LOCATION_, __ZBXE_VERSION__, _XE_PACKAGE_);
-			$cache_file = sprintf("%sfiles/cache/newest_news.%s.cache.php", _XE_PATH_, _XE_LOCATION_);
+			$newest_news_url = sprintf("http://news.coolsms.co.kr/news.php");
+			$cache_file = sprintf("%sfiles/cache/cool_news.%s.cache.php", _XE_PATH_, _XE_LOCATION_);
 			if(!file_exists($cache_file) || filemtime($cache_file)+ 60*60 < time()) {
 				// Considering if data cannot be retrieved due to network problem, modify filemtime to prevent trying to reload again when refreshing textmessageistration page
 				// Ensure to access the textmessageistration page even though news cannot be displayed
@@ -81,23 +81,19 @@
             $this->setTemplateFile('config');
 		}
 
-        function dispTextmessageAdminLogView() {
+        function dispTextmessageAdminUsageStatement() {
             $oTextmessageModel = &getModel('textmessage');
             $config = $oTextmessageModel->getModuleConfig();
 
-            if (Context::get('group_id'))
-            {
+            if (Context::get('group_id')) {
                 $args->group_id = Context::get('group_id');
                 $output = $oTextmessageModel->getMessagesInGroup($args);
                 $this->setTemplateFile('message_list');
-            }
-            else
-            {
+            } else {
                 $args = new StdClass();
                 $output = $oTextmessageModel->getMessageGroups($args);
                 $this->setTemplateFile('message_grouping');
             }
-
 
             // 템플릿에 쓰기 위해서 context::set
             Context::set('total_count', $output->total_count);
@@ -111,5 +107,39 @@
             Context::set('csutil', $csutil);
             Context::set('config', $config);
 
+        }
+
+        function dispTextmessageAdminStatisticsDaily() {
+            $logged_info = Context::get('logged_info');
+            if (!Context::get('stats_date')) Context::set('stats_date', date('Ymd'));
+
+            if ($logged_info) {
+                $args->stats_year = substr(Context::get('stats_date'), 0, 4);
+                $args->stats_month = substr(Context::get('stats_date'), 4, 2);
+                $output = executeQueryArray("textmessage.getStatisticsDaily", $args);
+				debugPrint('getStatDaily: ' . serialize($output));
+                if (!$output->toBool()) return $output;
+                Context::set('stats_data', $output->data);
+            }
+
+			$oTextmessageAdminController = &getAdminController('textmessage');
+			//$oTextmessageAdminController->makeStatistics();
+
+            $this->setTemplateFile('stats_daily');
+        }
+
+        function dispTextmessageAdminStatisticsMonthly() {
+            $logged_info = Context::get('logged_info');
+            if (!Context::get('stats_date')) Context::set('stats_date', date('Ymd'));
+
+            if ($logged_info) {
+                $args->user_id = $logged_info->user_id;
+                $args->stats_year = substr(Context::get('stats_date'), 0, 4);
+                $output = executeQueryArray("textmessage.getStatisticsMonthly", $args);
+                if (!$output->toBool()) return $output;
+                Context::set('stats_data', $output->data);
+            }
+
+            $this->setTemplateFile('stats_monthly');
         }
 	}
