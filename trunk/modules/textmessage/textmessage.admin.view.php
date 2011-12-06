@@ -142,30 +142,4 @@
 
             $this->setTemplateFile('stats_monthly');
         }
-
-        function dispTextmessageAdminCancelGroup() {
-            $args->group_ids = "'" . implode("','", explode(',', trim(Context::get('group_ids')))) . "'";
-            $output = executeQueryArray('textmessage.getTextmessageGroups', $args);
-            Context::set('group_list', $output->data);
-
-            require_once('textmessage.utility.php');
-            $csutil = new CSUtility();
-            Context::set('csutil', $csutil);
-
-            $this->setLayoutFile('popup_layout');
-            $this->setTemplateFile('cancel_group');
-        }
-
-        function dispTextmessageAdminCancelReserv() {
-            $args->message_id = trim(Context::get('message_id'));
-            $output = executeQueryArray('textmessage.getTextmessages', $args);
-            Context::set('mobilemessage_list', $output->data);
-
-            require_once('textmessage.utility.php');
-            $csutil = new CSUtility();
-            Context::set('csutil', $csutil);
-
-            $this->setLayoutFile('popup_layout');
-            $this->setTemplateFile('cancel');
-        }
 	}

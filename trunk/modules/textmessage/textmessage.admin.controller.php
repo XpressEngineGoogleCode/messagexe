@@ -175,5 +175,39 @@
 			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminUsageStatement','stats_date',Context::get('stats_date'));
 			$this->setRedirectUrl($redirectUrl);
         }
+
+        function procTextmessageAdminDeleteMessages() {
+            $target_message_ids = Context::get('target_message_ids');
+            if(!$target_message_ids) return new Object(-1, 'msg_invalid_request');
+            $message_ids = explode(',', $target_message_ids);
+            $oTextmessageController = &getController('textmessage');
+
+            foreach($message_ids as $id) {
+                $output = $oTextmessageController->deleteMessage($id);
+                if(!$output->toBool()) return $output;
+            }
+            $this->setMessage('success_deleted');
+			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminUsageStatement','group_id',Context::get('group_id'),'stats_date',Context::get('stats_date'));
+			$this->setRedirectUrl($redirectUrl);
+        }
+
+        function procTextmessageAdminDeleteGroup() {
+            $target_group_ids = Context::get('target_group_ids');
+            if(!$target_group_ids) return new Object(-1, 'msg_invalid_request');
+            $group_ids = explode(',', $target_group_ids);
+            $oTextmessageController = &getController('textmessage');
+
+            foreach($group_ids as $gid) {
+                $output = $oTextmessageController->deleteGroupMessage($gid);
+                if(!$output->toBool()) {
+                    $this->setMessage('failed_deleted');
+                    return $output;
+                }
+            }
+
+            $this->setMessage('success_deleted');
+			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminUsageStatement','stats_date',Context::get('stats_date'));
+			$this->setRedirectUrl($redirectUrl);
+        }
 	}
 ?>

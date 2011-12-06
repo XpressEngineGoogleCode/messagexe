@@ -1,0 +1,8 @@
+<query id="deleteGroupMessage" action="delete">
+	<tables>
+		<table name="textmessage_groups" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="group_id" var="group_id" notnull="notnull" />
+	</conditions>
+</query>
