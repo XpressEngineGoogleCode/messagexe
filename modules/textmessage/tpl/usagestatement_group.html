@@ -48,7 +48,7 @@
 
     <!-- 버튼 -->
     <div class="btnArea">
-        <a href="#" onclick="deleteGroupMessages(); return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
+        <span class="btn"><a href="#delete" class="modalAnchor deleteGroup">{$lang->cmd_delete}</a></span>
         <span class="btn"><a href="#cancelation" class="modalAnchor cancelGroup">{$lang->cmd_cancel_reserv}</a></span>
     </div>
 
@@ -71,7 +71,16 @@
 		<input type="hidden" name="module" value="textmessage" />
 		<input type="hidden" name="act" value="procTextmessageAdminCancelGroup" />
 		<input type="hidden" name="success_return_url" value="{getUrl('act', $act)}" />
-		<div id="extendForm">
+		<div id="cancelForm">
+		</div>
+	</form>
+</div>
+
+<div class="modal" id="delete">
+	<form action="./" class="fg form" method="post">
+		<input type="hidden" name="module" value="textmessage" />
+		<input type="hidden" name="act" value="procTextmessageAdminDeleteGroup" />
+		<div id="deleteForm">
 		</div>
 	</form>
 </div>

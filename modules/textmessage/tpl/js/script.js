@@ -60,7 +60,7 @@ jQuery(function($) {
 			{message_id:message_id},
 			function(ret){
 				var tpl = ret.tpl.replace(/<enter>/g, '\n');
-				$('#extendForm').html(tpl);
+				$('#cancelForm').html(tpl);
 
 				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
 			},
@@ -68,22 +68,57 @@ jQuery(function($) {
 		);
 
 	});
-	$('a.modalAnchor.cancelGroup').bind('before-open.mw', function(event){
-		var group_ids = makeList();
-		if(group_ids.length<1) return;
+	$('a.modalAnchor.cancelReserv').bind('before-open.mw', function(event){
+		var message_id = makeList();
+		if(message_id.length<1) return;
 
 		exec_xml(
 			'textmessage',
-			'getTextmessageAdminCancelGroup',
-			{group_ids:group_ids},
+			'getTextmessageAdminCancelReserv',
+			{message_id:message_id},
 			function(ret){
 				var tpl = ret.tpl.replace(/<enter>/g, '\n');
-				$('#extendForm').html(tpl);
+				$('#cancelForm').html(tpl);
 
 				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
 			},
 			['error','message','tpl']
 		);
 
+	});
+	$('a.modalAnchor.deleteGroup').bind('before-open.mw', function(event){
+		var group_ids = makeList();
+		if(group_ids.length<1) return;
+
+		exec_xml(
+			'textmessage',
+			'getTextmessageAdminDeleteGroup',
+			{group_ids:group_ids},
+			function(ret){
+				var tpl = ret.tpl.replace(/<enter>/g, '\n');
+				$('#deleteForm').html(tpl);
+
+				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
+			},
+			['error','message','tpl']
+		);
+
+	});
+	$('a.modalAnchor.deleteMessages').bind('before-open.mw', function(event){
+		var message_ids = makeList();
+		if(message_ids.length<1) return;
+
+		exec_xml(
+			'textmessage',
+			'getTextmessageAdminDeleteMessages',
+			{message_ids:message_ids},
+			function(ret){
+				var tpl = ret.tpl.replace(/<enter>/g, '\n');
+				$('#deleteForm').html(tpl);
+
+				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
+			},
+			['error','message','tpl']
+		);
 	});
 });

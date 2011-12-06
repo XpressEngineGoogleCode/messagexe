@@ -1,0 +1,8 @@
+<query id="deleteMessage" action="delete">
+	<tables>
+		<table name="textmessages" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="message_id" var="message_id" notnull="notnull" />
+	</conditions>
+</query>

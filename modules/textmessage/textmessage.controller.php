@@ -179,5 +179,20 @@
 
             return new Object();
         }
+
+        function deleteMessage($message_id) {
+               $args->message_id = $message_id;
+               $output = executeQuery('textmessage.deleteMessage', $args);
+               return $output;
+        }
+
+        function deleteGroupMessage($group_id) {
+               $args->group_id = $group_id;
+               $output = executeQuery('textmessage.deleteMessagesByGroupId', $args);
+			   if (!$output->toBool()) return $output;
+               $output = executeQuery('textmessage.deleteGroupMessage', $args);
+               return $output;
+        }
+
 	}
 ?>

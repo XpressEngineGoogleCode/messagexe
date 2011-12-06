@@ -13,10 +13,14 @@
 
         <action name="getTextmessageAdminCancelReserv" type="model" />
         <action name="getTextmessageAdminCancelGroup" type="model" />
+        <action name="getTextmessageAdminDeleteMessages" type="model" />
+        <action name="getTextmessageAdminDeleteGroup" type="model" />
 
         <action name="procTextmessageAdminInsertConfig" type="controller" ruleset="insert_config" />
         <action name="procTextmessageAdminStatistics" type="controller" />
         <action name="procTextmessageAdminCancelReserv" type="controller" />
         <action name="procTextmessageAdminCancelGroup" type="controller" />
+        <action name="procTextmessageAdminDeleteMessages" type="controller" />
+        <action name="procTextmessageAdminDeleteGroup" type="controller" />
     </actions>
 </module>
