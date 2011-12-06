@@ -1,8 +1,7 @@
 <script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
 <!--#include("header.html")-->
 <!--%import("filter/sync_result.xml")-->
-<!--%import("js/admin.js")-->
-<!--%import("css/message_list.css")-->
+<!--%import("js/script.js")-->
 
 <form method="get" action="./" id="mobilemessage_fo" class="form">
     <div class="table even easyList">
@@ -48,13 +47,9 @@
     </div>
 
     <!-- 버튼 -->
-    <div class="clear">
-        <div class="fl">
-            <a href="#" onclick="deleteGroupMessages(); return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
-            <a href="#" onclick="cancelGroupMessages(); return false;" class="button green"><span>{$lang->cmd_cancel_reserv}</span></a>
-        </div>
-        <div class="fr">
-        </div>
+    <div class="btnArea">
+        <a href="#" onclick="deleteGroupMessages(); return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
+        <a href="#" onclick="cancelGroupMessages(); return false;" class="button green"><span>{$lang->cmd_cancel_reserv}</span></a>
     </div>
 
     <!-- 페이지 네비게이션 -->

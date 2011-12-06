@@ -8,8 +8,12 @@
         <action name="dispTextmessageAdminUsageStatement" type="view" />
         <action name="dispTextmessageAdminStatisticsDaily" type="view" />
         <action name="dispTextmessageAdminStatisticsMonthly" type="view" />
+        <action name="dispTextmessageAdminCancelGroup" type="view" />
+        <action name="dispTextmessageAdminCancelReserv" type="view" />
 
         <action name="procTextmessageAdminInsertConfig" type="controller" ruleset="insert_config" />
         <action name="procTextmessageAdminStatistics" type="controller" />
+        <action name="procTextmessageAdminCancelReserv" type="controller" />
+        <action name="procTextmessageAdminCancelGroup" type="controller" />
     </actions>
 </module>

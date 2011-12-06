@@ -1,7 +1,6 @@
 <!--#include("header.html")-->
 <!--%import("filter/sync_result.xml")-->
-<!--%import("js/admin.js")-->
-<!--%import("css/message_list.css")-->
+<!--%import("js/script.js")-->
 
 <form method="get" action="./" id="mobilemessage_fo" class="form">
     <div class="table even easyList">
@@ -41,15 +40,11 @@
     </div>
 
     <!-- 버튼 -->
-    <div class="clear">
-        <div class="fl">
+    <div class="btnArea">
             <a href="#" onclick="deleteMobilemessageLog(); return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
             <a href="#" onclick="cancelMobilemessage(); return false;" class="button green"><span>{$lang->cmd_cancel_reserv}</span></a>
-            <span class="button blue"><button onclick="javascript:if(!prepare_syncdata()) return false; procFilter(this.form, sync_result); return false;">{$lang->cmd_report_all}</button></span>
-        </div>
-        <div class="fr">
+            <a href="#" onclick="javascript:if(!prepare_syncdata()) return false; procFilter(this.form, sync_result); return false;" class="button"><span>동기화</span></a>
             <a href="?module={$module}&act={$act}" class="button black"><span>상위목록</span></a>
-        </div>
     </div>
 
     <!-- 페이지 네비게이션 -->

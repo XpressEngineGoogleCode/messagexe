@@ -146,5 +146,38 @@
 			// success
 			return new Object(0, $alert);
 		}
+
+        function cancelMessage($msgids, $opts=false) {
+			$oTextmessageModel = &getModel('textmessage');
+			$sms = $oTextmessageModel->getCoolSMS();
+
+            if (!$sms->connect()) return new Object(-1, 'warning_cannot_connect');
+
+            foreach ($msgids as $id) {
+                $sms->cancel($id);
+            }
+
+            $sms->disconnect();
+
+            return new Object();
+        }
+
+        /**
+         * @brief 문자취소(그룹)
+         **/
+        function cancelGroupMessages($group_ids, $opts=false) {
+			$oTextmessageModel = &getModel('textmessage');
+			$sms = $oTextmessageModel->getCoolSMS();
+
+            if (!$sms->connect()) return new Object(-1, 'warning_cannot_connect');
+
+            foreach ($group_ids as $gid) {
+                $sms->groupcancel($gid);
+            }
+
+            $sms->disconnect();
+
+            return new Object();
+        }
 	}
 ?>
