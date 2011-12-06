@@ -145,5 +145,29 @@
 			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminStatisticsDaily','stats_date',Context::get('stats_date'));
 			$this->setRedirectUrl($redirectUrl);
 		}
+
+        function procTextmessageAdminCancelReserv() {
+            $target_message_ids = Context::get('target_message_ids');
+            if(!$target_message_ids) return new Object(-1, 'msg_invalid_request');
+            $message_id_arr = explode(',', $target_message_ids);
+            $oTextmessageController = &getController('textmessage');
+
+            $output = $oTextmessageController->cancelMessage($message_id_arr);
+            if(!$output->toBool()) return $output;
+
+            $this->setMessage('success_canceled');
+        }
+
+        function procTextmessageAdminCancelGroup() {
+            $target_group_ids = Context::get('target_group_ids');
+            if(!$target_group_ids) return new Object(-1, 'msg_invalid_request');
+            $group_ids = explode(',', $target_group_ids);
+            $oTextmessageController = &getController('textmessage');
+
+            $output = $oTextmessageController->cancelGroupMessages($group_ids);
+            if(!$output->toBool()) return $output;
+
+            $this->setMessage('success_canceled');
+        }
 	}
 ?>

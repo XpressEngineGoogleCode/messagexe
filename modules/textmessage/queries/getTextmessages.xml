@@ -6,7 +6,8 @@
 		<column name="*" />
 	</columns>
 	<conditions>
-		<condition operation="like_prefix" column="regdate" var="regdate" notnull="notnull" />
+		<condition operation="like_prefix" column="regdate" var="regdate" />
+		<condition operation="in" column="message_id" var="message_id" pipe="and" />
 	</conditions>
 	<navigation>
 	</navigation>
