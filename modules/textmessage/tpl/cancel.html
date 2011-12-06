@@ -1,12 +1,7 @@
-<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
-<!--%import("filter/cancel.xml")-->
-<!--%import("js/script.js")-->
-
 <div id="popHeader" class="wide">
     <h3 class="xeAdmin">{$lang->cmd_cancel_reserv} ({$lang->target} : {count($mobilemessage_list)})</h3>
 </div>
 
-<form action="./" method="get" id="fo_management" onsubmit="return procFilter(this, cancel);">
 <input type="hidden" name="target_message_ids" value="{$message_id}" />
 
 <div id="popBody">
@@ -37,5 +32,3 @@
         <span class="button black strong"><input type="submit" value="{$lang->cmd_cancel_reserv}" /></span>
 </div>
 <!--@end-->
-
-</form>

@@ -49,3 +49,41 @@ function completeCancelGroupMessages(ret_obj) {
     window.close();
 }
 
+jQuery(function($) {
+	$('a.modalAnchor.cancelReserv').bind('before-open.mw', function(event){
+		var message_id = makeList();
+		if(message_id.length<1) return;
+
+		exec_xml(
+			'textmessage',
+			'getTextmessageAdminCancelReserv',
+			{message_id:message_id},
+			function(ret){
+				var tpl = ret.tpl.replace(/<enter>/g, '\n');
+				$('#extendForm').html(tpl);
+
+				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
+			},
+			['error','message','tpl']
+		);
+
+	});
+	$('a.modalAnchor.cancelGroup').bind('before-open.mw', function(event){
+		var group_ids = makeList();
+		if(group_ids.length<1) return;
+
+		exec_xml(
+			'textmessage',
+			'getTextmessageAdminCancelGroup',
+			{group_ids:group_ids},
+			function(ret){
+				var tpl = ret.tpl.replace(/<enter>/g, '\n');
+				$('#extendForm').html(tpl);
+
+				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
+			},
+			['error','message','tpl']
+		);
+
+	});
+});

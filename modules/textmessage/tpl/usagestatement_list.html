@@ -42,7 +42,8 @@
     <!-- 버튼 -->
     <div class="btnArea">
             <a href="#" onclick="deleteMobilemessageLog(); return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
-            <a href="#" onclick="cancelMobilemessage(); return false;" class="button green"><span>{$lang->cmd_cancel_reserv}</span></a>
+            <a cond="0" href="#" onclick="cancelMobilemessage(); return false;" class="button green"><span>{$lang->cmd_cancel_reserv}</span></a>
+			<span class="btn"><a href="#cancelation" class="modalAnchor cancelReserv">{$lang->cmd_cancel_reserv}</a></span>
             <a href="#" onclick="javascript:if(!prepare_syncdata()) return false; procFilter(this.form, sync_result); return false;" class="button"><span>동기화</span></a>
             <a href="?module={$module}&act={$act}" class="button black"><span>상위목록</span></a>
     </div>
@@ -61,3 +62,14 @@
     </div>
     <input type="hidden" id="mobilemessage_srls" name="mobilemessage_srls" value="12345" />
 </form>
+
+<div class="modal" id="cancelation">
+	<form action="./" class="fg form" method="post">
+		<input type="hidden" name="module" value="textmessage" />
+		<input type="hidden" name="act" value="procTextmessageAdminCancelReserv" />
+		<input type="hidden" name="group_id" value="{$group_id}" />
+		<input type="hidden" name="success_return_url" value="{getUrl('act', $act,'group_id',$group_id)}" />
+		<div id="extendForm">
+		</div>
+	</form>
+</div>

@@ -16,6 +16,11 @@
 		<value xml:lang="ko"><![CDATA[예약취소]]></value>
 		<value xml:lang="en"><![CDATA[Cancel Reservations]]></value>
 	</item>
+	<item name="success_canceled">
+		<value xml:lang="ko"><![CDATA[취소되었습니다]]></value>
+		<value xml:lang="en"><![CDATA[Canceled]]></value>
+	</item>
+
 	<item name="about_service_id">
 		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a> 에서 회원가입한 아이디를 입력합니다.]]></value>
 		<value xml:lang="en"><![CDATA[Input the ID you registered on <a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a>]]></value>

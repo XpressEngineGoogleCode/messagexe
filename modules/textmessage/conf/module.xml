@@ -11,6 +11,9 @@
         <action name="dispTextmessageAdminCancelGroup" type="view" />
         <action name="dispTextmessageAdminCancelReserv" type="view" />
 
+        <action name="getTextmessageAdminCancelReserv" type="model" />
+        <action name="getTextmessageAdminCancelGroup" type="model" />
+
         <action name="procTextmessageAdminInsertConfig" type="controller" ruleset="insert_config" />
         <action name="procTextmessageAdminStatistics" type="controller" />
         <action name="procTextmessageAdminCancelReserv" type="controller" />
