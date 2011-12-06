@@ -9,14 +9,7 @@
     <input type="hidden" name="stats_date" id="stats_date" value="{$stats_date}" />
     <input type="text" class="inputDate inputTypeText" value="{zdate($stats_date,'Y-m-d')}" readonly="readonly" />
     <span class="button black"><input type="submit" value="조회" /></span>
-</form>
-
-<form class="searchForm">
-    <input type="hidden" name="module" value="textmessage" />
-    <input type="hidden" name="act" value="procTextmessageAdminStatistics" />
-    <input type="hidden" name="stats_date" id="stats_date" value="{$stats_date}" />
-    <input type="text" class="inputDate inputTypeText" value="{zdate($stats_date,'Y-m-d')}" readonly="readonly" />
-    <span class="button black"><input type="submit" value="생성" /></span>
+    <span class="button black"><input type="submit" value="생성" onclick="this.form.module.value='admin'; this.form.act.value='procTextmessageAdminStatistics';" /></span>
 </form>
 
 <form method="get" action="./" id="mobilemessage_fo">

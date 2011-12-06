@@ -44,10 +44,15 @@
 		}
 
 		function procTextmessageAdminStatistics() {
-			$args->regdate = Context::get('stats_date');
+			$stats_date = Context::get('stats_date');
+			$args->regdate = $stats_date;
 			$args->regdate = substr($args->regdate, 0, 6);
 			$output = executeQueryArray('textmessage.getTextmessages',$args);
+			if (!$output->toBool()) return $output;
+			$textmessages = $output->data;
+			if (!$textmessages) $textmessages = array();
 
+			/*
 			$sms_sk_count = 0;
 			$sms_kt_count = 0;
 			$sms_lg_count = 0;
@@ -62,20 +67,14 @@
 			$mms_total_count = 0;
 			$oversea_count = 0;
 			$oversea_total_count = 0;
+			 */
 
 			$stat_data = array();
-			foreach ($output->data as $key=>$val) {
-				/*
-				$stats_year = substr($val->regdate, 0, 4);
-				$stats_month = substr($val->regdate, 4, 2);
-				$stats_day = substr($val->regdate, 6, 2);
-				$stats_hour = substr($val->regdate, 8, 2);
-				 */
+			foreach ($textmessages as $key=>$val) {
 				$datetime = substr($val->regdate, 0, 10);
 
-				if (!isset($stat_data[$datetime])) {
+				if (!array_key_exists($datetime, $stat_data)) {
 					$obj = new StdClass();
-					$obj->regdate = $datetime;
 					$obj->sms_sk_count = 0;
 					$obj->sms_kt_count = 0;
 					$obj->sms_lg_count = 0;
@@ -90,9 +89,9 @@
 					$obj->mms_total_count = 0;
 					$obj->oversea_count= 0;
 					$obj->oversea_total_count= 0;
-				} else {
-					$obj = &$stat_data[$datetime];
+					$stat_data[$datetime] = $obj;
 				}
+				$obj = $stat_data[$datetime];
 
 				if ($val->mstat=='2' and $val->rcode=='00' and $val->mtype=='SMS' AND $val->carrier=='SKT') $obj->sms_sk_count++;
 				if ($val->mstat=='2' and $val->rcode=='00' and $val->mtype=='SMS' AND $val->carrier=='KTF') $obj->sms_kt_count++;
@@ -110,22 +109,14 @@
 				if ($val->mstat=='2' and $val->rcode=='00' and $val->country_code != '82') $obj->oversea_count++;
 				if ($val->country_code != '82') $obj->oversea_total_count++;
 
-				if (!isset($stat_data[$datetime])) {
-					$stat_data[$datetime] = $obj;
-				}
+				$stat_data[$datetime] = $obj;
 			}
 
-			/*
-               query = "DELETE FROM bizxe_statistics WHERE user_id = '%s' AND stats_year = '%s' AND stats_month = '%s' AND stats_day = '%s' AND stats_hour = '%s'" % (userid, stats_year, stats_month, stats_day, stats_hour)
-                db.query(query)
-			 */
-			debugPrint('stat_data : ' . serialize($stat_data));
-
 			foreach ($stat_data as $key=>$val) {
-				$stats_year = substr($val->regdate, 0, 4);
-				$stats_month = substr($val->regdate, 4, 2);
-				$stats_day = substr($val->regdate, 6, 2);
-				$stats_hour = substr($val->regdate, 8, 2);
+				$stats_year = substr($key, 0, 4);
+				$stats_month = substr($key, 4, 2);
+				$stats_day = substr($key, 6, 2);
+				$stats_hour = substr($key, 8, 2);
 				$args->stats_year = $stats_year;
 				$args->stats_month = $stats_month;
 				$args->stats_day = $stats_day;
@@ -146,10 +137,12 @@
 				$args->oversea_total_count = $val->oversea_total_count;
 				$output = executeQuery('textmessage.deleteStatistics', $args);
 				$output = executeQuery('textmessage.insertStatistics', $args);
-				debugPrint('insertStatistics : ' . serialize($output));
 				if (!$output->toBool()) return $output;
 			}
-			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminStatisticsDaily');
+
+			$this->setMessage(substr($stats_date, 0, 4) . ' 년 ' . substr($stats_date, 4, 2) . ' 월 ' . ' 통계 데이터 생성');
+
+			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminStatisticsDaily','stats_date',Context::get('stats_date'));
 			$this->setRedirectUrl($redirectUrl);
 		}
 	}
