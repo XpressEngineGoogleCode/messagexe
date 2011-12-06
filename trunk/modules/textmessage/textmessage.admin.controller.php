@@ -156,6 +156,9 @@
             if(!$output->toBool()) return $output;
 
             $this->setMessage('success_canceled');
+
+			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminUsageStatement','group_id',Context::get('group_id'),'stats_date',Context::get('stats_date'));
+			$this->setRedirectUrl($redirectUrl);
         }
 
         function procTextmessageAdminCancelGroup() {
@@ -168,6 +171,9 @@
             if(!$output->toBool()) return $output;
 
             $this->setMessage('success_canceled');
+
+			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminUsageStatement','stats_date',Context::get('stats_date'));
+			$this->setRedirectUrl($redirectUrl);
         }
 	}
 ?>

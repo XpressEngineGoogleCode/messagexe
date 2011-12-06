@@ -49,7 +49,7 @@
     <!-- 버튼 -->
     <div class="btnArea">
         <a href="#" onclick="deleteGroupMessages(); return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
-        <a href="#" onclick="cancelGroupMessages(); return false;" class="button green"><span>{$lang->cmd_cancel_reserv}</span></a>
+        <span class="btn"><a href="#cancelation" class="modalAnchor cancelGroup">{$lang->cmd_cancel_reserv}</a></span>
     </div>
 
     <!-- 페이지 네비게이션 -->
@@ -65,3 +65,13 @@
         <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
     </div>
 </form>
+
+<div class="modal" id="cancelation">
+	<form action="./" class="fg form" method="post">
+		<input type="hidden" name="module" value="textmessage" />
+		<input type="hidden" name="act" value="procTextmessageAdminCancelGroup" />
+		<input type="hidden" name="success_return_url" value="{getUrl('act', $act)}" />
+		<div id="extendForm">
+		</div>
+	</form>
+</div>

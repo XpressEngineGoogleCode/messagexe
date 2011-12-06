@@ -1,16 +1,11 @@
-<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
-<!--%import("filter/cancel_group.xml")-->
-<!--%import("js/script.js")-->
-
 <div id="popHeader" class="wide">
     <h3 class="xeAdmin">{$lang->cmd_cancel_reserv} ({$lang->target} : {count($group_list)})</h3>
 </div>
 
-<form action="./" method="get" id="fo_management" onsubmit="return procFilter(this, cancel_group);">
 <input type="hidden" name="target_group_ids" value="{$group_ids}" />
 
 <div id="popBody">
-    <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+    <table cellspacing="0" class="adminTable">
     <tr>
         <th scope="col"><div>{$lang->regdate}</div></th>
         <th scope="col" class="half_wide"><div>발송자</div></th>
@@ -35,5 +30,3 @@
         <span class="button black strong"><input type="submit" value="{$lang->cmd_cancel_reserv}" /></span>
 </div>
 <!--@end-->
-
-</form>
