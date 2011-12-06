@@ -88,11 +88,11 @@
             if (Context::get('group_id')) {
                 $args->group_id = Context::get('group_id');
                 $output = $oTextmessageModel->getMessagesInGroup($args);
-                $this->setTemplateFile('message_list');
+                $this->setTemplateFile('usagestatement_list');
             } else {
                 $args = new StdClass();
                 $output = $oTextmessageModel->getMessageGroups($args);
-                $this->setTemplateFile('message_grouping');
+                $this->setTemplateFile('usagestatement_group');
             }
 
             // 템플릿에 쓰기 위해서 context::set
