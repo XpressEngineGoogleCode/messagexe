@@ -64,5 +64,14 @@
             $tpl = $oTemplate->compile($this->module_path.'tpl', 'delete_group');
             $this->add('tpl', str_replace("\n"," ",$tpl));
         }
+
+		function getTextmessageAdminUnfinishedMessages() {
+			$args->page = Context::get('page');
+			$output = executeQueryArray('textmessage.getUnfinishedMessages',$args);
+			$this->add('total_count', $output->total_count);
+			$this->add('total_page', $output->total_page);
+			$this->add('page', $output->page);
+			$this->add('data',$output->data);
+		}
 	}
 ?>

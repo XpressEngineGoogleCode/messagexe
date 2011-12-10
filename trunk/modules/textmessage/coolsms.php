@@ -28,7 +28,7 @@ class coolsms
 {
 	// host address
 	//var $cool_gateways = array("alpha.coolsms.co.kr"=>80, "bravo.coolsms.co.kr"=>80, "delta.coolsms.co.kr"=>80);
-	var $cool_gateways = array("222.122.81.208"=>7806);
+	var $cool_gateways = array("61.109.255.212"=>7805);
     // character set : only support for utf8, euckr
     var $_charset = "euckr";
     // module version
@@ -682,13 +682,21 @@ class coolsms
         return $count;
     }
 
-    function credits()
-    {
-        return $this->remain();
+	/**
+	 * deprecated. use balance()
+	 **/
+    function credits() {
+        return $this->balance();
     }
 
-    function remain()
-    {
+	/**
+	 * deprecated. use balance()
+	 **/
+	function remain() {
+		return $this->balance();
+	}
+
+    function balance() {
         $tbsp = array();
         $tbsp["VERSION"] = $this->VERSION_STR;
         $tbsp["MODULE-VERSION"] = $this->module_version;

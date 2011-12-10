@@ -7,7 +7,10 @@
 	<column name="reservflag" type="char" size="1" default="N" notnull="notnull" />
 	<column name="reservdate" type="varchar" size="14" notnull="notnull" />
 	<column name="total_count" type="number" size="11" default="0" />
+	<column name="waiting_count" type="number" size="11" default="0" />
+	<column name="sending_count" type="number" size="11" default="0" />
 	<column name="success_count" type="number" size="11" default="0" />
 	<column name="failure_count" type="number" size="11" default="0" />
+	<column name="cancel_count" type="number" size="11" default="0" />
 	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
 </table>

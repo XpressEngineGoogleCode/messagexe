@@ -187,5 +187,17 @@
             if (!$args->page_count) $args->page_count = 10;
             return executeQueryArray('textmessage.getTextmessagesInGroup', $args);
 		}
+
+		function getUnfinishedMessages() {
+			$output = executeQueryArray('textmessage.getUnfinishedMessages');
+			return $output;
+		}
+
+		function getMessageInfo($message_id) {
+			$args->message_id = $message_id;
+			$output = executeQuery('textmessage.getTextmessageInfo',$args);
+			debugPrint('getMessageInfo : ' .serialize($output));
+			return $output->data;
+		}
 }
 ?>
