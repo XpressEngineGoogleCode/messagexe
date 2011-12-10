@@ -11,8 +11,11 @@
 		<column name="reservflag" var="reservflag" default="N" />
 		<column name="reservdate" var="reservdate" />
 		<column name="total_count" var="total_count" />
+		<column name="waiting_count" var="waiting_count" />
+		<column name="sending_count" var="sending_count" />
 		<column name="success_count" var="success_count" />
 		<column name="failure_count" var="failure_count" />
+		<column name="cancel_count" var="cancel_count" />
 		<column name="regdate" var="regdate" default="curdate()" />
 	</columns>
 </query>

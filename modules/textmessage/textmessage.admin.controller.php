@@ -209,5 +209,24 @@
 			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminUsageStatement','stats_date',Context::get('stats_date'));
 			$this->setRedirectUrl($redirectUrl);
         }
+
+		function procTextmessageAdminUpdateStatus() {
+			$oTextmessageModel = &getModel('textmessage');
+			$oTextmessageController = &getController('textmessage');
+
+			$message_id = Context::get('message_id');
+
+			$sms = $oTextmessageModel->getCoolSMS();
+			if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
+			$result = $sms->rcheck($message_id);
+			debugPrint('result : ' . serialize($result));
+			$args->message_id = $message_id;
+			$args->status = $result['STATUS'];
+			$args->resultcode = $result['RESULT-CODE'];
+			$args->carrier = $result['CARRIER'];
+			$args->senddate = $result['SEND-DATE'];
+			$oTextmessageController->updateStatus($args);
+			$sms->disconnect();
+		}
 	}
 ?>

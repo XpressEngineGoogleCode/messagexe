@@ -1,9 +1,13 @@
+<load target="js/jquery.jgrowl.js" />
+<load target="css/jquery.jgrowl.css" />
 <load target="css/style.css" />
+<load target="js/script.js" />
+
 
 <div class="header4">
     <ul class="localNavigation">
         <li <!--@if($act=='dispTextmessageAdminIndex')-->class="on"<!--@end-->><a href="{getUrl('act','dispTextmessageAdminIndex')}">요약</a></li>
-        <li <!--@if($act=='dispTextmessageAdminUsageStatement')-->class="on"<!--@end-->><a href="{getUrl('act','dispTextmessageAdminUsageStatement')}">전송내역</a></li>
+        <li <!--@if($act=='dispTextmessageAdminUsageStatement')-->class="on"<!--@end-->><a href="{getUrl('act','dispTextmessageAdminUsageStatement')}">사용내역</a></li>
 		<li <!--@if($act=='dispTextmessageAdminStatisticsDaily')-->class="on"<!--@end-->><a href="{getUrl('act','dispTextmessageAdminStatisticsDaily')}">사용통계</a></li>
     </ul>
 </div>

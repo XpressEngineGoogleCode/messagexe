@@ -20,6 +20,114 @@
 			return executeQuery('textmessage.insertTextmessageGroup', $args);
 		}
 
+		function minusWaitingCount($group_id) {
+			$args->group_id = $group_id;
+			return executeQuery('textmessage.minusWaitingCount', $args);
+		}
+
+		function minusSendingCount($group_id) {
+			$args->group_id = $group_id;
+			return executeQuery('textmessage.minusSendingCount', $args);
+		}
+		function minusFailureCount($group_id) {
+			$args->group_id = $group_id;
+			return executeQuery('textmessage.minusFailureCount', $args);
+		}
+		function minusSuccessCount($group_id) {
+			$args->group_id = $group_id;
+			return executeQuery('textmessage.minusSuccessCount', $args);
+		}
+		function plusWaitingCount($group_id) {
+			$args->group_id = $group_id;
+			$output = executeQuery('textmessage.plusWaitingCount', $args);
+			debugPrint('plusWaitingCount : ' . serialize($output));
+			return $output;
+		}
+
+		function plusSendingCount($group_id) {
+			$args->group_id = $group_id;
+			return executeQuery('textmessage.plusSendingCount', $args);
+		}
+		function plusFailureCount($group_id) {
+			$args->group_id = $group_id;
+			$output = executeQuery('textmessage.plusFailureCount', $args);
+			debugPrint('plusFailureCount : ' . serialize($output));
+			return $output;
+		}
+		function plusSuccessCount($group_id) {
+			$args->group_id = $group_id;
+			$output = executeQuery('textmessage.plusSuccessCount', $args);
+			debugPrint('plusSuccessCount : ' . serialize($output));
+			return $output;
+		}
+
+		function minusCount($group_id, $status, $resultcode) {
+			debugPrint('group_id: ' . $group_id);
+			debugPrint('status: ' . $status);
+			debugPrint('resultcode: ' . $resultcode);
+			if (in_array($status, array('0','9'))) {
+				if (in_array($resultcode, array('00','99'))) $this->minusWaitingCount($group_id);
+				else $this->minusFailureCount($group_id);
+			}
+			if ($status == '1' && $resultcode == '00') {
+				$this->minusSendingCount($group_id);
+			}
+			if ($status == '1' && $resultcode != '00') {
+				$this->minusFailureCount($group_id);
+			}
+			if ($status == '2' && $resultcode != '00') {
+				$this->minusFailureCount($group_id);
+			}
+			if ($status == '2' && $resultcode == '00') {
+				$this->minusSuccessCount($group_id);
+			}
+		}
+
+		function plusCount($group_id, $status, $resultcode) {
+			debugPrint('group_id: ' . $group_id);
+			debugPrint('status: ' . $status);
+			debugPrint('resultcode: ' . $resultcode);
+			if (in_array($status, array('0','9'))) {
+				if (in_array($resultcode, array('00','99'))) $this->plusWaitingCount($group_id);
+				else $this->plusFailureCount($group_id);
+			}
+			if ($status == '1' && $resultcode == '00') {
+				$this->plusSendingCount($group_id);
+			}
+			if ($status == '1' && $resultcode != '00') {
+				$this->plusFailureCount($group_id);
+			}
+			if ($status == '2' && $resultcode != '00') {
+				$this->plusFailureCount($group_id);
+			}
+			if ($status == '2' && $resultcode == '00') {
+				$this->plusSuccessCount($group_id);
+			}
+		}
+
+
+
+		function updateStatus($in_args) {
+			$oTextmessageModel = &getModel('textmessage');
+
+			$message_info = $oTextmessageModel->getMessageInfo($in_args->message_id);
+
+			// minus
+			$this->minusCount($message_info->group_id, $message_info->mstat, $message_info->rcode);
+
+			// plus
+			$this->plusCount($message_info->group_id, $in_args->status, $in_args->resultcode);
+
+			$args->message_id = $in_args->message_id;
+			$args->mstat = $in_args->status;
+			$args->rcode = $in_args->resultcode;
+			$args->senddate = $in_args->senddate;
+			$args->carrier = $in_args->carrier;
+			$output = executeQuery('textmessage.updateStatus', $args);
+			debugPrint('updateStatus : ' . serialize($output));
+			return $output;
+		}
+
 		/**
 		 * @brief 메시지 전송
 		 * @param[in] $args
@@ -67,8 +175,6 @@
 			$group_id = coolsms::keygen();
 
 			$total_count=0;
-			$success_count=0;
-			$failure_count=0;
 			foreach ($in_args->recipient_no as $recipient_no) {
 				$message_id = coolsms::keygen();
 				$sms_args->type = $in_args->type;
@@ -98,32 +204,23 @@
 				$total_count++;
 			}
 
-			$args->group_id = $group_id;
-			$args->mtype = $in_args->mtype;
-			$args->subject =  $in_args->subject;
-			$args->content =  $in_args->content;
-			$args->reservflag = $in_args->reservflag;
-			$args->reservdate = $in_args->reservdate;
-			$args->total_count = $total_count;
-			$args->success_count = $success_count;
-			$args->failure_count = $failure_count;
-
-			$output = $this->insertTextmessageGroup($args);
-			debugPrint('insertTextmessageGroup : ' . serialize($output));
-			if (!$output->toBool()) return $output;
-
 
 			if (!$sms->connect()) {
 				return new Object(-1, 'error_cannot_connect');
 			}
 
+			$sending_count=0;
+			$failure_count=0;
+
 			if ($sms->send()) {
 				$result = $sms->getr();
 
-				foreach ($result as $row)
-				{
-					if ($row["RESULT-CODE"] == "00") $success_count++;
-					else $fail++;
+				foreach ($result as $row) {
+					if ($row["RESULT-CODE"] == "00") {
+						$sending_count++;
+					} else {
+					   	$failure_count++;
+					}
 
 					switch($row["RESULT-CODE"]) {
 						case "20":
@@ -135,13 +232,30 @@
 						case "58":
 							$alert = "해당 번호로 전송할 경로가 없습니다.";
 					}
+					debugPrint('row : ' . serialize($row));
+					$output = $this->updateStatus($row["MESSAGE-ID"], ($in_args->reservflag=='Y')?'0':'1', $row["RESULT-CODE"]);
+					debugPrint('updateSTatus : ' . serialize($output));
 				}
 			}
 			$sms->disconnect();
 			$sms->emptyall();
 
-			// failure
-			if ($fail > 0) return new Object(-1, $alert);
+			// insert group info.
+			$args->group_id = $group_id;
+			$args->mtype = $in_args->mtype;
+			$args->subject =  $in_args->subject;
+			$args->content =  $in_args->content;
+			$args->reservflag = $in_args->reservflag;
+			$args->reservdate = $in_args->reservdate;
+			$args->total_count = $total_count;
+			if ($in_args->reservflag=='Y') $args->waiting_count = $sending_count;
+			else $args->sending_count = $sending_count;
+			$args->failure_count = $failure_count;
+			$output = $this->insertTextmessageGroup($args);
+			if (!$output->toBool()) return $output;
+
+
+			if ($failure_count > 0) return new Object(-1, $alert);
 
 			// success
 			return new Object(0, $alert);

@@ -1,6 +1,5 @@
 <!--#include("header.html")-->
-<!--%import("filter/sync_result.xml")-->
-<!--%import("js/script.js")-->
+<load target="js/usagestatement.js" />
 
 <form method="get" action="./" id="mobilemessage_fo" class="form">
     <div class="table even easyList">
@@ -18,6 +17,7 @@
                 <th scope="col" class=""><div>상태</div></th>
                 <th scope="col" class="quarter_wide"><div>전송(취소)일시</div></th>
                 <th scope="col" class="quarter_wide"><div>결과</div></th>
+                <th scope="col" class="quarter_wide"><div>이통사</div></th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +33,7 @@
 				<td>{$csutil->dispStatus($val->mstat)}</td>
 				<td>{zdate($val->senddate, "Y-m-d H:i:s")}</td>
 				<td <!--@if($val->rcode != '00')-->style="color: #ee7989;"<!--@end-->>{$val->rcode}:{htmlspecialchars($csutil->dispResultCode($val->rcode))}</td>
+				<td><span cond="$val->carrier=='SKT'">SKT</span><span cond="$val->carrier=='LGT'">LGU+</span><span cond="$val->carrier=='KTF'">KT</span></td>
             </tr>
             <!--@end-->
         </tbody>
@@ -43,7 +44,6 @@
     <div class="btnArea">
 			<span class="btn"><a href="#delete" class="modalAnchor deleteMessages">{$lang->cmd_delete}</a></span>
 			<span class="btn"><a href="#cancelation" class="modalAnchor cancelReserv">{$lang->cmd_cancel_reserv}</a></span>
-            <a href="#" onclick="javascript:if(!prepare_syncdata()) return false; procFilter(this.form, sync_result); return false;" class="button"><span>동기화</span></a>
             <a href="?module={$module}&act={$act}" class="button black"><span>상위목록</span></a>
     </div>
 

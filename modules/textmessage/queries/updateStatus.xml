@@ -1,0 +1,14 @@
+<query id="updateStatus" action="update">
+    <tables>
+        <table name="textmessages" />
+    </tables>
+    <columns>
+        <column name="mstat" var="mstat" notnull="notnull" />
+        <column name="rcode" var="rcode" notnull="notnull" />
+        <column name="senddate" var="senddate" notnull="notnull" />
+        <column name="carrier" var="carrier" notnull="notnull" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="message_id" var="message_id" notnull="notnull" />
+    </conditions>
+</query>

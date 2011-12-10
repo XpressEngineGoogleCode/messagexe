@@ -49,94 +49,6 @@ function completeCancelGroupMessages(ret_obj) {
     window.close();
 }
 
-
-function completeUpdateStatus(ret) {
-	updateStatus.progress_count++;
-	if (!getUnfinishedMessages.list.length) {
-		setTimeout("jQuery('div.jGrowl .updateStatus').find('.jGrowl-close').trigger('jGrowl.close');", 2000);
-	}
-	jQuery('#updateCounter').text(updateStatus.progress_count); 
-	setTimeout("updateStatus()", 1000);
-}
-
-function updateStatus() {
-	if (typeof(updateStatus.progress_count)=='undefined') {
-		updateStatus.progress_count = 0;
-		jQuery.jGrowl("<div id='statusUpdader' style='color:white;'>전송결과 가져오는 중...<br /><span id='updateCounter'>0</span> / " + getUnfinishedMessages.total_count + "</div>", { sticky: true, theme:'updateStatus', themeState:'' });
-	}
-
-	if (getUnfinishedMessages.list.length > 0) {
-		var message_id = getUnfinishedMessages.list.pop()
-		exec_xml('textmessage'
-				,'procTextmessageAdminUpdateStatus'
-				, {message_id : message_id}
-				, completeUpdateStatus
-				, ['error','message']);
-	} else {
-		setTimeout("updateStatus()", 3000);
-	}
-}
-
-function completeGetUnfinishedMessages(ret) {
-	if (!ret['data'] || ret['total_count']==0) {
-		/*
-		setTimeout("jQuery('div.jGrowl').find('.jGrowl-close').trigger('jGrowl.close');", 2000);
-		delete getUnfinishedMessages.total_count;
-		getUnfinishedMessages.progress_count = 0;
-		*/
-		return;
-	}
-	var data = ret['data']['item'];
-	if (!jQuery.isArray(data)) {
-		data = new Array(data);
-	}
-	if (typeof(getUnfinishedMessages.total_count)=='undefined') {
-		getUnfinishedMessages.total_count = ret['total_count'];
-		jQuery.jGrowl("<div id='statusUpdader' style='color:white;'>목록 가져오는 중...<br /><span id='listCounter'>0</span> / " + getUnfinishedMessages.total_count + "</div>", { sticky: true, theme:'getList', themeState:'' });
-	}
-
-	for (var i = 0; i < data.length; i++) {
-		getUnfinishedMessages.list[getUnfinishedMessages.list.length] = data[i].message_id;
-		getUnfinishedMessages.progress_count++;
-		jQuery('#listCounter').text(getUnfinishedMessages.progress_count); 
-
-	}
-
-	if (parseInt(ret['page']) < parseInt(ret['total_page'])) {
-		setTimeout("getUnfinishedMessages()", 1000);
-	} else {
-		setTimeout("jQuery('div.jGrowl .getList').find('.jGrowl-close').trigger('jGrowl.close');", 2000);
-
-		if (typeof(updateStatus.progress_count)=='undefined') {
-			updateStatus();
-		}
-	}
-	getUnfinishedMessages.page++;
-
-
-}
-
-function getUnfinishedMessages() {
-	if (typeof(getUnfinishedMessages.list)=='undefined') {
-		getUnfinishedMessages.list = new Array();
-	}
-	if (typeof(getUnfinishedMessages.page)=='undefined') {
-		getUnfinishedMessages.page = 1;
-	}
-	if (typeof(getUnfinishedMessages.progress_count)=='undefined') {
-		getUnfinishedMessages.progress_count = 0;
-	}
-
-	exec_xml(
-		'textmessage',
-		'getTextmessageAdminUnfinishedMessages',
-		{page:getUnfinishedMessages.page},
-		completeGetUnfinishedMessages,
-		['error','message','data','total_count','total_page','page']
-	);
-}
-
-
 jQuery(function($) {
 	$('a.modalAnchor.cancelReserv').bind('before-open.mw', function(event){
 		var message_id = makeList();
@@ -209,6 +121,4 @@ jQuery(function($) {
 			['error','message','tpl']
 		);
 	});
-
-	getUnfinishedMessages();
 });
