@@ -3,23 +3,11 @@
         <table name="textmessage_statistics" />
     </tables>
     <columns>
-        <column name="stats_day" />
-        <column name="SUM(sms_sk_count)" alias="sms_sk_count" />
-        <column name="SUM(sms_kt_count)" alias="sms_kt_count" />
-        <column name="SUM(sms_lg_count)" alias="sms_lg_count" />
-        <column name="SUM(lms_sk_count)" alias="lms_sk_count" />
-        <column name="SUM(lms_kt_count)" alias="lms_kt_count" />
-        <column name="SUM(lms_lg_count)" alias="lms_lg_count" />
-        <column name="SUM(mms_sk_count)" alias="mms_sk_count" />
-        <column name="SUM(mms_kt_count)" alias="mms_kt_count" />
-        <column name="SUM(mms_lg_count)" alias="mms_lg_count" />
-        <column name="SUM(oversea_count)" alias="oversea_count" />
+		<column name="*" />
     </columns>
     <conditions>
         <condition operation="equal" column="stats_year" var="stats_year" notnull="notnull" />
         <condition operation="equal" column="stats_month" var="stats_month" notnull="notnull" pipe="and" />
+        <condition operation="equal" column="stats_day" var="stats_day" pipe="and" />
     </conditions>
-    <groups>
-        <group column="stats_day" />
-    </groups>
 </query>

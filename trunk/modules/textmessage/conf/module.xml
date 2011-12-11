@@ -30,6 +30,8 @@
         <action name="getTextmessageAdminDeleteMessages" type="model" />
         <action name="getTextmessageAdminDeleteGroup" type="model" />
         <action name="getTextmessageAdminUnfinishedMessages" type="model" />
+        <action name="getTextmessageAdminStatistics" type="model" />
+        <action name="getTextmessageAdminStatisticsMonthly" type="model" />
 
         <action name="procTextmessageAdminInsertConfig" type="controller" ruleset="insert_config" />
         <action name="procTextmessageAdminStatistics" type="controller" />

@@ -17,6 +17,7 @@
     </columns>
     <conditions>
         <condition operation="equal" column="stats_year" var="stats_year" notnull="notnull" />
+        <condition operation="equal" column="stats_month" var="stats_month" pipe="and" />
     </conditions>
     <groups>
         <group column="stats_month" />
