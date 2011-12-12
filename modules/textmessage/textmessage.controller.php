@@ -107,13 +107,13 @@
 
 
 
-		function updateStatus($in_args) {
+		function updateStatus($in_args,$skip_minus=false) {
 			$oTextmessageModel = &getModel('textmessage');
 
 			$message_info = $oTextmessageModel->getMessageInfo($in_args->message_id);
 
 			// minus
-			$this->minusCount($message_info->group_id, $message_info->mstat, $message_info->rcode);
+			if (!$skip_minus) $this->minusCount($message_info->group_id, $message_info->mstat, $message_info->rcode);
 
 			// plus
 			$this->plusCount($message_info->group_id, $in_args->status, $in_args->resultcode);
@@ -149,6 +149,9 @@
 			$oTextmessageModel = &getModel('textmessage');
 			$config = &$oTextmessageModel->getModuleConfig();
 
+			// validate
+			if (!$in_args->recipient_no) return new Object(-1, 'msg_invalid_request');
+
 			// generalize values
 			if (!$in_args->type) $in_args->type = 'SMS';
 			$in_args->type = strtoupper($in_args->type);
@@ -162,17 +165,19 @@
 			if ($in_args->type == "SMS") {
 				$in_args->content = coolsms::strcut_utf8($in_args->content, 160, true);
 			} else { // LMS, MMS
-				$in_args->content = coolsms::strcut_utf8($in_args->content, 2000, true);
+				$in_args->content = coolsms::strcut_utf8($in_args->content, 4000, true);
 			}
 
-			// validate
-			if (!$in_args->recipient_no) return new Object(-1, 'msg_invalid_request');
+			// generate group id
+			$group_id = coolsms::keygen();
 
+
+
+
+
+			// create sms object
 			$sms = $oTextmessageModel->getCoolSMS();
 			if ($in_args->encode_utf16) $sms->encode_utf16();
-
-
-			$group_id = coolsms::keygen();
 
 			$total_count=0;
 			foreach ($in_args->recipient_no as $recipient_no) {
@@ -204,7 +209,24 @@
 				$total_count++;
 			}
 
+			// insert group info.
+			$args->group_id = $group_id;
+			$args->mtype = $in_args->mtype;
+			$args->subject =  $in_args->subject;
+			$args->content =  $in_args->content;
+			$args->reservflag = $in_args->reservflag;
+			$args->reservdate = $in_args->reservdate;
+			$args->total_count = $total_count;
+			/*
+			if ($in_args->reservflag=='Y') $args->waiting_count = $sending_count;
+			else $args->sending_count = $sending_count;
+			$args->failure_count = $failure_count;
+			 */
+			$output = $this->insertTextmessageGroup($args);
+			if (!$output->toBool()) return $output;
 
+
+			// connect to server
 			if (!$sms->connect()) {
 				return new Object(-1, 'error_cannot_connect');
 			}
@@ -233,26 +255,15 @@
 							$alert = "해당 번호로 전송할 경로가 없습니다.";
 					}
 					debugPrint('row : ' . serialize($row));
-					$output = $this->updateStatus($row["MESSAGE-ID"], ($in_args->reservflag=='Y')?'0':'1', $row["RESULT-CODE"]);
+					$args->message_id = $row["MESSAGE-ID"];
+					$args->status = '9';
+					$args->resultcode = $row["RESULT-CODE"];
+					$output = $this->updateStatus($args,true);
 					debugPrint('updateSTatus : ' . serialize($output));
 				}
 			}
 			$sms->disconnect();
 			$sms->emptyall();
-
-			// insert group info.
-			$args->group_id = $group_id;
-			$args->mtype = $in_args->mtype;
-			$args->subject =  $in_args->subject;
-			$args->content =  $in_args->content;
-			$args->reservflag = $in_args->reservflag;
-			$args->reservdate = $in_args->reservdate;
-			$args->total_count = $total_count;
-			if ($in_args->reservflag=='Y') $args->waiting_count = $sending_count;
-			else $args->sending_count = $sending_count;
-			$args->failure_count = $failure_count;
-			$output = $this->insertTextmessageGroup($args);
-			if (!$output->toBool()) return $output;
 
 
 			if ($failure_count > 0) return new Object(-1, $alert);

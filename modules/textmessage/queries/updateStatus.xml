@@ -3,10 +3,10 @@
         <table name="textmessages" />
     </tables>
     <columns>
-        <column name="mstat" var="mstat" notnull="notnull" />
-        <column name="rcode" var="rcode" notnull="notnull" />
-        <column name="senddate" var="senddate" notnull="notnull" />
-        <column name="carrier" var="carrier" notnull="notnull" />
+        <column name="rcode" var="rcode" otnull="notnull" />
+        <column name="mstat" var="mstat" />
+        <column name="senddate" var="senddate" />
+        <column name="carrier" var="carrier" />
     </columns>
     <conditions>
         <condition operation="equal" column="message_id" var="message_id" notnull="notnull" />
