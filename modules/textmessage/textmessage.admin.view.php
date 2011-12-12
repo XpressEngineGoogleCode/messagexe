@@ -28,7 +28,7 @@
 			Context::set('config',$config);
 
 			//Retrieve recent news and set them into context
-			$newest_news_url = sprintf("http://news.coolsms.co.kr/news.php");
+			$newest_news_url = sprintf("http://news.coolsms.co.kr/news.php?loc=%s", _XE_LOCATION_);
 			$cache_file = sprintf("%sfiles/cache/cool_news.%s.cache.php", _XE_PATH_, _XE_LOCATION_);
 			if(!file_exists($cache_file) || filemtime($cache_file)+ 60*60 < time()) {
 				// Considering if data cannot be retrieved due to network problem, modify filemtime to prevent trying to reload again when refreshing textmessageistration page

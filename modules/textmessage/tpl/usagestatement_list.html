@@ -10,14 +10,14 @@
                 <th scope="col"><div>{$lang->no}</div></th>
                 <th scope="col"><div><input type="checkbox" value="" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
                 <th scope="col" class=""><div>{$lang->mtype}</div></th>
-                <th scope="col" class="quarter_wide"><div>받는번호</div></th>
-                <th scope="col" class=""><div>이름</div></th>
-                <th scope="col" class=""><div>예약</div></th>
+				<th scope="col" class="quarter_wide"><div>{$lang->recipient_no}</div></th>
+				<th scope="col" class=""><div>{$lang->user_name}</div></th>
+				<th scope="col" class=""><div>{$lang->reservation}</div></th>
                 <th scope="col" class="quarter_wide"><div>{$lang->content}</div></th>
-                <th scope="col" class=""><div>상태</div></th>
-                <th scope="col" class="quarter_wide"><div>전송(취소)일시</div></th>
-                <th scope="col" class="quarter_wide"><div>결과</div></th>
-                <th scope="col" class="quarter_wide"><div>이통사</div></th>
+				<th scope="col" class=""><div>{$lang->status}</div></th>
+				<th scope="col" class="quarter_wide"><div>{$lang->sent_time}</div></th>
+				<th scope="col" class="quarter_wide"><div>{$lang->result_code}</div></th>
+				<th scope="col" class="quarter_wide"><div>{$lang->carrier}</div></th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +44,7 @@
     <div class="btnArea">
 			<span class="btn"><a href="#delete" class="modalAnchor deleteMessages">{$lang->cmd_delete}</a></span>
 			<span class="btn"><a href="#cancelation" class="modalAnchor cancelReserv">{$lang->cmd_cancel_reserv}</a></span>
-            <a href="?module={$module}&act={$act}" class="button black"><span>상위목록</span></a>
+			<a href="?module={$module}&act={$act}" class="button black"><span>{$lang->up_list}</span></a>
     </div>
 
     <!-- 페이지 네비게이션 -->

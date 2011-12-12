@@ -9,7 +9,7 @@
     <input type="hidden" name="act" value="{$act}" />
     <input type="hidden" name="stats_date" id="stats_date" value="{$stats_date}" />
     <input type="text" class="inputDate inputTypeText" value="{zdate($stats_date,'Y-m-d')}" readonly="readonly" />
-    <span class="button black"><input type="submit" value="조회" /></span>
+	<span class="button black"><input type="submit" value="{$lang->view}" /></span>
 </form>
 
 <form method="get" action="./" id="mobilemessage_fo">
@@ -21,10 +21,10 @@
         <thead>
             <tr>
                 <th rowspan="2">Day</th>
-                <th colspan="3">일반</th>
-                <th colspan="3">장문</th>
-                <th colspan="3">포토</th>
-                <th rowspan="2">해외문자</th>
+				<th colspan="3">{$lang->sms}</th>
+				<th colspan="3">{$lang->lms}</th>
+				<th colspan="3">{$lang->mms}</th>
+				<th rowspan="2">{$lang->oversea}</th>
             </tr>
             <tr>
                 <th>SKT</th>
@@ -73,7 +73,7 @@
 				{@ $total_oversea_count += $row->oversea_count }
             </tr>
             <tr id="summary">
-                <td>합계</td>
+				<td>{$lang->sum}</td>
 				<td><span id="sum_sms_sk"></span></td>
 				<td><span id="sum_sms_kt"></span></td>
 				<td><span id="sum_sms_lg"></span></td>
@@ -86,7 +86,7 @@
 				<td><span id="sum_oversea"></span></td>
             </tr>
             <tr>
-                <td>총계</td>
+				<td>{$lang->total}</td>
 				<td colspan="3"><span id="total_sms_count">0</span></td>
                 <td colspan="3"><span id="total_lms_count">0</span></td>
                 <td colspan="3"><span id="total_mms_count">0</span></td>

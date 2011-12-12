@@ -11,15 +11,15 @@
                 <th scope="col"><div>{$lang->no}</div></th>
                 <th scope="col"><div><input type="checkbox" value="" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
                 <th scope="col" class="quarter_wide"><div>{$lang->regdate}</div></th>
-                <th scope="col" class=""><div>발송자</div></th>
+				<th scope="col" class=""><div>{$lang->sender}</div></th>
                 <th scope="col" class="quarter_wide"><div>{$lang->content}</div></th>
-                <th scope="col" class=""><div>예약상태</div></th>
-                <th scope="col" class=""><div>발송수</div></th>
-                <th scope="col" class=""><div>대기</div></th>
-                <th scope="col" class=""><div>전송중</div></th>
-                <th scope="col" class=""><div>성공</div></th>
-                <th scope="col" class=""><div>실패</div></th>
-                <th scope="col" class=""><div>취소</div></th>
+				<th scope="col" class=""><div>{$lang->reservation_status}</div></th>
+				<th scope="col" class=""><div>{$lang->total_count}</div></th>
+				<th scope="col" class=""><div>{$lang->waiting_count}</div></th>
+				<th scope="col" class=""><div>{$lang->sending_count}</div></th>
+				<th scope="col" class=""><div>{$lang->success_count}</div></th>
+				<th scope="col" class=""><div>{$lang->failure_count}</div></th>
+				<th scope="col" class=""><div>{$lang->cancel_count}</div></th>
                 <th scope="col"><div>&nbsp;</div></th>
             </tr>
         </thead>
@@ -31,7 +31,7 @@
                 <td>{zdate($val->regdate, "Y-m-d H:i:s")}</td>
                 <td>{htmlspecialchars($val->user_id)}</td>
                 <td title="{htmlspecialchars($val->subject)}"><a href="?module={$module}&act={$act}&group_id={$val->group_id}" class="receipt_status">{htmlspecialchars($csutil->dispContent($val->subject))}</a></td>
-                <td><!--@if($val->reservflag == "Y")--><span class="reservdate">{zdate($val->reservdate, "Y-m-d H:i")} 에 예약됨</span><!--@else-->-<!--@end--></td>
+                <td><!--@if($val->reservflag == "Y")--><span class="reservdate">{zdate($val->reservdate, "Y-m-d H:i")}</span><!--@else-->-<!--@end--></td>
                 <td><a href="?module={$module}&act={$act}&group_id={$val->group_id}" class="receipt_status">{$val->total_count}</a></td>
                 <td><a href="?module={$module}&act={$act}&group_id={$val->group_id}" class="receipt_status">{$val->waiting_count}</a></td>
                 <td><a href="?module={$module}&act={$act}&group_id={$val->group_id}" class="receipt_status">{$val->sending_count}</a></td>

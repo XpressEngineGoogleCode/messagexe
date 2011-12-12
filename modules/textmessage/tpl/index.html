@@ -4,26 +4,26 @@
 	<div class="body">
 		<div class="content dashboard" id="content">
 			<div cond="!$isSetupCompleted" class="message info">
-				<p>설정이 완료되지 않았습니다.</p>
-				<p><a href="{getUrl('act','dispTextmessageAdminConfig')}">설정하러가기</a></p>
+				<p>{$lang->msg_config_required}</p>
+				<p><a href="{getUrl('act','dispTextmessageAdminConfig')}">{$lang->cmd_goto_configure}</a></p>
 			</div>
 			<div class="section">
 
 				<div cond="$isSetupCompleted" class="portlet">
-					<h2 class="h2">충전내역</h2>
+					<h2 class="h2">{$lang->recharging_state}</h2>
 					<ul class="lined">
-						<li>서비스ID : {$config->service_id} <span class="side"><a href="{getUrl('act','dispTextmessageAdminConfig')}">설정변경</a></span></li>
-						<li>잔액 : <b title="SMS : {(int)($config->cs_cash / $config->sms_price)}, 장문 : {(int)($config->cs_cash / $config->lms_price)}, 포토 : {(int)($config->cs_cash / $config->mms_price)}">{number_format($config->cs_cash)}</b> 원<span class="side"><a href="http://www.coolsms.co.kr/chg/" target="_blank">충전하기</a></span></li>
-						<li>포인트 : <b title="SMS : {(int)($config->cs_point / $config->sms_price)}, 장문 : {(int)($config->cs_point / $config->lms_price)}, 포토 : {(int)($config->cs_point / $config->mms_price)}">{number_format($config->cs_point)}</b> 점 (잔액 소진 후 건당 {$config->sms_price} 포인트씩 자동차감)</li>
-						<li cond="$config->cs_mdrop">문자방울 : <b>{number_format($config->cs_mdrop)}</b> 개 (SMS 1개, 장문 3개, 포토 10개 차감)</li>
-						<li>일반 : <b style="color:red"|cond="$config->sms_volume < 100">{number_format($config->sms_volume)}</b> 개 발송가능 (건당 {$config->sms_price}원 차감)</li>
-						<li>장문 : <b>{number_format($config->lms_volume)}</b> 개 발송가능 (건당 {$config->lms_price}원 차감)</li>
-						<li>포토 : <b>{number_format($config->mms_volume)}</b> 개 발송가능 (건당 {$config->mms_price}원 차감)</li>
+						<li>{$lang->service_id} : {$config->service_id} <span class="side"><a href="{getUrl('act','dispTextmessageAdminConfig')}">{$lang->cmd_configure}</a></span></li>
+						<li>{$lang->balance} : <b title="{$lang->sms} : {(int)($config->cs_cash / $config->sms_price)}, {$lang->lms} : {(int)($config->cs_cash / $config->lms_price)}, {$lang->mms} : {(int)($config->cs_cash / $config->mms_price)}">{number_format($config->cs_cash)}</b> {$lang->won} <span class="side"><a href="http://www.coolsms.co.kr/chg/" target="_blank">{$lang->recharge}</a></span></li>
+						<li>{$lang->point} : <b title="{$lang->sms} : {(int)($config->cs_point / $config->sms_price)}, {$lang->lms} : {(int)($config->cs_point / $config->lms_price)}, {$lang->mms} : {(int)($config->cs_point / $config->mms_price)}">{number_format($config->cs_point)}</b> {sprintf($lang->point_guide,$config->sms_price)}</li>
+						<li cond="$config->cs_mdrop">{$lang->mdrop} : <b>{number_format($config->cs_mdrop)}</b> 개 (SMS 1개, 장문 3개, 포토 10개 차감)</li>
+						<li>{$lang->sms} : <b style="color:red"|cond="$config->sms_volume < 100">{number_format($config->sms_volume)}</b> {sprintf($lang->volume_guide,$config->sms_price)}</li>
+						<li>{$lang->lms} : <b>{number_format($config->lms_volume)}</b> {sprintf($lang->volume_guide,$config->lms_price)}</li>
+						<li>{$lang->mms} : <b>{number_format($config->mms_volume)}</b> {sprintf($lang->volume_guide,$config->mms_price)}</li>
 					</ul>
 				</div>
 
 				<div class="portlet">
-					<h2 class="h2">공지</h2>
+					<h2 class="h2">{$lang->notice}</h2>
 					<ul class="lined">
 						<!--@foreach($news AS $key=>$value)-->
 						<li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
