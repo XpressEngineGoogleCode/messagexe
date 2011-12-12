@@ -122,6 +122,22 @@
 			}
 		}
 
+		function procTextmessageAdminDeleteStatistics() {
+			$stats_date = Context::get('stats_date');
+			$args->stats_year = substr($stats_date, 0, 4);
+			$args->stats_month = substr($stats_date, 4, 2);
+			$args->stats_day = sprintf("%02u", (int)Context::get('day'));
+			$output = executeQuery('textmessage.deleteStatistics', $args);
+			if (!$output->toBool()) return $output;
+		}
+
+		function procTextmessageAdminDeleteStatisticsMonth() {
+			$stats_date = Context::get('stats_date');
+			$args->stats_year = substr($stats_date, 0, 4);
+			$args->stats_month = sprintf("%02u", (int)Context::get('month'));
+			$output = executeQuery('textmessage.deleteStatistics', $args);
+			if (!$output->toBool()) return $output;
+		}
 		function procTextmessageAdminStatistics() {
 			$stats_date = Context::get('stats_date');
 			$args->regdate = $stats_date;
@@ -234,7 +250,7 @@
             $output = $oTextmessageController->cancelMessage($message_id_arr);
             if(!$output->toBool()) return $output;
 
-            $this->setMessage('success_canceled');
+            $this->setMessage('success_requested');
 
 			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminUsageStatement','group_id',Context::get('group_id'),'stats_date',Context::get('stats_date'));
 			$this->setRedirectUrl($redirectUrl);
@@ -249,7 +265,7 @@
             $output = $oTextmessageController->cancelGroupMessages($group_ids);
             if(!$output->toBool()) return $output;
 
-            $this->setMessage('success_canceled');
+            $this->setMessage('success_requested');
 
 			$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminUsageStatement','stats_date',Context::get('stats_date'));
 			$this->setRedirectUrl($redirectUrl);

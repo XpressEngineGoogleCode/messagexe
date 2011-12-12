@@ -78,7 +78,7 @@
 			$oTextmessageAdminController = &getAdminController('textmessage');
 
 			$stats_date = Context::get('stats_date');
-			$month = Context::get('month');
+			$month = sprintf("%02u", (int)Context::get('month'));
 
 			$args->stats_year = substr($stats_date, 0, 4);
 			$args->stats_month = $month;
@@ -125,7 +125,7 @@
 			$oTextmessageAdminController = &getAdminController('textmessage');
 
 			$stats_date = Context::get('stats_date');
-			$day = Context::get('day');
+			$day = sprintf("%02u", (int)Context::get('day'));
 
 			$args->stats_year = substr($stats_date, 0, 4);
 			$args->stats_month = substr($stats_date, 4, 2);
@@ -168,6 +168,11 @@
 				$stats->mms_lg_count += $val->mms_lg_count;
 				$stats->oversea_count += $val->oversea_count;
 			}
+
+			$year = (int)substr($stats_date,0,4);
+			$month = (int)substr($stats_date,4,2);
+			$last_day = date('t',mktime(0,0,0,$month,1,$year));
+			$this->add('last_day',$last_day);
 			$this->add('data', $stats);
 		}
 	}

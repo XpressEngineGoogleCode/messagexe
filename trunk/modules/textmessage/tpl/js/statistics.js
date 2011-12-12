@@ -1,7 +1,8 @@
 function completeGetStatistics(ret) {
+	if (typeof(getStatistics.last_day)=='undefined') getStatistics.last_day = parseInt(ret['last_day']);
 	var day = getStatistics.day;
 	var data = ret['data'];
-	var html = '<tr><td>'+day+'</td><td>'+data.sms_sk_count+'</td><td>'+data.sms_kt_count+'</td><td>'+data.sms_lg_count+'</td>';
+	var html = '<tr><td>'+day+'&nbsp;<span class="refresh" data-day="'+day+'" title="Update"></span></td><td>'+data.sms_sk_count+'</td><td>'+data.sms_kt_count+'</td><td>'+data.sms_lg_count+'</td>';
 	html += '<td>'+data.lms_sk_count+'</td><td>'+data.lms_kt_count+'</td><td>'+data.lms_lg_count+'</td>';
 	html += '<td>'+data.mms_sk_count+'</td><td>'+data.mms_kt_count+'</td><td>'+data.mms_lg_count+'</td>';
 	html += '<td>'+data.oversea_count+'</td></tr>';
@@ -45,7 +46,7 @@ function completeGetStatistics(ret) {
 
 	getStatistics.day++;
 
-	if (getStatistics.day <= 30) setTimeout("getStatistics()", 100);
+	if (getStatistics.day <= getStatistics.last_day) setTimeout("getStatistics()", 100);
 }
 
 function getStatistics() {
@@ -56,7 +57,7 @@ function getStatistics() {
 		'getTextmessageAdminStatistics',
 		{stats_date:stats_date,day:getStatistics.day},
 		completeGetStatistics,
-		['error','message','data']
+		['error','message','data','last_day']
 	);
 }
 
@@ -76,4 +77,18 @@ jQuery(function($) {
 	getStatistics.total_mms_count = 0;
 	getStatistics.total_oversea_count = 0;
 	getStatistics();
+
+	$('.refresh').live('click', function() {
+		var stats_date = $('#stats_date').val();
+		var day = $(this).attr('data-day');
+		exec_xml(
+			'textmessage',
+			'procTextmessageAdminDeleteStatistics',
+			{stats_date:stats_date,day:day},
+			function() {
+				location.href=current_url;
+			},
+			['error','message','data']
+		);
+	});
 });

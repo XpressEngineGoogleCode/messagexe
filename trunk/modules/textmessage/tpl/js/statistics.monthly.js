@@ -1,7 +1,7 @@
 function completeGetStatistics(ret) {
 	var month = getStatistics.month;
 	var data = ret['data'];
-	var html = '<tr><td>'+month+'</td><td>'+data.sms_sk_count+'</td><td>'+data.sms_kt_count+'</td><td>'+data.sms_lg_count+'</td>';
+	var html = '<tr><td>'+month+'&nbsp;<span class="refresh" data-month="'+month+'" title="Update"></span></td><td>'+data.sms_sk_count+'</td><td>'+data.sms_kt_count+'</td><td>'+data.sms_lg_count+'</td>';
 	html += '<td>'+data.lms_sk_count+'</td><td>'+data.lms_kt_count+'</td><td>'+data.lms_lg_count+'</td>';
 	html += '<td>'+data.mms_sk_count+'</td><td>'+data.mms_kt_count+'</td><td>'+data.mms_lg_count+'</td>';
 	html += '<td>'+data.oversea_count+'</td></tr>';
@@ -78,4 +78,18 @@ jQuery(function($) {
 	getStatistics.total_mms_count = 0;
 	getStatistics.total_oversea_count = 0;
 	getStatistics();
+
+	$('.refresh').live('click', function() {
+		var stats_date = $('#stats_date').val();
+		var month = $(this).attr('data-month');
+		exec_xml(
+			'textmessage',
+			'procTextmessageAdminDeleteStatisticsMonth',
+			{stats_date:stats_date,month:month},
+			function() {
+				location.href=current_url;
+			},
+			['error','message','data']
+		);
+	});
 });

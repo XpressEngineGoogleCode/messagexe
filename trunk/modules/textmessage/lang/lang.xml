@@ -12,13 +12,25 @@
 		<value xml:lang="ko"><![CDATA[콜백 URL]]></value>
 		<value xml:lang="en"><![CDATA[Callback URL]]></value>
 	</item>
+	<item name="usage_statement">
+		<value xml:lang="ko"><![CDATA[발송내역]]></value>
+		<value xml:lang="en"><![CDATA[Usage Statement]]></value>
+	</item>
+	<item name="dashboard">
+		<value xml:lang="ko"><![CDATA[대시보드]]></value>
+		<value xml:lang="en"><![CDATA[Dashboard]]></value>
+	</item>
+	<item name="statistics">
+		<value xml:lang="ko"><![CDATA[사용통계]]></value>
+		<value xml:lang="en"><![CDATA[Statistics]]></value>
+	</item>
 	<item name="cmd_cancel_reserv">
 		<value xml:lang="ko"><![CDATA[예약취소]]></value>
 		<value xml:lang="en"><![CDATA[Cancel Reservations]]></value>
 	</item>
-	<item name="success_canceled">
-		<value xml:lang="ko"><![CDATA[취소되었습니다]]></value>
-		<value xml:lang="en"><![CDATA[Canceled]]></value>
+	<item name="success_requested">
+		<value xml:lang="ko"><![CDATA[요청하였습니다]]></value>
+		<value xml:lang="en"><![CDATA[Requested]]></value>
 	</item>
 
 	<item name="about_service_id">

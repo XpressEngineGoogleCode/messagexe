@@ -4,12 +4,12 @@
     <permissions />
 	<menus>
 		<menu name="textmessageIndex">
-			<title xml:lang="ko">문자메시지 요약</title>
-			<title xml:lang="en">Textmessage Summary</title>
+			<title xml:lang="ko">문자메시지 대시보드</title>
+			<title xml:lang="en">Textmessage Dashboard</title>
 		</menu>
 		<menu name="textmessageUsageStatement">
-			<title xml:lang="ko">문자메시지 사용내역</title>
-			<title xml:lang="en">Textmessage Usage</title>
+			<title xml:lang="ko">문자메시지 발송내역</title>
+			<title xml:lang="en">Textmessage Statement</title>
 		</menu>
 		<menu name="textmessageStatistics">
 			<title xml:lang="ko">문자메시지 사용통계</title>
@@ -18,7 +18,7 @@
 	</menus>
     <actions>
         <action name="dispTextmessageAdminIndex" type="view" admin_index="true" menu_name="textmessageIndex" menu_index="true" />
-        <action name="dispTextmessageAdminConfig" type="view" />
+        <action name="dispTextmessageAdminConfig" type="view" menu_name="textmessageUsageStatement" />
         <action name="dispTextmessageAdminUsageStatement" type="view" menu_name="textmessageUsageStatement" menu_index="true" />
         <action name="dispTextmessageAdminStatisticsDaily" type="view" menu_name="textmessageStatistics" menu_index="true" />
         <action name="dispTextmessageAdminStatisticsMonthly" type="view" menu_name="textmessageStatistics" />
@@ -40,5 +40,7 @@
         <action name="procTextmessageAdminDeleteMessages" type="controller" />
         <action name="procTextmessageAdminDeleteGroup" type="controller" />
         <action name="procTextmessageAdminUpdateStatus" type="controller" />
+        <action name="procTextmessageAdminDeleteStatisticsMonth" type="controller" />
+        <action name="procTextmessageAdminDeleteStatistics" type="controller" />
     </actions>
 </module>
