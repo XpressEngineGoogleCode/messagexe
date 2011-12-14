@@ -112,21 +112,6 @@
         function dispTextmessageAdminStatisticsDaily() {
             $logged_info = Context::get('logged_info');
             if (!Context::get('stats_date')) Context::set('stats_date', date('Ymd'));
-
-			/*
-            if ($logged_info) {
-                $args->stats_year = substr(Context::get('stats_date'), 0, 4);
-                $args->stats_month = substr(Context::get('stats_date'), 4, 2);
-                $output = executeQueryArray("textmessage.getStatisticsDaily", $args);
-				debugPrint('getStatDaily: ' . serialize($output));
-                if (!$output->toBool()) return $output;
-                Context::set('stats_data', $output->data);
-            }
-			 */
-
-			//$oTextmessageAdminController = &getAdminController('textmessage');
-			//$oTextmessageAdminController->makeStatistics();
-
             $this->setTemplateFile('stats_daily');
         }
 

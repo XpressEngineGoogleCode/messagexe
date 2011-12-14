@@ -314,7 +314,6 @@
 			$sms = $oTextmessageModel->getCoolSMS();
 			if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
 			$result = $sms->rcheck($message_id);
-			debugPrint('result : ' . serialize($result));
 			$args->message_id = $message_id;
 			$args->status = $result['STATUS'];
 			$args->resultcode = $result['RESULT-CODE'];

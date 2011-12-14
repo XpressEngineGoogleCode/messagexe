@@ -40,7 +40,6 @@
 		function plusWaitingCount($group_id) {
 			$args->group_id = $group_id;
 			$output = executeQuery('textmessage.plusWaitingCount', $args);
-			debugPrint('plusWaitingCount : ' . serialize($output));
 			return $output;
 		}
 
@@ -51,20 +50,15 @@
 		function plusFailureCount($group_id) {
 			$args->group_id = $group_id;
 			$output = executeQuery('textmessage.plusFailureCount', $args);
-			debugPrint('plusFailureCount : ' . serialize($output));
 			return $output;
 		}
 		function plusSuccessCount($group_id) {
 			$args->group_id = $group_id;
 			$output = executeQuery('textmessage.plusSuccessCount', $args);
-			debugPrint('plusSuccessCount : ' . serialize($output));
 			return $output;
 		}
 
 		function minusCount($group_id, $status, $resultcode) {
-			debugPrint('group_id: ' . $group_id);
-			debugPrint('status: ' . $status);
-			debugPrint('resultcode: ' . $resultcode);
 			if (in_array($status, array('0','9'))) {
 				if (in_array($resultcode, array('00','99'))) $this->minusWaitingCount($group_id);
 				else $this->minusFailureCount($group_id);
@@ -84,9 +78,6 @@
 		}
 
 		function plusCount($group_id, $status, $resultcode) {
-			debugPrint('group_id: ' . $group_id);
-			debugPrint('status: ' . $status);
-			debugPrint('resultcode: ' . $resultcode);
 			if (in_array($status, array('0','9'))) {
 				if (in_array($resultcode, array('00','99'))) $this->plusWaitingCount($group_id);
 				else $this->plusFailureCount($group_id);
@@ -124,7 +115,6 @@
 			$args->senddate = $in_args->senddate;
 			$args->carrier = $in_args->carrier;
 			$output = executeQuery('textmessage.updateStatus', $args);
-			debugPrint('updateStatus : ' . serialize($output));
 			return $output;
 		}
 
@@ -197,9 +187,7 @@
 				$in_args->message_id = $message_id;
 				$in_args->group_id = $group_id;
 				$in_args->mtype = $in_args->type;
-				debugPrint('in_args : ' . serialize($in_args));
 				$output = $this->insertTextmessage($in_args);
-				debugPrint('insertTextmessage : ' . serialize($output));
 				if (!$output->toBool()) return $output;
 
 				if (!$sms->addobj($sms_args)) {
@@ -254,12 +242,10 @@
 						case "58":
 							$alert = "해당 번호로 전송할 경로가 없습니다.";
 					}
-					debugPrint('row : ' . serialize($row));
 					$args->message_id = $row["MESSAGE-ID"];
 					$args->status = '9';
 					$args->resultcode = $row["RESULT-CODE"];
 					$output = $this->updateStatus($args,true);
-					debugPrint('updateSTatus : ' . serialize($output));
 				}
 			}
 			$sms->disconnect();
