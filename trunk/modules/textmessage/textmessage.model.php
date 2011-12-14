@@ -196,7 +196,6 @@
 		function getMessageInfo($message_id) {
 			$args->message_id = $message_id;
 			$output = executeQuery('textmessage.getTextmessageInfo',$args);
-			debugPrint('getMessageInfo : ' .serialize($output));
 			return $output->data;
 		}
 }
