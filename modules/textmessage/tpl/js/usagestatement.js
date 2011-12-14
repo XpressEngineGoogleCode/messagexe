@@ -50,19 +50,17 @@ function completeCancelGroupMessages(ret_obj) {
 }
 
 jQuery(function($) {
-	$('a.modalAnchor.cancelReserv').bind('before-open.mw', function(event){
-		var message_id = makeList();
-		if(message_id.length<1) return;
+	$('a.modalAnchor.cancelGroup').bind('before-open.mw', function(event){
+		var group_ids = makeList();
+		if(group_ids.length<1) return;
 
 		exec_xml(
 			'textmessage',
-			'getTextmessageAdminCancelReserv',
-			{message_id:message_id},
+			'getTextmessageAdminCancelGroup',
+			{group_ids:group_ids},
 			function(ret){
 				var tpl = ret.tpl.replace(/<enter>/g, '\n');
 				$('#cancelForm').html(tpl);
-
-				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
 			},
 			['error','message','tpl']
 		);
@@ -79,8 +77,6 @@ jQuery(function($) {
 			function(ret){
 				var tpl = ret.tpl.replace(/<enter>/g, '\n');
 				$('#cancelForm').html(tpl);
-
-				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
 			},
 			['error','message','tpl']
 		);
@@ -97,8 +93,6 @@ jQuery(function($) {
 			function(ret){
 				var tpl = ret.tpl.replace(/<enter>/g, '\n');
 				$('#deleteForm').html(tpl);
-
-				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
 			},
 			['error','message','tpl']
 		);
@@ -115,8 +109,6 @@ jQuery(function($) {
 			function(ret){
 				var tpl = ret.tpl.replace(/<enter>/g, '\n');
 				$('#deleteForm').html(tpl);
-
-				//if (checked)$('#extendForm #radio_'+checked).attr('checked', 'checked');
 			},
 			['error','message','tpl']
 		);
