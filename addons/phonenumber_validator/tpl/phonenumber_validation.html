@@ -26,10 +26,13 @@
     <input type="hidden" name="act" value="{$act}">
     <input type="hidden" name="authcode" value="{$authcode}">
 </form>
+
 <!--%import("js/data.js")-->
 <script>
     // alert
-    <!--@if($alert_message)-->alert("{$alert_message}");<!--@end-->
+    <block cond="$alert_message">
+        alert("{$alert_message}");
+    </block>
 
 
     // getting input values
@@ -77,24 +80,5 @@
         // set value
         jQuery('#country_code').val(code);
     }
-
-/*
-// for test
-(function($) {
-    jQuery(function($) {
-
-    // set country code
-    countrycode = '1';
-    objs = window.opener.document.getElementsByName("{$countrycode_fieldname}");
-    objs[0].value = countrycode;
-
-    // set flag
-    obj = window.opener.document.getElementById("phoneNumberValidatorFlag");
-    alert(jQuery('body').data('82'));
-    jQuery(obj).text(jQuery('body').data(countrycode) + '(' + countrycode + ')');
-    });
-}) (jQuery);
-*/
-
 
 </script>
