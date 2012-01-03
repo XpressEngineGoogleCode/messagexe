@@ -1,0 +1,10 @@
+<filter name="delete_noticom" module="notification" act="procNotificationAdminComDelete" confirm_msg_code="confirm_delete">
+    <form>
+        <node target="notification_srl" require="true" />
+    </form>
+    <parameter />
+    <response callback_func="completeNotiComAction">
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>

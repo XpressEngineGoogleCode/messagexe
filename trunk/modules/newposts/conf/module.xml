@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants />
+    <permissions />
+	<menus>
+		<menu name="newpostsConfig">
+			<title xml:lang="ko">새글알림설정</title>
+			<title xml:lang="en">Newposts Configuration</title>
+		</menu>
+	</menus>
+    <actions>
+        <action name="dispNewpostsAdminList" type="view" admin_index="true" menu_name="newpostsConfig" menu_index="true" />
+        <action name="dispNewpostsAdminInsert" type="view"  menu_name="newpostsConfig" />
+        <action name="dispNewpostsAdminModify" type="view"  menu_name="newpostsConfig" />
+
+        <action name="getNewpostsAdminDelete" type="model" />
+
+        <action name="procNewpostsAdminInsert" type="controller"  />
+        <action name="procNewpostsAdminDelete" type="controller"  />
+    </actions>
+</module>
