@@ -1,0 +1,11 @@
+<load target="css/style.css" />
+<h1 class="h1">{$lang->cmd_newposts}</h1>
+
+<div cond="0" class="header4">
+    <ul class="localNavigation">
+        <li <!--@if($act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify')-->class="on"<!--@end-->><a href="{getUrl('act','dispNewpostsAdminList')}">{$lang->cmd_newposts_config}</a></li>
+    </ul>
+</div>
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
