@@ -1,0 +1,10 @@
+<filter name="delete_notidoc" module="notification" act="procNotificationAdminDocDelete" confirm_msg_code="confirm_delete">
+    <form>
+        <node target="notification_srl" require="true" />
+    </form>
+    <parameter />
+    <response callback_func="completeNotiDocAction">
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>

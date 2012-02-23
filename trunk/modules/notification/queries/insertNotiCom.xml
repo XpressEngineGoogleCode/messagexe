@@ -1,0 +1,15 @@
+<query id="insertNotiCom" action="insert">
+	<tables>
+		<table name="notification_comment" />
+	</tables>
+	<columns>
+		<column name="notification_srl" var="notification_srl" filter="number" notnull="notnull" />
+		<column name="content" var="content" notnull="notnull" />
+		<column name="msgtype" var="msgtype" default="SMS" />
+		<column name="mail_content" var="mail_content" notnull="notnull" />
+		<!-- 1: SMS+Mail, 2: SMS, 3: Email -->
+		<column name="sending_method" var="sending_method" default="1" />
+		<column name="extra_vars" var="extra_vars" default="" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>

@@ -1,0 +1,12 @@
+<filter name="noticom_append" module="notification" act="procNotificationAdminComAppend" confirm_msg_code="confirm_submit">
+    <form>
+		<node target="notification_srl" require="true" />
+	</form>
+    <parameter>
+		<param name="noti_srl" target="notification_srl" />
+	</parameter>
+    <response callback_func="completeNotiComAction">
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>

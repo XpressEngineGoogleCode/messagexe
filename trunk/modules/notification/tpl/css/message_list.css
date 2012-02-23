@@ -1,0 +1,7 @@
+@charset "utf-8";
+/* vi:set ts=4 sw=4 expandtab enc=utf8: */
+.reservdate { margin:0 0 0 2px; font-family:"Arial Black"; font-size:9pt; }
+.receipt_status { margin:0 16px 0 16px; font-family:"Arial Black"; font-size:9pt; }
+.success_count { color:#3dadf7; }
+.cancel_count { color:#fc6908; }
+.subcount { color:#868686; }

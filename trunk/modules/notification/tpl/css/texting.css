@@ -1,0 +1,272 @@
+@charset "utf-8";
+/* vi:set ts=4 sw=4 expandtab enc=utf8: */
+
+/* Browser Reset Preference - 수정하지 마십시오
+---------------------------------------------------------------------------------*/
+* { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6, pre, code { font-size: 1em }
+a img { border: none; }
+fieldset { border:none; }
+input { margin:0; padding:0; }
+a {  }
+
+
+
+
+
+/* Layouts - Restricted Preference - 수정하지 마십시오
+---------------------------------------------------------------------------------*/
+#cellphone_telnumlist,
+#cellphone_text { overflow-y:scroll; *zoom:1; }
+
+/* Naver White */
+.pxe_pointmsg_white { *zoom:1; overflow:hidden; }
+.pxe_pointmsg_white .body { *zoom:1; overflow:hidden; }
+.pxe_pointmsg_white .lcd { *zoom:1; overflow:hidden; clear:both; }
+.pxe_pointmsg_white .caller { *zoom:1; overflow:hidden; }
+.pxe_pointmsg_white .sendMsg { *zoom:1; overflow:hidden; }
+.pxe_pointmsg_white .footer { *zoom:1; overflow:hidden; }
+
+/* Naver Black */
+.pxe_pointmsg_black { *zoom:1; overflow:hidden; }
+.pxe_pointmsg_black .body { *zoom:1; overflow:hidden; }
+.pxe_pointmsg_black .lcd { *zoom:1; overflow:hidden; clear:both; }
+.pxe_pointmsg_black .caller { *zoom:1; overflow:hidden; }
+.pxe_pointmsg_black .sendMsg { *zoom:1; overflow:hidden; }
+.pxe_pointmsg_black .footer { *zoom:1; overflow:hidden; }
+
+
+
+/* Layouts - Margin & Position Preference - 필요에 따라 margin과 Padding 값만 수정하세요
+---------------------------------------------------------------------------------*/
+
+/* Naver White */
+.pxe_pointmsg_white {  }
+.pxe_pointmsg_white .body { padding:20px 14px 0 14px; }
+.pxe_pointmsg_white .lcd { margin-bottom:8px; padding:13px 9px; }
+.pxe_pointmsg_white .listFooter,
+.pxe_pointmsg_white .lcdFooter { margin-top:4px; padding-top:5px; }
+.pxe_pointmsg_white .msgSelect { margin-bottom:8px; padding:5px 6px 0px 6px; *padding:1px 6px 3px 6px; }
+.pxe_pointmsg_white .list { padding:68px 8px 0 8px; }
+.pxe_pointmsg_white .caller { margin:4px 0 -5px 0; *margin:4px 0 2px 0; padding-top:3px; }
+.pxe_pointmsg_white .footer { padding:0 14px 0 14px; }
+
+/* Naver Black */
+.pxe_pointmsg_black {  }
+.pxe_pointmsg_black .body { padding:20px 14px 0 14px; }
+.pxe_pointmsg_black .lcd { margin-bottom:8px; padding:13px 9px; }
+.pxe_pointmsg_black .listFooter,
+.pxe_pointmsg_black .lcdFooter { margin-top:4px; padding-top:5px; }
+.pxe_pointmsg_black .msgSelect { margin-bottom:8px; padding:5px 6px 0px 6px; *padding:1px 6px 3px 6px; }
+.pxe_pointmsg_black .list { padding:68px 8px 0 8px; }
+.pxe_pointmsg_black .caller { margin:4px 0 -5px 0; *margin:4px 0 2px 0; padding-top:3px; }
+.pxe_pointmsg_black .footer { padding:0 14px 0 14px; }
+
+
+
+
+
+/* Colorset - Naver White
+---------------------------------------------------------------------------------*/
+.pxe_pointmsg_white #cellphone_text { 
+    width:118px; 
+	height:93px; 
+	border:0; 
+	background:none; 
+	font:9pt 돋움체, DotumChe; 
+	color:#4f7319; 
+	line-height:140%; 
+
+    letter-spacing: 0;
+	word-break: break-all;
+	overflow: -moz-scrollbars-vertical;
+	overflow-y: scroll;
+
+	scrollbar-face-color: #a2e835;
+	scrollbar-shadow-color: #a2e835;
+	scrollbar-highlight-color: #a2e835;
+	scrollbar-3dlight-color: #a2e835;
+	scrollbar-darkshadow-color: #a2e835;
+	scrollbar-track-color: #a2e835;
+	scrollbar-arrow-color: #6fbd00;
+}
+
+.pxe_pointmsg_white #cellphone_bytes { 
+    width:90px; 
+	border:0; 
+	background:none; 
+	font:9px Tahoma; 
+	color:#6e9e0c; 
+	text-align:left; 
+	line-height:160%; 
+	float:left; 
+	overflow:hidden;
+}
+
+.pxe_pointmsg_white #cellphone_listcount { 
+    width:90px; 
+	height:20px;
+	border:0; 
+	background:none; 
+	font:8pt 돋움; 
+	color:#999; 
+	text-align:left; 
+	line-height:160%; 
+	float:left; 
+	overflow:hidden;
+}
+
+.pxe_pointmsg_white #cellphone_telnumlist { 
+    width:100%; 
+	height:70px; 
+	border:0; 
+	background:none; 
+	font:8pt 돋움, Dotum; 
+	color:#999; 
+	text-align:left; 
+	line-height:140%; 
+	scrollbar-face-color: #fff;
+	scrollbar-shadow-color: #fff;
+	scrollbar-highlight-color: #fff;
+	scrollbar-3dlight-color: #d7d7d7;
+	scrollbar-darkshadow-color: #d7d7d7;
+	scrollbar-track-color: #f3f3f3;
+	scrollbar-arrow-color: #737373;
+}
+
+.pxe_pointmsg_white #cellphone_callback { 
+	position:relative; 
+	top:-3px; 
+	width:111px;
+	height:16px; 
+	border:1px solid #d3d3d3; 
+	background:url(../img/icon_arrow.gif) right center no-repeat; 
+	text-align:left; 
+	font:11px Arial, Helvetica, sans-serif;
+	color:#999; 
+	float:right;
+}
+
+.pxe_pointmsg_white { width:190px; }
+.pxe_pointmsg_white .body { height:422px; font:8pt 돋움, Dotum; color:#999; letter-spacing:-1px; background:url(../img/bg_phone.gif) left top no-repeat; }
+.pxe_pointmsg_white .lcd { height:118px; background:url(../img/bg_phone_lcd.gif) no-repeat; text-align:right; }
+.pxe_pointmsg_white .lcdFooter { border-top:1px solid #94da27; }
+.pxe_pointmsg_white .lcdFooter input.rewrite { float:right; }
+.pxe_pointmsg_white .footer { height:15px; background:url(../img/bg_phone.gif) 0 -651px no-repeat; }
+
+.pxe_pointmsg_white .msgSelect { height:21px; border:1px solid #d7d7d7; color:#999; clear:both; overflow:hidden; }
+.pxe_pointmsg_white .msgSelect input { position:relative; top:1px; }
+.pxe_pointmsg_white .msgSelect .checkSMS { float:left; }
+.pxe_pointmsg_white .msgSelect .checkLMS { float:right; }
+
+.pxe_pointmsg_white .addressbook { position: absolute; }
+.pxe_pointmsg_white .addressbook .btn_address { position: absolute; top: 6px; left: 95px; }
+
+.pxe_pointmsg_white .list { height:107px; background:url(../img/bg_list.gif) no-repeat; }
+.pxe_pointmsg_white .listFooter { border-top:1px solid #ebebeb; }
+.pxe_pointmsg_white .listFooter input.confirm { float:right; }
+
+.pxe_pointmsg_white .sendMsg .btnSend,
+.pxe_pointmsg_white .sendMsg .btnReserv { position:relative; }
+.pxe_pointmsg_white .sendMsg .btnReserv { top:-1px; }
+
+
+/* Colorset - Naver Black
+---------------------------------------------------------------------------------*/
+.pxe_pointmsg_black #cellphone_text { 
+    width:118px; 
+	height:93px; 
+	border:0; 
+	background:none; 
+	font:9pt 돋움체, DotumChe; 
+	color:#999; 
+	line-height:140%; 
+
+    letter-spacing: 0;
+	word-break: break-all;
+	overflow: -moz-scrollbars-vertical;
+	overflow-y: scroll;
+
+	scrollbar-face-color: #191919;
+	scrollbar-shadow-color: #191919;
+	scrollbar-highlight-color: #191919;
+	scrollbar-3dlight-color: #191919;
+	scrollbar-darkshadow-color: #191919;
+	scrollbar-track-color: #191919;
+	scrollbar-arrow-color: #535353;
+}
+
+.pxe_pointmsg_black #cellphone_bytes { 
+    width:90px; 
+	border:0; 
+	background:none; 
+	font:9px Tahoma; 
+	color:#535353; 
+	text-align:left; 
+	line-height:160%; 
+	float:left; 
+	overflow:hidden;
+}
+
+.pxe_pointmsg_black #cellphone_listcount { 
+    width:90px; 
+	height:20px;
+	border:0; 
+	background:none; 
+	font:8pt 돋움; 
+	color:#535353; 
+	text-align:left; 
+	line-height:160%; 
+	float:left; 
+	overflow:hidden;
+}
+
+.pxe_pointmsg_black #cellphone_telnumlist { 
+    width:100%; 
+	height:70px; 
+	border:0; 
+	background:none; 
+	font:8pt 돋움, Dotum; 
+	color:#535353; 
+	text-align:left; 
+	line-height:140%; 
+	scrollbar-face-color: #161616;
+	scrollbar-shadow-color: #161616;
+	scrollbar-highlight-color: #161616;
+	scrollbar-3dlight-color: #282828;
+	scrollbar-darkshadow-color: #282828;
+	scrollbar-track-color: #000000;
+	scrollbar-arrow-color: #535353;
+}
+
+.pxe_pointmsg_black #cellphone_callback { 
+	position:relative; 
+	top:-3px; 
+	width:111px;
+	height:16px; 
+	border:1px solid #282828; 
+	background:url(../img/black_icon_arrow.gif) right center no-repeat; 
+	text-align:left; 
+	font:11px Arial, Helvetica, sans-serif;
+	color:#535353; 
+	float:right;
+}
+
+.pxe_pointmsg_black { width:190px; }
+.pxe_pointmsg_black .body { height:422px; font:8pt 돋움, Dotum; color:#535353; letter-spacing:-1px; background:url(../img/black_bg_phone.gif) left top no-repeat; }
+.pxe_pointmsg_black .lcd { height:118px; background:url(../img/black_bg_phone_lcd.gif) no-repeat; text-align:right; color:#999!important; }
+.pxe_pointmsg_black .lcdFooter { border-top:1px solid #282828; }
+.pxe_pointmsg_black .lcdFooter input.rewrite { float:right; }
+.pxe_pointmsg_black .footer { height:15px; background:url(../img/black_bg_phone.gif) 0 -651px no-repeat; }
+
+.pxe_pointmsg_black .msgSelect { height:21px; border:1px solid #282828; color:#535353; background:#161616; clear:both; overflow:hidden; }
+.pxe_pointmsg_black .msgSelect input { position:relative; top:1px; }
+.pxe_pointmsg_black .msgSelect .checkSMS { float:left; }
+.pxe_pointmsg_black .msgSelect .checkLMS { float:right; }
+
+.pxe_pointmsg_black .list { height:107px; background:url(../img/black_bg_list.gif) no-repeat; }
+.pxe_pointmsg_black .listFooter { border-top:1px solid #282828; }
+.pxe_pointmsg_black .listFooter input.confirm { float:right; }
+
+.pxe_pointmsg_black .sendMsg .btnSend,
+.pxe_pointmsg_black .sendMsg .btnReserv { position:relative; }

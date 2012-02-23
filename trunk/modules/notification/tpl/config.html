@@ -1,0 +1,25 @@
+<!--#include("header.html")-->
+
+<form id="fo_config" action="./" method="post" class="form" ruleset="insertConfig">
+	<input type="hidden" name="module" value="notification" />
+	<input type="hidden" name="act" value="procNotificationAdminConfig" />
+	<fieldset class="section">
+		<h2 class="xeAdmin">{$lang->module_config}</h4>
+		<ul>
+			<li>
+				<p class="q">{$lang->cellphone_fieldname}</p>
+				<p class="a">
+					<select name="cellphone_fieldname">
+						<option value="">{$lang->select}</option>
+						<option loop="$member_config->signupForm=>$item" value="{$item->name}" selected="selected"|cond="$item->name==$config->cellphone_fieldname">{$item->title}</option>
+					</select>
+					<p>{$lang->about_cellphone_fieldname}</p>
+				</p>
+			</li>
+		</ul>
+	</fieldset>
+	<div class="btnArea">
+		<span class="btn"><input type="submit" value="{$lang->cmd_apply}" /></span>
+	</div>
+</form>
+

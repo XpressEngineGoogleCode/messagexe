@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+    <title xml:lang="ko">댓글알림</title>
+    <description xml:lang="ko">문자와 메일로 댓글을 알려줍니다.</description>
+    <version>2.0.BETA</version>
+    <date>2011-12-14</date>
+    <category>service</category>
+    <author email_address="contact@nurigo.net" link="http://www.coolsms.co.kr">
+        <name xml:lang="ko">NURIGO</name>
+    </author>
+</module>

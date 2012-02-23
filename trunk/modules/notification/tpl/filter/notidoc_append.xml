@@ -1,0 +1,12 @@
+<filter name="notidoc_append" module="notification" act="procNotificationAdminDocAppend" confirm_msg_code="confirm_submit">
+    <form>
+        <node target="content" require="true" />
+        <node target="msgtype" require="true" />
+        <node target="callback_number_type" require="true" />
+    </form>
+    <parameter />
+    <response callback_func="completeNotiDocAction">
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>
