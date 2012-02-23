@@ -1,0 +1,11 @@
+<query id="getNotificationMembers" action="select">
+    <tables>
+        <table name="member" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="in" column="user_id" var="user_ids" notnull="notnull" />
+    </conditions>
+</query>

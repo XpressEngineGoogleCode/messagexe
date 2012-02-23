@@ -1,0 +1,8 @@
+<query id="deleteNotiCom" action="delete">
+	<tables>
+		<table name="notification_comment" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="notification_srl" var="notification_srl" notnull="notnull" />
+	</conditions>
+</query>

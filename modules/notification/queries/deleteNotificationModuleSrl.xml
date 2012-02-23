@@ -1,0 +1,8 @@
+<query id="deleteNotificationModuleSrl" action="delete">
+	<tables>
+		<table name="notification_modules" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="notification_srl" var="notification_srl" notnull="notnull" />
+	</conditions>
+</query>

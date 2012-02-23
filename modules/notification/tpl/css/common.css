@@ -1,0 +1,170 @@
+@charset "utf-8";
+/* vi:set ts=4 sw=4 expandtab enc=utf8: */
+.smsBox{ display:block; margin:0; padding:0; width: 748px; }
+.smsBox form { border:0; margin:0; padding:0; }
+.smsBox {font-family:돋움,dotum; font-size:9pt;}
+
+/* resourceTab */
+.smsBox .smsResource { float:left; }
+.smsBox .smsResource .smsResourceTab { margin:8px 0 1px 6px; border:solid #fff 1px; }
+.smsBox .smsResource .smsResourceTab .btnMembers { display:inline; margin-right:3px; width:60px; height:18px; background:url('../img/btn_members.gif') no-repeat; border:0; text-indent:-1000em; overflow:hidden; }
+.smsBox .smsResource .smsResourceTab .btnMembers.membersOn { display:inline; margin-right:3px; width:60px; height:18px; background:url('../img/btn_members_on.gif') no-repeat; border:0; text-indent:-1000em; overflow:hidden; }
+.smsBox .smsResource .smsResourceTab .btnPurplebook { display:inline; margin-right:3px; width:48px; height:18px; background:url('../img/btn_yellowbook.gif') no-repeat; border:0; text-indent:-1000em; overflow:hidden; }
+.smsBox .smsResource .smsResourceTab .btnPurplebook.purplebookOn { display:inline; margin-right:3px; width:48px; height:18px; background:url('../img/btn_yellowbook_on.gif') no-repeat; border:0; text-indent:-1000em; overflow:hidden; }
+
+
+.smsBox .smsResource .smsBlank { width:380px; height:571px; }
+
+/* smsOrganization */
+.smsBox .smsOrganization {  border:solid #e7e7e7 1px; margin:0 0 0 4px; padding:2px;}
+
+/* smsOrgGroup */
+.smsBox .smsOrganization .smsOrgGroup { clear:both; width:380px; height:183px; overflow:hidden; font-family:굴림체, DotumChe; font-size:9pt; }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupHeader { position:relative; margin:0; height: 16px; padding:5px 0 0 0; border: #e7e7e7 1px solid; background: #f7f7f7; font: 11px dotum; letter-spacing: -1px; color: #4c4c4c; } 
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupHeader span { display:block; position:relative; float:left; }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupHeader span.sequence { width:31px; margin:0 0 0 8px;  }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupHeader span.chkGroup { margin:0 0 0 10px; width: 13px; background:url('../img/bg_checkbox_01.gif') no-repeat; float: left; height: 13px; overflow: hidden; cursor:pointer; } 
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupHeader span.chkGroup.on { background-position: 0px -13px; } 
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupHeader span.groupName { margin: 0 0 0 10px; }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupBody { width:378px; height:148px; border:solid #e7e7e7 1px; border-top:0; overflow:auto; font-family:굴림체, DotumChe; font-size:9pt; }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupBody ul { margin:10px; padding:0; } 
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupBody ul li { height: 21px;  font-size: 12px; color:#676767; list-style-type:none; margin:0; padding:0; display:block;}
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupBody ul li span { text-overflow: ellipsis; }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupBody ul li span.chkGroup { margin:0; width: 13px; background:url('../img/bg_checkbox_01.gif') no-repeat; float: left; height: 13px; overflow: hidden; cursor:pointer; } 
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupBody ul li span.chkGroup.on { margin:0; background-position: 0px -13px; } 
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupBody ul li span.sequence { width:31px; margin:0 0 0 8px; font-family:tahoma; white-space:nowrap; float:left; overflow:hidden; font-weight:normal; }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupBody ul li span.groupName { margin: 0 0 0 10px; width: 240px; font-family: tahoma; white-space: nowrap; float: left; overflow: hidden; font-weight: normal; cursor:pointer; }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupBody ul li span.groupName.groupNameOn { width:240px; margin:0 0 0 9px; font-family: tahoma; white-space: nowrap; float: left; overflow: hidden; font-weight: normal; cursor:pointer; color:white; background-color:#2673ab; }
+/*
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupFooter { width:366px; height:46px; border:solid #e7e7e7 1px; background: #f7f7f7; overflow:hidden; font-family:굴림체, DotumChe; font-size:9pt; }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupFooter #smsSearchWord { float:left; font-size:8pt; padding:0; display:inline; }
+.smsBox .smsOrganization .smsOrgGroup .smsOrgGroupFooter #btnSearch {  position:relative; display:inline; float:left; top:-2px; margin:0 10px 2px 0; width:62px; height:18px; padding-bottom:2px; background:url('../img/btn_openall.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+*/
+
+/* smsMembers */
+.smsBox .smsOrganization .smsMembers { margin: 10px 0 0 0; width:380px; height:339px;  overflow:hidden; font-family:굴림체, DotumChe; font-size:9pt;  }
+.smsBox .smsOrganization .smsMembers .smsMemberSearch .smsMemberSearchForm { border:0; margin:0; padding:0; }
+.smsBox .smsOrganization .smsMembers .smsMemberSearch .smsMemberSearchForm fieldset { border:0; margin:0; padding:0; }
+.smsBox .smsOrganization .smsMembers .smsMemberSearch .smsMemberSearchForm select { margin: 2px 0 0 0; font-size:8pt; padding:0; }
+.smsBox .smsOrganization .smsMembers .smsMemberSearch .smsMemberSearchForm input { height:16px; font-size:8pt; margin:0; padding:0; }
+.smsBox .smsOrganization .smsMembers .smsMembersHeader { position:relative; margin-top:5px; height: 16px; padding:5px 0 0 0; border: #e7e7e7 1px solid; background: #f7f7f7; font: 11px dotum; letter-spacing: -1px; color: #4c4c4c; } 
+.smsBox .smsOrganization .smsMembers .smsMembersHeader span { display:block; position:relative; float:left; }
+.smsBox .smsOrganization .smsMembers .smsMembersHeader span.sequence { width:38px;  margin:1px 0 0 8px; }
+.smsBox .smsOrganization .smsMembers .smsMembersHeader span.chkMembers { margin:0; padding:0; width: 13px;  background:url('../img/bg_checkbox_01.gif') no-repeat; height: 13px; overflow: hidden; cursor:pointer; } 
+.smsBox .smsOrganization .smsMembers .smsMembersHeader span.chkMembers.on { background-position: 0px -13px; } 
+.smsBox .smsOrganization .smsMembers .smsMembersHeader span.id { width:70px; margin:1px 0 0 10px; }
+.smsBox .smsOrganization .smsMembers .smsMembersHeader span.name { width:74px; margin:1px 0 0 10px; }
+.smsBox .smsOrganization .smsMembers .smsMembersHeader span.number { width:32px; margin:1px 0 0 10px;  }
+.smsBox .smsOrganization .smsMembers .smsMembersBody { overflow: auto; height:242px; padding:0; border:#e7e7e7 1px solid; border-top:0px none; background:#fff; }
+.smsBox .smsOrganization .smsMembers .smsMembersBody ul { margin:10px; padding:0; } 
+.smsBox .smsOrganization .smsMembers .smsMembersBody ul li { height: 21px; font-size: 12px; color:#676767; list-style-type:none; margin:0; padding:0; }
+.smsBox .smsOrganization .smsMembers .smsMembersBody ul li span { text-overflow: ellipsis; }
+.smsBox .smsOrganization .smsMembers .smsMembersBody ul li span.chkMember { margin:0; padding:0; width: 13px; display: inline; background:url('../img/bg_checkbox_01.gif') no-repeat; float: left; height: 13px; overflow: hidden; cursor:pointer; } 
+.smsBox .smsOrganization .smsMembers .smsMembersBody ul li span.chkMember.on { background-position: 0px -13px; } 
+.smsBox .smsOrganization .smsMembers .smsMembersBody ul li span.sequence { margin: -1px 0px 0px 0px; width: 36px; display: inline; font-family: tahoma; white-space: nowrap; float: left; overflow: hidden; font-weight: normal; cursor:pointer; }
+.smsBox .smsOrganization .smsMembers .smsMembersBody ul li span.number { margin: -1px 0px 0px 9px; width: 86px; display: inline;  float: left; overflow: hidden; font-weight: normal; cursor:pointer; border:solid white 1px;}
+.smsBox .smsOrganization .smsMembers .smsMembersBody ul li span.name { margin: 1px 0px 0px 20px; width: 74px; display: inline; white-space: nowrap; float: left; overflow: hidden; font-weight: normal; cursor:pointer; }
+.smsBox .smsOrganization .smsMembers .smsMembersBody ul li span.id { margin: 1px 0px 0px 10px; width: 60px; display: inline; white-space: nowrap; float: left; overflow: hidden; font-weight: normal; cursor:pointer; }
+.smsBox .smsOrganization .smsMembers .smsMembersFooter { width:366px; height:20px; border:solid #e7e7e7 1px; border-top:0; background: #f7f7f7; overflow:hidden; font-family:굴림체, DotumChe; font-size:9pt; padding:6px 0 0 12px;}
+.smsBox .smsOrganization .smsMembers .smsMembersFooter ul { margin:0; padding:0 0 0 0; float:left; } 
+.smsBox .smsOrganization .smsMembers .smsMembersFooter ul li { margin:1px; padding:1px 3px 1px 3px; list-style-type:none; display:inline;  cursor:pointer;}
+.smsBox .smsOrganization .smsMembers .smsMembersFooter ul li.on { font-weight:bold; }
+.smsBox .smsOrganization .smsMembers .smsMembersFooter a { float:right; position:relative; top:-2px; margin:0 6px 0 0; width:17px; height:17px; background:url('../img/excel.gif') no-repeat; text-indent:-1000em; }
+
+
+/* smsSimplePhone */
+.smsBox .smsSimplePhone {  }
+
+.smsBox .scroll{ scrollbar-arrow-color: #bdbdbd; scrollbar-face-color: #f8f8f8; scrollbar-darkshadow-color: #e5e5e5; scrollbar-highlight-color: #f8f8f8; scrollbar-shadow-color: #f8f8f8; scrollbar-track-color: #fcfcfc; scrollbar-3dlight-color: #e5e5e5; }
+
+/* smsSimplePhonePane */
+.smsBox .smsSimplePhonePane { position:relative; float:left; margin:0; width:186px; height:256px; background:url('../img/content_container_bg.gif') no-repeat; } 
+.smsBox .smsSimplePhonePane .smsSimplePhonePaneTitle { display:block; position:absolute; top:14px; left:13px; font-family:돋움체, DotumChe; font-size:12px; font-weight:bold; color:#000000; }
+.smsBox .smsSimplePhonePane .smsSimplePhonePaneTitle .btnSimplePhoneSpecial {  position:relative; display:inline; float:left; top:-2px; margin:0 10px 2px 0; width:62px; height:18px; padding-bottom:2px; background:url('../img/btn_special.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+.smsBox .smsSimplePhonePane .smsPurplebookTextMessagePane { position:absolute; display:block; top:60px; left:36px; } 
+.smsBox .smsSimplePhonePane .smsPurplebookTextMessagePane textarea { position: relative; width: 117px; height: 92px; top: 0px; left: 0px; margin: 0px; padding: 0 10px 0 0; line-height: 1.4em; overflow:-moz-scrollbars-vertical; overflow-y: scroll; background-color: transparent; border:0 none; border-right:1px #e5e5e5 solid; font-family:돋움체, DotumChe; font-size:12px; word-break: break-all; letter-spacing:0; }
+.smsBox .smsSimplePhonePane .smsPurplebookByteArea { position:absolute; width:140px; display:block; top:162px; right:25px; text-align:right; font-family:verdana; font-size:9px; color:#676767; }
+.smsBox .smsSimplePhonePane .smsPurplebookCallbackPane { position:absolute; width:180px; display:block; top:186px; left:11px; letter-spacing:-1px; font-family:돋움체, DotumChe; font-size:11px; color:#000000; }
+.smsBox .smsSimplePhonePane .smsPurplebookCallbackPane input { border-bottom: #ddd 1px solid; border-left: #ddd 1px solid; padding-bottom: 2px; padding-left: 3px; width: 99px; padding-right: 0px; font: 11px tahoma; color: #676767; vertical-align: middle; border-top: #ddd 1px solid; border-right: #ddd 1px solid; padding-top: 0px; }
+.smsBox .smsSimplePhonePane .smsSimplePhoneButtonPane { position:absolute; width:180px; height:30px; display:block; top:214px; left:11px; }
+.smsBox .smsSimplePhonePane .smsSimplePhoneButtonPane .btnSimplePhoneReserv { position:relative; display:inline; float:left; margin-right:3px; width:80px; height:28px; background:url('../img/btn_reserve.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+.smsBox .smsSimplePhonePane .smsSimplePhoneButtonPane .btnSimplePhoneSend { position:relative; display:inline; float:left; width:80px; height:28px; background:url('../img/btn_send.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+
+/* smsSimplePhoneSwitch */
+.smsBox .smsSimplePhone .smsSimplePhonePane .smsSimplePhoneSwitch { position:relative; float:right; top:-5px; left:4px; width:93px; height:248px; padding:3px; font-family:돋움, Dotum; font-size:8pt;}
+.smsBox .smsSimplePhone .smsSimplePhonePane .smsSimplePhoneSwitch #btnSimplePhoneMMS { position:relative; float:left; width:33px; height:23px; background:url('../img/btn_mms.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+.smsBox .smsSimplePhone .smsSimplePhonePane .smsSimplePhoneSwitch #btnSimplePhoneMMS.on { position:relative; float:left; width:33px; height:23px; background:url('../img/btn_mms_on.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+.smsBox .smsSimplePhone .smsSimplePhonePane .smsSimplePhoneSwitch #btnSimplePhoneSMS { position:relative; float:left; width:50px; height:23px; background:url('../img/btn_sms.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+.smsBox .smsSimplePhone .smsSimplePhonePane .smsSimplePhoneSwitch #btnSimplePhoneSMS.on { position:relative; float:left; width:50px; height:23px; background:url('../img/btn_sms_on.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+
+/* smsReplaceVar */
+.smsBox .smsReplaceVar { position:relative; float:left; margin:0 0 0 4px; }
+.smsBox .smsReplaceVar ul { list-style-type:none; margin:10px 0 0 0; padding:0; }
+.smsBox .smsReplaceVar li { height:22px; margin:0; padding:0; }
+.smsBox .smsReplaceVar button { font-size:9pt; }
+
+
+/* middleLayer */
+.smsBox .middleLayer { position:relative; float:left; margin-top:10px; width:43px; height:170px; padding:100px 5px 0 5px; overflow:hidden; text-align:center; }
+.smsBox .middleLayer .btn_add { position:relative; float:left; width:43px; height:53px; background:url('../img/btn_add.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+.smsBox .middleLayer2 { position:relative; float:left; margin-top:10px; width:43px; height:170px; padding:84px 5px 0 5px; overflow:hidden; text-align:center; }
+.smsBox .middleLayer2 .btn_add { position:relative; float:left; width:43px; height:53px; background:url('../img/btn_add.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; }
+
+/* targetList */
+.smsBox .targetList { position:relative; float:left; display:inline; margin:0px; width:294px; overflow:hidden; } 
+.smsBox .targetList UL { padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px; }
+.smsBox .targetList LI { list-style-type:none; padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px; }
+.smsBox .targetList .container_title{ display:block; position:relative; margin-top:5px; width:294px; height:17px; border-bottom:#dbdbdb 1px solid; font-family:돋움체, DotumChe; font-size:12px; font-weight:bold; color:#000000; } 
+.smsBox .targetList .container_title span{ font-family:돋움체, DotumChe; font-size:11px; font-weight:normal; color:#787878; }
+.smsBox .targetList .direct_numAdder{ display:block; position:relative; margin-top:6px; left:0px; width:294px; height:17px; font-family:돋움체, DotumChe; font-size:12px; font-weight:normal; color:#787878; } 
+.smsBox .targetList .direct_numAdder label { display:inline; float:left; margin:3px 5px 0 0; padding:0; letter-spacing:-1px; } 
+.smsBox .targetList .direct_numAdder #inputDirectName { display:inline; float:left;	width: 60px; height:14px; padding:1px 0 0 4px; border-bottom: #ddd 1px solid; border-left: #ddd 1px solid; border-top: #ddd 1px solid; border-right: #ddd 1px solid; font: 12px tahoma; color: #676767;  margin:0 4px 0 0;} 
+.smsBox .targetList .direct_numAdder #inputDirectNumber { display:inline; float:left;	width: 100px; height:14px; padding:1px 0 0 4px; border-bottom: #ddd 1px solid; border-left: #ddd 1px solid; border-top: #ddd 1px solid; border-right: #ddd 1px solid; font: 12px tahoma; color: #676767; } 
+.smsBox .targetList .direct_numAdder button { position:relative; float:right; width:41px; height:20px; background:url('../img/btn_addNum.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; } 
+.smsBox .targetList .list_header { position:relative; margin-top:5px; width:285px; height: 16px; padding:5px 0 0 7px; border: #e7e7e7 1px solid; background: #f7f7f7; font: 11px dotum; letter-spacing: -1px; color: #4c4c4c; } 
+.smsBox .targetList .list_header span { display:block; position:relative; float:left; }
+.smsBox .targetList .list_header span.chkRecipient { padding-bottom: 0px; margin: 0px; padding-left: 0px; width: 13px; padding-right: 0px; background:url('../img/bg_checkbox_01.gif') no-repeat; float: left; height: 13px; overflow: hidden; cursor:pointer; padding-top: 0px; } 
+.smsBox .targetList .list_header span.chkRecipient.on { background-position: 0px -13px; } 
+.smsBox .targetList .list_header span.name { width:100px; margin:1px 0 0 10px; }
+.smsBox .targetList .list_header span.number { width:90px; margin:1px 0 0 10px; }
+.smsBox .targetList .list_header span.del { width:24px; margin: 1px 0 0 10px;	}
+.smsBox .targetList .rnumlist_body { overflow: auto; height: 200px; padding:0 10px 0 7px; border: #e7e7e7 1px solid; border-top:0px none; background: #fff; }
+.smsBox .targetList .rnumlist_body ul { margin-top: 8px; } 
+.smsBox .targetList .rnumlist_body ul li { height: 21px; float: left; font-size: 12px; color:#676767; }
+.smsBox .targetList .rnumlist_body ul li span.chkRecipient { padding-bottom: 0px; margin: 0px; padding-left: 0px; width: 13px; padding-right: 0px; display: inline; background:url('../img/bg_checkbox_01.gif') no-repeat; float: left; height: 13px; overflow: hidden; cursor:pointer; padding-top: 0px; } 
+.smsBox .targetList .rnumlist_body ul li span.chkRecipient.on { background-position: 0px -13px; } 
+.smsBox .targetList .rnumlist_body ul li span.name { margin: 1px 0px 0px 10px; width:100px; text-overflow: ellipsis; display: inline; white-space: nowrap; float: left; overflow: hidden; font-weight: normal; cursor:pointer; }
+.smsBox .targetList .rnumlist_body ul li span.number { margin: -1px 0px 0px 10px; width:98px; text-overflow: ellipsis; display: inline; font-family: tahoma; white-space: nowrap; float: left; overflow: hidden; font-weight: normal; cursor:pointer; }
+.smsBox .targetList .rnumlist_body ul li span.delRecipient { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 5px; width: 9px; display: inline; background:url('../img/btn_delete.gif') no-repeat; float: left; height:9px; overflow: hidden; } 
+.smsBox .targetList .list_footer { position:relative; display:block; margin-bottom:5px; width:285px; height: 20px; padding:5px 0 3px 7px; overflow:hidden; border: #e7e7e7 1px solid; border-top:0 none; background: #f7f7f7; font: 11px 돋움체, DotumChe; letter-spacing: -1px; color: #4c4c4c; } 
+.smsBox .targetList .list_footer button { position:relative; display:inline; float:left; border:0 none; text-indent:-1000em; overflow:hidden;}
+.smsBox .targetList .list_footer .btn_allNum {  width:62px; height:18px; background:url('../img/btn_selAll.gif') no-repeat;  }
+.smsBox .targetList .list_footer .btn_delNum { margin-left:2px;  width:62px; height:18px; background:url('../img/btn_delSel.gif') no-repeat; } 
+.smsBox .targetList .list_footer #btn_delDup { margin-left:2px; width:62px; height:18px; background:url('../img/btn_removeDuplicated.gif') no-repeat; } 
+.smsBox .targetList .list_footer .btn_bulkAdd { float:right; width:62px; height:18px; background:url('../img/btn_bulkadd.gif') no-repeat; margin: 0 8px 0 0; } 
+.smsBox .targetList .comment{ display:block; position:relative; margin-top:6px; left:0px; width:294px; height:14px; padding-top:3px; letter-spacing:-1px; font-family:돋움체, DotumChe; font-size:11px; font-weight:normal; color:#787878; }
+.smsBox .targetList .comment a{ font-weight:bold; color:#75bD0D; text-decoration:none; } 
+
+/* layerBulkAdd */
+.smsBox .layerBulkAdd { position:relative; float:right; display:none; top:-264px; left:-11px; background-color:#ffffff; width:292px; height:262px; border:solid #e7e7e7 1px;}
+.smsBox .layerBulkAdd .bulkAddArea { width:288px; margin:2px; background-color:#f9f9f9; overflow:hidden; }
+.smsBox .layerBulkAdd .bulkAddArea .areaTit {float:left; font-family:돋움,dotum; font-size:9pt; font-weight:bold; padding:6px 0 5px 6px;}
+.smsBox .layerBulkAdd .bulkAddArea .areaTit span{float:none; display:inline; padding-left:3px;}
+.smsBox .layerBulkAdd .bulkAddArea .areaClose {float:right;padding:5px 6px 0 0;}
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList { clear:both; position:relative; margin:4px; width:278px; }
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList #telnumlist { border:solid #eee 1px; width:270px; height:170px; padding: 3px;font-family:돋움체,DotumChe; font-size:9pt;}
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList .number { margin: 0 0 0 4px;  }
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList .name { margin: 0 0 0 60px; }
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList .bulkAddFooter { margin: 3px; }
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList .bulkAddFooter .total { display:block; }
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList .bulkAddFooter .bulkAddButtons { display:block; }
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList .bulkAddFooter .bulkAddButtons #btnPurplebookRegister { position:relative; float:left; display:inline; width:70px; height:16px; background:url('../img/btn_purplebook_register.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; margin: 2px; } 
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList .bulkAddFooter .bulkAddButtons #btnVerifyList { position:relative; float:right; display:inline; width:48px; height:16px; background:url('../img/btn_verify.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; margin: 2px; } 
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList .bulkAddFooter .bulkAddButtons #btnAddList { position:relative; float:right; display:inline; width:48px; height:16px; background:url('../img/btn_addlist.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; margin: 2px; } 
+.smsBox .layerBulkAdd .bulkAddArea .phoneNumberList .bulkAddFooter .bulkAddButtons #btnEmptyList { position:relative; float:right; display:inline; width:48px; height:16px; background:url('../img/btn_emptylist.gif') no-repeat; border:0 none; text-indent:-1000em; overflow:hidden; margin: 2px; } 
+
+.progressModal { text-align:center; display:none; overflow:hidden; }
+.progressModal .text { font-size: 8pt; text-align:center; margin:4px; } 
+.progressModal .ani { background-image:url('../img/pbar-ani.gif'); width:180px; height:12px; margin: 0 0 0 10px; }
+
+

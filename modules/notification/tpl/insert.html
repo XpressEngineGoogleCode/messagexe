@@ -1,0 +1,82 @@
+<!--%import("css/phone.css")-->
+<!--%import("css/notification.css")-->
+<!--%import("css/config.css")-->
+<!--%import("js/notification.js")-->
+<!--%import("js/target.js")-->
+
+<include target="header.html" />
+
+<form id="fo_noticom_append" action="./" method="post">
+	<input type="hidden" name="module" value="notification" />
+	<input type="hidden" name="act" value="procNotificationAdminInsert" />
+    <input type="hidden" name="noti_srl" value="{$notification_info->notification_srl}" />
+    <input type="hidden" name="mail_content" value="{htmlspecialchars($notification_info->mail_content)}" />
+
+	<div class="table even easyList">
+		<table>
+			<tr>
+				<th scope="row">{$lang->target_module}</th>
+				<td>
+					<div>
+						{@$id="module_srls"}
+						<input type="hidden" name="{$id}" id="{$id}" value="{$notification_info->module_srls}" />
+						<select name="_{$id}" id="_{$id}" size="8" class="w200 fl" style="float:left;"></select>
+						<ul class="midCommand">
+							<li><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></li>
+							<li><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></li>
+							<li><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></li>
+							<li><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></li>
+						</ul>
+						<script type="text/javascript">
+							if(typeof(getModuleSrlList)!=='undefined') {
+								doAddWindowLoadEventLoader( function() { getModuleSrlList('{$id}'); } );
+							}
+						</script>
+					</div>
+					<p style="clear:both;">{$lang->about_target_module}</p>
+				</td>
+			</tr>
+			<tr>
+				<th>{$lang->sedning_method}</th>
+				<td>
+					<input type="radio" name="sending_method" id="sending_method_1" value="1" checked="checked"|cond="$notification_info->sending_method=='1'||!$notification_info->sending_method" /><label for="sending_method_1">{$lang->textmessage_plus_email}</label>
+					<input type="radio" name="sending_method" id="sending_method_2" value="2" checked="checked"|cond="$notification_info->sending_method=='2'" /><label for="sending_method_2">{$lang->textmessage}</label>
+					<input type="radio" name="sending_method" id="sending_method_3" value="3" checked="checked"|cond="$notification_info->sending_method=='3'" /><label for="sending_method_3">{$lang->email}</label>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">{$lang->content}</th>
+				<td>
+					<div class="pscreen_bg">
+						<textarea name="content" class="pscreen" style="border:solid #eee 1px;">{$notification_info->content}</textarea>
+					</div>
+					<div>
+						<a class="button"><span class="notiReplaceVar" var="content">{$lang->comment_content}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="user_id">{$lang->comment_userid}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="user_name">{$lang->comment_username}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="nick_name">{$lang->comment_nickname}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="browser_title">{$lang->browser_title}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="mid">{$lang->mid}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="article_url">{$lang->article_url}</span></a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">
+					<div>{$lang->mail_content}[<a href="#helpMailContent" class="tgAnchor">?</a>]</div>
+					<div class="tgContent layer" id="helpMailContent" style="z-index:99999;margin-top:9px;">
+						<p>{$lang->help_mail_content}</p>
+					</div>
+				</th>
+				<td>
+					<div>{$editor}</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="btnArea">
+		<span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+		<a href="{getUrl('act','dispNotificationAdminList')}" class="button"><span>{$lang->cmd_cancel}</span></a>
+	</div>
+</form>

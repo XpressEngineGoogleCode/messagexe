@@ -1,0 +1,15 @@
+<query id="getModuleInfoByNotificationSrl" action="select">
+	<tables>
+		<table name="notification_modules" alias="notification" />
+        <table name="modules" alias="modules" />
+	</tables>
+	<columns>
+		<column name="notification.*" />
+		<column name="modules.*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="notification.notification_srl" var="notification_srl" pipe="and" />
+		<condition operation="in" column="notification.notification_srl" var="notification_srls" pipe="and" />
+		<condition operation="equal" column="notification.module_srl" default="modules.module_srl" pipe="and" />
+	</conditions>
+</query>
