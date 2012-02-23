@@ -24,7 +24,6 @@ class newpostsController extends newposts
 
 		if (in_array($config->sending_method,array('1','3'))) 
 		{
-			$title = $title;
 			$oMail = new Mail();
 			$oMail->setTitle($title);
 			$oMail->setContent($mail_content);
@@ -32,7 +31,6 @@ class newpostsController extends newposts
 			$target_email = explode(',',$config->admin_emails);
 			foreach ($target_email as $email_address) 
 			{
-				debugPrint('email address : ' . $email_address);
 				$email_address = trim($email_address);
 				if (!$email_address) continue;
 				$oMail->setReceiptor($email_address, $email_address);
@@ -54,17 +52,17 @@ class newpostsController extends newposts
 		$mail_content = $this->mergeKeywords($config->mail_content, $obj);
 		$mail_content = $this->mergeKeywords($mail_content, $module_info);
 
+/*
 		// get document info.
 		$oDocumentModel = &getModel('document');
 		$oDocument = $oDocumentModel->getDocument($obj->document_srl);
-
-		// title
-		$title = $oDocument->getTitleText();
+		debugPrint('oDocument : ' . serialize($oDocument));
+*/
 
 		$tmp_obj->article_url = getFullUrl('','document_srl', $obj->document_srl);
 		$tmp_content = $this->mergeKeywords($mail_content, $tmp_obj);
 		$tmp_message = $this->mergeKeywords($sms_message, $tmp_obj);
-		$this->sendMessages($tmp_message, $tmp_content, $title, $sender, $config);
+		$this->sendMessages($tmp_message, $tmp_content, $obj->title, $sender, $config);
 	}
 
 	/**
@@ -73,6 +71,7 @@ class newpostsController extends newposts
 	 **/
 	function triggerInsertDocument(&$obj) 
 	{
+		debugPrint('triggerInsertDocument obj : ' . serialize($obj));
 		$oMemberModel = &getModel('member');
 
 		// if module_srl not set, just return with success;
