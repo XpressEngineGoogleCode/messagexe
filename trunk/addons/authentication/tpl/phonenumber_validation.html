@@ -1,0 +1,84 @@
+<!--%import("js/validation.js")-->
+<script>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</script>
+<div class="title">{$lang->cmd_input_phone_number}</div>
+
+<form id="fo_phonenum_valid" method="get">
+    <div id="popBody">
+        <table cellspacing="0" class="rowTable">
+        <tr>
+            <th scope="col"><div>{$lang->cellphone_number}</div></th>
+            <td>
+                <!--@if($global=='Y')-->
+                <!--#include("global.html")-->
+                <!--@end-->
+                <input type="text" id="cellphone_number1" name="cellphone_number1" size="4" maxlength="4" value="" class="inputTypeText" />
+                <input type="text" id="cellphone_number2" name="cellphone_number2" size="4" maxlength="4" value="" class="inputTypeText" />
+                <input type="text" id="cellphone_number3" name="cellphone_number3" size="4" maxlength="4" value="" class="inputTypeText" />
+                <p>{$lang->desc_input_phone_number}</p>
+            </td>
+        </tr>
+        </table>
+    </div>
+    <div id="popFooter">
+        <span class="button black strong"><input type="submit" value="{$lang->cmd_receive_validation_code}" /></span>
+    </div>
+    <input type="hidden" name="module" value="{$module}">
+    <input type="hidden" name="act" value="{$act}">
+    <input type="hidden" name="authcode" value="{$authcode}">
+</form>
+
+<!--%import("js/data.js")-->
+<script>
+    // alert
+    <block cond="$alert_message">
+        alert("{$alert_message}");
+    </block>
+
+
+    // getting input values
+    var cn1 = document.getElementById("cellphone_number1");
+    var cn2 = document.getElementById("cellphone_number2");
+    var cn3 = document.getElementById("cellphone_number3");
+
+    //var phonenum_arr = window.opener.document.getElementsByName("{$phonenumber_fieldname}");
+    var phonenum_arr = jQuery('input[name^={$phonenumber_fieldname}]', window.opener.document);
+    if (phonenum_arr.length < 3)
+    {
+        alert("{$lang->alert_check_cellphone_fieldname}");
+    }
+    else
+    {
+        cn1.value = phonenum_arr[0].value;
+        cn2.value = phonenum_arr[1].value;
+        cn3.value = phonenum_arr[2].value;
+    }
+
+    cn1.focus();
+
+    function set_default_country() {
+        // getting default country code
+        var countrycode = window.opener.document.getElementsByName("{$countrycode_fieldname}");
+        var code = '82';
+        var continent = 'AS';
+        if (countrycode.length > 0 && countrycode[0].value.length > 0) code = countrycode[0].value;
+
+        // country
+        jQuery('#nation option').filter(function(index) {
+            if (jQuery(this).attr('code') == code) {
+                jQuery(this).attr('selected',true);
+                continent = jQuery(this).attr('continent');
+            }
+        });
+
+        // continent
+        jQuery('#continent option').filter(function(index) {
+            if (jQuery(this).val()==continent) {
+                jQuery(this).attr('selected', true);
+            }
+        });
+
+        // set value
+        jQuery('#country_code').val(code);
+    }
+
+</script>
