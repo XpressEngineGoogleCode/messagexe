@@ -1,0 +1,15 @@
+<query id="getModuleInfoByConfigSrl" action="select">
+	<tables>
+		<table name="newposts_modules" alias="newposts" />
+        <table name="modules" alias="modules" />
+	</tables>
+	<columns>
+		<column name="newposts.*" />
+		<column name="modules.*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="newposts.config_srl" var="config_srl" pipe="and" />
+		<condition operation="in" column="newposts.config_srl" var="config_srls" pipe="and" />
+		<condition operation="equal" column="newposts.module_srl" default="modules.module_srl" pipe="and" />
+	</conditions>
+</query>

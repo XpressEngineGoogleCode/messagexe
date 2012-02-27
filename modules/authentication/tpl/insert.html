@@ -1,0 +1,87 @@
+<load target="css/phone.css" />
+<load target="js/target.js" />
+
+<include target="header.html" />
+
+<form action="./" method="post">
+	<input type="hidden" name="module" value="notification" />
+	<input type="hidden" name="act" value="procNewpostsAdminInsert" />
+    <input type="hidden" name="config_srl" value="{$config->config_srl}" />
+    <input type="hidden" name="mail_content" value="{htmlspecialchars($config->mail_content)}" />
+
+	<div class="table even easyList">
+		<table>
+			<tr>
+				<th scope="row">{$lang->target_module}</th>
+				<td>
+					<div>
+						{@$id="module_srls"}
+						<input type="hidden" name="{$id}" id="{$id}" value="{$config->module_srls}" />
+						<select name="_{$id}" id="_{$id}" size="8" class="w200 fl" style="float:left;"></select>
+						<ul class="midCommand">
+							<li><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></li>
+							<li><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></li>
+							<li><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></li>
+							<li><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></li>
+						</ul>
+						<script type="text/javascript">
+							if(typeof(getModuleSrlList)!=='undefined') {
+								doAddWindowLoadEventLoader( function() { getModuleSrlList('{$id}'); } );
+							}
+						</script>
+					</div>
+					<p style="clear:both;">{$lang->about_target_module}</p>
+				</td>
+			</tr>
+			<tr>
+				<th>{$lang->sedning_method}</th>
+				<td>
+					<input type="radio" name="sending_method" id="sending_method_1" value="1" checked="checked"|cond="$config->sending_method=='1'||!$config->sending_method" /><label for="sending_method_1">{$lang->textmessage_plus_email}</label>
+					<input type="radio" name="sending_method" id="sending_method_2" value="2" checked="checked"|cond="$config->sending_method=='2'" /><label for="sending_method_2">{$lang->textmessage}</label>
+					<input type="radio" name="sending_method" id="sending_method_3" value="3" checked="checked"|cond="$config->sending_method=='3'" /><label for="sending_method_3">{$lang->email}</label>
+				</td>
+			</tr>
+			<tr>
+				<th>휴대전화 번호</th>
+				<td><input type="text" name="admin_phones" style="width:300px;" value="{$config->admin_phones}" /><p>콤마(,)로 구분 여러 개 입력가능</p></td>
+			</tr>
+			<tr>
+				<th scope="row">{$lang->content}</th>
+				<td>
+					<div class="pscreen_bg">
+						<textarea name="content" class="pscreen" style="border:solid #eee 1px;">{$config->content}</textarea>
+					</div>
+					<div>
+						<a class="button"><span class="notiReplaceVar" var="content">{$lang->document_content}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="user_id">{$lang->document_userid}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="user_name">{$lang->document_username}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="nick_name">{$lang->document_nickname}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="browser_title">{$lang->browser_title}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="mid">{$lang->mid}</span></a>
+						<a class="button"><span class="notiReplaceVar" var="article_url">{$lang->article_url}</span></a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>이메일 주소</th>
+				<td><input type="text" name="admin_emails" style="width:300px;" value="{$config->admin_emails}" /><p>콤마(,)로 구분 여러 개 입력가능</p></td>
+			</tr>
+			<tr>
+				<th scope="row">
+					<div>{$lang->mail_content}[<a href="#helpMailContent" class="tgAnchor">?</a>]</div>
+					<div class="tgContent layer" id="helpMailContent" style="z-index:99999;margin-top:9px;">
+						<p>{$lang->help_mail_content}</p>
+					</div>
+				</th>
+				<td>
+					<div>{$editor}</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="btnArea">
+		<span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+		<a href="{getUrl('act','dispNewpostsAdminList')}" class="button"><span>{$lang->cmd_list}</span></a>
+	</div>
+</form>
