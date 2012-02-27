@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon version="0.2">
+    <title xml:lang="ko">폰번호인증 애드온</title>
+    <description xml:lang="ko">
+        폰번호 애드온입니다.
+    </description>
+    <version>2-BETA</version>
+    <date>2012-02-25</date>
+    <author email_address="wiley@nurigo.net" link="http://open.coolsms.co.kr">
+        <name xml:lang="ko">wiley</name>
+    </author>
+    <extra_vars>
+        <group>
+            <title xml:lang="ko">기본설정</title>
+            <var name="country_code">
+                <title xml:lang="ko">국가코드</title>
+                <description xml:lang="ko">핸드폰인증 서비스할 국가코드를 입력합니다(미국 1, 일본 81, 중국 86) 미입력시 기본모듈의 설정에 따릅니다.</description>
+            </var>
+            <var name="callback">
+                <title xml:lang="ko">회신번호</title>
+                <description xml:lang="ko">미입력시 모듈에 설정된 기본 회신번호로 발송됩니다. 예) 02-1234-1234</description>
+            </var>
+            <var name="content">
+                <title xml:lang="ko">발송내용</title>
+                <description xml:lang="ko">• 사용가능 치환변수
+                    %validation_code% : 다섯자리 인증번호로 치환
+                    %new_line% : 한줄 내림으로 치환
+                    • 미입력시 "[핸드폰인증]%new_line%%validation_code% ☜ 인증번호를 정확히 입력해 주세요." 으로 발송됩니다.
+                </description>
+            </var>
+            <var name="encode_utf16" type="select">
+                <title xml:lang="ko">UTF-16 전송</title>
+                <description xml:lang="ko">현지언어로 발송내용을 입력하실 수 있습니다. 단, 70캐릭터(바이트 단위가 아님, 70개의 글자) 제한</description>
+                <options value="A">
+                    <title xml:lang="ko">기본모듈 설정에 따름</title>
+                </options>
+                <options value="Y">
+                    <title xml:lang="ko">사용</title>
+                </options>
+                <options value="N">
+                    <title xml:lang="ko">사용하지 않음</title>
+                </options>
+            </var>
+            <var name="timeover">
+                <title xml:lang="ko">재전송 제한시간</title>
+                <description xml:lang="ko">인증번호 발송 후 입력된 초 안에 재전송을 제한합니다. 기본은 30초 입니다.</description>
+            </var>
+            <var name="unique" type="select">
+                <title xml:lang="ko">중복번호 허용</title>
+                <description xml:lang="ko">폰번호의 중복허용 여부를 선택합니다. 기본은 허용입니다.</description>
+                <options value="N">
+                    <title xml:lang="ko">중복 허용</title>
+                </options>
+                <options value="Y">
+                    <title xml:lang="ko">중복 방지</title>
+                </options>
+            </var>
+            <var name="hide_checkbox" type="select">
+                <title xml:lang="ko">체크박스 감추기</title>
+                <description xml:lang="ko">핸드폰번호 및 인증번호필드의 공개체크박스를 감춥니다.</description>
+                <options value="Y">
+                    <title xml:lang="ko">감추기</title>
+                </options>
+                <options value="N">
+                    <title xml:lang="ko">보여주기</title>
+                </options>
+            </var>
+            <var name="display_authcode" type="select">
+                <title xml:lang="ko">인증번호필드 표시</title>
+                <description xml:lang="ko">인증번호필드를 보이거나 감춥니다.</description>
+                <options value="Y">
+                    <title xml:lang="ko">보이기</title>
+                </options>
+                <options value="N">
+                    <title xml:lang="ko">감추기</title>
+                </options>
+            </var>
+            <var name="mandatory" type="select">
+                <title xml:lang="ko">인증필수 여부</title>
+                <description xml:lang="ko">필수아님으로 선택시 인증받지 않고도 가입이 허용되도록 설정합니다. 인증번호필드의 필수항목을 해제해 주세요.</description>
+                <options value="Y">
+                    <title xml:lang="ko">필수</title>
+                </options>
+                <options value="N">
+                    <title xml:lang="ko">필수아님</title>
+                </options>
+            </var>
+        </group>
+
+        <group>
+            <title xml:lang="ko">국제인증</title>
+            <var name="global" type="select">
+                <title xml:lang="ko">국제인증모드</title>
+                <description xml:lang="ko">140개국 나라의 핸드폰 인증을 지원합니다. 현지 사정에 따라 인증번호 발송이 안될 수도 있습니다.</description>
+                <options value="N">
+                    <title xml:lang="ko">미사용</title>
+                </options>
+                <options value="Y">
+                    <title xml:lang="ko">사용</title>
+                </options>
+            </var>
+            <var name="content_eng">
+                <title xml:lang="ko">발송내용</title>
+                <description xml:lang="ko">• 나라마다 언어 및 문자인코딩 방식이 틀리므로 영어로 입력하셔야 현지 단말기에서 문제없이 수신 받을 수 있습니다.
+                    • 사용가능 치환변수
+                    %validation_code% : 다섯자리 인증번호로 치환
+                    %new_line% : 한줄 내림으로 치환
+                    • 미입력시 "[Authentication Code]%new_line%%validation_code% Please input the five digits correctly." 으로 발송됩니다.
+                </description>
+            </var>
+        </group>
+    </extra_vars>
+</addon>
