@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants />
+    <permissions />
+	<menus>
+	</menus>
+    <actions>
+		<action name="dispAuthenticationAdminConfig" type="view" admin_index="true" />
+		<action name="procAuthenticationAdminConfig" type="controller" />
+    </actions>
+</module>
