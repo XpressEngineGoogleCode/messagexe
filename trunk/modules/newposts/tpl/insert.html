@@ -67,6 +67,14 @@
 				<td><input type="text" name="admin_emails" style="width:300px;" value="{$config->admin_emails}" /><p>콤마(,)로 구분 여러 개 입력가능</p></td>
 			</tr>
 			<tr>
+				<th>발신자 정보</th>
+				<td>
+					이름: <input type="text" name="sender_name" style="width:100px;" value="{$config->sender_name}" />
+					이메일: <input type="text" name="sender_email" style="width:240px;" value="{$config->sender_email}" />
+					<p>입력된 이메일주소를 발신주소로 사용합니다. 비워두시면 글쓴이의 이메일 주소가 입력됩니다.</p>
+				</td>
+			</tr>
+			<tr>
 				<th scope="row">
 					<div>{$lang->mail_content}[<a href="#helpMailContent" class="tgAnchor">?</a>]</div>
 					<div class="tgContent layer" id="helpMailContent" style="z-index:99999;margin-top:9px;">

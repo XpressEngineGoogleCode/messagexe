@@ -52,6 +52,12 @@ class newposts extends ModuleObject
 			return true;
 		}
 
+		// 2012.03.06 add newposts_config.sender_name
+		if(!$oDB->isColumnExists("newposts_config","sender_name")) return true;
+		// 2012.03.06 add newposts_config.sender_email
+		if(!$oDB->isColumnExists("newposts_config","sender_email")) return true;
+
+
 		return false;
 	}
 
@@ -68,6 +74,13 @@ class newposts extends ModuleObject
 		if (!$oModuleModel->getTrigger('document.insertDocument', 'newposts', 'controller', 'triggerInsertDocument', 'after'))
 		{
 			$oModuleController->insertTrigger('document.insertDocument', 'newposts', 'controller', 'triggerInsertDocument', 'after');
+		}
+
+		if(!$oDB->isColumnExists("newposts_config","sender_name")) {
+			$oDB->addColumn("newposts_config","sender_name", "varchar","80");
+		}
+		if(!$oDB->isColumnExists("newposts_config","sender_email")) {
+			$oDB->addColumn("newposts_config","sender_email", "varchar","250");
 		}
 	}
 
