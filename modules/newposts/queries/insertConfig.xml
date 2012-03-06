@@ -8,6 +8,8 @@
 		<column name="content" var="content" />
 		<column name="msgtype" var="msgtype" default="SMS" />
 		<column name="admin_emails" var="admin_emails" />
+		<column name="sender_name" var="sender_name" />
+		<column name="sender_email" var="sender_email" />
 		<column name="mail_content" var="mail_content" />
 		<!-- 1: SMS+Mail, 2: SMS, 3: Email -->
 		<column name="sending_method" var="sending_method" default="1" />

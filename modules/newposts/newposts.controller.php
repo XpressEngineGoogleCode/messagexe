@@ -24,10 +24,26 @@ class newpostsController extends newposts
 
 		if (in_array($config->sending_method,array('1','3'))) 
 		{
+			if ($config->sender_email)
+			{
+				$sender_email_address = $config->sender_email;
+			}
+			else
+			{
+				$sender_email_address = $sender->email_address;
+			}
+			if ($config->sender_name)
+			{
+				$sender_name = $config->sender_name;
+			}
+			else
+			{
+				$sender_name = $sender->nick_name;
+			}
 			$oMail = new Mail();
 			$oMail->setTitle($title);
 			$oMail->setContent($mail_content);
-			$oMail->setSender($sender->nick_name, $sender->email_address);
+			$oMail->setSender($sender_name, $sender_email_address);
 			$target_email = explode(',',$config->admin_emails);
 			foreach ($target_email as $email_address) 
 			{

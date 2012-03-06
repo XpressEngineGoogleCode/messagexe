@@ -19,7 +19,7 @@ class newpostsAdminController extends newposts
 	 **/
 	function procNewpostsAdminInsert() 
 	{
-		$params = Context::gets('admin_phones','admin_emails','content','mail_content','module_srls','msgtype','sending_method');
+		$params = Context::gets('admin_phones','admin_emails','sender_name','sender_email','content','mail_content','module_srls','msgtype','sending_method');
 		$params->config_srl = Context::get('config_srl');
 
 		if ($params->config_srl) 
@@ -50,6 +50,7 @@ class newpostsAdminController extends newposts
 
 		//$params->extra_vars = serialize($extra_vars);
 
+		debugPrint('params : ' . serialize($params));
 		// insert newposts
 		$output = executeQuery('newposts.insertConfig', $params);
 		debugPrint('insertConfig : ' . serialize($output));
