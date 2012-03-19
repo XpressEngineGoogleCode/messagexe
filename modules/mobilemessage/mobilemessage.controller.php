@@ -662,6 +662,7 @@
             // insert
             $query_id = "mobilemessage.insertMapping";
             $output = executeQuery($query_id, $args);
+            debugPrint('insertMapping: ' . serialize($output));
             if (!$output->toBool()) return $output;
 
             return new Object();
@@ -896,6 +897,8 @@
                     $phonenum = $extra_vars->{$config->cellphone_fieldname};
                 }
             }
+
+            if (is_array($phonenum)) $phonenum = implode($phonenum);
 
             // 매핑정보 기록
             unset($args);
