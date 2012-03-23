@@ -368,9 +368,9 @@
                 $args->phone_num = str_replace('|@|', '', $args->phone_num);
                 if ($args->phone_num == "") $empty_count++;
                 $args->country = "";
-                if ($row->{$config->countrycode_fieldname}) {
+                if (isset($row->{$config->countrycode_fieldname})) {
                     $args->country = $row->{$config->countrycode_fieldname};
-                } else if ($extra_vars->{$config->countrycode_fieldname}) {
+                } else if (isset($extra_vars->{$config->countrycode_fieldname})) {
                     $args->country = $extra_vars->{$config->countrycode_fieldname};
                 }
                 $total_count++;
