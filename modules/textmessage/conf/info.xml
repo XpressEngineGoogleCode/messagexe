@@ -4,11 +4,11 @@
 	<title xml:lang="en">Text Messages</title>
 	<description xml:lang="ko">SMS, LMS, MMS 등의 문자메시지 발송 API를 제공하여 모듈, 애드온, 위젯에서 연동할 수 있도록 합니다.</description>
 	<description xml:lang="en">This module provides for SMS, LMS, MMS connections.</description>
-	<version>2.0.BETA</version>
-	<date>2011-11-14</date>
+	<version>2.0.1</version>
+	<date>2012-04-02</date>
 	<category>service</category>
-	<author email_address="wiley@nurigo.net" link="http://www.nurigo.net/">
-		<name xml:lang="ko">wiley</name>
-		<name xml:lang="en">wiley</name>
+	<author email_address="contact@nurigo.net" link="http://www.nurigo.net/">
+		<name xml:lang="ko">NURIGO</name>
+		<name xml:lang="en">NURIGO</name>
 	</author>
 </module>

@@ -184,10 +184,12 @@
 				//$sms_args->country_iso_code = $in_args->country_iso_code;
 				if ($args->type=='MMS') $sms_args->attachment = $in_args->attachment;
 
-				$in_args->message_id = $message_id;
-				$in_args->group_id = $group_id;
-				$in_args->mtype = $in_args->type;
-				$output = $this->insertTextmessage($in_args);
+				$query_args = $in_args;
+				$query_args->message_id = $message_id;
+				$query_args->group_id = $group_id;
+				$query_args->mtype = $in_args->type;
+				$query_args->recipient_no = $recipient_no;
+				$output = $this->insertTextmessage($query_args);
 				if (!$output->toBool()) return $output;
 
 				if (!$sms->addobj($sms_args)) {
@@ -212,7 +214,6 @@
 			 */
 			$output = $this->insertTextmessageGroup($args);
 			if (!$output->toBool()) return $output;
-
 
 			// connect to server
 			if (!$sms->connect()) {
