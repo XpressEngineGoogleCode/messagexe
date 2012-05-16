@@ -662,7 +662,6 @@
             // insert
             $query_id = "mobilemessage.insertMapping";
             $output = executeQuery($query_id, $args);
-            debugPrint('insertMapping: ' . serialize($output));
             if (!$output->toBool()) return $output;
 
             return new Object();
