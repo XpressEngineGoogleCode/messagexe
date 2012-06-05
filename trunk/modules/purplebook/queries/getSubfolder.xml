@@ -1,0 +1,13 @@
+<query id="getSubfolder" action="select">
+	<tables>
+		<table name="purplebook" />
+	</tables>
+	<columns>
+		<column name="COUNT(*)" alias="subfolder" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="node_route" var="node_route" notnull="notnull" />
+		<condition operation="notequal" column="node_id" var="node_id" notnull="notnull" pipe="and" />
+		<condition operation="equal" column="node_type" default="1" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

@@ -1,0 +1,7 @@
+<table name="purplebook_share">
+	<column name="node_id" type="number" size="11" notnull="notnull" index="idx_node_id" />
+	<column name="share_member" type="number" size="11" notnull="notnull" index="idx_share_member" />
+	<column name="p_read" type="char" size="1" default="Y" />
+	<column name="p_write" type="char" size="1" default="N" />
+	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
+</table>

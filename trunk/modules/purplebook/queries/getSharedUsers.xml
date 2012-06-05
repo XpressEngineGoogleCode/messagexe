@@ -1,0 +1,16 @@
+<query id="getSharedUsers" action="select">
+	<tables>
+		<table name="purplebook_share" alias="share" />
+        <table name="member" alias="member" />
+	</tables>
+	<columns>
+		<column name="share.share_member" alias="member_srl" />
+		<column name="share.node_id" alias="node_id" />
+		<column name="member.user_id" alias="user_id" />
+		<column name="member.nick_name" alias="nick_name" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="share.node_id" var="node_id" notnull="notnull" />
+        <condition operation="equal" column="share.share_member" default="member.member_srl" pipe="and" />
+	</conditions>
+</query>

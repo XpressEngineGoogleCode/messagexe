@@ -1,0 +1,12 @@
+<query id="getAllNodes" action="select">
+	<tables>
+		<table name="purplebook" />
+	</tables>
+	<columns>
+		<column name="node_id" />
+		<column name="user_id" />
+		<column name="node_route" />
+	</columns>
+    <conditions />
+	<navigation />
+</query>

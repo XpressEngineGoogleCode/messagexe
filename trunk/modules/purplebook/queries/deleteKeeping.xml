@@ -1,0 +1,8 @@
+<query id="deleteKeeping" action="delete">
+	<tables>
+		<table name="purplebook_messages" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="message_srl" var="message_srl" notnull="notnull" />
+	</conditions>
+</query>
