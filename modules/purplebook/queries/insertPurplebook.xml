@@ -1,0 +1,17 @@
+<query id="insertPurplebook" action="insert">
+	<tables>
+		<table name="purplebook" />
+	</tables>
+	<columns>
+		<column name="node_id" var="node_id" filter="number" notnull="notnull" />
+		<column name="member_srl" var="member_srl" notnull="notnull" />
+		<column name="user_id" var="user_id" notnull="notnull" />
+		<column name="node_route" var="node_route" notnull="notnull" />
+		<column name="node_name" var="node_name" notnull="notnull" />
+		<column name="node_type" var="node_type" notnull="notnull" />
+		<column name="phone_num" var="phone_num" default="" />
+		<column name="subfolder" var="subfolder" default="0" />
+		<column name="subnode" var="subnode" default="0" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>

@@ -1,0 +1,12 @@
+<query id="insertCallbackNumber" action="insert">
+	<tables>
+		<table name="purplebook_callbacks" />
+	</tables>
+	<columns>
+		<column name="callback_srl" var="callback_srl" filter="number" notnull="notnull" />
+		<column name="member_srl" var="member_srl" filter="number" notnull="notnull" />
+		<column name="user_id" var="user_id" notnull="notnull" />
+		<column name="phonenum" var="phonenum" filter="number" notnull="notnull" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>

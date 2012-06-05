@@ -1,0 +1,8 @@
+<query id="deleteRecentMessages" action="delete">
+	<tables>
+		<table name="purplebook_messages" />
+	</tables>
+	<conditions>
+		<condition operation="in" column="message_srl" var="message_srls" notnull="notnull" />
+	</conditions>
+</query>

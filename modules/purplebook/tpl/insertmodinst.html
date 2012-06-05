@@ -1,0 +1,156 @@
+<load target="js/script.js" />
+
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<form action="./" method="post" class="form">
+	<input type="hidden" name="module" value="purplebook" />
+	<input type="hidden" name="act" value="procPurplebookAdminInsertModInst" />
+	<input type="hidden" name="page" value="{$page}" />
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	<input type="hidden" name="primary_key" value="{$module_info->module_srl}" />
+	<input type="hidden" name="delivery_info" value="{htmlspecialchars($module_info->delivery_info)}" />
+
+	<table cellspacing="0" class="rowTable">
+
+	<!--@if($logged_info->is_admin!='Y')-->
+	<input type="hidden" name="mid" value="{$module_info->mid}" />
+	<!--@else-->
+	<tr>
+		<th scope="row"><div>{$lang->mid}</div></th>
+		<td>
+		    <input type="text" name="mid" value="{$module_info->mid}" class="inputTypeText w200" />
+		    <p>{$lang->about_mid}</p>
+		</td>
+	</tr>
+	<!--@end-->
+	<tr>
+		<th scope="row"><div>{$lang->module_category}</div></th>
+		<td>
+		    <select name="module_category_srl">
+			<option value="0">{$lang->notuse}</option>
+			<!--@foreach($module_category as $key => $val)-->
+			<option value="{$key}" <!--@if($module_info->module_category_srl==$key)-->selected="selected"<!--@end-->>{$val->title}</option>
+			<!--@end-->
+		    </select>
+		    <p>{$lang->about_module_category}</p>
+		</td>
+	</tr>
+
+	<tr>
+		<th scope="row"><div>{$lang->browser_title}</div></th>
+		<td>
+		    <input type="text" name="browser_title" value="{htmlspecialchars($module_info->browser_title)}"  class="inputTypeText w400" id="browser_title"/>
+		    <a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','browser_title')}" onclick="popopen(this.href);return false;" class="buttonSet buttonSetting"><span>{$lang->cmd_find_langcode}</span></a>
+		    <p>{$lang->about_browser_title}</p>
+		</td>
+	</tr>
+
+	<tr>
+		<th scope="row"><div>{$lang->layout}</div></th>
+		<td>
+		    <select name="layout_srl">
+		    <option value="0">{$lang->notuse}</option>
+		    <!--@foreach($layout_list as $key => $val)-->
+		    <option value="{$val->layout_srl}" <!--@if($module_info->layout_srl==$val->layout_srl)-->selected="selected"<!--@end-->>{$val->title} ({$val->layout})</option>
+		    <!--@end-->
+		    </select>
+		    <p>{$lang->about_layout}</p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><div>{$lang->skin}</div></th>
+		<td>
+		    <select name="skin">
+			<!--@foreach($skin_list as $key=>$val)-->
+			<option value="{$key}" <!--@if($module_info->skin==$key ||(!$module_info->skin && $key=='xe_board'))-->selected="selected"<!--@end-->>{$val->title}</option>
+			<!--@end-->
+		    </select>
+		    <p>{$lang->about_skin}</p>
+		</td>
+	</tr>
+        <tr>
+                <th scope="row"><div>카테고리 출력</div></th>
+                <td>
+                    <select name="category_display">
+                        <option value="1" selected="selected"|cond="$module_info->category_display=='1'">전체출력</option>
+                        <option value="2" selected="selected"|cond="$module_info->category_display=='2'">2단 아래로 출력</option>
+                    </select>
+                    <p>2단 아래로 출력을 선택하면 1단(1depth)메뉴는 출력하지 않습니다. 분류 수가 많아 복잡한 경우에 "2단 아래로 출력"을 선택하세요.</p>
+                </td>
+        </tr>
+	<tr cond="0">
+		<th scope="row"><div>주문자정보필드(이름)</div></th>
+		<td>
+		    <input type="text" name="purchaser_name" value="{htmlspecialchars($module_info->purchaser_name)}"  class="inputTypeText w400" id="purchaser_name"/>
+		    <p>주문자정보에서 주소 필드로 사용될 회원가입폼의 변수명을 입력해 주세요.</p>
+		</td>
+	</tr>
+
+
+	<tr cond="0">
+	<th scope="row"><div>주문자정보필드(주소)</div></th>
+	<td>
+	    <input type="text" name="purchaser_address" value="{htmlspecialchars($module_info->purchaser_address)}"  class="inputTypeText w400" id="purchaser_address"/>
+	    <p>주문자정보에서 주소 필드로 사용될 회원가입폼의 변수명을 입력해 주세요.</p>
+	</td>
+	</tr>
+
+	<tr cond="0">
+		<th scope="row"><div>주문자정보필드(휴대전화)</div></th>
+		<td>
+		    <input type="text" name="purchaser_cellphone" value="{htmlspecialchars($module_info->purchaser_cellphone)}"  class="inputTypeText w400" id="purchaser_cellphone"/>
+		    <p>주문자정보에서 휴대전화 필드로 사용될 회원가입폼의 변수명을 입력해 주세요.</p>
+		</td>
+	</tr>
+	<tr cond="0">
+		<th scope="row"><div>주문자정보필드(일반전화)</div></th>
+		<td>
+		    <input type="text" name="purchaser_telnum" value="{htmlspecialchars($module_info->purchaser_telnum)}"  class="inputTypeText w400" id="purchaser_telnum"/>
+		    <p>주문자정보에서 일반전화 필드로 사용될 회원가입폼의 변수명을 입력해 주세요.</p>
+		</td>
+	</tr>
+	<tr cond="0">
+		<th scope="row"><div>택배사 선택</div></th>
+		<td>
+		    <select name="express_id">
+			<option loop="$delivery_companies=>$key,$val" value="{$key}" selected="selected"|cond="$module_info->express_id==$key">{$val}</option>
+		    </select>
+		    <p>택배사를 선택해 주세요.</p>
+		</td>
+	</tr>
+	<tr cond="0">
+		<th scope="row"><div>배송비</div></th>
+		<td>
+			<input type="text" name="delivery_fee" value="{$module_info->delivery_fee}" />
+			<p>배송비를 입력해 주세요.</p>
+		</td>
+	</tr>
+	<tr cond="0">
+		<th scope="row"><div>무료배송금액</div></th>
+		<td>
+			<input type="text" name="freedeliv_amount" value="{$module_info->freedeliv_amount}" />
+			<p>무료배송금액을 입력해 주세요.</p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">
+			<div>
+				배송정보<br>
+			</div>
+		</th>
+		<td>
+			<div class="editor">{$editor}일괄적용 <input type="radio" name="delivery_info_all" value="all" checked>
+				개별적용 <input type="radio" name="delivery_info_all" value="each"></div>
+		</td>
+	</tr>
+
+	<tr>
+		<th colspan="2" class="button">
+		    <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+		    <span class="button"><input type="button" value="{$lang->cmd_back}" onclick="history.back(); return false;" /></span>
+		</th>
+	</tr>
+	</table>
+</form>

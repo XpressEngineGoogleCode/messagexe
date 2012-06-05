@@ -1,0 +1,8 @@
+<query id="deleteRecentReceivers" action="delete">
+	<tables>
+		<table name="purplebook_receivers" />
+	</tables>
+	<conditions>
+		<condition operation="in" column="receiver_srl" var="receiver_srls" notnull="notnull" />
+	</conditions>
+</query>
