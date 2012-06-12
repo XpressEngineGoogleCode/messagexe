@@ -18,9 +18,11 @@
 		<action name="getPurplebookSearchFolder" type="model" />
 		<action name="getPurplebookSharedUsers" type="model" />
 		<action name="getPurplebookProperties" type="model" />
+		<action name="getPurplebookCashInfo" type="model" />
 		<action name="getPurplebookCallbackNumbers" type="model" />
 		<action name="getPurplebookLatestNumbers" type="model" />
 		<action name="getPurplebookSavedMessages" type="model" />
+		<action name="getPurplebookStatusListByMessageId" type="model" />
 
 		<action name="procPurplebookSendMsg" type="controller" standalone="true" />
 		<action name="procPurplebookFilePicker" type="controller" standalone="true" />

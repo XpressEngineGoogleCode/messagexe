@@ -967,7 +967,7 @@ function updateResultStatus() {
         , url : "./"
         , data : { 
                     module : "purplebook"
-                    , act : "getPurplebookListByMessageId"
+                    , act : "getPurplebookStatusListByMessageId"
                     , message_ids : message_ids_str
                  }
         , dataType : "json"
@@ -2446,7 +2446,7 @@ function get_cashinfo()
 
     var params = new Array();
     var response_tags = new Array('error','message','cash','point','mdrop','sms_price','lms_price','mms_price');
-    exec_xml('purlebook', 'getPurplebookCashInfo', params, completeGetCashInfo, response_tags);
+    exec_xml('purplebook', 'getPurplebookCashInfo', params, completeGetCashInfo, response_tags);
 }
 
 function submit_messages() {

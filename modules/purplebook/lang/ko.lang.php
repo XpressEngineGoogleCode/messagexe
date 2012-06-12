@@ -6,6 +6,26 @@
      * @brief  한국어
      **/
 
+    $lang->sms = 'SMS';
+    $lang->lms = 'MMS장문';
+    $lang->mms = 'MMS포토';
+    $lang->reserv_send = '예약전송';
+    $lang->direct_send = '바로전송';
+    $lang->msg_not_enough_money = '사용가능한 잔액이 모자랍니다. 취소를 선택하고 충전 후 사용하세요';
+    $lang->available_sms_number = '가능 SMS 건수: ';
+    $lang->arranged_sms_number = '예정 SMS 건수: ';
+    $lang->msg_will_you_try = '전송을 시도하시겠습니까?';
+    $lang->reservation_datetime = '예약일시';
+    $lang->number_to_send = '전송할 건수: ';
+    $lang->msg_will_you_send = '전송하시겠습니까?';
+    $lang->msg_not_enough_money = '사용가능한 잔액이 모자랍니다. 취소를 선택하고 충전 후 사용하세요';
+    $lang->available_lms_number = '가능 LMS 건수: ';
+    $lang->arranged_lms_number = '예정 LMS 건수: ';
+    $lang->available_mms_number = '가능 MMS 건수: ';
+    $lang->arranged_mms_number = '예정 MMS 건수: ';
+    $lang->msg_login_required = '로그인 후 사용하실 수 있습니다';
+
+
     $lang->cellphone = '핸드폰';    // 휴대폰으로 표기되길 원하시면 '핸드폰'을 '휴대폰'으로 수정하세요.
     $lang->phone_number = '폰번호';
     $lang->cash = '캐쉬';
