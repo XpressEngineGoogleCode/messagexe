@@ -608,6 +608,7 @@ class coolsms
 				if (!is_array($tbsp["ATTACHMENT"])) $image_list = array($tbsp["ATTACHMENT"]);
 				else $image_list = $tbsp["ATTACHMENT"];
 
+				$this->file_ids = array();
 				$file_ids = array();
 				foreach ($image_list as $image) {
 					$image_content = file_get_contents($image);
