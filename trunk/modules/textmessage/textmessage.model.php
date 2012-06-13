@@ -8,6 +8,7 @@
 	class textmessageModel extends textmessage {
 
 		function init() {
+
 		}
 
 		/**
@@ -38,11 +39,23 @@
 			return $GLOBALS['__textmessage_config__'];
 		}
 
-		function getCoolSMS() {
+		function &getCoolSMS() 
+		{
+			static $sms = NULL;
+
+			if ($sms)
+			{
+				return $sms;
+			}
+
+            $oModuleModel = &getModel('module');
+            $module_info = $oModuleModel->getModuleInfoXml($this->module);
+            $version = $module_info->version;
+
 			$config = $this->getModuleConfig();
 			require_once($this->module_path.'coolsms.php');
 			$sms = new coolsms();
-			$sms->appversion("messageXe/" . $this->version . " XE/" . __ZBXE_VERSION__);
+			$sms->appversion("MXE2/" . $version . ", XE/" . __ZBXE_VERSION__);
 			if ($config->service_id && $config->password) {
 				$sms->setuser($config->service_id, $config->password);
 			}
@@ -144,12 +157,7 @@
 		function getCashInfo($args=false) {
 			$config = $this->getModuleConfig($args);
 
-			require_once($this->module_path.'coolsms.php');
-			$sms = new coolsms();
-			$sln_reg_key = $this->getSlnRegKey();
-			if ($sln_reg_key) $sms->enable_resale();
-			$sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
-			$sms->setuser($config->cs_userid, $config->cs_passwd, $config->crypt);
+			$sms = &$this->getCoolSMS();
 
 			// connect
 			if (!$sms->connect()) {
