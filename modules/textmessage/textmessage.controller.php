@@ -320,8 +320,9 @@ class textmessageController extends textmessage
 			$sms_args->reservdate = $in_args->reservdate;
 			$sms_args->groupid = $group_id;
 			$sms_args->country = $in_args->country_code;
+			$sms_args->subject = $in_args->subject;
 			//$sms_args->country_iso_code = $in_args->country_iso_code;
-			if ($args->type=='MMS')
+			if ($in_args->type=='MMS')
 			{	
 				$sms_args->attachment = $in_args->attachment;
 			}
@@ -348,6 +349,7 @@ class textmessageController extends textmessage
 
 				// insert db record
 				$query_args->message_id = $message_id;
+				$query_args->content = $content;
 				$output = $this->insertTextmessage($query_args);
 				if (!$output->toBool()) return $output;
 
@@ -406,6 +408,36 @@ class textmessageController extends textmessage
 		$first_msg = $sms->msgl[0];
 		$total_count = $sms->count();
 
+		//
+		// insert group info.
+		//
+		$group_id = $first_msg['GROUP-ID'];
+		$mtype = $first_msg['TYPE'];
+		$subject = $first_msg['SUBJECT'];
+		$message = $first_msg['MESSAGE'];
+		if (isset($first_msg['RESERVDATE']))
+		{
+			$reservdate = $first_msg['RESERVDATE'];
+			$reservflag = 'Y';
+		}
+		$args->group_id = $group_id;
+		$args->mtype = $mtype;
+		$args->subject =  $subject;
+		$args->content =  $message;
+		if (!$args->subject)
+		{
+			$args->subject = $message;
+		}
+		$args->reservflag = $reservflag;
+		$args->reservdate = $reservdate;
+		$args->total_count = $total_count;
+		$output = $this->insertTextmessageGroup($args);
+		if(!$output->toBool())
+		{
+			return $output;
+		}
+		unset($args);
+
 		// connect to server
 		if(!$sms->connect()) 
 		{
@@ -453,33 +485,6 @@ class textmessageController extends textmessage
 		$sms->disconnect();
 		$sms->emptyall();
 
-		$group_id = $first_msg['GROUP-ID'];
-		$mtype = $first_msg['TYPE'];
-		$subject = $first_msg['SUBJECT'];
-		$message = $first_msg['MESSAGE'];
-		if (isset($first_msg['RESERVDATE']))
-		{
-			$reservdate = $first_msg['RESERVDATE'];
-			$reservflag = 'Y';
-		}
-
-		// insert group info.
-		$args->group_id = $group_id;
-		$args->mtype = $mtype;
-		$args->subject =  $subject;
-		$args->content =  $message;
-		if (!$args->subject)
-		{
-			$args->subject = $message;
-		}
-		$args->reservflag = $reservflag;
-		$args->reservdate = $reservdate;
-		$args->total_count = $total_count;
-		$output = $this->insertTextmessageGroup($args);
-		if(!$output->toBool())
-		{
-			return $output;
-		}
 
 
 		if ($failure_count > 0)
