@@ -1,5 +1,6 @@
 <?php
 /**
+ * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookView
  * @author wiley(wiley@nurigo.net)
  * @brief  purplebookView
@@ -232,4 +233,3 @@ class purplebookView extends purplebook
 }
 /* End of file purplebook.view.php */
 /* Location: ./modules/purplebook/purplebook.view.php */
-
