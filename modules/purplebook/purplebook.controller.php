@@ -1,6 +1,6 @@
 <?php
 /**
- * vi:set sw=4 ts=4 noexpandtab fileencoding=utf8:
+ * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookController
  * @author wiley@nurigo.net
  * @brief  purplebookController
@@ -133,7 +133,7 @@ class purplebookController extends purplebook
 	 * @brief node_id의 node_route를 구해서 node_route로 검색하여 하위 폴더 갯수를 구하여 업댓.
 	 * @param[in] node_id : 업댓할 node_id
 	 **/
-	function updateSubfolder($user_id, $node_id) 
+	function updateSubfolder($member_srl, $node_id) 
 	{
 		$subfolder = 0;
 
@@ -145,7 +145,7 @@ class purplebookController extends purplebook
 
 		// get node_route
 		$args->node_id = $node_id;
-		$args->user_id = $user_id;
+		$args->member_srl= $member_srl;
 		$output = executeQuery('purplebook.getPurplebook', $args);
 		if(!$output->toBool())
 		{
@@ -176,12 +176,12 @@ class purplebookController extends purplebook
 	 * @brief node_id의 node_route를 구해서 node_route로 검색하여 하위 명단 갯수를 구하여 업댓
 	 * @param[in] node_id : 업댓할 node_id
 	 **/
-	function updateSubnode($user_id, $node_id) 
+	function updateSubnode($member_srl, $node_id) 
 	{
 		$subnode = 0;
 
 		$args->node_id = $node_id;
-		$args->user_id = $user_id;
+		$args->member_srl = $member_srl;
 		$output = executeQuery('purplebook.getPurplebook', $args);
 		if(!$output->toBool())
 		{
@@ -222,7 +222,7 @@ class purplebookController extends purplebook
 
 	/**
 	 * @brief 주소록 명단 삭제
-	 * @param[in] user_id
+	 * @param[in] member_srl
 	 * @param[in] node_id
 	 **/
 	function deletePurplebook($args) 
@@ -524,7 +524,7 @@ class purplebookController extends purplebook
 		// check permission for node_id
 		if(!$this->checkPermission($node_id)) return new Object(-1, 'msg_no_permission');
 
-		$args->user_id = $logged_info->user_id;
+		$args->member_srl = $logged_info->member_srl;
 		$args->node_id = $node_id;
 		$args->node_name = $node_name;
 		$output = executeQuery('purplebook.updatePurplebookName', $args);
@@ -543,7 +543,7 @@ class purplebookController extends purplebook
 		// check permission for node_id
 		if(!$this->checkPermission($node_id)) return new Object(-1, 'msg_no_permission');
 
-		$args->user_id = $logged_info->user_id;
+		$args->member_srl = $logged_info->member_srl;
 		$args->node_id = $node_id;
 		$args->phone_num = $phone_num;
 		$output = executeQuery('purplebook.updatePurplebookPhone', $args);
@@ -655,8 +655,8 @@ class purplebookController extends purplebook
 
 		if(!in_array($parent_node, array('f.','t.','s.')))
 		{
-			if($args->node_type=='1') $this->updateSubfolder($logged_info->user_id, $parent_node);
-			if($args->node_type=='2') $this->updateSubnode($logged_info->user_id, $parent_node);
+			if($args->node_type=='1') $this->updateSubfolder($logged_info->member_srl, $parent_node);
+			if($args->node_type=='2') $this->updateSubnode($logged_info->member_srl, $parent_node);
 		}
 
 		$this->add('id', $args->node_id);
@@ -715,7 +715,7 @@ class purplebookController extends purplebook
 
 		if(!in_array($parent_node, array('f.','t.','s.')))
 		{
-			$this->updateSubnode($logged_info->user_id, $parent_node);
+			$this->updateSubnode($logged_info->member_srl, $parent_node);
 		}
 
 		$this->add('return_data',$list);
@@ -742,11 +742,11 @@ class purplebookController extends purplebook
 		return $output;
 	}
 
-	function copyNode($user_id, $node_id, $parent_id) 
+	function copyNode($member_srl, $node_id, $parent_id) 
 	{
 		// get destination
 		$args->node_id = $parent_id;
-		$args->user_id = $user_id;
+		$args->member_srl = $member_srl;
 		$output = executeQuery('purplebook.getPurplebook', $args);
 		if(!$output->toBool()) return $output;
 		$dest_node = $output->data;
@@ -758,7 +758,7 @@ class purplebookController extends purplebook
 		// get current node
 		unset($args);
 		$args->node_id = $node_id;
-		$args->user_id = $user_id;
+		$args->member_srl = $member_srl;
 		$output = executeQuery('purplebook.getPurplebook', $args);
 		if(!$output->toBool()) return $output;
 		$current = $output->data;
@@ -772,35 +772,31 @@ class purplebookController extends purplebook
 		$new_node_id = $output->node_id;
 
 		// copy children
-		$search_args->user_id = $user_id;
+		$search_args->member_srl = $member_srl;
 		$search_args->node_route = $current->node_route . $current->node_id . '.';
 		//$search_args->node_type = '2';
 		$output = executeQueryArray('purplebook.getPurplebookChildrenByNodeRoute', $search_args);
 		if(!$output->toBool()) return $output;
 		$new_route = $new_args->node_route . $new_node_id . '.';
-		if($output->data) {
-			foreach ($output->data as $no => $val) {
+		if($output->data)
+		{
+			foreach($output->data as $no => $val)
+			{
 				$val->node_route = $new_route;
 				$old_node_id = $val->node_id;
-				if($val->node_type = '1' && $val->subfolder > 0) {
+				if($val->node_type = '1' && $val->subfolder > 0)
+				{
 					$new_node_id = $res->node_id;
-					$this->copyNode($user_id, $old_node_id, $new_node_id);
-				} else {
+					$this->copyNode($member_srl, $old_node_id, $new_node_id);
+				}
+				else
+				{
 					$res = $this->insertPurplebook($val);
 				}
-				
-				//executeQuery('purplebook.updatePurplebook', $val);
 			}
 		}
 
-		/*
-		// update current
-		$output = executeQuery('purplebook.updatePurplebook', $new_args);
-		if(!$output->toBool()) return $output;
-
-		$this->updateSubfolder($user_id, $previous_node);
-		 */
-		if($parent_id) $this->updateSubfolder($user_id, $parent_id);
+		if($parent_id) $this->updateSubfolder($member_srl, $parent_id);
 	}
 
 	function moveNode($node_id, $parent_id) 
@@ -854,8 +850,8 @@ class purplebookController extends purplebook
 		if(!$output->toBool()) return $output;
 
 		// root folder has no node_id.
-		if($previous_node) $this->updateSubfolder($logged_info->user_id, $previous_node);
-		if($parent_id) $this->updateSubfolder($logged_info->user_id, $parent_id);
+		if($previous_node) $this->updateSubfolder($logged_info->member_srl, $previous_node);
+		if($parent_id) $this->updateSubfolder($logged_info->member_srl, $parent_id);
 	}
 
 	function procPurplebookMoveNode() 
@@ -945,7 +941,7 @@ class purplebookController extends purplebook
 		{
 			// get parent node
 			$args->node_id = $node_id;
-			$args->user_id = $logged_info->user_id;
+			$args->member_srl = $logged_info->member_srl;
 			$output = executeQuery('purplebook.getPurplebook', $args);
 			if(!$output->toBool()) return $output;
 			$parent_node = $this->getPostNode($output->data->node_route);
@@ -954,7 +950,7 @@ class purplebookController extends purplebook
 		unset($args);
 
 		// delete share info.
-		$args->user_id = $logged_info->user_id;
+		$args->member_srl = $logged_info->member_srl;
 		$args->node_route = $node_route;
 		$args->node_type = '1';
 		$output = executeQueryArray('purplebook.getPurplebookByNodeRoute', $args);
@@ -976,7 +972,7 @@ class purplebookController extends purplebook
 		}
 
 		// delete subfolder
-		$args->user_id = $logged_info->user_id;
+		$args->member_srl = $logged_info->member_srl;
 		$args->node_route = $node_route;
 		$output = executeQuery('purplebook.deletePurplebookByNodeRoute', $args);
 		if(!$output->toBool()) return $output;
@@ -985,7 +981,7 @@ class purplebookController extends purplebook
 		// delete self
 		if(!in_array($node_id, array('f.','t.','s.')))
 		{
-			$args->user_id = $logged_info->user_id;
+			$args->member_srl = $logged_info->member_srl;
 			$args->node_id = $node_id;
 			$output = executeQuery('purplebook.deletePurplebook', $args);
 			if(!$output->toBool()) return $output;
@@ -995,7 +991,7 @@ class purplebookController extends purplebook
 		// update parent subfolder
 		if($parent_node)
 		{
-			$output = $this->updateSubfolder($logged_info->user_id, $parent_node);
+			$output = $this->updateSubfolder($logged_info->member_srl, $parent_node);
 			if(!$output->toBool()) return $output;
 		}
 	}

@@ -1,5 +1,6 @@
 <?php
 /**
+ * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookAdminController
  * @author wiley(wiley@nurigo.net)
  * @brief  purplebookAdminController
@@ -41,6 +42,21 @@ class purplebookAdminController extends purplebook
 
 		$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPurplebookAdminInsertModInst','module_srl',$output->get('module_srl'));
 		$this->setRedirectUrl($redirectUrl);
+	}
+
+	function procPurplebookAdminDeleteModInst() {
+		$module_srl = Context::get('module_srl');
+
+		$oModuleController = &getController('module');
+		$output = $oModuleController->deleteModule($module_srl);
+		if(!$output->toBool()) return $output;
+
+		$this->add('module','purplebook');
+		$this->add('page',Context::get('page'));
+		$this->setMessage('success_deleted');
+
+		$returnUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPurplebookAdminModInstList');
+		$this->setRedirectUrl($returnUrl);
 	}
 
 
