@@ -35,4 +35,5 @@ class authenticationAdminModel extends authentication
 		$this->add('tpl', str_replace("\n"," ",$tpl));
 	}
 }
-?>
+/* End of file authentication.admin.model.php */
+/* Location: ./modules/authentication/authentication.admin.model.php */
