@@ -1,0 +1,7 @@
+<table name="authentication">
+	<column name="member_srl" type="number" default="0" index="idx_member_srl" />
+	<column name="clue" type="varchar" size="250" notnull="notnull" index="idx_clue" />
+	<column name="authcode" type="varchar"  size="2500" notnull="notnull" />
+	<column name="expire" type="date" />
+	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
+</table>

@@ -13,4 +13,5 @@ class authenticationView extends authentication
 		$this->setTemplatePath($this->module_path.'tpl');
 	}
 }
-?>
+/* End of file authentication.view.php */
+/* Location: ./modules/authentication/authentication.view.php */

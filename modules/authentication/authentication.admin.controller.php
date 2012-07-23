@@ -14,7 +14,8 @@ class authenticationAdminController extends authentication
 	{
 	}
 
-	function isValidFieldName($fieldname) {
+	function isValidFieldName($fieldname)
+	{
 		$bfound = false;
 
 		// 확장 필드에세 찾아보기
@@ -39,7 +40,8 @@ class authenticationAdminController extends authentication
 	/**
 	 * @brief 모듈 환경설정값 쓰기
 	 **/
-	function procAuthenticationAdminConfig() {
+	function procAuthenticationAdminConfig()
+	{
 		$bsucc = true;
 		$messages = "= 설정오류 내역 =\n";
 
@@ -148,4 +150,5 @@ class authenticationAdminController extends authentication
 		$this->setRedirectUrl($redirectUrl);
 	}
 }
-?>
+/* End of file authentication.admin.controller.php */
+/* Location: ./modules/authentication/authentication.admin.controller.php */

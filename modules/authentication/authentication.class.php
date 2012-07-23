@@ -9,7 +9,7 @@ class authentication extends ModuleObject
 {
 	/**
 	 * @brief Object를 텍스트의 %...% 와 치환.
-	 **/
+	 */
 	function mergeKeywords($text, &$obj) 
 	{
 		if (!is_object($obj)) return $text;
@@ -27,49 +27,25 @@ class authentication extends ModuleObject
 
 	/**
 	 * @brief 모듈 설치 실행
-	 **/
+	 */
 	function moduleInstall() 
 	{
 		$oModuleController = &getController('module');
 		$oModuleModel = &getModel('module');
 
-		$oModuleController->insertTrigger('member.insertMember', 'authentication', 'controller', 'triggerInsertMember', 'after');
-		$oModuleController->insertTrigger('member.deleteMember', 'authentication', 'controller', 'triggerDeleteMember', 'before');
-		$oModuleController->insertTrigger('member.updateMember', 'authentication', 'controller', 'triggerUpdateMember', 'after');
+		$oModuleController->insertTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after');
 	}
 
 	/**
 	 * @brief 설치가 이상없는지 체크
-	 **/
+	 */
 	function checkUpdate() 
 	{
 		$oDB = &DB::getInstance();
 		$oModuleModel = &getModel('module');
 		$oModuleController = &getController('module');
 
-		if (!$oModuleModel->getTrigger('member.insertMember'
-			, 'authentication'
-			, 'controller'
-			, 'triggerInsertMember'
-			, 'after'))
-		{
-			return true;
-		}
-
-		if (!$oModuleModel->getTrigger('member.deleteMember'
-			, 'authentication'
-			, 'controller'
-			, 'triggerDeleteMember'
-			, 'before'))
-		{
-			return true;
-		}
-
-		if (!$oModuleModel->getTrigger('member.updateMember'
-			, 'authentication'
-			, 'controller'
-			, 'triggerUpdateMember'
-			, 'after'))
+		if(!$oModuleModel->getTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after'))
 		{
 			return true;
 		}
@@ -79,32 +55,33 @@ class authentication extends ModuleObject
 
 	/**
 	 * @brief 업데이트(업그레이드)
-	 **/
+	 */
 	function moduleUpdate() 
 	{
 		$oDB = &DB::getInstance();
 		$oModuleModel = &getModel('module');
 		$oModuleController = &getController('module');
 
-		if (!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerInsertMember', 'after'))
+		if(!$oModuleModel->getTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after'))
 		{
-			$oModuleController->insertTrigger('member.insertMember', 'authentication', 'controller', 'triggerInsertMember', 'after');
-		}
-		if (!$oModuleModel->getTrigger('member.deleteMember', 'authentication', 'controller', 'triggerDeleteMember', 'before'))
-		{
-			$oModuleController->insertTrigger('member.deleteMember', 'authentication', 'controller', 'triggerDeleteMember', 'before');
-		}
-		if (!$oModuleModel->getTrigger('member.updateMember', 'authentication', 'controller', 'triggerUpdateMember', 'after'))
-		{
-			$oModuleController->insertTrigger('member.updateMember', 'authentication', 'controller', 'triggerUpdateMember', 'after');
+			$oModuleController->insertTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after');
 		}
 	}
 
 	/**
+	 * @brief Unintall
+	 */
+	function moduleUninstall()
+	{
+		return new Object();
+	}
+
+	/**
 	 * @brief 캐시파일 재생성
-	 **/
+	 */
 	function recompileCache() 
 	{
 	}
 }
-?>
+/* End of file authentication.class.php */
+/* Location: ./modules/authentication/authentication.class.php */

@@ -76,4 +76,5 @@ class authenticationModel extends authentication
 		return $userid_array;
 	}
 }
-?>
+/* End of file authentication.model.php */
+/* Location: ./modules/authentication/authentication.model.php */
