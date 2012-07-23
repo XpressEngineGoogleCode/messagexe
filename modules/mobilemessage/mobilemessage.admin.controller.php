@@ -104,7 +104,7 @@
 
                 $sms = new coolsms();
                 $sln_reg_key = $oModel->getSlnRegKey();
-                if ($sln_reg_key) $sms->enable_resale();
+                if ($sln_reg_key) $sms->setSRK($sln_reg_key);
                 $sms->appversion("MXE/{$this->version}/" . __ZBXE_VERSION__);
                 $sms->setuser($args->cs_userid, $args->cs_passwd);
                 if ($sms->connect()) {

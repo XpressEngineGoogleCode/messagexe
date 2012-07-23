@@ -12,7 +12,7 @@
             require_once($this->module_path."coolsms.php");
             $this->sms = new coolsms();
             $sln_reg_key = $oModel->getSlnRegKey();
-            if ($sln_reg_key) $this->sms->set_sln_reg_key($sln_reg_key);
+            if ($sln_reg_key) $this->sms->setSRK($sln_reg_key);
             $this->sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
             $this->sms->setuser($this->config->cs_userid, $this->config->cs_passwd);
             $this->sms->charset('utf8');

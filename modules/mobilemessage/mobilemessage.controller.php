@@ -239,7 +239,7 @@
             require_once($this->module_path.'coolsms.php');
             $this->sms = new coolsms();
             $sln_reg_key = $oModel->getSlnRegKey();
-            if ($sln_reg_key) $this->sms->set_sln_reg_key($sln_reg_key);
+            if ($sln_reg_key) $this->sms->setSRK($sln_reg_key);
             $this->sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
             $this->sms->setuser($this->config->cs_userid, $this->config->cs_passwd, $this->config->crypt);
             $this->sms->charset('utf8');
@@ -369,7 +369,7 @@
             require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $oMobilemessageModel->getSlnRegKey();
-            if ($sln_reg_key) $sms->set_sln_reg_key($sln_reg_key);
+            if ($sln_reg_key) $sms->setSRK($sln_reg_key);
             $sms->appversion("MXE/{$this->version} XE/" . __ZBXE_VERSION__);
             $sms->charset("utf8");
             $sms->setuser($config->cs_userid, $config->cs_passwd, $config->crypt);
@@ -590,7 +590,7 @@
             require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $oMobilemessageModel->getSlnRegKey();
-            if ($sln_reg_key) $sms->enable_resale();
+            if ($sln_reg_key) $sms->setSRK($sln_reg_key);
             $sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
             if (!$config->cs_userid || !$config->cs_passwd) {
                 $this->setMessage('warning_check_setuser');
@@ -949,7 +949,7 @@
             require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $oMobilemessageModel->getSlnRegKey();
-            if ($sln_reg_key) $sms->enable_resale();
+            if ($sln_reg_key) $sms->setSRK($sln_reg_key);
             $sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
             if (!$config->cs_userid || !$config->cs_passwd) {
                 return new Object(-1, 'warning_check_setuser');
@@ -981,7 +981,7 @@
             require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $oMobilemessageModel->getSlnRegKey();
-            if ($sln_reg_key) $sms->enable_resale();
+            if ($sln_reg_key) $sms->setSRK($sln_reg_key);
             $sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
             if (!$config->cs_userid || !$config->cs_passwd)
             {
