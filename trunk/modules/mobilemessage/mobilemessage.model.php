@@ -67,7 +67,7 @@
             require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $this->getSlnRegKey();
-            if ($sln_reg_key) $sms->enable_resale();
+            if ($sln_reg_key) $sms->setSRK($sln_reg_key);
             $sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
             if ($config->cs_userid && $config->cs_passwd) {
                 $sms->setuser($config->cs_userid, $config->cs_passwd);
@@ -475,7 +475,7 @@
             require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $this->getSlnRegKey();
-            if ($sln_reg_key) $sms->enable_resale();
+            if ($sln_reg_key) $sms->setSRK($sln_reg_key);
             $sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
             $sms->setuser($config->cs_userid, $config->cs_passwd, $config->crypt);
 
@@ -511,7 +511,7 @@
             require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $this->getSlnRegKey();
-            if ($sln_reg_key) $sms->enable_resale();
+            if ($sln_reg_key) $sms->setSRK($sln_reg_key);
             $sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
             $sms->setuser($config->cs_userid, $config->cs_passwd, $config->crypt);
 
