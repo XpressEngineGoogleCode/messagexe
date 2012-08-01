@@ -16,14 +16,14 @@
     <th scope="row"><div><span class="required">*</span>{$lang->serviceid}</div></th>
         <td>
             <input type="text" name="cs_userid" value="{$mobilemessage_config->cs_userid}" class="inputTypeText w200" />
-            <p><!--@if($sln_reg_key)-->{$lang->about_msol_serviceid}<!--@else-->{$lang->about_serviceid}<!--@end--></p>
+            <p>{$lang->about_serviceid}</p>
         </td>
     </tr>
     <tr>
         <th scope="row"><div><span class="required">*</span>{$lang->password}</div></th>
         <td>
             <input type="password" name="cs_passwd" value="{$mobilemessage_config->cs_passwd}" class="inputTypeText w200" />
-            <p><!--@if($sln_reg_key)-->{$lang->about_msol_service_password}<!--@else-->{$lang->about_service_password}<!--@end--></p>
+            <p>{$lang->about_service_password}</p>
         </td>
     </tr>
     <tr>
