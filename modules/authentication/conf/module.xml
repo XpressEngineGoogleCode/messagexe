@@ -6,8 +6,13 @@
 	</menus>
     <actions>
 		<action name="dispAuthenticationAdminConfig" type="view" admin_index="true" />
+		<action name="dispAuthenticationCompare" type="view" />
+		<action name="dispAuthenticationCompare3" type="view" />
+
 		<action name="procAuthenticationAdminConfig" type="controller" />
 
 		<action name="procAuthenticationSendAuthCode" type="controller" />
+		<action name="procAuthenticationCompare" type="controller" />
+		<action name="procAuthenticationUpdateStatus" type="controller" />
     </actions>
 </module>

@@ -198,6 +198,8 @@ class authenticationAdminView extends authentication
 
 		$this->setTemplateFile('insert');
 	}
+
+	
 }
 /* End of file authentication.admin.view.php */
 /* Location: ./modules/authentication/authentication.admin.view.php */
