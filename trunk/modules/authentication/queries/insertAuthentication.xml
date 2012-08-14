@@ -1,0 +1,14 @@
+<query id="insertAuthentication" action="insert">
+	<tables>
+		<table name="authentication" />
+	</tables>
+	<columns>
+		<column name="authentication_srl" var="authentication_srl" />
+		<column name="clue" var="clue" />
+		<column name="authcode" var="authcode" />
+		<column name="expire" var="expire" default="" />
+		<column name="country" val="country" />
+		<column name="regdate" var="regdate" default="curdate()" />
+		<column name="authcode_pass" var="authcode_pass" default="N" />
+	</columns>
+</query>

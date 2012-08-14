@@ -1,0 +1,12 @@
+<query id="getAuthcodeClue" action="insert">
+	<tables>
+		<table name="authentication" />
+	</tables>
+	<columns>
+		<column bane="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="clue" var="clue" notnull="notnull" pipe="and" />
+		<condition operation="equal" column="authcode_pass" default="Y" />
+	</conditions>
+</query>

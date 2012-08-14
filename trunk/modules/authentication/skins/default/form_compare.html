@@ -1,0 +1,14 @@
+<load target="../../tpl/skin.js/script.js" />
+
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<form method="post" id="fo_compare_2" action="./">
+	<input type="hidden" name="act" value="procAuthenticationCompare" />
+	<input type="hidden" name="authentication_srl" value={$authentication_srl} />
+	인증번호를 입력하세요. <input type="text" id="authcode" name="authcode" />
+
+	<button onclick="compeleteCompare({$authentication_srl})">확인</button>
+</form>
+
