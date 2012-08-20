@@ -15,7 +15,7 @@
 #phone .exTxt {font-size:12px; color:#999; line-height:1.3em; margin:5px 0 0 0; padding:0;}
 
 /* input style */
-#phone .input01 {height:25px; font-size:16px; color:#666; border:1px solid #dadada; vertical-align:middle; padding:0 0 04px; line-height:25px;}
+#phone .input01 {height:25px; font-size:16px; color:#666; border:1px solid #dadada; vertical-align:middle; padding:0 0 0 4px; line-height:25px;}
 #phone .input01:focus {border-color:#ff9435; color:#ff9435;}
 #phone .input02:focus {border-color:#ff9435; }
 
