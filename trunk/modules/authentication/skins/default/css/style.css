@@ -25,6 +25,9 @@
 #phone .size03 {width:100px;}
 #phone .size04 {width:160px;}
 
+/* confirm */
+#phone .confirm {vertical-align:middle;}
+
 /* table style */
 #phone .container {width:100%; border-collapse:collapse;}
 #phone .container th {width:140px; padding:0 20px 0 0; text-align:right; border-top:1px solid #dadada; border-bottom:1px solid #dadada; font-size:16px; background:#f9f9f9;}
