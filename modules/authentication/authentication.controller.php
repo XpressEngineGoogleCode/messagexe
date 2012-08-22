@@ -11,7 +11,7 @@ class authenticationController extends authentication
 	{
 		session_start();
 
-		if($_COOKIE['authcode_overlap'] == 5)
+		if($_COOKIE['authcode_overlap'] == 10)
 		{
 			return new Object(-1, '인증번호 보낸 횟수 초과(1시간 뒤 사용 가능)');
 		}
@@ -26,9 +26,9 @@ class authenticationController extends authentication
 			setcookie('authcode_overlap',$_COOKIE['authcode_overlap'] + 1, time()+3600);
 		}
 
-		if($_COOKIE['authcode_overlap'] > 5)
+		if($_COOKIE['authcode_overlap'] > 10)
 		{
-			setcookie('authcode_overlap',5, time()+3600);
+			setcookie('authcode_overlap',10, time()+3600);
 		}
 /*
 		$aa = Context::get('mid');
@@ -44,15 +44,22 @@ class authenticationController extends authentication
 		$key = rand(1, 99999);
 		$keystr = sprintf("%05d", $key);
 
+
+		$args->clue = $vars->phone_1.$vars->phone_2.$vars->phone_3;
+
+		$output = executeQuery('authentication.getAuthcodeClue', $args);
+
+		debugPrint('halp_2');
+		debugPrint($output->data);
+
 		$args->country = $vars->country;
 		$args->authentication_srl = getNextSequence();
 		$args->expire = date("j",time()).date("i",time());
 		$args->authcode = $keystr;
-		$args->clue = $vars->phone_1.$vars->phone_2.$vars->phone_3;
-
-		$output = executeQuery('authentication,getAuthcodePass', $args);
-
+		
 		$output = executeQuery('authentication.insertAuthentication', $args);
+
+		debugPrint($output);
 		if (!$output->toBool())
 		{
 			return $output;
@@ -65,6 +72,7 @@ class authenticationController extends authentication
 			$_SESSION['country'] = $vars->country;
 			$_SESSION['phone'] = $phone;
 			$_SESSION['authentication_srl'] = $args->authentication_srl;
+			$_SESSION['authentication_mid'] = $vars->authcode_mid;
 		}
 
 		$this->add('authentication_srl', $args->authentication_srl);
@@ -127,20 +135,23 @@ class authenticationController extends authentication
 			setcookie('authcode_overlap','', time()-90000);
 			$_SESSION['authentication_pass'] = 'Y';
 
-			$args->elision = 'Y';
+			$args->authcode_pass = 'Y';
 			$args->authentication_srl = $_SESSION['authentication_srl'];
-			$output = executeQuery('authentication.updateElision', $args);
+			$output = executeQuery('authentication.updateAuthcodePass', $args);
 			if(!$output->toBool())
 			{
 				return $output;
 			}
+
+			
+
+			$returnUrl = getNotEncodedUrl('', 'mid', $all_args->authcode_mid, 'act', 'dispMemberSignUpForm');
 
 			unset($_SESSION['country']);
 			unset($_SESSION['phone']);
 			unset($_SESSION['authentication_mid']);
 			unset($_SESSION['authentication_srl']);
 
-			$returnUrl = getNotEncodedUrl('', 'mid', $all_args->authcode_mid, 'act', 'dispMemberSignUpForm');
 			$this->setRedirectUrl($returnUrl);
 		}
 		else
@@ -171,12 +182,27 @@ class authenticationController extends authentication
 			$oModule->setTemplatePath($addon_tpl_path);
 			$oModule->setTemplateFile($addon_tpl_file);
 
+			$oAuthenticationModel = &getModel('authentication');
+			$oMemberModel = &getModel('member');
+
+			$info = $oAuthenticationModel->getModuleConfig();
+
+			debugPrint('ko_22');
+			debugPrint($info);
+
 			if($_SESSION['phone'])
 			{
 				$phone = $_SESSION['phone'];
 			}
 
-			Context::set('country', $_SESSION['country']);
+			if(!$_SESSION['country'])
+			{
+				Context::set('country', $info->country_code);
+			}
+			else
+			{
+				Context::set('country', $_SESSION['country']);
+			}
 			Context::set('authcode_mid', Context::get('mid'));
 			Context::set('phone_1', $phone[phone_1]);
 			Context::set('phone_2', $phone[phone_2]);
@@ -218,6 +244,15 @@ class authenticationController extends authentication
 
 			$this->add('result', $result);
 	}
+
+	function triggerDeleteMember(&$obj) 
+	{
+
+		debugPrint('ko_223');
+		debugPrint($obj);
+		return new Object(-1, 'd');
+	}
+
 
 }
 ?>

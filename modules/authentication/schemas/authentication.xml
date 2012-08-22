@@ -4,6 +4,7 @@
 	<column name="authcode" type="varchar" size="2500" notnull="notnull" />
 	<column name="authcode_pass" type="char" size="25" />
 	<column name="country" type="number" size="11" />
+	<column name="ban_period" type="number" size="11" />
 	<column name="expire" type="date" />
 	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
 </table>

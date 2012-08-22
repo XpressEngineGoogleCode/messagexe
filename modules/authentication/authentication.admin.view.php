@@ -47,6 +47,10 @@ class authenticationAdminView extends authentication
 
 		Context::set('mobilemessage_config', $config);
 
+		$country_code = explode(',',$config->country_code);
+
+		Context::set('country_code', $country_code);
+
 		$group_list = $oMemberModel->getGroups(0);
 		Context::set('group_list', $group_list);
 
