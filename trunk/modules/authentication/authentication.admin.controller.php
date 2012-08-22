@@ -47,25 +47,9 @@ class authenticationAdminController extends authentication
 
 		$args = Context::getRequestVars();
 
-		// 폰번호 필드 설정을 했지만 올바르지 않는지 체크
-		if ($args->cellphone_fieldname) {
-			if (!$this->isValidFieldName($args->cellphone_fieldname)) {
-				$messages .= "[핸드폰번호 필드명] 필드명이 올바르지 않습니다. 정확히 입력해 주세요.";
-				$bsucc = false;
-			}
-		}
-
-		// 인증번호 필드 설정을 했지만 올바른지 체크
-		if ($args->validationcode_fieldname) {
-			if (!$this->isValidFieldName($args->validationcode_fieldname)) {
-				$messages .= "[인증번호 필드명] 필드명이 올바르지 않습니다. 정확히 입력해 주세요.";
-				$bsucc = false;
-			}
-		}
-
 		// check whether countrycode_fieldname is valid
 		if ($args->countrycode_fieldname) {
-			if (!$this->isValidFieldName($args->countrycode_fieldname)) {
+			if (!$this->isValidFieldName($args->country_code)) {
 				$messages .= "[국가번호 필드명] 필드명이 올바르지 않습니다. 정확히 입력해 주세요.";
 				$bsucc = false;
 			}
