@@ -34,6 +34,9 @@
 		 **/
 		function procNotificationAdminInsert() {
 			$params = Context::gets('content','mail_content','module_srls','msgtype','sending_method');
+			$extra_vars = new StdClass();
+			$extra_vars->admin_phones = Context::get('admin_phones');
+			$extra_vars->admin_emails = Context::get('admin_emails');
 			$params->notification_srl = Context::get('noti_srl');
 
 			if ($params->notification_srl) {
@@ -58,7 +61,7 @@
 				if (!$output->toBool()) return $output;
 			}
 
-			//$params->extra_vars = serialize($extra_vars);
+			$params->extra_vars = serialize($extra_vars);
 
 			// insert notification
 			$output = executeQuery('notification.insertNotiCom', $params);
