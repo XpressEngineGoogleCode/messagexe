@@ -1,13 +1,13 @@
 <!--%import("css/config.css")-->
 <!--%import("css/phone.css")-->
+<include target="header.html" />
+<load target="../../module/tpl/js/multi_order.js" />
 
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-<p>{$XE_VALIDATOR_MESSAGE}</p>
-</div>
-<h1>{print_r($mobilemessage_config)}</h1>
 <form id="fo_config" action="./" method="post" class="form" ruleset="insert_config">
 	<input type="hidden" name="module" value="authentication" />
 	<input type="hidden" name="act" value="procAuthenticationAdminConfig" />
+	<input type="hidden" name="module_srl" value={$module_srl} />
+
 	<fieldset class="section">
 		<h2 class="h2">기본 설정</h2>
 		<ul>
@@ -30,6 +30,105 @@
 				</p>
 			</li>
 		</ul>
+
+		<ul>
+			<li>
+				<p class="q">{$lang->validationcode_limit}</p>
+				<p class="a">
+
+				<td class="orangeTop">
+					<input type="text" size="5" maxlength="2" name="number_limit" value="{$mobilemessage_config->number_limit}" />
+				</td>
+				
+				<p>빈칸으로 두시면 기본 다섯자로 인증번호가 전송됩니다.<br />최대 여덞자 까지 가능합니다.</p>
+
+				</p>
+			</li>
+		</ul>
+
+		<ul>
+			<li>
+				<p class="q">{$lang->validationcode_message_limit}</p>
+				<p class="a">
+
+				<td class="orangeTop">
+					<input type="text" size="5" maxlength="2" name="authcode_ban_limit" value="{$mobilemessage_config->authcode_ban_limit}" />
+				</td>
+				
+				<p>인증번호 횟수 제한.<br />같은번호로 일정 횟수 이상 인증번호 요청시 해당 번호를 1일간 금지합니다.</p>
+
+				</p>
+			</li>
+		</ul>
+
+
+
+		<ul>
+			<li>
+				<p class="q">{$lang->validationcode_content}</p>
+				<p class="a">
+
+				<td class="orangeTop">
+					<textarea name="message_content" cond="$mobilemessage_config->message_content">{htmlspecialchars($mobilemessage_config->message_content)}</textarea>
+					<textarea name="message_content" cond="!$mobilemessage_config->message_content">[authcode]</textarea>
+				</td>
+				
+				<p>[authcode]가 인증번호입니다..<br />예)'인증 번호는 [authcode] 입니다.'</p>
+
+				</p>
+			</li>
+		</ul>
+
+<!--
+		{@$list = array_keys($authcode_list)}
+				<input type="hidden" name="list" value="{implode(',', $list)}" />
+				<h1>{print_r($list)}</h1>
+
+				<select class="multiorder_show" size="8" multiple="multiple" style="width:290px;vertical-align:top">
+						<option loop="$authcode_list => $key, $val" value="{$val}">{$key}</option>
+					</select>
+					<button type="button" class="text multiorder_add" style="vertical-align:top">{$lang->cmd_insert}</button>
+					<select class="multiorder_selected" size="8" multiple="multiple" style="width:290px;vertical-align:top">
+						<option loop="$authcode_list => $key, $val" value="{$val}">{$key}</option>
+					</select>
+					<button type="button" class="text multiorder_up" style="vertical-align:top">{$lang->cmd_move_up}</button>
+					<button type="button" class="text multiorder_down" style="vertical-align:top">{$lang->cmd_move_down}</button>
+					<button type="button" class="text multiorder_del" style="vertical-align:top">{$lang->cmd_delete}</button>
+					<script type="text/javascript">
+						xe.registerApp(new xe.MultiOrderManager('list'));
+					</script>
+-->
+
+			
+		<ul>
+			<li>
+				<p class="q">{$lang->validationcode_fieldname}</p>
+				<p class="a">
+				
+				<td class="orangeTop">
+					{@$list = array_keys($list_config)}
+					<input type="hidden" name="list" value="{implode(',', $list)}" />
+					<select class="multiorder_show" size="8" multiple="multiple" style="width:290px;vertical-align:top">
+						<option loop="$extra_vars => $key, $val" cond="!$list_config[$key]" value="{$key}">{$val->name}</option>
+					</select>
+					<button type="button" class="text multiorder_add" style="vertical-align:top">{$lang->cmd_insert}</button>
+					<select class="multiorder_selected" size="8" multiple="multiple" style="width:290px;vertical-align:top">
+						<option loop="$list_config => $key, $val" value="{$key}">{$val->name}</option>
+					</select>
+					<button type="button" class="text multiorder_del" style="vertical-align:top">{$lang->cmd_delete}</button>
+					<script type="text/javascript">
+						xe.registerApp(new xe.MultiOrderManager('list'));
+					</script>
+				</td>
+				
+				<p>인증모듈을 사용할 곳을 고릅니다.<br />예) '회원가입'을 추가하시면 회원가입시 인증번호를 요구합니다.</p>
+
+				</p>
+			</li>
+		</ul>
+
+
+
 	</fieldset>
 	<div class="btnArea">
 		<span class="btn"><input type="submit" value="{$lang->cmd_save}" /></span>

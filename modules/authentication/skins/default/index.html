@@ -12,14 +12,14 @@
 	<form method="post" action="./">
 		<input type="hidden" name="act" value="procAuthenticationCompare" />
 		<input type="hidden" name="authentication_srl" value={$authentication_srl} />
-		<input type="hidden" name="authcode_mid" value={$authcode_mid} />
+		<input type="hidden" name="authcode_mid" id="authcode_mid" value={$authcode_mid} />
 		<input type="hidden" name="module" value="authentication" />
 		<table class="container">
 			<tr>
 				<th class="orangeTop">국가선택</th>
 				<td class="orangeTop">
 					<select name="country" id="country" class="size04">
-						<option>선택</option>
+						<option value=''>선택</option>
 						<option value="82" selected="selected"|cond="$country == '82'">한국</option>
 						<option value="1" selected="selected"|cond="$country == '1'">미국</option>
 						<option value="86" selected="selected"|cond="$country == '86'">중국</option>
@@ -31,7 +31,7 @@
 				<th>휴대폰번호</th>
 				<td>	
 					<select name="phone_1" id="phone_1" class="size01">
-						<option>선택</option>
+						<option value=''>선택</option>
 						<option value="010" selected="selected"|cond="$phone_1 == '010'" >010</option>
 						<option value="011" selected="selected"|cond="$phone_1 == '011'" >011</option>
 						<option value="016" selected="selected"|cond="$phone_1 == '016'" >016</option>
@@ -43,13 +43,14 @@
 					<input class="input01 size02" type="text" name="phone_2" id="phone_2" size="5" maxlength="4" value="{$phone_2}" />
 					-
 					<input class="input01 size02" type="text" name="phone_3" id="phone_3" size="5" maxlength="4" value="{$phone_3}" />
-					<a href="#" onclick="authcodeSend(); return false;"><img src="images/phone_06.gif" border="0" /></a>
+					<a href="#" onclick="authcodeSend(); return false;" id="authcode_send"><img src="images/phone_06.gif" border="0" /></a>
+					<a href="#" onclick="authcodeSend(); return false;" id="authcode_resend"><img src="images/phone_07.gif" border="0" /></a>
 				</td>
 			</tr>
 			<tr>
 				<th class="orangeBottom">인증번호</th>
 				<td class="orangeBottom">
-					<input class="input01 size03" type="text" id="authcode" name="authcode" />
+					<input class="input01 size03" type="text" id="authcode" name="authcode" maxlength="{$number_limit}" />
 					<input class="confirm" type="image" src="images/phone_10.gif" />
 				</td>
 			</tr>

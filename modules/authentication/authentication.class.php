@@ -34,6 +34,12 @@ class authentication extends ModuleObject
 		$oModuleModel = &getModel('module');
 
 		$oModuleController->insertTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after');
+
+		$oModuleController->insertTrigger('member.MemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after');
+
+		$oModuleController->insertTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after');
+
+		$oModuleController->insertTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdateAfter', 'before');
 	}
 
 	/**
@@ -46,6 +52,21 @@ class authentication extends ModuleObject
 		$oModuleController = &getController('module');
 
 		if(!$oModuleModel->getTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after'))
+		{
+			return true;
+		}
+
+		if(!$oModuleModel->getTrigger('member.MemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after'))
+		{
+			return true;
+		}
+
+		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after'))
+		{
+			return true;
+		}
+
+		if(!$oModuleModel->getTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdateAfter', 'before'))
 		{
 			return true;
 		}
@@ -66,6 +87,22 @@ class authentication extends ModuleObject
 		{
 			$oModuleController->insertTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after');
 		}
+
+		if(!$oModuleModel->getTrigger('member.MemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after'))
+		{
+			$oModuleController->insertTrigger('member.MemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after');
+		}
+
+		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after'))
+		{
+			$oModuleController->insertTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after');
+		}
+
+		if(!$oModuleModel->getTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdateAfter', 'before'))
+		{
+			$oModuleController->insertTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdateAfter', 'before');
+		}
+
 	}
 
 	/**

@@ -1,0 +1,12 @@
+<query id="insertAuthcodeMembersrl" action="insert">
+	<tables>
+		<table name="authcode_member_srl" />
+	</tables>
+	<columns>
+		<column name="authentication_srl" var="authentication_srl" notnull="notnull" />
+		<column name="clue" var="clue" notnull="notnull" />
+		<column name="authcode" var="authcode" notnull="notnull" />
+		<column name="regdate" var="regdate" default="curdate()" />
+		<column name="member_srl" var="member_srl" notnull="notnull" />
+	</columns>
+</query>
