@@ -11,6 +11,19 @@ class authenticationAdminView extends authentication
 
 	function init() 
 	{
+		$args->module = 'authentication';
+		$output = executeQuery('authentication.getModulesrl', $args);
+		if(!$output->data)
+		{
+			$authenticationAdminController = &getAdminController('authentication');
+			$output = $authenticationAdminController->procAuthenticationModuleInsert();
+			$output = executeQuery('authentication.getModulesrl', $args);
+		}
+
+		debugPRint('kof_3');
+
+		Context::set('module_srl', $output->data->module_srl);
+		
 		$oMemberModel = &getModel('member');
 
 		// group 목록 가져오기
@@ -24,41 +37,43 @@ class authenticationAdminView extends authentication
 	/**
 	 * config
 	 */
-	function dispAuthenticationAdminConfig() {
+	function dispAuthenticationAdminConfig() 
+	{
 		$oAuthenticationModel = &getModel('authentication');
 		$oMemberModel = &getModel('member');
 
 		$config = $oAuthenticationModel->getModuleConfig();
+		$module_srl = Context::get('module_srl');
 
-		// load member list
-		$query_id = "mobilemessage.getNotificationMembers";
-		$id_list = explode(',', $config->id_list);
-		$id_list = "'" . join("','", $id_list) . "'";
-		if ($id_list) {
-			$args->user_ids = $id_list;
-			$output = executeQueryArray($query_id, $args);
-			Context::set('member_list', $output->data);
-		} else {
-			Context::set('member_list', array());
-		}
-
-		// callback_number_direct
-		$config->callback_number_direct = explode('|@|', $config->callback_number_direct);
-
-		Context::set('mobilemessage_config', $config);
 
 		$country_code = explode(',',$config->country_code);
 
 		Context::set('country_code', $country_code);
 
-		$group_list = $oMemberModel->getGroups(0);
-		Context::set('group_list', $group_list);
+		$oModuleController = &getController('module');
+		$oAuthcodeModel = &getModel('authentication');
+		
+		// 설정 항목 추출 (설정항목이 없을 경우 기본 값을 세팅)
 
-		$group_srl_list = explode(',', $config->group_srl_list);
-		Context::set('group_srl_list', $group_srl_list);
+		$args->module_srl = $module_srl;
+		$args->module = 'authentication';
+		$output = executeQuery('module.getModulePartConfig', $args);
 
-		$change_group_srl_list = explode(',', $config->change_group_srl_list);
-		Context::set('change_group_srl_list', $change_group_srl_list);
+		if(!$output->data->config)
+		{
+			$oModuleController->insertModulePartConfig('authentication',$module_srl,$non_config);
+		}
+
+		if($oAuthcodeModel->getListConfig($module_srl))
+		{
+			Context::set('list_config', $oAuthcodeModel->getListConfig($module_srl));
+		}
+		Context::set('extra_vars', $oAuthcodeModel->getDefaultListConfig($module_srl));
+
+		$security = new Security();
+		$security->encodeHTML('list_config');
+
+
 
 		// 템플릿 파일 지정
 		$this->setTemplateFile('config');
@@ -201,6 +216,40 @@ class authenticationAdminView extends authentication
 		Context::set('editor', $editor);
 
 		$this->setTemplateFile('insert');
+	}
+
+
+	function dispAuthenticationAdminAuthcodeList() 
+	{
+		debugPrint('kor_3');
+		debugPrint($this->module_info);
+
+		$args->page = Context::get('page');
+		
+
+		$search_key = Context::get('search_key');
+		if($search_key == 'Y')
+		{
+			$authcode_pass = Context::get('n_authcode_pass');
+			$phone_number = Context::get('n_phone_number');
+
+			$args->authcode_pass = trim($authcode_pass);
+			$args->clue = $phone_number;
+
+			Context::set('n_authcode_pass', $authcode_pass);
+			Context::set('n_phone_number', $phone_number);
+		}
+
+		$output = executeQuery('authentication.getAuthenticationAll',$args);
+		Context::set('authcode_list', $output->data);
+		Context::set('total_count', $output->total_count);
+		Context::set('total_page', $output->total_page);
+		Context::set('page', $output->page);
+		Context::set('list', $output->data);
+		Context::set('page_navigation', $output->page_navigation);
+		debugPrint('kor_434');
+		debugPrint($output);
+		$this->setTemplateFile('authcode_list');
 	}
 
 	

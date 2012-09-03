@@ -6,6 +6,12 @@
         <li <!--@if($act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify')-->class="on"<!--@end-->><a href="{getUrl('act','dispNewpostsAdminList')}">{$lang->cmd_newposts_config}</a></li>
     </ul>
 </div>
+<div>
+	<ul class="localNavigation">
+		<li><a href="{getUrl('act','dispAuthenticationAdminConfig')}">기본설정</a></li>
+		<li><a href="{getUrl('act','dispAuthenticationAdminAuthcodeList')}">사용현황</a></li>
+	</ul>
+</div>
 <div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 <p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
