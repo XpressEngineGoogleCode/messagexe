@@ -35,7 +35,7 @@ class authentication extends ModuleObject
 
 		$oModuleController->insertTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after');
 
-		$oModuleController->insertTrigger('member.MemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after');
+		$oModuleController->insertTrigger('member.procMemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after');
 
 		$oModuleController->insertTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after');
 
@@ -56,7 +56,7 @@ class authentication extends ModuleObject
 			return true;
 		}
 
-		if(!$oModuleModel->getTrigger('member.MemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after'))
+		if(!$oModuleModel->getTrigger('member.procMemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after'))
 		{
 			return true;
 		}
@@ -88,9 +88,9 @@ class authentication extends ModuleObject
 			$oModuleController->insertTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after');
 		}
 
-		if(!$oModuleModel->getTrigger('member.MemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after'))
+		if(!$oModuleModel->getTrigger('member.procMemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after'))
 		{
-			$oModuleController->insertTrigger('member.MemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after');
+			$oModuleController->insertTrigger('member.procMemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after');
 		}
 
 		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after'))

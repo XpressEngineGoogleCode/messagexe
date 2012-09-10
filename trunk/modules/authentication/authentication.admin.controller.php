@@ -101,14 +101,37 @@ class authenticationAdminController extends authentication
 			if(!$val) continue;
 			$list_arr[] = $val;
 		}
-
-		$oModuleController = &getController('module');
-		$oModuleController->insertModulePartConfig('authentication', $module_srl, $list_arr);
-
+		
 		$bsucc = true;
 		$messages = "= 설정오류 내역 =\n";
 
 		$args = Context::getRequestVars();
+
+		debugPrint('komn_23');
+		debugPRint($args);
+
+		$args->number_limit = trim($args->number_limit);
+		$args->authcode_ban_limit = trim($args->authcode_ban_limit);
+		$args->authcode_time_limit = trim($args->authcode_time_limit);
+
+		if(!preg_match('/[0-9]/',$args->authcode_ban_limit))
+		{
+			return new Object(-1, '[전송횟수 제한 오류] 숫자만 입력해주세요.');
+		}
+
+		if($args->authcode_time_limit != 0)
+		{
+			if(!preg_match('/[0-9]/',$args->authcode_time_limit))
+			{
+				return new Object(-1, '[재전송 시간 오류] 숫자만 입력해주세요.');
+			}
+
+			if($args->authcode_time_limit < 10)
+			{
+				return new Object(-1, '[재전송 시간 오류] 10초 이상 가능합니다.');
+			}
+		}
+
 
 		// check whether countrycode_fieldname is valid
 		if ($args->countrycode_fieldname) {
@@ -117,12 +140,17 @@ class authenticationAdminController extends authentication
 				$bsucc = false;
 			}
 		}
-		if ($args->number_limit > 10)
+		if ($args->number_limit > 8 || !preg_match('/[0-9]/',$args->number_limit))
 		{
 			$args->number_limit = '';
 			$messages .= "[인증번호 숫자 오류] 정확히 입력해 주세요.";
 			$bsucc = false;
 		}
+
+
+		$oModuleController = &getController('module');
+		$oModuleController->insertModulePartConfig('authentication', $module_srl, $list_arr);
+
 		// save module configuration.
 		$oModuleController = getController('module');
 		$output = $oModuleController->insertModuleConfig('authentication', $args);

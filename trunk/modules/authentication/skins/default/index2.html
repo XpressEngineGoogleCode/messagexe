@@ -1,0 +1,38 @@
+<load target="css/style.css" />
+
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+<div id="phone">
+	<div id="header">
+		<h1><img src="images/phone_02.gif" alt="휴대폰인증" /></h1>
+	</div><!-- #header// -->
+	<form method="post" action="./">
+		<input type="hidden" name="act" value="procAuthenticationCompare" />
+		<input type="hidden" name="authentication_srl" value="{$authentication_srl}" />
+		<input type="hidden" name="authcode_mid" id="authcode_mid" value={$authcode_mid} />
+		<input type="hidden" name="module" value="authentication" />
+		<input type="hidden" name="member_srl" value="{$member_info->member_srl}" />
+		<table class="container">
+			<tr>
+				<th>휴대폰번호</th>
+				<td>	
+					<select name="phone_1" id="phone_1" class="size01">
+						<option value=''>선택</option>
+						<option value="010"  >010</option>
+						<option value="011"  >011</option>
+						<option value="016"  >016</option>
+						<option value="017"  >017</option>
+						<option value="018"  >018</option>
+						<option value="019"  >019</option>
+					</select>
+					-
+					<input class="input01 size02" type="text" name="phone_2" id="phone_2" size="5" maxlength="4"  />
+					-
+					<input class="input01 size02" type="text" name="phone_3" id="phone_3" size="5" maxlength="4"  />
+					<input type="submit" value="확인">
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
