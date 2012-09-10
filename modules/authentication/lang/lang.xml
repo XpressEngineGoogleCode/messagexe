@@ -12,10 +12,15 @@
 		<value xml:lang="ko"><![CDATA[기본 국가번호]]></value>
 		<value xml:lang="en"><![CDATA[Default Country Code]]></value>
 	</item>
-	<item name="validationcode_fieldname">
-		<value xml:lang="ko"><![CDATA[인증번호 필드]]></value>
-		<value xml:lang="en"><![CDATA[Authentication Field]]></value>
+	<item name="validationcode_act">
+		<value xml:lang="ko"><![CDATA[액션선택]]></value>
+		<value xml:lang="en"><![CDATA[Select Action]]></value>
 	</item>
+	<item name="validationcode_send_limit">
+		<value xml:lang="ko"><![CDATA[인증번호 재전송 시간]]></value>
+		<value xml:lang="en"><![CDATA[Send Authcode Limit]]></value>
+	</item>
+
 	<item name="validationcode_limit">
 		<value xml:lang="ko"><![CDATA[인증번호 숫자 제한]]></value>
 		<value xml:lang="en"><![CDATA[Authentication number limit]]></value>

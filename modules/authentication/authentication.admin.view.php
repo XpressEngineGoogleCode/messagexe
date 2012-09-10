@@ -45,6 +45,7 @@ class authenticationAdminView extends authentication
 		$config = $oAuthenticationModel->getModuleConfig();
 		$module_srl = Context::get('module_srl');
 
+		Context::set('mobilemessage_config', $config);
 
 		$country_code = explode(',',$config->country_code);
 

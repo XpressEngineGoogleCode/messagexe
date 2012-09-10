@@ -29,10 +29,11 @@ class authenticationController extends authentication
 			return new Object(-1, '국가 및 휴대폰 번호를 전부 입력해주세요.');
 		}
 		debugPrint('konm_1');
+
+		debugPrint(Context::get('nation2'));
 		debugPrint($vars);
 		$key = rand(1, 99999999999);
 		debugPrint($info->number_limit);
-
 		$number_limit = intval($info->number_limit);
 		if($info->number_limit)
 		{
@@ -77,20 +78,36 @@ class authenticationController extends authentication
 			if($_SESSION['authcode_ban']  == $info->authcode_ban_limit)
 			{
 				$args->authcode_ban = 'Y';
-				$_SESSION['authcode_ban'] == 1;
+				$_SESSION['authcode_ban'] = 1;
 			}
 		}
 
 		debugPrint('halp_2');
 		debugPrint($output);
+		debugPrint('alp_2');
+		debugPrint($info);
 
 		unset($args->regdate);
 
 		$args->country = $vars->country;
 		$args->authentication_srl = getNextSequence();
 		$args->authcode = $keystr;
+
+		if(!$info->authcode_time_limit || $info->authcode_time_limit < 10)
+		{
+			$send_time = date("ymdHis", mktime(date("H"), date("i"), date("s") + 20, date("m"), date("d"), date("y")));
+		}
+		else
+		{
+			$send_time = date("ymdHis", mktime(date("H"), date("i"), date("s") + $info->authcode_time_limit, date("m"), date("d"), date("y")));
+		}
 		
-		
+
+		$args->send_times = $send_time;
+
+		debugPrint($args);
+		debugPrint($args->send_time);
+		debugPrint($send_time);
 		$output = executeQuery('authentication.insertAuthentication', $args);
 
 		debugPrint($output);
@@ -99,8 +116,6 @@ class authenticationController extends authentication
 			debugPrint('chk_insert');
 			return $output;
 		}
-
-		
 
 		debugPrint('chk_1');
 		$phone = array("phone_1" => $vars->phone_1, "phone_2" => $vars->phone_2, "phone_3" => $vars->phone_3);
@@ -135,7 +150,7 @@ class authenticationController extends authentication
 		$args->callback = $vars->phone_1.$vars->phone_2.$vars->phone_3;
 		if($info->message_content)
 		{
-			$content = str_replace(array("[authcode]"),array($keystr),$info->message_content);
+			$content = str_replace(array("%authcode%"),array($keystr),$info->message_content);
 			$args->content = $content;
 		}
 		else
@@ -145,7 +160,6 @@ class authenticationController extends authentication
 		$args->encode_utf16 = $encode_utf16; 
 		$controller = &getController('textmessage');
 		$output = $controller->sendMessage($args);
-
 
 		debugPrint('opw_1');
 		debugPrint($args);
@@ -170,6 +184,7 @@ class authenticationController extends authentication
 	function procAuthenticationCompare()
 	{
 
+		debugPrint(Context::get('member_srl'));
 		debugPrint('kon_99');
 		debugPrint($_SESSION['country'] );
 		debugPrint($_SESSION['phone']);
@@ -245,27 +260,31 @@ class authenticationController extends authentication
 
 	function procAuthenticationUpdateStatus() 
 	{
-			$oTextmessageModel = &getModel('textmessage');
-			$oTextmessageController = &getController('textmessage');
+		if(!$_SESSION['phone'] || !$_SESSION['authentication_srl'] || !$_SESSION['country'])
+		{
+			return new Object(-1, '인증번호를 전송 받으십시오.');
+		}
+		$oTextmessageModel = &getModel('textmessage');
+		$oTextmessageController = &getController('textmessage');
 
-			$message_id = Context::get('message_id');
+		$message_id = Context::get('message_id');
 
-			$sms = $oTextmessageModel->getCoolSMS();
-			if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
-			debugPrint('lmp_1');
-			debugPrint($message_id);
-			$result = $sms->rcheck($message_id);
-			debugPrint('lmp_2');
-			debugPRint($result);
-			$args->message_id = $message_id;
-			$args->status = $result['STATUS'];
-			$args->resultcode = $result['RESULT-CODE'];
-			$args->carrier = $result['CARRIER'];
-			$args->senddate = $result['SEND-DATE'];
-			$oTextmessageController->updateStatus($args);
-			$sms->disconnect();
+		$sms = $oTextmessageModel->getCoolSMS();
+		if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
+		debugPrint('lmp_1');
+		debugPrint($message_id);
+		$result = $sms->rcheck($message_id);
+		debugPrint('lmp_2');
+		debugPRint($result);
+		$args->message_id = $message_id;
+		$args->status = $result['STATUS'];
+		$args->resultcode = $result['RESULT-CODE'];
+		$args->carrier = $result['CARRIER'];
+		$args->senddate = $result['SEND-DATE'];
+		$oTextmessageController->updateStatus($args);
+		$sms->disconnect();
 
-			$this->add('result', $result);
+		$this->add('result', $result);
 	}
 
 	function authcodeStartSet(&$oModule)
@@ -282,10 +301,15 @@ class authenticationController extends authentication
 
 		$info = $oAuthenticationModel->getModuleConfig();
 
+		if($info->authcode_time_limit)
+		{
+			Context::set('time_limit', $info->authcode_time_limit);
+		}
 		if($_SESSION['phone'])
 		{
 			$phone = $_SESSION['phone'];
 		}
+		
 		Context::set('number_limit', $info->number_limit);
 
 		if(!$_SESSION['country'])
@@ -296,10 +320,30 @@ class authenticationController extends authentication
 		{
 			Context::set('country', $_SESSION['country']);
 		}
+		
 		Context::set('authcode_mid', Context::get('mid'));
 		Context::set('phone_1', $phone[phone_1]);
 		Context::set('phone_2', $phone[phone_2]);
 		Context::set('phone_3', $phone[phone_3]);
+
+		if($_SESSION['time_before'])
+		{
+			Context::set('time_before', $_SESSION['time_before']);
+		}
+
+		$output = executeQuery('authentication.getAuthenticationSend_time');
+
+		if($output ->data)
+		{
+			foreach($output->data as $k => $v)
+			{
+				$send_time = $v->send_time;
+			}
+		}
+		debugPrint($send_time);
+		debugPrint('klom');
+		debugPrint($output);
+		Context::set('send_time', $send_time);
 	}
 
 	function validateAuthCode()
@@ -315,7 +359,7 @@ class authenticationController extends authentication
 		$output = executeQuery('authentication.getModulesrl', $args);
 		if(!$output->data)
 		{
-			return new Object(-1, 'module_srl이 없습니다');
+			return;
 		}
 		$module_srl  = $output->data->module_srl;
 		$oModuleModel = &getModel('module');
@@ -349,8 +393,19 @@ class authenticationController extends authentication
 
 					debugPrint($output);
 
-					$this->authcodeStartSet(&$oModule);
 					$_SESSION['authentication_update'] = 'N';
+
+					/* 
+					 * index_2
+					 */
+					$this->authcodeStartSet(&$oModule);
+
+					$config->skin = 'default';
+					$addon_tpl_path = sprintf('./modules/authentication/skins/%s/', $config->skin);
+					$addon_tpl_file = 'index2.html';
+
+					$oModule->setTemplatePath($addon_tpl_path);
+					$oModule->setTemplateFile($addon_tpl_file);
 				}
 
 				if(Context::get('act') == "dispMemberModifyInfo" && $_SESSION['authentication_update'] == 'Y' && $v == 'dispMemberModifyInfo')
@@ -382,8 +437,14 @@ class authenticationController extends authentication
 
 	function triggerMemberInsertAfter(&$args)
 	{
+		debugPrint('test_insert_3');
+		debugPRint($_SESSION['phone']);
+		debugPRint($_SESSION['authentication_srl']);
+		debugPrint($_SESSION['authcode_member_srl']);
 		if($_SESSION['phone'] && $_SESSION['authentication_srl'] && $_SESSION['authcode_member_srl'])
 		{
+			debugPrint('test_insert');
+			debugPrint($args);
 			$args->clue = $vars->phone_1.$vars->phone_2.$vars->phone_3;
 			$args->regdate = $today;
 			$args->authentication_srl = $_SESSION['authentication_srl'];
@@ -428,6 +489,10 @@ class authenticationController extends authentication
 		debugPrint($_SESSION['phone']);
 		debugPrint($_SESSION['authentication_srl']);
 		debugPrint($_SESSION['authcode_member_srl']);
+
+		debugPrint('test_insert_2');
+		debugPrint($args);
+
 		
 	}
 

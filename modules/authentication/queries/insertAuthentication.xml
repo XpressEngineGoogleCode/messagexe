@@ -10,5 +10,6 @@
 		<column name="regdate" var="regdate" default="curdate()" />
 		<column name="authcode_pass" var="authcode_pass" default="N" />
 		<column name="authcode_ban" var="authcode_ban" default="N" />
+		<column name="send_time" var="send_times" />
 	</columns>
 </query>
