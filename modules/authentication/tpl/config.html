@@ -18,7 +18,7 @@
 
 				<td class="orangeTop">
 					<select name="country_code" id="country" class="size04">
-						<option>선택</option>
+						<option value="">선택</option>
 						<option value="233" selected="selected"|cond="$mobilemessage_config->country_code == '233'">가나</option>
 						<option value="241" selected="selected"|cond="$mobilemessage_config->country_code == '241'">가봉</option>
 						<option value="220" selected="selected"|cond="$mobilemessage_config->country_code == '220'">감비아</option>
@@ -317,7 +317,7 @@
 
 				<td class="orangeTop">
 					<textarea name="message_content" cond="$mobilemessage_config->message_content">{htmlspecialchars($mobilemessage_config->message_content)}</textarea>
-					<textarea name="message_content" cond="!$mobilemessage_config->message_content">[authcode]</textarea>
+					<textarea name="message_content" cond="!$mobilemessage_config->message_content">%authcode%</textarea>
 				</td>
 				
 				<p>예) [핸드폰인증] %authcode% ☜ 인증번호를 정확히 입력해 주세요.</p>

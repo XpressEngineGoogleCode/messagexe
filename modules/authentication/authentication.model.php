@@ -40,11 +40,8 @@ class authenticationModel extends authentication
 		$oModuleModel = &getModel('module');
 		$oDocumentModel = &getModel('document');
 
-		debugPrint('kor_33');
-		debugPrint($module_srl);
 		// 저장된 목록 설정값을 구하고 없으면 빈값을 줌.
 		$list_config = $oModuleModel->getModulePartConfig('authentication', $module_srl);
-		debugPrint($list_config);
 		if(!$list_config || !count($list_config)) $list_config = array('');
 
 		// 사용자 선언 확장변수 구해와서 배열 변환후 return

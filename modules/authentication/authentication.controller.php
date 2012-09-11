@@ -28,17 +28,11 @@ class authenticationController extends authentication
 		{
 			return new Object(-1, '국가 및 휴대폰 번호를 전부 입력해주세요.');
 		}
-		debugPrint('konm_1');
-
-		debugPrint(Context::get('nation2'));
-		debugPrint($vars);
 		$key = rand(1, 99999999999);
-		debugPrint($info->number_limit);
 		$number_limit = intval($info->number_limit);
 		if($info->number_limit)
 		{
 			$keystr = substr($key,0,$number_limit);
-			debugPrint($keystr);
 		}
 		else 
 		{
@@ -82,11 +76,6 @@ class authenticationController extends authentication
 			}
 		}
 
-		debugPrint('halp_2');
-		debugPrint($output);
-		debugPrint('alp_2');
-		debugPrint($info);
-
 		unset($args->regdate);
 
 		$args->country = $vars->country;
@@ -105,36 +94,22 @@ class authenticationController extends authentication
 
 		$args->send_times = $send_time;
 
-		debugPrint($args);
-		debugPrint($args->send_time);
-		debugPrint($send_time);
 		$output = executeQuery('authentication.insertAuthentication', $args);
 
-		debugPrint($output);
 		if (!$output->toBool())
 		{
-			debugPrint('chk_insert');
 			return $output;
 		}
 
-		debugPrint('chk_1');
 		$phone = array("phone_1" => $vars->phone_1, "phone_2" => $vars->phone_2, "phone_3" => $vars->phone_3);
-		debugPrint('chk_2');
 
 		if(!$_SESSION['phone'] || !$_SESSION['authentication_srl'] || !$_SESSION['country'])
 		{
-			debugPRint('chk_3');
 			$_SESSION['country'] = $vars->country;
 			$_SESSION['phone'] = $phone;
 			$_SESSION['authentication_srl'] = $args->authentication_srl;
 			$_SESSION['authentication_mid'] = $vars->authcode_mid;
-
-			debugPRint('kon_6');
-			debugPrint($vars);
 		}
-		debugPRint('chk_4');
-		debugPRint($vars);
-
 
 		$this->add('authentication_srl', $args->authentication_srl);
 		$this->add('authcode_mid', $vars->authcode_mid);
@@ -161,19 +136,17 @@ class authenticationController extends authentication
 		$controller = &getController('textmessage');
 		$output = $controller->sendMessage($args);
 
-		debugPrint('opw_1');
-		debugPrint($args);
-		debugPRint($output);
-		debugPrint($this);
-
 		if (!$output->toBool())
 		{
 			return $output;
 		}
-
+/*
 		$msgid = $output->variables[data][0]->message_id;
 		$args->message_id = $msgid;
-		$this->add('message_id', $msgid);
+ */
+
+		$_SESSION['message_id'] = $args->message_id;
+		
 		
 /*
 		$returnUrl = getNotEncodedUrl('', 'mid', Context::get('mid'), 'act', 'dispAuthenticationCompare', 'authentication_srl', $authentication_srl, 'phone', $phone);
@@ -183,22 +156,11 @@ class authenticationController extends authentication
 
 	function procAuthenticationCompare()
 	{
-
-		debugPrint(Context::get('member_srl'));
-		debugPrint('kon_99');
-		debugPrint($_SESSION['country'] );
-		debugPrint($_SESSION['phone']);
-		debugPrint($_SESSION['authentication_mid']);
-		debugPrint($_SESSION['authentication_srl']);
-
 		if(!$_SESSION['phone'] || !$_SESSION['authentication_srl'] || !$_SESSION['country'])
 		{
 			return new Object(-1, '인증번호를 전송 받으십시오.');
 		}
 
-
-		debugPrint('kon_1');
-		debugPrint($_SESSION['authentication_mid']);
 		$all_args = Context::getRequestVars();
 
 		$authentication_srl = Context::get('authentication_srl');
@@ -206,8 +168,6 @@ class authenticationController extends authentication
 		$args->authentication_srl = $authentication_srl;
 		$output = executeQuery('authentication.getAuthentication', $args);
 
-		debugPrint('ko_33');
-		debugPrint($authentication_srl);
 		if(!$output->toBool())
 		{
 			return $output;
@@ -246,8 +206,6 @@ class authenticationController extends authentication
 		}
 		else
 		{
-			debugPrint('kon_4');
-			debugPrint($_SESSION['authentication_mid']);
 			return new Object(-1,'인증코드가 올바르지 않습니다.');
 			/*
 			$this->setError(-1);
@@ -271,11 +229,7 @@ class authenticationController extends authentication
 
 		$sms = $oTextmessageModel->getCoolSMS();
 		if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
-		debugPrint('lmp_1');
-		debugPrint($message_id);
 		$result = $sms->rcheck($message_id);
-		debugPrint('lmp_2');
-		debugPRint($result);
 		$args->message_id = $message_id;
 		$args->status = $result['STATUS'];
 		$args->resultcode = $result['RESULT-CODE'];
@@ -314,7 +268,14 @@ class authenticationController extends authentication
 
 		if(!$_SESSION['country'])
 		{
-			Context::set('country', $info->country_code);
+			if($info->country_code)
+			{
+				Context::set('country', $info->country_code);
+			}
+			else
+			{
+				Context::set('country', '82');
+			}
 		}
 		else
 		{
@@ -331,7 +292,7 @@ class authenticationController extends authentication
 			Context::set('time_before', $_SESSION['time_before']);
 		}
 
-		$output = executeQuery('authentication.getAuthenticationSend_time');
+		$output = executeQueryArray('authentication.getAuthenticationSend_time');
 
 		if($output ->data)
 		{
@@ -340,10 +301,14 @@ class authenticationController extends authentication
 				$send_time = $v->send_time;
 			}
 		}
-		debugPrint($send_time);
-		debugPrint('klom');
-		debugPrint($output);
 		Context::set('send_time', $send_time);
+
+		unset($_SESSION['message_id']);
+
+		if($_SESSION['message_id'])
+		{
+			Context::set('message_id', $_SESSION['message_id']);
+		}
 	}
 
 	function validateAuthCode()
@@ -365,24 +330,18 @@ class authenticationController extends authentication
 		$oModuleModel = &getModel('module');
 		$list_config = $oModuleModel->getModulePartConfig('authentication', $module_srl);
 
-		debugPrint('komn_33');
-		debugPrint($list_config);
 		if($list_config)
 		{
 			foreach($list_config as $k => $v)
 			{
+				// 회원정보수정시
 				if(Context::get('act') == 'dispMemberModifyInfo' && $_SESSION['authentication_update'] != 'Y' && $v == 'dispMemberModifyInfo')
 				{
-					debugPrint('konm_34');
-					debugPrint($v);
+					$this->authcodeStartSet(&$oModule);
+
 					$logged_info = Context::get('logged_info');
 
 					$args->member_srl = $logged_info->member_srl;
-					debugPrint('ko=4');
-					debugPrint($args);
-					debugPrint(&$oMoulde);
-					debugPrint(Context::get('member_srl'));
-					debugPrint($logged_info);
 
 					$output = executeQuery('authentication.getAuthcodeMembersrl', $args);
 
@@ -391,21 +350,8 @@ class authenticationController extends authentication
 						return $output;
 					}
 
-					debugPrint($output);
-
 					$_SESSION['authentication_update'] = 'N';
 
-					/* 
-					 * index_2
-					 */
-					$this->authcodeStartSet(&$oModule);
-
-					$config->skin = 'default';
-					$addon_tpl_path = sprintf('./modules/authentication/skins/%s/', $config->skin);
-					$addon_tpl_file = 'index2.html';
-
-					$oModule->setTemplatePath($addon_tpl_path);
-					$oModule->setTemplateFile($addon_tpl_file);
 				}
 
 				if(Context::get('act') == "dispMemberModifyInfo" && $_SESSION['authentication_update'] == 'Y' && $v == 'dispMemberModifyInfo')
@@ -435,16 +381,13 @@ class authenticationController extends authentication
 		$_SESSION['authcode_member_srl'] = $args->member_srl;
 	}
 
+	/*
+	 * 회원가입후 member_srl과 인증정보들을 authentication_history table에 넣는다.
+	 */
 	function triggerMemberInsertAfter(&$args)
 	{
-		debugPrint('test_insert_3');
-		debugPRint($_SESSION['phone']);
-		debugPRint($_SESSION['authentication_srl']);
-		debugPrint($_SESSION['authcode_member_srl']);
 		if($_SESSION['phone'] && $_SESSION['authentication_srl'] && $_SESSION['authcode_member_srl'])
 		{
-			debugPrint('test_insert');
-			debugPrint($args);
 			$args->clue = $vars->phone_1.$vars->phone_2.$vars->phone_3;
 			$args->regdate = $today;
 			$args->authentication_srl = $_SESSION['authentication_srl'];
@@ -456,13 +399,8 @@ class authenticationController extends authentication
 
 			foreach($output as $k => $v)
 			{
-				debugPrint('mko_2');
-				debugPrint($k);
-				debugPrint($v);
 				if($v->authcode_pass == 'Y')
 				{
-					debugPrint('kol_3');
-					debugPrint($v->authcode);
 					$authcode = $v->authcode;	
 				}
 			}
@@ -485,21 +423,14 @@ class authenticationController extends authentication
 			}
 
 		}
-		debugPrint('triggerAfter_1');
-		debugPrint($_SESSION['phone']);
-		debugPrint($_SESSION['authentication_srl']);
-		debugPrint($_SESSION['authcode_member_srl']);
-
-		debugPrint('test_insert_2');
-		debugPrint($args);
-
-		
 	}
 
 
+	/*
+	 * 발송체크
+	 */
 	function triggerMemberUpdateAfter(&$args)
 	{
-
 		if(Context::get('act') == "dispMemberModifyInfo")
 		{
 			$config->skin = 'default';
@@ -510,8 +441,6 @@ class authenticationController extends authentication
 			$oModule->setTemplateFile($addon_tpl_file);
 
 		}
-		debugPrint('trigger_update_1');
-		debugPrint($args);
 	}
 
 
