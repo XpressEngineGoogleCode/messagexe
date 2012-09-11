@@ -75,7 +75,7 @@ function updateStatus()
 {
 	msg_id = jQuery('#msg_id').val();
 	alert(msg_id);
-	if(msg_id == 0)
+	if(!msg_id)
 	{
 		alert('msg_id가 없습니다.');
 		return false;
