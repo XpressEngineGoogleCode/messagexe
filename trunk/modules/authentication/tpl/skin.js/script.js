@@ -55,7 +55,6 @@ function authcodeSend()
 	params['phone_2'] = jQuery("#phone_2").val();
 	params['phone_3'] = jQuery("#phone_3").val();
 	params['authcode_mid'] = jQuery("#authcode_mid").val();
-	params['message_id'] = ''; 
 
 	if(!params['country'] || !params['phone_1'] || !params['phone_2'] || !params['phone_3'])
 	{
@@ -68,29 +67,37 @@ function authcodeSend()
 
 function completeSend(ret_obj)
 {
-	setCookie('message_id', ret_obj['message_id']);
 	setCookie('authentication_srl', ret_obj['authentication_srl']);
 	setCookie('authcode_mid', ret_obj['authcode_mid']);
-	message_id = parseInt(ret_obj['message_id'], 10);
 }
 
 function updateStatus()
 {
-	jQuery("#footer").html('');
-	jQuery("#footer").append('<div><span>확인중...</span></div>');
-	message_id = getCookie('message_id');
+	msg_id = jQuery('#msg_id').val();
+	alert(msg_id);
+	if(msg_id == 0)
+	{
+		alert('msg_id가 없습니다.');
+		return false;
+	}
+	else
+	{
+		jQuery("#footer").html('');
+		jQuery("#footer").append('<div><span>확인중...</span></div>');
+		message_id = msg_id;
 
-	var params = new Array();	
-	var responses = ['error','message', 'result'];
+		var params = new Array();	
+		var responses = ['error','message', 'result'];
 
-	params['message_id'] = message_id;
+		params['message_id'] = message_id;
 
-	exec_xml('authentication', 'procAuthenticationUpdateStatus', params, completeUpdate, responses);
+		exec_xml('authentication', 'procAuthenticationUpdateStatus', params, completeUpdate, responses);
+	}
 }
 
 function completeUpdate(ret_obj)
 {
-	message_id = getCookie('message_id');
+	message_id = jQuery('#msg_id').val();
 
 	r_status = ret_obj['result']['STATUS'];
 	r_code = ret_obj['result']['RESULT-CODE'];

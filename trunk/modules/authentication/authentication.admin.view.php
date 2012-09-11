@@ -20,7 +20,6 @@ class authenticationAdminView extends authentication
 			$output = executeQuery('authentication.getModulesrl', $args);
 		}
 
-		debugPRint('kof_3');
 
 		Context::set('module_srl', $output->data->module_srl);
 		
@@ -222,9 +221,6 @@ class authenticationAdminView extends authentication
 
 	function dispAuthenticationAdminAuthcodeList() 
 	{
-		debugPrint('kor_3');
-		debugPrint($this->module_info);
-
 		$args->page = Context::get('page');
 		
 
@@ -248,8 +244,6 @@ class authenticationAdminView extends authentication
 		Context::set('page', $output->page);
 		Context::set('list', $output->data);
 		Context::set('page_navigation', $output->page_navigation);
-		debugPrint('kor_434');
-		debugPrint($output);
 		$this->setTemplateFile('authcode_list');
 	}
 

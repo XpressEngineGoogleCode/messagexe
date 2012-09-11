@@ -107,16 +107,16 @@ class authenticationAdminController extends authentication
 
 		$args = Context::getRequestVars();
 
-		debugPrint('komn_23');
-		debugPRint($args);
-
 		$args->number_limit = trim($args->number_limit);
 		$args->authcode_ban_limit = trim($args->authcode_ban_limit);
 		$args->authcode_time_limit = trim($args->authcode_time_limit);
 
-		if(!preg_match('/[0-9]/',$args->authcode_ban_limit))
+		if($args->authcode_ban_limit)
 		{
-			return new Object(-1, '[전송횟수 제한 오류] 숫자만 입력해주세요.');
+			if(!preg_match('/[0-9]/',$args->authcode_ban_limit))
+			{
+				return new Object(-1, '[전송횟수 제한 오류] 숫자만 입력해주세요.');
+			}
 		}
 
 		if($args->authcode_time_limit != 0)
@@ -140,11 +140,14 @@ class authenticationAdminController extends authentication
 				$bsucc = false;
 			}
 		}
-		if ($args->number_limit > 8 || !preg_match('/[0-9]/',$args->number_limit))
+		if($args->number_limit)
 		{
-			$args->number_limit = '';
-			$messages .= "[인증번호 숫자 오류] 정확히 입력해 주세요.";
-			$bsucc = false;
+			if ($args->number_limit > 8 || !preg_match('/[0-9]/',$args->number_limit))
+			{
+				$args->number_limit = '';
+				$messages .= "[인증번호 자릿수 오류] 정확히 입력해 주세요.";
+				$bsucc = false;
+			}
 		}
 
 
@@ -206,7 +209,6 @@ class authenticationAdminController extends authentication
 
 		// insert authentication
 		$output = executeQuery('authentication.insertConfig', $params);
-		debugPrint('insertConfig : ' . serialize($output));
 		if (!$output->toBool()) 
 		{
 			return $output;

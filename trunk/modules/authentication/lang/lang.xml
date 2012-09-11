@@ -22,8 +22,8 @@
 	</item>
 
 	<item name="validationcode_limit">
-		<value xml:lang="ko"><![CDATA[인증번호 숫자 제한]]></value>
-		<value xml:lang="en"><![CDATA[Authentication number limit]]></value>
+		<value xml:lang="ko"><![CDATA[인증번호 자릿수 제한]]></value>
+		<value xml:lang="en"><![CDATA[Authentication a cipherl imit]]></value>
 	</item>
 	<item name="validationcode_message_limit">
 		<value xml:lang="ko"><![CDATA[인증번호 전송횟수 제한]]></value>

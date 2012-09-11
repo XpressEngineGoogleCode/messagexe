@@ -16,6 +16,7 @@
 		<input type="hidden" name="module" value="authentication" />
 		<input type="hidden" id="time_limit" value="{$time_limit}" />
 		<input type="hidden" id="send_time" value="{$send_time}" />
+		<input type="hidden" id="msg_id" value="{$message_id}" />
 		<table class="container">
 			<tr>
 				<th class="orangeTop">국가선택</th>
@@ -286,8 +287,7 @@
 			</tr>
 		</table>
 	</form>
-
-	
+	<h1>{$message_id}</h1>
 	<div id="content">
 		<img src="images/phone_17.gif" /><span>인증번호가오지 않는다면? <a href="#" onclick="updateStatus(); return false"><img src="images/phone_14.gif"></a></span>
 	</div>
