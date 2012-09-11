@@ -2,7 +2,7 @@
 /**
  * vi:set sw=4 ts=4 noexpandtab fileencoding=utf8:
  * @class  authentication
- * @author wiley(wiley@nurigo.net)
+ * @author NURIGO(contact@nurigo.net)
  * @brief  authentication
  */
 class authentication extends ModuleObject 

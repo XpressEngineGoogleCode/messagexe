@@ -9,28 +9,21 @@ class authenticationController extends authentication
 {
 	function procAuthenticationSendAuthCode()
 	{
-/*
-		$aa = Context::get('mid');
 
-		Context::set('authentication_pass', 1);
-		$returnUrl = getNotEncodedUrl('','mid', $aa,  'act', 'dispMemberSignUpForm' );
-		$this->setRedirectUrl($returnUrl);
-
- */
-		$oAuthenticationView = &getView('authentication');
 		$oAuthenticationModel = &getModel('authentication');
-		
-		$info = $oAuthenticationModel->getModuleConfig();
+		$config = $oAuthenticationModel->getModuleConfig();
 
+		// check variables
 		$vars = Context::getRequestVars();
-
 		if(!$vars->phone_1 || !$vars->phone_2 || !$vars->phone_3 || !$vars->country)
 		{
 			return new Object(-1, '국가 및 휴대폰 번호를 전부 입력해주세요.');
 		}
+
+		// generate auth-code
 		$key = rand(1, 99999999999);
-		$number_limit = intval($info->number_limit);
-		if($info->number_limit)
+		$number_limit = intval($config->number_limit);
+		if($config->number_limit)
 		{
 			$keystr = substr($key,0,$number_limit);
 		}
@@ -45,7 +38,8 @@ class authenticationController extends authentication
 		$args->regdate = $today;
 		$output = executeQuery('authentication.getAuthcodeClue', $args);
 
-		if($info->authcode_ban_limit)
+		// check tries limit
+		if($config->authcode_ban_limit)
 		{
 			if(is_array($output->data))
 			{
@@ -69,7 +63,7 @@ class authenticationController extends authentication
 				$_SESSION['authcode_ban'] = $_SESSION['authcode_ban'] + 1;
 			}
 
-			if($_SESSION['authcode_ban']  == $info->authcode_ban_limit)
+			if($_SESSION['authcode_ban']  == $config->authcode_ban_limit)
 			{
 				$args->authcode_ban = 'Y';
 				$_SESSION['authcode_ban'] = 1;
@@ -82,20 +76,19 @@ class authenticationController extends authentication
 		$args->authentication_srl = getNextSequence();
 		$args->authcode = $keystr;
 
-		if(!$info->authcode_time_limit || $info->authcode_time_limit < 10)
+		if(!$config->authcode_time_limit || $config->authcode_time_limit < 10)
 		{
 			$send_time = date("ymdHis", mktime(date("H"), date("i"), date("s") + 20, date("m"), date("d"), date("y")));
 		}
 		else
 		{
-			$send_time = date("ymdHis", mktime(date("H"), date("i"), date("s") + $info->authcode_time_limit, date("m"), date("d"), date("y")));
+			$send_time = date("ymdHis", mktime(date("H"), date("i"), date("s") + $config->authcode_time_limit, date("m"), date("d"), date("y")));
 		}
 		
 
 		$args->send_times = $send_time;
 
 		$output = executeQuery('authentication.insertAuthentication', $args);
-
 		if (!$output->toBool())
 		{
 			return $output;
@@ -123,9 +116,9 @@ class authenticationController extends authentication
 		$args->country = $vars->country;
 		$args->recipient_no =  $vars->phone_1.$vars->phone_2.$vars->phone_3;
 		$args->callback = $vars->phone_1.$vars->phone_2.$vars->phone_3;
-		if($info->message_content)
+		if($config->message_content)
 		{
-			$content = str_replace(array("%authcode%"),array($keystr),$info->message_content);
+			$content = str_replace(array("%authcode%"),array($keystr),$config->message_content);
 			$args->content = $content;
 		}
 		else
@@ -140,18 +133,13 @@ class authenticationController extends authentication
 		{
 			return $output;
 		}
-/*
-		$msgid = $output->variables[data][0]->message_id;
-		$args->message_id = $msgid;
- */
+		$data = $output->get('data');
+		$obj = $data[0];
+		$message_id = $obj->message_id;
 
-		$_SESSION['message_id'] = $args->message_id;
-		
-		
-/*
-		$returnUrl = getNotEncodedUrl('', 'mid', Context::get('mid'), 'act', 'dispAuthenticationCompare', 'authentication_srl', $authentication_srl, 'phone', $phone);
-		$this->setRedirectUrl($returnUrl);
-		 */
+		$this->add('message_id', $message_id);
+
+		$this->setMessage('인증번호를 발송하였습니다.');
 	}
 
 	function procAuthenticationCompare()
@@ -167,7 +155,6 @@ class authenticationController extends authentication
 
 		$args->authentication_srl = $authentication_srl;
 		$output = executeQuery('authentication.getAuthentication', $args);
-
 		if(!$output->toBool())
 		{
 			return $output;
@@ -179,6 +166,8 @@ class authenticationController extends authentication
 		if($authentication_1 == $authentication_2)
 		{
 			$_SESSION['authentication_pass'] = 'Y';
+			debugPrint('aaaaaaaaa');
+			debugPrint($_SESSION['authentication_pass']);
 
 			$args->authcode_pass = 'Y';
 			$args->authentication_srl = $_SESSION['authentication_srl'];
@@ -304,15 +293,13 @@ class authenticationController extends authentication
 		}
 	}
 
-	function validateAuthCode()
-	{
-	}
-
 	/**
 	 * @brief 모듈핸들러 실행 후 트리거 (애드온의 after_module_proc에 대응)
 	 **/
 	function triggerModuleHandlerProc(&$oModule)
 	{
+		debugPrint('$_SESSION[authentication_pass]');
+		debugPrint($_SESSION['authentication_pass']);
 		$args->module = 'authentication';
 		$output = executeQuery('authentication.getModulesrl', $args);
 		if(!$output->data)
@@ -361,7 +348,8 @@ class authenticationController extends authentication
 				{
 					if(!$_SESSION['XE_VALIDATOR_RETURN_URL'] && $_SESSION['authentication_pass'] == 'Y')
 					{
-						unset($_SESSION['authentication_pass']);
+						//unset($_SESSION['authentication_pass']);
+						debugPrint('unset');
 					}
 
 				}

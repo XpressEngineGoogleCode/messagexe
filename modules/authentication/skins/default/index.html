@@ -11,7 +11,7 @@
 	</div><!-- #header// -->
 	<form method="post" action="./">
 		<input type="hidden" name="act" value="procAuthenticationCompare" />
-		<input type="hidden" name="authentication_srl" value={$authentication_srl} />
+		<input type="hidden" id="authentication_srl" name="authentication_srl" value={$authentication_srl} />
 		<input type="hidden" name="authcode_mid" id="authcode_mid" value={$authcode_mid} />
 		<input type="hidden" name="module" value="authentication" />
 		<input type="hidden" id="time_limit" value="{$time_limit}" />
@@ -45,22 +45,22 @@
 					<input class="input01 size02" type="text" name="phone_2" id="phone_2" size="5" maxlength="4" value="{$phone_2}" />
 					-
 					<input class="input01 size02" type="text" name="phone_3" id="phone_3" size="5" maxlength="4" value="{$phone_3}" />
-					<a href="#" onclick="authcodeSend(); return false;" id="authcode_send" ><img src="img/phone_06.gif" border="0" /></a>
-					<a href="#" onclick="authcodeSend(); return false;" id="authcode_resend" ><img src="img/phone_07.gif" border="0" /></a>
+					<a href="#" onclick="getAuthCode(); return false;" id="get_authcode"><span>Get AuthCode</span></a>
+					<a cond="0" href="#" onclick="getAuthCode(); return false;" id="authcode_resend"><img src="img/phone_07.gif" border="0" /></a>
 				</td>
 			</tr>
 			<tr>
 				<th class="orangeBottom">인증번호</th>
 				<td class="orangeBottom">
 					<input class="input01 size03" type="text" id="authcode" name="authcode" maxlength="{$number_limit}" />
-					<input class="confirm" type="image" src="img/phone_10.gif" />
+					<a href="#" onclick="verifyAuthCode(); return false"><img src="img/phone_10.gif"></a>
 				</td>
 			</tr>
 		</table>
 	</form>
 	<h1>{$message_id}</h1>
 	<div id="content">
-		<img src="img/phone_17.gif" /><span>인증번호가오지 않는다면? <a href="#" onclick="updateStatus(); return false"><img src="img/phone_14.gif"></a></span>
+		<img src="img/phone_17.gif" /><span>인증번호가 오지 않는다면? <a href="#" onclick="updateStatus(); return false"><img src="img/phone_14.gif"></a></span>
 	</div>
 	<div id="footer">
 		주의! 휴대폰번호를 정확하게 입력하였는지 확인해주세요.

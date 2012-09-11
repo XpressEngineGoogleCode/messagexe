@@ -5,21 +5,23 @@ jQuery(document).ready(function (){
 	time_now = today.format("yymmddHHMMss");
 	time_now = parseInt(time_now);
 
+	/*
 	if(jQuery('#send_time').val() > time_now)
 	{
-		jQuery('#authcode_send').hide();
+		jQuery('#get_authcode').hide();
 		jQuery('#authcode_resend').show();
 	}
 	else
 	{
-		jQuery('#authcode_send').show();
+		jQuery('#get_authcode').show();
 		jQuery('#authcode_resend').hide();
 	}
+	*/
 
 
 });
 
-function authcodeSend()
+function getAuthCode()
 {
 	var today = new Date();
 /*
@@ -41,8 +43,6 @@ function authcodeSend()
 			alert ("잠시후에 재전송 가능합니다."); 
 			return false;
 		}
-
-		location.reload();
 	}
 
 
@@ -69,15 +69,22 @@ function completeSend(ret_obj)
 {
 	setCookie('authentication_srl', ret_obj['authentication_srl']);
 	setCookie('authcode_mid', ret_obj['authcode_mid']);
+
+	jQuery('#get_authcode').addClass('reget');
+	jQuery('#msg_id').val(ret_obj['message_id']);
+	jQuery('#authentication_srl').val(ret_obj['authentication_srl']);
+
+	alert(ret_obj['message']);
+
+	jQuery('#authcode').focus();
 }
 
 function updateStatus()
 {
 	msg_id = jQuery('#msg_id').val();
-	alert(msg_id);
 	if(!msg_id)
 	{
-		alert('msg_id가 없습니다.');
+		alert('인증번호 받기 버튼을 클릭하세요. 인증번호 전송 후 확인이 가능합니다.');
 		return false;
 	}
 	else
@@ -140,6 +147,14 @@ function completeUpdate(ret_obj)
 
 			case 30:
 			jQuery("#footer").html('가능한 전송 잔량이 없습니다.');
+			break;
+
+			case 31:
+			jQuery("#footer").html('전송할 수 없는 번호입니다.');
+			break;
+
+			case 32:
+			jQuery("#footer").html('미가입자 입니다.');
 			break;
 
 			case 40:
@@ -237,6 +252,23 @@ function completeUpdate(ret_obj)
 	{
 		setTimeout("updateStatus()", 2000);
 	}
+}
+
+function completeCompare(ret_obj)
+{
+	alert(ret_obj['message']);
+	location.reload();
+}
+
+function verifyAuthCode()
+{
+	var params = new Array();
+	var responses = ['error','message'];
+
+	params['authentication_srl'] = jQuery("#authentication_srl").val();
+	params['authcode'] = jQuery('#authcode').val();
+
+	exec_xml('authentication', 'procAuthenticationCompare', params, completeCompare, responses);
 }
 
 
