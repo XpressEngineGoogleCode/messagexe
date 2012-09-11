@@ -11,12 +11,29 @@
 
 	<fieldset class="section">
 		<h2 class="h2">기본 설정</h2>
+
 		<ul>
+			<li>
+				<p class="q">{$lang->skin}</p>
+				<p class="a">
+		    		<select name="skin">
+						<option loop="$skin_list=>$key,$val" value="{$key}" selected="selected"|cond="$module_info->skin==$key">{$val->title}</option>
+					</select>
+				</p>
+				<p class="desc">{$lang->about_skin}</p>
+			</li>
+			<li cond="0">
+				<p class="q">{$lang->skin}</p>
+				<p class="a">
+		    		<select name="mskin">
+						<option loop="$mskin_list=>$key,$val" value="{$key}" selected="selected"|cond="$module_info->mskin==$key">{$val->title}</option>
+					</select>
+				</p>
+				<p class="desc">{$lang->about_skin}</p>
+			</li>
 			<li>
 				<p class="q">{$lang->default_country}</p>
 				<p class="a">
-
-				<td class="orangeTop">
 					<select name="country_code" id="country" class="size04">
 						<option value="">선택</option>
 						<option value="233" selected="selected"|cond="$mobilemessage_config->country_code == '233'">가나</option>
@@ -252,9 +269,7 @@
 						<option value="670" selected="selected"|cond="$mobilemessage_config->country_code == '670'">티모르</option>
 						<option value="689" selected="selected"|cond="$mobilemessage_config->country_code == '689'">프랑스령 폴리네시아</option>
 					</select>
-				</td>
-				
-				<p>문자가 기본 국가로 설정된 나라로 문자를 발송하게 합니다.<br />기본은 82 대한민국입니다.</p>
+				<p class="desc">문자가 기본 국가로 설정된 나라로 문자를 발송하게 합니다.<br />기본은 82 대한민국입니다.</p>
 
 				</p>
 			</li>
@@ -264,12 +279,9 @@
 			<li>
 				<p class="q">{$lang->validationcode_limit}</p>
 				<p class="a">
-
-				<td class="orangeTop">
 					<input type="text" size="5" maxlength="2" name="number_limit" value="{$mobilemessage_config->number_limit}" />
-				</td>
-				
-				<p>빈칸으로 두시면 기본 다섯자로 인증번호가 전송됩니다.<br />최대 여덞자 까지 가능합니다.</p>
+				</p>
+				<p class="desc">빈칸으로 두시면 기본 다섯자로 인증번호가 전송됩니다.<br />최대 여덞자 까지 가능합니다.</p>
 
 				</p>
 			</li>
@@ -279,12 +291,9 @@
 			<li>
 				<p class="q">{$lang->validationcode_message_limit}</p>
 				<p class="a">
-
-				<td class="orangeTop">
 					<input type="text" size="5" maxlength="2" name="authcode_ban_limit" value="{$mobilemessage_config->authcode_ban_limit}" />
-				</td>
-				
-				<p>인증번호 횟수 제한.<br />같은번호로 일정 횟수 이상 인증번호 요청시 해당 번호를 1시간동안  금지합니다.</p>
+				</p>
+				<p class="desc">인증번호 횟수 제한.<br />같은번호로 일정 횟수 이상 인증번호 요청시 해당 번호를 1시간동안  금지합니다.</p>
 
 				</p>
 			</li>
@@ -295,32 +304,21 @@
 			<li>
 				<p class="q">{$lang->validationcode_send_limit}</p>
 				<p class="a">
-
-				<td class="orangeTop">
 					<input type="text" size="5" maxlength="2" name="authcode_time_limit" value="{$mobilemessage_config->authcode_time_limit}" />
-				</td>
-				
-				<p>인증번호 시간 제한.<br />인증번호를 여러번 보낼수 없도록 합니다. 예) 15 입력시 15초후에 재전송이 가능하게 설정됩니다. <br> 10초이상 가능.</p>
+				</p>
+				<p class="desc">인증번호 시간 제한.<br />인증번호를 여러번 보낼수 없도록 합니다. 예) 15 입력시 15초후에 재전송이 가능하게 설정됩니다. <br> 10초이상 가능.</p>
 
 				</p>
 			</li>
 		</ul>
-
-
-
-		
-
 		<ul>
 			<li>
 				<p class="q">{$lang->validationcode_content}</p>
 				<p class="a">
-
-				<td class="orangeTop">
 					<textarea name="message_content" cond="$mobilemessage_config->message_content">{htmlspecialchars($mobilemessage_config->message_content)}</textarea>
 					<textarea name="message_content" cond="!$mobilemessage_config->message_content">%authcode%</textarea>
-				</td>
-				
-				<p>예) [핸드폰인증] %authcode% ☜ 인증번호를 정확히 입력해 주세요.</p>
+				</p>
+				<p class="desc">예) [핸드폰인증] %authcode% ☜ 인증번호를 정확히 입력해 주세요.</p>
 
 				</p>
 			</li>
@@ -351,8 +349,6 @@
 			<li>
 				<p class="q">{$lang->validationcode_act}</p>
 				<p class="a">
-				
-				<td class="orangeTop">
 					{@$list = array_keys($list_config)}
 					<input type="hidden" name="list" value="{implode(',', $list)}" />
 					<select class="multiorder_show" size="8" multiple="multiple" style="width:290px;vertical-align:top">
@@ -366,9 +362,8 @@
 					<script type="text/javascript">
 						xe.registerApp(new xe.MultiOrderManager('list'));
 					</script>
-				</td>
-				
-				<p>인증모듈을 사용할 곳을 고릅니다.<br />예) '회원가입'을 추가하시면 회원가입시 인증번호를 요구합니다.</p>
+				</p>
+				<p class="desc">인증모듈을 사용할 곳을 고릅니다.<br />예) '회원가입'을 추가하시면 회원가입시 인증번호를 요구합니다.</p>
 
 				</p>
 			</li>

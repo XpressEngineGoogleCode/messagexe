@@ -2,7 +2,7 @@
 /**
  * vi:set sw=4 ts=4 noexpandtab fileencoding=utf8:
  * @class  authenticationAdminView
- * @author wiley(wiley@nurigo.net)
+ * @author NURIGO(contact@nurigo.net)
  * @brief  authenticationAdminView
  */ 
 class authenticationAdminView extends authentication 
@@ -40,42 +40,45 @@ class authenticationAdminView extends authentication
 	{
 		$oAuthenticationModel = &getModel('authentication');
 		$oMemberModel = &getModel('member');
+		$oModuleController = &getController('module');
+		$oModuleModel = &getModel('module');
 
-		$config = $oAuthenticationModel->getModuleConfig();
 		$module_srl = Context::get('module_srl');
 
+		$config = $oAuthenticationModel->getModuleConfig();
 		Context::set('mobilemessage_config', $config);
 
 		$country_code = explode(',',$config->country_code);
-
 		Context::set('country_code', $country_code);
 
-		$oModuleController = &getController('module');
-		$oAuthcodeModel = &getModel('authentication');
+
+		// get skin list
+		$skin_list = $oModuleModel->getSkins($this->module_path);
+		Context::set('skin_list',$skin_list);
+		$mskin_list = $oModuleModel->getSkins($this->module_path, "m.skins");
+		Context::set('mskin_list', $mskin_list);
+
 		
 		// 설정 항목 추출 (설정항목이 없을 경우 기본 값을 세팅)
-
 		$args->module_srl = $module_srl;
 		$args->module = 'authentication';
 		$output = executeQuery('module.getModulePartConfig', $args);
-
 		if(!$output->data->config)
 		{
 			$oModuleController->insertModulePartConfig('authentication',$module_srl,$non_config);
 		}
 
-		if($oAuthcodeModel->getListConfig($module_srl))
+		if($oAuthenticationModel->getListConfig($module_srl))
 		{
-			Context::set('list_config', $oAuthcodeModel->getListConfig($module_srl));
+			Context::set('list_config', $oAuthenticationModel->getListConfig($module_srl));
 		}
-		Context::set('extra_vars', $oAuthcodeModel->getDefaultListConfig($module_srl));
+		Context::set('extra_vars', $oAuthenticationModel->getDefaultListConfig($module_srl));
 
 		$security = new Security();
 		$security->encodeHTML('list_config');
 
 
-
-		// 템플릿 파일 지정
+		// set template file
 		$this->setTemplateFile('config');
 	}
 
