@@ -16,9 +16,11 @@ class authenticationModel extends authentication
 	}
 
 	function getModuleConfig() {
-		if (!$GLOBALS['__authentication_config__']) {
+		if (!$GLOBALS['__authentication_config__'])
+		{
 			$oModuleModel = &getModel('module');
 			$config = $oModuleModel->getModuleConfig('authentication');
+			if(!$config->skin) $config->skin = 'default';
 			$GLOBALS['__authentication_config__'] = $config;
 		}
 		return $GLOBALS['__authentication_config__'];

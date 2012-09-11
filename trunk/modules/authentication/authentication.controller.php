@@ -2,7 +2,7 @@
 /**
  * vi:set sw=4 ts=4 noexpandtab fileencoding=utf8:
  * @class  authenticationController
- * @author wiley@nurigo.net
+ * @author NURIGO(contact@nurigo.net)
  * @brief  authenticationController
  */
 class authenticationController extends authentication 
@@ -243,34 +243,27 @@ class authenticationController extends authentication
 
 	function authcodeStartSet(&$oModule)
 	{
-		$config->skin = 'default';
-		$addon_tpl_path = sprintf('./modules/authentication/skins/%s/', $config->skin);
-		$addon_tpl_file = 'index.html';
-				
-		$oModule->setTemplatePath($addon_tpl_path);
-		$oModule->setTemplateFile($addon_tpl_file);
-
 		$oAuthenticationModel = &getModel('authentication');
-		$oMemberModel = &getModel('member');
+		$config = $oAuthenticationModel->getModuleConfig();
+		$oModule->setTemplatePath(sprintf($this->module_path.'skins/%s/', $config->skin));
+		$oModule->setTemplateFile('index');
 
-		$info = $oAuthenticationModel->getModuleConfig();
-
-		if($info->authcode_time_limit)
+		if($config->authcode_time_limit)
 		{
-			Context::set('time_limit', $info->authcode_time_limit);
+			Context::set('time_limit', $config->authcode_time_limit);
 		}
 		if($_SESSION['phone'])
 		{
 			$phone = $_SESSION['phone'];
 		}
 		
-		Context::set('number_limit', $info->number_limit);
+		Context::set('number_limit', $config->number_limit);
 
 		if(!$_SESSION['country'])
 		{
-			if($info->country_code)
+			if($config->country_code)
 			{
-				Context::set('country', $info->country_code);
+				Context::set('country', $config->country_code);
 			}
 			else
 			{
@@ -442,7 +435,6 @@ class authenticationController extends authentication
 
 		}
 	}
-
-
 }
-?>
+/* End of file authentication.controller.php */
+/* Location: ./modules/authentication/authentication.controller.php */
