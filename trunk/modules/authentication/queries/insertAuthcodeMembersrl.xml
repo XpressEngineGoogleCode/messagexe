@@ -1,6 +1,6 @@
 <query id="insertAuthcodeMembersrl" action="insert">
 	<tables>
-		<table name="authentication_history" />
+		<table name="authentication_member" />
 	</tables>
 	<columns>
 		<column name="authentication_srl" var="authentication_srl" notnull="notnull" />

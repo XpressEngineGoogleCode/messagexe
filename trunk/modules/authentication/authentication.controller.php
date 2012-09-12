@@ -360,7 +360,7 @@ class authenticationController extends authentication
 	}
 
 	/*
-	 * 회원가입후 member_srl과 인증정보들을 authentication_history table에 넣는다.
+	 * 회원가입후 member_srl과 인증정보들을 authentication_member table에 넣는다.
 	 */
 	function triggerMemberInsert(&$in_args)
 	{
