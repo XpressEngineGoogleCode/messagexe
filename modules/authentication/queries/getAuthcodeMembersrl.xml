@@ -1,6 +1,6 @@
 <query id="getAuthcodeMembersrl" action="select">
 	<tables>
-		<table name="authentication_history" />
+		<table name="authentication_member" />
 	</tables>
 	<columns>
 		<column name="*" />
