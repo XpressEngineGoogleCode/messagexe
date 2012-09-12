@@ -191,6 +191,7 @@ class authenticationController extends authentication
 			unset($_SESSION['country']);
 			unset($_SESSION['authentication_mid']);
 
+			$this->setMessage('인증이 완료되었습니다. 다음페이지로 이동합니다.');
 			$this->setRedirectUrl($returnUrl);
 		}
 		else
@@ -357,70 +358,48 @@ class authenticationController extends authentication
 		}
 		return new Object();
 	}
-	function triggerMembersrlGet(&$args)
-	{
-		$_SESSION['authcode_member_srl'] = $args->member_srl;
-	}
 
 	/*
 	 * 회원가입후 member_srl과 인증정보들을 authentication_history table에 넣는다.
 	 */
-	function triggerMemberInsertAfter(&$args)
+	function triggerMemberInsert(&$in_args)
 	{
-		if($_SESSION['phone'] && $_SESSION['authentication_srl'] && $_SESSION['authcode_member_srl'])
+		if($_SESSION['authentication_srl'])
 		{
-			$args->clue = $vars->phone_1.$vars->phone_2.$vars->phone_3;
-			$args->regdate = $today;
 			$args->authentication_srl = $_SESSION['authentication_srl'];
 			$output = executeQuery('authentication.getAuthentication', $args);
-			if(!$output->toBool())
-			{
-				return $output;
-			}
+			if(!$output->toBool()) return $output;
+			$authinfo = $output->data;
 
-			foreach($output as $k => $v)
-			{
-				if($v->authcode_pass == 'Y')
-				{
-					$authcode = $v->authcode;	
-				}
-			}
-			unset($args->regdate);
-
-			$args->authcode = $authcode;
-			$args->member_srl = $_SESSION['authcode_member_srl'];
-			$args->clue = $_SESSION['phone']['phone_1'] . $_SESSION['phone']['phone_2'] . $_SESSION['phone']['phone_3'];
+			$args->authcode = $authinfo->authcode;
+			$args->member_srl = $in_args->member_srl;
+			$args->clue = $authinfo->clue;
 			$output = executeQuery('authentication.insertAuthcodeMembersrl', $args);
-
-			if(!$output->toBool())
-			{
-				return $output;
-			}
-			else
-			{
-				unset($_SESSION['phone']);
-				unset($_SESSION['authentication_srl']);
-				unset($_SESSION['authcode_member_srl']);
-			}
-
+			if(!$output->toBool()) return $output;
 		}
 	}
 
-
-	/*
-	 * 발송체크
+	/**
+	 * this function will be triggered by member module after module.updateMember called.
 	 */
-	function triggerMemberUpdateAfter(&$args)
+	function triggerMemberUpdate(&$in_args)
 	{
-		if(Context::get('act') == "dispMemberModifyInfo")
+		if($_SESSION['authentication_srl'])
 		{
-			$config->skin = 'default';
-			$addon_tpl_path = sprintf('./modules/authentication/skins/%s/', $config->skin);
-			$addon_tpl_file = 'index.html';
-					
-			$oModule->setTemplatePath($addon_tpl_path);
-			$oModule->setTemplateFile($addon_tpl_file);
+			$args->authentication_srl = $_SESSION['authentication_srl'];
+			$output = executeQuery('authentication.getAuthentication', $args);
+			if(!$output->toBool()) return $output;
+			$authinfo = $output->data;
 
+			$args->authcode = $authinfo->authcode;
+			$args->member_srl = $in_args->member_srl;
+			$args->clue = $authinfo->clue;
+
+			$output = executeQuery('authentication.deleteAuthcodeMembersrl', $args);
+			if(!$output->toBool()) return $output;
+
+			$output = executeQuery('authentication.insertAuthcodeMembersrl', $args);
+			if(!$output->toBool()) return $output;
 		}
 	}
 }

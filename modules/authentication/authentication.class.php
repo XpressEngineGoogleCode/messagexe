@@ -25,6 +25,27 @@ class authentication extends ModuleObject
 		return $text;
 	}
 
+	function registerTriggers()
+	{
+		$oModuleController = &getController('module');
+		$oModuleModel = &getModel('module');
+
+		if(!$oModuleModel->getTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after'))
+		{
+			$oModuleController->insertTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after');
+		}
+
+		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMemberInsert', 'after'))
+		{
+			$oModuleController->insertTrigger('member.insertMember', 'authentication', 'controller', 'triggerMemberInsert', 'after');
+		}
+
+		if(!$oModuleModel->getTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdate', 'after'))
+		{
+			$oModuleController->insertTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdate', 'after');
+		}
+	}
+
 	/**
 	 * @brief 모듈 설치 실행
 	 */
@@ -33,13 +54,7 @@ class authentication extends ModuleObject
 		$oModuleController = &getController('module');
 		$oModuleModel = &getModel('module');
 
-		$oModuleController->insertTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after');
-
-		$oModuleController->insertTrigger('member.procMemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after');
-
-		$oModuleController->insertTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after');
-
-		$oModuleController->insertTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdateAfter', 'before');
+		$this->registerTriggers();
 	}
 
 	/**
@@ -51,25 +66,9 @@ class authentication extends ModuleObject
 		$oModuleModel = &getModel('module');
 		$oModuleController = &getController('module');
 
-		if(!$oModuleModel->getTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after'))
-		{
-			return true;
-		}
-
-		if(!$oModuleModel->getTrigger('member.procMemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after'))
-		{
-			return true;
-		}
-
-		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after'))
-		{
-			return true;
-		}
-
-		if(!$oModuleModel->getTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdateAfter', 'before'))
-		{
-			return true;
-		}
+		if(!$oModuleModel->getTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after')) return true;
+		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMemberInsert', 'after')) return true;
+		if(!$oModuleModel->getTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdate', 'after')) return true;
 
 		return false;
 	}
@@ -83,26 +82,7 @@ class authentication extends ModuleObject
 		$oModuleModel = &getModel('module');
 		$oModuleController = &getController('module');
 
-		if(!$oModuleModel->getTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after'))
-		{
-			$oModuleController->insertTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after');
-		}
-
-		if(!$oModuleModel->getTrigger('member.procMemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after'))
-		{
-			$oModuleController->insertTrigger('member.procMemberInsert', 'authentication', 'controller', 'triggerMemberInsertAfter', 'after');
-		}
-
-		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after'))
-		{
-			$oModuleController->insertTrigger('member.insertMember', 'authentication', 'controller', 'triggerMembersrlGet', 'after');
-		}
-
-		if(!$oModuleModel->getTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdateAfter', 'before'))
-		{
-			$oModuleController->insertTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdateAfter', 'before');
-		}
-
+		$this->registerTriggers();
 	}
 
 	/**
