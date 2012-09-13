@@ -1,4 +1,4 @@
-<table name="authentication_history">
+<table name="authentication_member">
 	<column name="member_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
 	<column name="authentication_srl" type="number" size="11" notnull="notnull" />
 	<column name="clue" type="varchar" size="120" notnull="notnull" index="idx_clue" />

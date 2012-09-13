@@ -14,7 +14,7 @@
 		<action name="procAuthenticationModuleInsert" type="controller" />
 
 		<action name="procAuthenticationSendAuthCode" type="controller" />
-		<action name="procAuthenticationCompare" type="controller" />
+		<action name="procAuthenticationVerifyAuthcode" type="controller" ruleset="verify_authcode" />
 		<action name="procAuthenticationUpdateStatus" type="controller" />
     </actions>
 </module>

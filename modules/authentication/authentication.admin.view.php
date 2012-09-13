@@ -85,6 +85,7 @@ class authenticationAdminView extends authentication
 	/**
 	 * @brief authentication configuration list.
 	 **/
+	/*
 	function dispAuthenticationAdminList() 
 	{
 		$config_list = array();
@@ -131,6 +132,7 @@ class authenticationAdminView extends authentication
 
 		$this->setTemplateFile('list');
 	}
+	 */
 
 	/**
 	 * @brief insert authentication configuration info.
@@ -167,6 +169,7 @@ class authenticationAdminView extends authentication
 	/**
 	 * @brief modify authentication configuration.
 	 **/
+	/*
 	function dispAuthenticationAdminModify() 
 	{
 		$config_srl = Context::get('config_srl');
@@ -220,6 +223,7 @@ class authenticationAdminView extends authentication
 
 		$this->setTemplateFile('insert');
 	}
+	 */
 
 
 	function dispAuthenticationAdminAuthcodeList() 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ruleset version="1.5.0">
+    <customrules>
+    </customrules>
+    <fields>
+		<field name="number_limit" required="true" filter="number" maxlength="2" />
+		<field name="authcode_ban_limit" required="true" maxlength="5" />
+		<field name="authcode_time_limit" required="true" maxlength="2" />
+		<field name="message_content" required="true" maxlength="250" />
+    </fields>
+</ruleset>

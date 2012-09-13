@@ -20,6 +20,7 @@ class authenticationAdminController extends authentication
 	}
 
 
+	/*
 	function isValidFieldName($fieldname)
 	{
 		$bfound = false;
@@ -42,6 +43,7 @@ class authenticationAdminController extends authentication
 
 		return $bfound;
 	}
+	 */
 
 	function procAuthenticationModuleInsert()
 	{
@@ -133,6 +135,7 @@ class authenticationAdminController extends authentication
 		}
 
 
+		/*
 		// check whether countrycode_fieldname is valid
 		if ($args->countrycode_fieldname) {
 			if (!$this->isValidFieldName($args->country_code)) {
@@ -140,6 +143,8 @@ class authenticationAdminController extends authentication
 				$bsucc = false;
 			}
 		}
+		 */
+
 		if($args->number_limit)
 		{
 			if ($args->number_limit > 8 || !preg_match('/[0-9]/',$args->number_limit))
@@ -174,6 +179,7 @@ class authenticationAdminController extends authentication
 	/**
 	 * @brief saving config values.
 	 **/
+	/*
 	function procAuthenticationAdminInsert() 
 	{
 		$params = Context::gets('admin_phones','admin_emails','content','mail_content','module_srls','msgtype','sending_method');
@@ -217,7 +223,9 @@ class authenticationAdminController extends authentication
 		$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispAuthenticationAdminModify','config_srl',$params->config_srl);
 		$this->setRedirectUrl($redirectUrl);
 	}
+	 */
 
+	/*
 	function procAuthenticationAdminDelete() 
 	{
 		$config_srl = Context::get('config_srl');
@@ -235,6 +243,7 @@ class authenticationAdminController extends authentication
 		$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispAuthenticationAdminList');
 		$this->setRedirectUrl($redirectUrl);
 	}
+	 */
 }
 /* End of file authentication.admin.controller.php */
 /* Location: ./modules/authentication/authentication.admin.controller.php */

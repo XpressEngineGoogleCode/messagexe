@@ -10,13 +10,12 @@
 		<h1><img src="img/phone_02.gif" alt="휴대폰인증" /></h1>
 	</div><!-- #header// -->
 	<form method="post" action="./">
-		<input type="hidden" name="act" value="procAuthenticationCompare" />
+		<input type="hidden" name="act" value="procAuthenticationVerifyAuthcode" />
 		<input type="hidden" id="authentication_srl" name="authentication_srl" value={$authentication_srl} />
-		<input type="hidden" name="authcode_mid" id="authcode_mid" value={$authcode_mid} />
 		<input type="hidden" name="module" value="authentication" />
 		<input type="hidden" id="time_limit" value="{$time_limit}" />
-		<input type="hidden" id="send_time" value="{$send_time}" />
-		<input type="hidden" id="msg_id" value="{$message_id}" />
+		<input cond="0" type="hidden" id="send_time" value="{$send_time}" />
+		<input type="hidden" id="message_id" value="" />
 		<table class="container">
 			<tr>
 				<th class="orangeTop">국가선택</th>
@@ -31,20 +30,9 @@
 			<tr>
 				<th>휴대폰번호</th>
 				<td>	
-					<input class="input01 size02" type="text" name="phone_1" id="phone_1" size="5" maxlength="4" value="{$phone_1}" />
-					<select cond="0" name="phone_1" id="phone_1" class="size01">
-						<option value=''>선택</option>
-						<option value="010" selected="selected"|cond="$phone_1 == '010'" >010</option>
-						<option value="011" selected="selected"|cond="$phone_1 == '011'" >011</option>
-						<option value="016" selected="selected"|cond="$phone_1 == '016'" >016</option>
-						<option value="017" selected="selected"|cond="$phone_1 == '017'" >017</option>
-						<option value="018" selected="selected"|cond="$phone_1 == '018'" >018</option>
-						<option value="019" selected="selected"|cond="$phone_1 == '019'" >019</option>
-					</select>
-					-
-					<input class="input01 size02" type="text" name="phone_2" id="phone_2" size="5" maxlength="4" value="{$phone_2}" />
-					-
-					<input class="input01 size02" type="text" name="phone_3" id="phone_3" size="5" maxlength="4" value="{$phone_3}" />
+					<input class="input01 size02" type="text" name="phonenum[]" id="phonenum_1" size="5" maxlength="4" value="010" />
+					<input class="input01 size02" type="text" name="phonenum[]" id="phonenum_2" size="5" maxlength="4" value="{$phone_2}" autofocus="autofocus" />
+					<input class="input01 size02" type="text" name="phonenum[]" id="phonenum_3" size="5" maxlength="4" value="{$phone_3}" />
 					<a href="#" onclick="getAuthCode(); return false;" id="get_authcode"><span>Get AuthCode</span></a>
 					<a cond="0" href="#" onclick="getAuthCode(); return false;" id="authcode_resend"><img src="img/phone_07.gif" border="0" /></a>
 				</td>
