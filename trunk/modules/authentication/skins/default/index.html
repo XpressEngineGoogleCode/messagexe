@@ -5,11 +5,11 @@
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 
-<div id="phone">
+<div id="phone" style="width:{$config->width}"|cond="$config->width">
 		<div id="header">
 		<h1><img src="img/phone_02.gif" alt="휴대폰인증" /></h1>
 	</div><!-- #header// -->
-	<form method="post" action="./">
+	<form method="post" action="./" ruleset="verify_authcode">
 		<input type="hidden" name="act" value="procAuthenticationVerifyAuthcode" />
 		<input type="hidden" id="authentication_srl" name="authentication_srl" value={$authentication_srl} />
 		<input type="hidden" name="module" value="authentication" />
@@ -23,7 +23,7 @@
 					<select name="country" id="country" class="size04">
 						<option value=''>선택</option>
 						{@asort($lang->country_codes)}
-						<option loop="$lang->country_codes=>$key,$val" value="{$key}" selected="selected"|cond="$country == $key">{$val}</option>
+						<option loop="$lang->country_codes=>$key,$val" value="{$key}" selected="selected"|cond="$config->country_code == $key">{$val}</option>
 					</select>
 				</td>
 			</tr>
@@ -46,12 +46,11 @@
 			</tr>
 		</table>
 	</form>
-	<h1>{$message_id}</h1>
 	<div id="content">
 		<img src="img/phone_17.gif" /><span>인증번호가 오지 않는다면? <a href="#" onclick="updateStatus(); return false"><img src="img/phone_14.gif"></a></span>
 	</div>
 	<div id="footer">
-		주의! 휴대폰번호를 정확하게 입력하였는지 확인해주세요.
+		<span id="notice">주의! 휴대폰번호를 정확하게 입력하였는지 확인해주세요.</span>
 	</div><!-- #footer// -->
 	
 </div>

@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <lang>
-	<item name="number_limit">
-		<value xml:lang="ko"><![CDATA[인증번호 자릿수 제한]]></value>
+	<item name="digit_number">
+		<value xml:lang="ko"><![CDATA[인증번호 자릿수]]></value>
+	</item>
+	<item name="authcode">
+		<value xml:lang="ko"><![CDATA[인증번호]]></value>
 	</item>
 	<item name="about_number_limit">
 		<value xml:lang="ko"><![CDATA[빈칸으로 두시면 기본 다섯자로 인증번호가 전송됩니다. 최대 여덞자 까지 가능합니다.]]></value>

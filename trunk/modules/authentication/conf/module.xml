@@ -13,7 +13,7 @@
 		<action name="procAuthenticationAdminConfig" type="controller" />
 		<action name="procAuthenticationModuleInsert" type="controller" />
 
-		<action name="procAuthenticationSendAuthCode" type="controller" />
+		<action name="procAuthenticationSendAuthCode" type="controller" ruleset="send_authcode" />
 		<action name="procAuthenticationVerifyAuthcode" type="controller" ruleset="verify_authcode" />
 		<action name="procAuthenticationUpdateStatus" type="controller" />
     </actions>
