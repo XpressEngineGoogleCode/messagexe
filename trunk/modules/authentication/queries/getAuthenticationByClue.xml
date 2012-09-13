@@ -1,4 +1,4 @@
-<query id="getAuthcodeClue" action="select">
+<query id="getAuthenticationByClue" action="select">
 	<tables>
 		<table name="authentication" />
 	</tables>

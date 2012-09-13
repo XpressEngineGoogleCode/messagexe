@@ -1,16 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <lang>
-	<item name="cellphone_fieldname">
-		<value xml:lang="ko"><![CDATA[휴대전화 필드]]></value>
-		<value xml:lang="en"><![CDATA[Phone Number Field Name]]></value>
+	<item name="number_limit">
+		<value xml:lang="ko"><![CDATA[인증번호 자릿수 제한]]></value>
 	</item>
-	<item name="about_cellphone_fieldname">
-		<value xml:lang="ko"><![CDATA[회원의 폰번호를 받기위해 생성하신 추가필드의 입력항목이름을 입력해 주세요.<br />만약 핸드폰번호를 받기위한 추가필드를 생성하지 않으셨다면 <a href=\"?module=admin&act=dispMemberAdminJoinFormList\">가입폼관리</a>에서 전화번호형식(phone)으로 추가해 주세요.]]></value>
-		<value xml:lang="en"><![CDATA[<p>Browser Title : %browser_title%<br />Nick-name: %nick_name%<br />Content : %content%<br />문서 URL : %article_url%</p>]]></value>
-	</item>
-	<item name="default_country">
-		<value xml:lang="ko"><![CDATA[기본 국가번호]]></value>
-		<value xml:lang="en"><![CDATA[Default Country Code]]></value>
+	<item name="about_number_limit">
+		<value xml:lang="ko"><![CDATA[빈칸으로 두시면 기본 다섯자로 인증번호가 전송됩니다. 최대 여덞자 까지 가능합니다.]]></value>
 	</item>
 	<item name="validationcode_act">
 		<value xml:lang="ko"><![CDATA[액션선택]]></value>

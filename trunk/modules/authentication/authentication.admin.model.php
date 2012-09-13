@@ -7,6 +7,7 @@
  */
 class authenticationAdminModel extends authentication 
 {
+	/*
 	function getAuthenticationAdminDelete() 
 	{
 		// get configs.
@@ -34,6 +35,7 @@ class authenticationAdminModel extends authentication
 		$tpl = $oTemplate->compile($this->module_path.'tpl', 'delete');
 		$this->add('tpl', str_replace("\n"," ",$tpl));
 	}
+	 */
 }
 /* End of file authentication.admin.model.php */
 /* Location: ./modules/authentication/authentication.admin.model.php */

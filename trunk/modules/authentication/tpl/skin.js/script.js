@@ -32,6 +32,7 @@ function getAuthCode()
 	alert(parseInt(today.format("ss"))+30);
 	*/
 
+	/*
 	if(jQuery('#send_time').val())
 	{
 		time_before = parseInt(jQuery('#send_time').val());
@@ -44,19 +45,18 @@ function getAuthCode()
 			return false;
 		}
 	}
-
+	*/
 
 	var params = new Array();
-	var responses = ['error','message','authentication_srl','authcode_mid','message_id'];
+	var responses = ['error','message','authentication_srl','message_id'];
+	var phonenum = '';
+	jQuery("#phone input[name^=phonenum]").each(function() { phonenum += jQuery(this).val(); });
 
 	params['module'] = 'authentication';
 	params['country'] = jQuery("#country").val();
-	params['phone_1'] = jQuery("#phone_1").val();
-	params['phone_2'] = jQuery("#phone_2").val();
-	params['phone_3'] = jQuery("#phone_3").val();
-	params['authcode_mid'] = jQuery("#authcode_mid").val();
+	params['phonenum'] = phonenum;
 
-	if(!params['country'] || !params['phone_1'] || !params['phone_2'] || !params['phone_3'])
+	if(!params['country'] || !params['phonenum'])
 	{
 		alert ("국가 및 휴대폰 번호를 전부 입력해주세요."); 
 		return false;
@@ -68,10 +68,9 @@ function getAuthCode()
 function completeSend(ret_obj)
 {
 	setCookie('authentication_srl', ret_obj['authentication_srl']);
-	setCookie('authcode_mid', ret_obj['authcode_mid']);
 
 	jQuery('#get_authcode').addClass('reget');
-	jQuery('#msg_id').val(ret_obj['message_id']);
+	jQuery('#message_id').val(ret_obj['message_id']);
 	jQuery('#authentication_srl').val(ret_obj['authentication_srl']);
 
 	alert(ret_obj['message']);
@@ -81,8 +80,8 @@ function completeSend(ret_obj)
 
 function updateStatus()
 {
-	msg_id = jQuery('#msg_id').val();
-	if(!msg_id)
+	message_id = jQuery('#message_id').val();
+	if(!message_id)
 	{
 		alert('인증번호 받기 버튼을 클릭하세요. 인증번호 전송 후 확인이 가능합니다.');
 		return false;
@@ -91,7 +90,6 @@ function updateStatus()
 	{
 		jQuery("#footer").html('');
 		jQuery("#footer").append('<div><span>확인중...</span></div>');
-		message_id = msg_id;
 
 		var params = new Array();	
 		var responses = ['error','message', 'result'];
@@ -104,8 +102,6 @@ function updateStatus()
 
 function completeUpdate(ret_obj)
 {
-	message_id = jQuery('#msg_id').val();
-
 	r_status = ret_obj['result']['STATUS'];
 	r_code = ret_obj['result']['RESULT-CODE'];
 
@@ -254,7 +250,7 @@ function completeUpdate(ret_obj)
 	}
 }
 
-function completeCompare(ret_obj)
+function completeVerifyAuthcode(ret_obj)
 {
 	alert(ret_obj['message']);
 	location.reload();
@@ -268,7 +264,7 @@ function verifyAuthCode()
 	params['authentication_srl'] = jQuery("#authentication_srl").val();
 	params['authcode'] = jQuery('#authcode').val();
 
-	exec_xml('authentication', 'procAuthenticationCompare', params, completeCompare, responses);
+	exec_xml('authentication', 'procAuthenticationVerifyAuthcode', params, completeVerifyAuthcode, responses);
 }
 
 

@@ -1,4 +1,4 @@
-<query id="deleteAuthcodeMembersrl" action="delete">
+<query id="deleteAuthenticationMember" action="delete">
 	<tables>
 		<table name="authentication_member" />
 	</tables>
