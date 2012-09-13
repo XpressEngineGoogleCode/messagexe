@@ -34,51 +34,26 @@ class authenticationController extends authentication
 		$keystr = $this->getRandNumber($config->digit_number);
 
 		$today = date("Ymd", mktime(0,0,0,date("m"),date("d"),date("Y")));
+		debugPrint('$today');
+		debugPrint($today);
 
 		$args->clue = $phonenum;
 		$args->regdate = $today;
-		$output = executeQuery('authentication.getAuthenticationByClue', $args);
+		$output = executeQuery('authentication.getTryCountByClue', $args);
+		if (!$output->toBool()) return $output;
+		unset($args);
 
-		// check tries limit
-		if($config->authcode_ban_limit)
+		// check day try limit
+		if($output->data->count > $config->day_try_limit)
 		{
-			if(is_array($output->data))
-			{
-				foreach($output->data as $k => $v)
-				{
-					if($v->authcode_ban == 'Y')
-					{
-						return new Object(-1, '잦은 인증번호 요청으로 금지되셨습니다. 1일뒤에 다시 시도해주십시오.');
-					}
-				}
-			}
-			/*
-			
-			if(!$_SESSION['authcode_clue'] || !$_SESSION['authcode_ban'])
-			{
-				$_SESSION['authcode_clue'] = $args->clue;
-				$_SESSION['authcode_ban'] = 1;
-			}
-
-			if($args->clue == $_SESSION['authcode_srl'])
-			{
-				$_SESSION['authcode_ban'] = $_SESSION['authcode_ban'] + 1;
-			}
-
-			if($_SESSION['authcode_ban']  == $config->authcode_ban_limit)
-			{
-				$args->authcode_ban = 'Y';
-				$_SESSION['authcode_ban'] = 1;
-			}
-			 */
+			return new Object(-1, '잦은 인증번호 요청으로 금지되셨습니다. 1일뒤에 다시 시도해주십시오.');
 		}
 
-		unset($args->regdate);
-
-		$args->country = $country;
 		$args->authentication_srl = getNextSequence();
+		$args->country = $country;
+		$args->clue = $phonenum;
 		$args->authcode = $keystr;
-
+		/*
 		if(!$config->authcode_time_limit || $config->authcode_time_limit < 10)
 		{
 			$send_time = date("ymdHis", mktime(date("H"), date("i"), date("s") + 20, date("m"), date("d"), date("y")));
@@ -87,15 +62,10 @@ class authenticationController extends authentication
 		{
 			$send_time = date("ymdHis", mktime(date("H"), date("i"), date("s") + $config->authcode_time_limit, date("m"), date("d"), date("y")));
 		}
-		
-
 		$args->send_times = $send_time;
-
+		 */
 		$output = executeQuery('authentication.insertAuthentication', $args);
-		if (!$output->toBool())
-		{
-			return $output;
-		}
+		if (!$output->toBool()) return $output;
 
 		$_SESSION['authentication_srl'] = $args->authentication_srl;
 		$this->add('authentication_srl', $args->authentication_srl);
@@ -188,11 +158,7 @@ class authenticationController extends authentication
 		{
 			Context::set('time_limit', $config->authcode_time_limit);
 		}
-		
 		Context::set('number_limit', $config->number_limit);
-
-		if(!$config->country_code) $config->country_code = '82';
-
 		Context::set('config', $config);
 	}
 

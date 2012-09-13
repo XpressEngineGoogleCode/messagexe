@@ -37,7 +37,7 @@
 					<select name="country_code" id="country" class="size04">
 						<option value="">선택</option>
 						{@asort($lang->country_codes)}
-						<option loop="$lang->country_codes=>$key,$val" value="{$key}" selected="selected"|cond="$country == $key">{$val}</option>
+						<option loop="$lang->country_codes=>$key,$val" value="{$key}" selected="selected"|cond="$key == $config->country_code">{$val}</option>
 					</select>
 				<p class="desc">문자가 기본 국가로 설정된 나라로 문자를 발송하게 합니다.<br />기본은 82 대한민국입니다.</p>
 
@@ -49,7 +49,7 @@
 			<li>
 				<p class="q">{$lang->validationcode_limit}</p>
 				<p class="a">
-					<input type="text" size="5" maxlength="2" name="number_limit" value="{$mobilemessage_config->number_limit}" />
+					<input type="text" size="5" maxlength="2" name="digit_number" value="{$config->digit_number}" />
 				</p>
 				<p class="desc">빈칸으로 두시면 기본 다섯자로 인증번호가 전송됩니다.<br />최대 여덞자 까지 가능합니다.</p>
 
@@ -61,7 +61,7 @@
 			<li>
 				<p class="q">{$lang->validationcode_message_limit}</p>
 				<p class="a">
-					<input type="text" size="5" maxlength="2" name="authcode_ban_limit" value="{$mobilemessage_config->authcode_ban_limit}" />
+					<input type="text" size="5" maxlength="2" name="day_try_limit" value="{$config->day_try_limit}" />
 				</p>
 				<p class="desc">인증번호 횟수 제한.<br />같은번호로 일정 횟수 이상 인증번호 요청시 해당 번호를 1시간동안  금지합니다.</p>
 
@@ -74,7 +74,7 @@
 			<li>
 				<p class="q">{$lang->validationcode_send_limit}</p>
 				<p class="a">
-					<input type="text" size="5" maxlength="2" name="authcode_time_limit" value="{$mobilemessage_config->authcode_time_limit}" />
+					<input type="text" size="5" maxlength="2" name="authcode_time_limit" value="{$config->authcode_time_limit}" />
 				</p>
 				<p class="desc">인증번호 시간 제한.<br />인증번호를 여러번 보낼수 없도록 합니다. 예) 15 입력시 15초후에 재전송이 가능하게 설정됩니다. <br> 10초이상 가능.</p>
 
@@ -85,8 +85,8 @@
 			<li>
 				<p class="q">{$lang->validationcode_content}</p>
 				<p class="a">
-					<textarea name="message_content" cond="$mobilemessage_config->message_content">{htmlspecialchars($mobilemessage_config->message_content)}</textarea>
-					<textarea name="message_content" cond="!$mobilemessage_config->message_content">%authcode%</textarea>
+					<textarea name="message_content" cond="$config->message_content">{htmlspecialchars($config->message_content)}</textarea>
+					<textarea name="message_content" cond="!$config->message_content">%authcode%</textarea>
 				</p>
 				<p class="desc">예) [핸드폰인증] %authcode% ☜ 인증번호를 정확히 입력해 주세요.</p>
 
@@ -138,6 +138,19 @@
 				</p>
 			</li>
 		</ul>
+
+		<ul>
+			<li>
+				<p class="q">가로너비</p>
+				<p class="a">
+					<input type="text" size="5" name="width" value="{$config->width}" />
+				</p>
+				<p class="desc">가로너비를 설정하실 수 있습니다. 90% 혹은 650px 와 같이 입력해 주세요.</p>
+
+				</p>
+			</li>
+		</ul>
+
 	<div class="btnArea">
 		<span class="btn"><input type="submit" value="{$lang->cmd_save}" /></span>
 	</div>

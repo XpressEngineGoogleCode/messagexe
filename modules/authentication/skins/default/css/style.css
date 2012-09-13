@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* common */
-#phone {margin:0; padding:0; width:650px; font-family:'돋움','Dotum','굴림','Gulim'; font-size:12px; color:#666; }
+#phone {margin:0; padding:0; font-family:'돋움','Dotum','굴림','Gulim'; font-size:12px; color:#666; }
 #phone h1 {margin:0; padding:0;}
 #phone img {border: none; vertical-align: middle;} 
 #phone .mgt {margin-top:20px;}
@@ -46,6 +46,7 @@
 #phone #get_authcode.reget { background:url("../img/reget_authcode.gif"); }
 
 /* footer */
-#phone #footer {height:40px; background:#666; font-family:"굴림", "돋움"; font-size:13px; color:#fff; padding: 20px 20px 0 20px; }
+#phone #footer { height:auto; background:#666; font-family:"굴림", "돋움"; font-size:13px; color:#fff; }
+#phone #footer span { display:inline-block; padding:20px; }
 
 

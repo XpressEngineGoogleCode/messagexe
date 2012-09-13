@@ -1,30 +1,15 @@
+	/*
 jQuery(document).ready(function (){
-
 	var today = new Date();
-
 	time_now = today.format("yymmddHHMMss");
 	time_now = parseInt(time_now);
-
-	/*
-	if(jQuery('#send_time').val() > time_now)
-	{
-		jQuery('#get_authcode').hide();
-		jQuery('#authcode_resend').show();
-	}
-	else
-	{
-		jQuery('#get_authcode').show();
-		jQuery('#authcode_resend').hide();
-	}
-	*/
-
-
 });
+	*/
 
 function getAuthCode()
 {
-	var today = new Date();
 /*
+	var today = new Date();
 	alert(today.getMonth());
 	alert(today.format("yymmddHHMMss"));
 
@@ -47,25 +32,44 @@ function getAuthCode()
 	}
 	*/
 
-	var params = new Array();
-	var responses = ['error','message','authentication_srl','message_id'];
-	var phonenum = '';
-	jQuery("#phone input[name^=phonenum]").each(function() { phonenum += jQuery(this).val(); });
 
-	params['module'] = 'authentication';
-	params['country'] = jQuery("#country").val();
-	params['phonenum'] = phonenum;
-
-	if(!params['country'] || !params['phonenum'])
+	// check country code
+	var country = jQuery("#country").val();
+	if(!country.length)
 	{
-		alert ("국가 및 휴대폰 번호를 전부 입력해주세요."); 
+		alert ("국가를 선택해 주세요."); 
 		return false;
 	}
 
-	exec_xml('authentication', 'procAuthenticationSendAuthCode', params, completeSend, responses);
+	// check phone number
+	var phonenum = '';
+	jQuery("#phone input[name^=phonenum]").each(
+		function()
+		{
+			$cell = jQuery(this);
+			var cellval = $cell.val();
+			if(!cellval.length)
+	   		{
+				alert('휴대폰번호를 입력하세요.');
+				$cell.focus();
+				phonenum = '';
+				return false;
+			}
+			phonenum += cellval;
+		}
+	);
+	if(!phonenum.length) return false;
+
+	// call an ajax to get the auth-code 
+	var params = new Array();
+	var responses = ['error','message','authentication_srl','message_id'];
+	params['module'] = 'authentication';
+	params['phonenum'] = phonenum;
+	params['country'] = country;
+	exec_xml('authentication', 'procAuthenticationSendAuthCode', params, completeSendAuthCode, responses);
 }
 
-function completeSend(ret_obj)
+function completeSendAuthCode(ret_obj)
 {
 	setCookie('authentication_srl', ret_obj['authentication_srl']);
 
@@ -88,8 +92,7 @@ function updateStatus()
 	}
 	else
 	{
-		jQuery("#footer").html('');
-		jQuery("#footer").append('<div><span>확인중...</span></div>');
+		jQuery("#footer #notice").html('확인중...');
 
 		var params = new Array();	
 		var responses = ['error','message', 'result'];
@@ -102,15 +105,14 @@ function updateStatus()
 
 function completeUpdate(ret_obj)
 {
-	r_status = ret_obj['result']['STATUS'];
-	r_code = ret_obj['result']['RESULT-CODE'];
-
-	r_code = parseInt(r_code, 10);
+	var r_status = ret_obj['result']['STATUS'];
+	var r_code = ret_obj['result']['RESULT-CODE'];
+	var r_code = parseInt(r_code, 10);
+	var $notice = jQuery('#footer #notice');
 
 	if(r_status == 2 && r_code == 00)
 	{
-		jQuery("#footer").html('');
-		jQuery("#footer").append('<div><span>전송완료. 만약 메시지가 도착하지 않으셨다면 스팸함을 확인해주세요.</span></div>');
+		$notice.html('전송완료. 만약 메시지가 도착하지 않으셨다면 스팸함을 확인해주세요.');
 	}
 
 	else if(r_status == 2 && r_code != 0)
@@ -118,127 +120,127 @@ function completeUpdate(ret_obj)
 		switch(r_code)
 		{
 			case 10:
-			jQuery("#footer").html('잘못된 번호입니다. 번호를 확인해주세요.');
+			$notice.html('잘못된 번호입니다. 번호를 확인해주세요.');
 			break;
 
 			case 11:
-			jQuery("#footer").html('상위 서비스망이 스팸 인식됬습니다.');
+			$notice.html('상위 서비스망이 스팸 인식됬습니다.');
 			break;
 
 			case 12:
-			jQuery("#footer").html('이통사 전송불가 입니다.');
+			$notice.html('이통사 전송불가 입니다.');
 			break;
 
 			case 13:
-			jQuery("#footer").html('필드값이 누락 되었습니다.');
+			$notice.html('필드값이 누락 되었습니다.');
 			break;
 
 			case 20:
-			jQuery("#footer").html('등록된 계정이 아니거나 패스워드가 틀립니다.');
+			$notice.html('등록된 계정이 아니거나 패스워드가 틀립니다.');
 			break;
 
 			case 21:
-			jQuery("#footer").html('존재하지 않는 메시지 입니다.');
+			$notice.html('존재하지 않는 메시지 입니다.');
 			break;
 
 			case 30:
-			jQuery("#footer").html('가능한 전송 잔량이 없습니다.');
+			$notice.html('가능한 전송 잔량이 없습니다.');
 			break;
 
 			case 31:
-			jQuery("#footer").html('전송할 수 없는 번호입니다.');
+			$notice.html('전송할 수 없는 번호입니다.');
 			break;
 
 			case 32:
-			jQuery("#footer").html('미가입자 입니다.');
+			$notice.html('미가입자 입니다.');
 			break;
 
 			case 40:
-			jQuery("#footer").html('전송시간 초과입니다.');
+			$notice.html('전송시간 초과입니다.');
 			break;
 
 			case 41:
-			jQuery("#footer").html('단말기 Busy');
+			$notice.html('단말기 Busy');
 			break;
 
 			case 42:
-			jQuery("#footer").html('음영지역 입니다.');
+			$notice.html('음영지역 입니다.');
 			break;
 
 			case 43:
-			jQuery("#footer").html('단말기 파워 오프 입니다.');
+			$notice.html('단말기 파워 오프 입니다.');
 			break;
 
 			case 44:
-			jQuery("#footer").html('단말기 메시지 저장갯수 초과 입니다.');
+			$notice.html('단말기 메시지 저장갯수 초과 입니다.');
 			break;
 
 			case 45:
-			jQuery("#footer").html('단말기 일시 서비스 정지 입니다.');
+			$notice.html('단말기 일시 서비스 정지 입니다.');
 			break;
 
 			case 46:
-			jQuery("#footer").html('기타 단말기 문제 입니다.');
+			$notice.html('기타 단말기 문제 입니다.');
 			break;
 
 			case 47:
-			jQuery("#footer").html('착신 거절 입니다.');
+			$notice.html('착신 거절 입니다.');
 			break;
 
 			case 48:
-			jQuery("#footer").html('Unkonwn error');
+			$notice.html('Unkonwn error');
 			break;
 
 			case 49:
-			jQuery("#footer").html('Format Error');
+			$notice.html('Format Error');
 			break;
 
 			case 50:
-			jQuery("#footer").html('sms서비스 불가 단말기 입니다.');
+			$notice.html('sms서비스 불가 단말기 입니다.');
 			break;
 
 			case 51:
-			jQuery("#footer").html('착신측의 호불가 상태 입니다.');
+			$notice.html('착신측의 호불가 상태 입니다.');
 			break;
 			
 			case 52:
-			jQuery("#footer").html('이통사 서버 운영자 삭제 입니다.');
+			$notice.html('이통사 서버 운영자 삭제 입니다.');
 			break;
 
 			case 53:
-			jQuery("#footer").html('서버 메시지 Que Full');
+			$notice.html('서버 메시지 Que Full');
 			break;
 
 			case 54:
-			jQuery("#footer").html('스팸인식입니다.');
+			$notice.html('스팸인식입니다.');
 			break;
 
 			case 55:
-			jQuery("#footer").html('스팸, nospam.or.kr에 등록된 번호 입니다.');
+			$notice.html('스팸, nospam.or.kr에 등록된 번호 입니다.');
 			break;
 
 			case 56:
-			jQuery("#footer").html('전송실패(무선망단) 입니다.');
+			$notice.html('전송실패(무선망단) 입니다.');
 			break;
 
 			case 57:
-			jQuery("#footer").html('전송실패(무선망->단말기단) 입니다.');
+			$notice.html('전송실패(무선망->단말기단) 입니다.');
 			break;
 
 			case 58:
-			jQuery("#footer").html('전송경로가 없습니다.');
+			$notice.html('전송경로가 없습니다.');
 			break;
 
 			case 60:
-			jQuery("#footer").html('취소하셨습니다.');
+			$notice.html('취소하셨습니다.');
 			break;
 
 			case 70:
-			jQuery("#footer").html('허용되지 않은 IP주소 입니다.');
+			$notice.html('허용되지 않은 IP주소 입니다.');
 			break;
 
 			case 99:
-			jQuery("#footer").html('대기상태입니다.');
+			$notice.html('대기상태입니다.');
 			break;
 		}
 
@@ -273,6 +275,7 @@ function verifyAuthCode()
  * date 함수  사용법은 http://blog.stevenlevithan.com/archives/date-time-format
  */
 
+/*
 var dateFormat = function () {
 	var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
 		timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
@@ -385,4 +388,4 @@ Date.prototype.format = function (mask, utc) {
 	return dateFormat(this, mask, utc);
 };
 
-
+*/
