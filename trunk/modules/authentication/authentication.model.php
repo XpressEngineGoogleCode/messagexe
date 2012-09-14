@@ -64,6 +64,23 @@ class authenticationModel extends authentication
 		return $extra_vars;
 
 	}
+
+	function getAuthenticationInfo($authentication_srl)
+	{
+		$args->authentication_srl = $authentication_srl;
+		$output = executeQuery('authentication.getAuthentication', $args);
+		if(!$output->toBool()) return;
+		return $output->data;
+	}
+
+	function getAuthenticationMemberListByClue($clue)
+	{
+		$args->clue = $clue;
+		$output = executeQueryArray('authentication.getAuthenticationMemberListByClue', $args);
+		debugPrint($output);
+		if(!$output->toBool()) return;
+		return $output->data;
+	}
 }
 /* End of file authentication.model.php */
 /* Location: ./modules/authentication/authentication.model.php */
