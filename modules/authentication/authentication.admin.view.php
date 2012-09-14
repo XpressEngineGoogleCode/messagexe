@@ -250,6 +250,31 @@ class authenticationAdminView extends authentication
 		$this->setTemplateFile('authcode_list');
 	}
 
+	function dispAuthenticationAdminMemberList() 
+	{
+		$args->page = Context::get('page');
+		$search_key = Context::get('search_key');
+		if($search_key == 'Y')
+		{
+			$authcode_pass = Context::get('n_authcode_pass');
+			$phone_number = Context::get('n_phone_number');
+
+			$args->authcode_pass = trim($authcode_pass);
+			$args->clue = $phone_number;
+
+			Context::set('n_authcode_pass', $authcode_pass);
+			Context::set('n_phone_number', $phone_number);
+		}
+
+		$output = executeQuery('authentication.getAuthenticationMemberList',$args);
+		Context::set('list', $output->data);
+		Context::set('total_count', $output->total_count);
+		Context::set('total_page', $output->total_page);
+		Context::set('page', $output->page);
+		Context::set('list', $output->data);
+		Context::set('page_navigation', $output->page_navigation);
+		$this->setTemplateFile('memberlist');
+	}
 	
 }
 /* End of file authentication.admin.view.php */

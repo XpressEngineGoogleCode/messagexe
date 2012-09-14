@@ -7,6 +7,7 @@
 		<column name="authentication_srl" var="authentication_srl" notnull="notnull" />
 		<column name="clue" var="clue" notnull="notnull" />
 		<column name="authcode" var="authcode" notnull="notnull" />
+		<column name="country_code" var="country_code" />
 		<column name="regdate" var="regdate" default="curdate()" />
 	</columns>
 </query>

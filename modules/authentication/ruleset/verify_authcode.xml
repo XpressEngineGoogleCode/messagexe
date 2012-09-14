@@ -5,6 +5,5 @@
     <fields>
 		<field name="authentication_srl" required="true" filter="number" maxlength="11" />
 		<field name="authcode" required="true" maxlength="80" />
-		<field name="phonenum" required="true" />
     </fields>
 </ruleset>

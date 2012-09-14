@@ -4,6 +4,6 @@
     </customrules>
     <fields>
 		<field name="phonenum" required="true" />
-		<field name="country" required="true" />
+		<field name="country_code" required="true" />
     </fields>
 </ruleset>
