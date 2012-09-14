@@ -7,7 +7,7 @@
 	</columns>
 	<conditions>
 		<condition operation="equal" column="clue" var="clue" pipe="and" />
-		<condition operation="equal" column="authcode_pass" var="authcode_pass" pipe="and" />
+		<condition operation="equal" column="passed" var="passed" pipe="and" />
 	</conditions>
 	<navigation>
 		<index var="sort_index" default="regdate" order="asc" />
