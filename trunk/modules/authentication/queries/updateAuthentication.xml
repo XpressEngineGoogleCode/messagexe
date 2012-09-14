@@ -1,9 +1,9 @@
-<query id="updateAuthcodePass" action="update">
+<query id="updateAuthentication" action="update">
 	<tables>
 		<table name="authentication" />
 	</tables>
 	<columns>
-		<column name="authcode_pass" var="authcode_pass" />
+		<column name="passed" var="passed" />
 	</columns>
 	<conditions>
 		<condition operation="equal" column="authentication_srl" var="authentication_srl" notnull="notnull" />

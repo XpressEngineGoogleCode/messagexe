@@ -13,14 +13,12 @@
 		<input type="hidden" name="act" value="procAuthenticationVerifyAuthcode" />
 		<input type="hidden" id="authentication_srl" name="authentication_srl" value={$authentication_srl} />
 		<input type="hidden" name="module" value="authentication" />
-		<input type="hidden" id="time_limit" value="{$time_limit}" />
-		<input cond="0" type="hidden" id="send_time" value="{$send_time}" />
 		<input type="hidden" id="message_id" value="" />
 		<table class="container">
 			<tr>
 				<th class="orangeTop">국가선택</th>
 				<td class="orangeTop">
-					<select name="country" id="country" class="size04">
+					<select name="country_code" id="country_code" class="size04">
 						<option value=''>선택</option>
 						{@asort($lang->country_codes)}
 						<option loop="$lang->country_codes=>$key,$val" value="{$key}" selected="selected"|cond="$config->country_code == $key">{$val}</option>
@@ -40,7 +38,7 @@
 			<tr>
 				<th class="orangeBottom">인증번호</th>
 				<td class="orangeBottom">
-					<input class="input01 size03" type="text" id="authcode" name="authcode" maxlength="{$number_limit}" />
+					<input class="input01 size03" type="text" id="authcode" name="authcode" maxlength="{$config->digit_number}" />
 					<a href="#" onclick="verifyAuthCode(); return false"><img src="img/phone_10.gif"></a>
 				</td>
 			</tr>

@@ -24,8 +24,8 @@ class authenticationController extends authentication
 
 		// check variables
 		$phonenum = Context::get('phonenum');
-		$country = Context::get('country');
-		if(!$phonenum || !$country)
+		$country_code = Context::get('country_code');
+		if(!$phonenum || !$country_code)
 		{
 			return new Object(-1, '국가 및 휴대폰 번호를 전부 입력해주세요.');
 		}
@@ -33,37 +33,36 @@ class authenticationController extends authentication
 		// generate auth-code
 		$keystr = $this->getRandNumber($config->digit_number);
 
+		// check day try limit
 		$today = date("Ymd", mktime(0,0,0,date("m"),date("d"),date("Y")));
-		debugPrint('$today');
-		debugPrint($today);
-
 		$args->clue = $phonenum;
 		$args->regdate = $today;
 		$output = executeQuery('authentication.getTryCountByClue', $args);
 		if (!$output->toBool()) return $output;
 		unset($args);
-
-		// check day try limit
 		if($output->data->count > $config->day_try_limit)
 		{
 			return new Object(-1, '잦은 인증번호 요청으로 금지되셨습니다. 1일뒤에 다시 시도해주십시오.');
 		}
 
+		// check day try limit
+		$today = date("YmdHis", time()-$config->resend_interval);
+		$args->clue = $phonenum;
+		$args->regdate = $today;
+		$output = executeQuery('authentication.getTryCountByClue', $args);
+		if (!$output->toBool()) return $output;
+		unset($args);
+		if($output->data->count > 0)
+		{
+			return new Object(-1, $config->resend_interval . '초 동안 다시 받으실 수 없습니다. 전송확인 버튼을 눌러 수신받지 못하는 사유를 확인하세요.');
+		}
+
+		// save auth info
 		$args->authentication_srl = getNextSequence();
-		$args->country = $country;
+		$args->country_code = $country_code;
 		$args->clue = $phonenum;
 		$args->authcode = $keystr;
-		/*
-		if(!$config->authcode_time_limit || $config->authcode_time_limit < 10)
-		{
-			$send_time = date("ymdHis", mktime(date("H"), date("i"), date("s") + 20, date("m"), date("d"), date("y")));
-		}
-		else
-		{
-			$send_time = date("ymdHis", mktime(date("H"), date("i"), date("s") + $config->authcode_time_limit, date("m"), date("d"), date("y")));
-		}
-		$args->send_times = $send_time;
-		 */
+		$args->ipaddress = $_SERVER['REMOTE_ADDR'];
 		$output = executeQuery('authentication.insertAuthentication', $args);
 		if (!$output->toBool()) return $output;
 
@@ -73,7 +72,7 @@ class authenticationController extends authentication
 
 		unset($args);
 
-		$args->country = $country;
+		$args->country_code = $country_code;
 		$args->recipient_no =  $phonenum;
 		$args->callback = '';
 		if($config->message_content)
@@ -114,9 +113,9 @@ class authenticationController extends authentication
 		if($authentication_1 == $authentication_2)
 		{
 			$_SESSION['authentication_pass'] = 'Y';
-			$args->authcode_pass = 'Y';
+			$args->passed = 'Y';
 			$args->authentication_srl = $_SESSION['authentication_srl'];
-			$output = executeQuery('authentication.updateAuthcodePass', $args);
+			$output = executeQuery('authentication.updateAuthentication', $args);
 			if(!$output->toBool()) return $output;
 			$this->setMessage('인증이 완료되었습니다. 다음페이지로 이동합니다.');
 		}
@@ -196,6 +195,7 @@ class authenticationController extends authentication
 			$args->authcode = $authinfo->authcode;
 			$args->member_srl = $in_args->member_srl;
 			$args->clue = $authinfo->clue;
+			$args->country_code = $authinfo->country_code;
 			$output = executeQuery('authentication.insertAuthenticationMember', $args);
 			if(!$output->toBool()) return $output;
 		}
@@ -216,6 +216,7 @@ class authenticationController extends authentication
 			$args->authcode = $authinfo->authcode;
 			$args->member_srl = $in_args->member_srl;
 			$args->clue = $authinfo->clue;
+			$args->country_code = $authinfo->country_code;
 
 			$output = executeQuery('authentication.deleteAuthenticationMember', $args);
 			if(!$output->toBool()) return $output;

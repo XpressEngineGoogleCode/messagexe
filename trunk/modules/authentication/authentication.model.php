@@ -22,6 +22,7 @@ class authenticationModel extends authentication
 			if(!$config->skin) $config->skin = 'default';
 			if(!$config->digit_number) $config->digit_number = 5;
 			if(!$config->country_code) $config->country_code = '82';
+			if(!$config->resend_interval) $config->resend_interval = 20;
 			$GLOBALS['__authentication_config__'] = $config;
 		}
 		return $GLOBALS['__authentication_config__'];

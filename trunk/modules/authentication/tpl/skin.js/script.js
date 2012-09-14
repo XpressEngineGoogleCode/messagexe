@@ -34,8 +34,8 @@ function getAuthCode()
 
 
 	// check country code
-	var country = jQuery("#country").val();
-	if(!country.length)
+	var country_code = jQuery("#country_code").val();
+	if(!country_code.length)
 	{
 		alert ("국가를 선택해 주세요."); 
 		return false;
@@ -65,7 +65,7 @@ function getAuthCode()
 	var responses = ['error','message','authentication_srl','message_id'];
 	params['module'] = 'authentication';
 	params['phonenum'] = phonenum;
-	params['country'] = country;
+	params['country_code'] = country_code;
 	exec_xml('authentication', 'procAuthenticationSendAuthCode', params, completeSendAuthCode, responses);
 }
 
@@ -260,6 +260,13 @@ function completeVerifyAuthcode(ret_obj)
 
 function verifyAuthCode()
 {
+	message_id = jQuery('#message_id').val();
+	if(!message_id)
+	{
+		alert('인증번호 받기 버튼을 클릭하세요. 인증번호 전송 후 확인이 가능합니다.');
+		return false;
+	}
+
 	var params = new Array();
 	var responses = ['error','message'];
 

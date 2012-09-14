@@ -3,5 +3,7 @@
 	<column name="authentication_srl" type="number" size="11" notnull="notnull" />
 	<column name="clue" type="varchar" size="120" notnull="notnull" index="idx_clue" />
 	<column name="authcode" type="varchar" size="80" notnull="notnull" />
+	<column name="country_code" type="varchar" size="11" />
+	<column name="country_a2" type="varchar" size="2" />
 	<column name="regdate" type="date" notnull="notnull" index="idx_regdate" />
 </table>
