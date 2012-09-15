@@ -176,6 +176,23 @@ class authenticationAdminController extends authentication
 		$this->setRedirectUrl($redirectUrl);
 	}
 
+	function procAuthenticationAdminMigrateFromMXE()
+	{
+		$oMemberModel = &getModel('member');
+		$output = executeQueryArray('authentication.getMXEAllMappingData');
+		if(!$output->toBool()) return $output;
+		foreach($output->data as $key=>$val)
+		{
+			$member_info = $oMemberModel->getMemberInfoByUserID($val->user_id);
+			$args->authentication_srl = 0;
+			$args->member_srl = $member_info->member_srl;
+			$args->clue = $val->phone_num;
+			$args->country_code = $val->country;
+			$args->authcode = '01234';
+			executeQuery('authentication.insertAuthenticationMember', $args);
+		}
+	}
+
 	/**
 	 * @brief saving config values.
 	 **/
