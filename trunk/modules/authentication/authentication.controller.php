@@ -18,7 +18,6 @@ class authenticationController extends authentication
 
 	function procAuthenticationSendAuthCode()
 	{
-
 		$oAuthenticationModel = &getModel('authentication');
 		$config = $oAuthenticationModel->getModuleConfig();
 
@@ -29,6 +28,10 @@ class authenticationController extends authentication
 		{
 			return new Object(-1, '국가 및 휴대폰 번호를 전부 입력해주세요.');
 		}
+		$reqvars = Context::getRequestVars();
+
+		$trigger_output = ModuleHandler::triggerCall ('authentication.procAuthenticationSendAuthCode', 'before', $reqvars);
+		if(!$trigger_output->toBool ()) return $trigger_output;
 
 		// generate auth-code
 		$keystr = $this->getRandNumber($config->digit_number);
@@ -70,7 +73,7 @@ class authenticationController extends authentication
 		$this->add('authentication_srl', $args->authentication_srl);
 		Context::set('authentication_srl', $_SESSION['authentication_srl']);
 
-		unset($args);
+		//unset($args);
 
 		$args->country_code = $country_code;
 		$args->recipient_no =  $phonenum;
@@ -97,11 +100,16 @@ class authenticationController extends authentication
 		$message_id = $obj->message_id;
 		$this->add('message_id', $message_id);
 
+		$trigger_output = ModuleHandler::triggerCall ('authentication.procAuthenticationSendAuthCode', 'after', $args);
+		if(!$trigger_output->toBool ()) return $trigger_output;
+
 		$this->setMessage('인증번호를 발송하였습니다.');
 	}
 
 	function procAuthenticationVerifyAuthcode()
 	{
+		$reqvars = Context::getRequestVars();
+
 		$authentication_srl = Context::get('authentication_srl');
 		$args->authentication_srl = $authentication_srl;
 		$output = executeQuery('authentication.getAuthentication', $args);
@@ -118,9 +126,18 @@ class authenticationController extends authentication
 			$output = executeQuery('authentication.updateAuthentication', $args);
 			if(!$output->toBool()) return $output;
 			$this->setMessage('인증이 완료되었습니다. 다음페이지로 이동합니다.');
+
+			$reqvars->passed = 'Y';
+			$reqvars->authentication_srl = $args->authentication_srl;
+			$trigger_output = ModuleHandler::triggerCall ('authentication.procAuthenticationVerifyAuthCode', 'after', $reqvars);
+			if(!$trigger_output->toBool ()) return $trigger_output;
 		}
 		else
 		{
+			$reqvars->passed = 'N';
+			$reqvars->authentication_srl = $args->authentication_srl;
+			$trigger_output = ModuleHandler::triggerCall ('authentication.procAuthenticationVerifyAuthCode', 'after', $reqvars);
+			if(!$trigger_output->toBool ()) return $trigger_output;
 			return new Object(-1,'인증코드가 올바르지 않습니다.');
 		}
 	}

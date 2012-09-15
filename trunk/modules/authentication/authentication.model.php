@@ -23,6 +23,8 @@ class authenticationModel extends authentication
 			if(!$config->digit_number) $config->digit_number = 5;
 			if(!$config->country_code) $config->country_code = '82';
 			if(!$config->resend_interval) $config->resend_interval = 20;
+			if(!$config->day_try_limit) $config->day_try_limit = 10;
+			if(!$config->message_content) $config->message_content = '[핸드폰인증] %authcode% ☜  인증번호를 정확히 입력해 주세요';
 			$GLOBALS['__authentication_config__'] = $config;
 		}
 		return $GLOBALS['__authentication_config__'];
