@@ -12,6 +12,8 @@
 		<action name="dispAuthenticationCompare3" type="view" />
 
 		<action name="procAuthenticationAdminConfig" type="controller" ruleset="insert_config" />
+		<action name="procAuthenticationAdminMigrateFromMXE" type="controller" />
+
 		<action name="procAuthenticationModuleInsert" type="controller" />
 
 		<action name="procAuthenticationSendAuthCode" type="controller" ruleset="send_authcode" />
