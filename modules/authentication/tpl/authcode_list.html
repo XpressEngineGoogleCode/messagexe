@@ -1,15 +1,12 @@
 <include target="header.html" />
 <!--%import("css/config.css")-->
 
-<fieldset class="section">
-	<h2 class="h2">인증번호 현황</h2>
-
 <div class="summary">
     <strong>Total</strong> <em>{number_format($total_count)}</em>, Page <strong>{number_format($page)}</strong>/{number_format($total_page)}
 </div>
 
-
-<form aciton="./" method="post">
+<form aciton="./" method="get">
+		<input type="hidden" name="module" value="{$module}" />
 		<input type="hidden" name="act" value="dispAuthenticationAdminAuthcodeList" />
 		<input type="hidden" name="search_key" value="Y" />
 		<ul>
@@ -22,12 +19,13 @@
 			</li>
 			<li>휴대폰 번호 : <input type="text" name="n_phone_number" value="{$n_phone_number}" /></li>
 		</ul>
-		<input type="submit" value="조회" />
+		<span class="btn"><input type="submit" value="조회" /></span>
 </form>
 
 <table class="rowTable">
 	<thead>
 		<tr>
+			<th scope="col">No.</th>
 			<th scope="col">휴대폰번호.</th>
 			<th scope="col">인증번호.</th>
 			<th scope="col">인증완료.</th>
@@ -36,10 +34,11 @@
 	</thead>
 	<tbody>
 		<tr loop="$authcode_list => $no,$val">
+			<td>{$no}</td>
 			<td>{$val->clue}</td>
 			<td>{$val->authcode}</td>
 			<td>{$val->passed}</td>
-			<td>{$val->regdate}</td>	
+			<td>{zdate($val->regdate)}</td>	
 		</tr>
 	</tbody>
 </table>

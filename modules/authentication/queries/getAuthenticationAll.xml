@@ -5,14 +5,14 @@
 	<columns>
 		<column name="*" />
 	</columns>
+	<conditions>
+		<condition operation="equal" column="clue" var="clue" pipe="and" />
+		<condition operation="equal" column="passed" var="passed" pipe="and" />
+	</conditions>
 	<navigation>
-		<index var="sort_index" default="regdate" order="asc" />
+		<index var="sort_index" default="regdate" order="desc" />
 		<list_count var="list_count" default="20" />
 		<page_count var="page_count" default="10" />
 		<page var="page" default="1" />
 	</navigation>
-	<conditions>
-		<condition operation="equal" column="clue" var="clue" pipe="and" />
-		<condition operation="equal" column="authcode_pass" var="authcode_pass" pipe="and" />
-	</conditions>
 </query>

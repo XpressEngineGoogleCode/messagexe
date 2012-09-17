@@ -14,7 +14,7 @@
 	</columns>
 	<conditions>
 		<condition operation="equal" column="authmem.member_srl" default="mem.member_srl" />
-		<condition operation="equal" column="authmem.clue" var="clue" />
+		<condition operation="equal" column="authmem.clue" var="clue" pipe="and" />
 	</conditions>
 	<navigation>
 		<index var="sort_index" default="authmem.regdate" order="desc" />

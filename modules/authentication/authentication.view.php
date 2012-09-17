@@ -13,7 +13,7 @@ class authenticationView extends authentication
 		$config = $oAuthenticationModel->getModuleConfig();
 		$this->setTemplatePath($this->module_path."skins/{$config->skin}");
 	}
-
+	/*
 	function dispAuthenticationCompare()
 	{
 		$vars = Context::get('phone');
@@ -21,11 +21,7 @@ class authenticationView extends authentication
 		Context::set('authentication_srl', Context::get('authentication_srl'));
 		$this->setTemplateFile('index');
 	}
-
-	function dispAuthenticationCompare3()
-	{
-		$this->setTemplateFile('form_complete');
-	}
+	 */
 }
 /* End of file authentication.view.php */
 /* Location: ./modules/authentication/authentication.view.php */
