@@ -28,10 +28,11 @@ class coolsms
 {
 	// host address
 	var $cool_gateways = array("alpha.coolsms.co.kr"=>80, "bravo.coolsms.co.kr"=>80, "delta.coolsms.co.kr"=>80);
+	var $test_gateways = array("t1.coolsms.co.kr"=>80, "t2.coolsms.co.kr"=>80, "t3.coolsms.co.kr"=>80);
 	// character set : only support for utf8, euckr
 	var $_charset = "euckr";
 	// module version
-	var $module_version = "php/2.3.2";
+	var $module_version = "php/2.3.3";
 	// application version
 	var $app_version = "";
 
@@ -67,6 +68,8 @@ class coolsms
 	var $crypt = "MD5";
 
 	var $options="";
+	var $test_mode = false;
+	var $sln_reg_key="";
 
 	/**
 	 * @brief contructor
@@ -365,7 +368,14 @@ class coolsms
 	{
 		$connected = false;
 
-		$gateways = $this->cool_gateways;
+		if ($this->test_mode)
+		{
+			$gateways = $this->test_gateways;
+		}
+		else
+		{
+			$gateways = $this->cool_gateways;
+		}
 
 		foreach($gateways as $host => $port)
 		{
@@ -418,6 +428,24 @@ class coolsms
 	function appversion($version)
 	{
 		$this->app_version = $version;
+	}
+
+	/**
+	 * @brief set solution registration key
+	 **/
+	function setSRK($srk)
+	{
+		$this->sln_reg_key = $srk;
+	}
+
+	function setTestMode()
+	{
+		$this->test_mode = true;
+	}
+
+	function setRealMode()
+	{
+		$this->test_mode = false;
 	}
 
 	/**
@@ -497,6 +525,7 @@ class coolsms
 
 		$tbsp = array();
 
+		if ($this->sln_reg_key) $tbsp["SLN-REG-KEY"] = $this->sln_reg_key;
 		$tbsp["VERSION"] = $this->VERSION_STR;
 		$tbsp["MODULE-VERSION"] = $this->module_version;
 		if ($this->app_version) $tbsp["APP-VERSION"] = $this->app_version;
