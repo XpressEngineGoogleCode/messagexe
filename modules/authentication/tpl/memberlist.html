@@ -30,17 +30,21 @@
 <table class="rowTable">
 	<thead>
 		<tr>
+			<th scope="col">아이디</th>
+			<th scope="col">닉네임</th>
+			<th scope="col">국가</th>
 			<th scope="col">휴대폰번호.</th>
 			<th scope="col">인증번호.</th>
-			<th scope="col">인증완료.</th>
 			<th scope="col">날짜</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr loop="$list => $no,$val">
+			<td>{$val->user_id}</td>
+			<td>{$val->nick_name}</td>
+			<td>{$val->country_code}</td>
 			<td>{$val->clue}</td>
 			<td>{$val->authcode}</td>
-			<td>{$val->passed}</td>
 			<td>{$val->regdate}</td>	
 		</tr>
 	</tbody>
