@@ -39,6 +39,12 @@
 			return $GLOBALS['__textmessage_config__'];
 		}
 
+        function getSlnRegKey() {
+            if (!file_exists($this->module_path.'resale.info.php')) return false;
+            require_once($this->module_path.'resale.info.php');
+            return __SOLUTION_REGISTRATION_KEY__;
+        }
+
 		function &getCoolSMS() 
 		{
 			static $sms = NULL;
@@ -55,6 +61,8 @@
 			$config = $this->getModuleConfig();
 			require_once($this->module_path.'coolsms.php');
 			$sms = new coolsms();
+            $sln_reg_key = $this->getSlnRegKey();
+            if ($sln_reg_key) $sms->setSRK($sln_reg_key);
 			$sms->appversion("MXE2/" . $version . ", XE/" . __ZBXE_VERSION__);
 			if ($config->service_id && $config->password) {
 				$sms->setuser($config->service_id, $config->password);
