@@ -183,16 +183,14 @@ class authenticationController extends authentication
 	 **/
 	function triggerModuleHandlerProc(&$oModule)
 	{
-		$args->module = 'authentication';
-		$output = executeQuery('authentication.getModulesrl', $args);
-		if(!$output->data) return;
-		$module_srl  = $output->data->module_srl;
+		$oAuthenticationModel = &getModel('authentication');
+		$config = $oAuthenticationModel->getModuleConfig();
 
-		$oModuleModel = &getModel('module');
-		$list_config = $oModuleModel->getModulePartConfig('authentication', $module_srl);
-		if(count($list_config) && in_array(Context::get('act'), $list_config) && $_SESSION['authentication_pass'] != 'Y')
+		$action_list = array_filter(explode(',',$config->list));
+
+		if(in_array(Context::get('act'), $action_list) && $_SESSION['authentication_pass'] != 'Y')
 		{
-				$this->startAuthentication(&$oModule);
+			$this->startAuthentication(&$oModule);
 		}
 		return new Object();
 	}

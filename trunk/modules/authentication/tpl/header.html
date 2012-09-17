@@ -1,16 +1,10 @@
 <load target="css/style.css" />
-<h1 class="h1">{$lang->cmd_newposts}</h1>
-
-<div cond="0" class="header4">
-    <ul class="localNavigation">
-        <li <!--@if($act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify')-->class="on"<!--@end-->><a href="{getUrl('act','dispNewpostsAdminList')}">{$lang->cmd_newposts_config}</a></li>
-    </ul>
-</div>
-<div>
-	<ul class="localNavigation">
-		<li><a href="{getUrl('act','dispAuthenticationAdminConfig')}">기본설정</a></li>
-		<li><a href="{getUrl('act','dispAuthenticationAdminAuthcodeList')}">사용현황</a></li>
-		<li><a href="{getUrl('act','dispAuthenticationAdminMemberList')}">인증회원</a></li>
+<h2 class="h2">인증모듈 관리</h2>
+<div class="cnb">
+	<ul>
+		<li><a href="{getUrl('act','dispAuthenticationAdminConfig')}" class="active"|cond="$act=='dispAuthenticationAdminConfig'">기본설정</a></li>
+		<li><a href="{getUrl('act','dispAuthenticationAdminAuthcodeList')}" class="active"|cond="$act=='dispAuthenticationAdminAuthcodeList'">사용현황</a></li>
+		<li><a href="{getUrl('act','dispAuthenticationAdminMemberList')}" class="active"|cond="$act=='dispAuthenticationAdminMemberList'">인증회원</a></li>
 	</ul>
 </div>
 <div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">

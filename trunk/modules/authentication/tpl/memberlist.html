@@ -1,35 +1,27 @@
 <include target="header.html" />
 <!--%import("css/config.css")-->
 
-<fieldset class="section">
-	<h2 class="h2">인증번호 현황</h2>
-
 <div class="summary">
     <strong>Total</strong> <em>{number_format($total_count)}</em>, Page <strong>{number_format($page)}</strong>/{number_format($total_page)}
 </div>
 
-<a href="{getUrl('act','procAuthenticationAdminMigrateFromMXE')}">Migrate from MXE</a>
+<a cond="0" href="{getUrl('act','procAuthenticationAdminMigrateFromMXE')}">Migrate from MXE</a>
 
 
-<form aciton="./" method="post">
-		<input type="hidden" name="act" value="dispAuthenticationAdminAuthcodeList" />
+<form aciton="./" method="get">
+		<input type="hidden" name="module" value="{$module}" />
+		<input type="hidden" name="act" value="{$act}" />
 		<input type="hidden" name="search_key" value="Y" />
 		<ul>
-			<li>인증완료 : 
-				<select name="n_authcode_pass">
-					<option value=""> 선택 </option>
-					<option value="Y" selected="selected"|cond="$n_authcode_pass == 'Y'">인증완료</option>
-					<option value="N" selected="selected"|cond="$n_authcode_pass == 'N'">인증미완료</option>
-				</select>
-			</li>
 			<li>휴대폰 번호 : <input type="text" name="n_phone_number" value="{$n_phone_number}" /></li>
 		</ul>
-		<input type="submit" value="조회" />
+		<span class="btn"><input type="submit" value="조회" /></span>
 </form>
 
 <table class="rowTable">
 	<thead>
 		<tr>
+			<th scope="col">No.</th>
 			<th scope="col">아이디</th>
 			<th scope="col">닉네임</th>
 			<th scope="col">국가</th>
@@ -40,12 +32,13 @@
 	</thead>
 	<tbody>
 		<tr loop="$list => $no,$val">
+			<td>{$no}</td>
 			<td>{$val->user_id}</td>
 			<td>{$val->nick_name}</td>
 			<td>{$val->country_code}</td>
 			<td>{$val->clue}</td>
 			<td>{$val->authcode}</td>
-			<td>{$val->regdate}</td>	
+			<td>{zdate($val->regdate)}</td>	
 		</tr>
 	</tbody>
 </table>
