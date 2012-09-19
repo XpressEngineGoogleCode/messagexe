@@ -38,6 +38,15 @@ class authenticationModel extends authentication
 		return $output->data;
 	}
 
+	function getAuthenticationMember($member_srl)
+	{
+		$args->member_srl = $member_srl;
+		$output = executeQuery('authentication.getAuthenticationMember', $args);
+		if(!$output->toBool()) return;
+		return $output->data;
+	}
+
+
 	function getAuthenticationMemberListByClue($clue)
 	{
 		$args->clue = $clue;
