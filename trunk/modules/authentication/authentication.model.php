@@ -46,7 +46,6 @@ class authenticationModel extends authentication
 		return $output->data;
 	}
 
-
 	function getAuthenticationMemberListByClue($clue)
 	{
 		$args->clue = $clue;
@@ -54,6 +53,13 @@ class authenticationModel extends authentication
 		debugPrint($output);
 		if(!$output->toBool()) return;
 		return $output->data;
+	}
+
+	function triggerMemberMenu($in_args)
+	{
+		$url = getUrl('','module','authentication','act','dispAuthenticationSendMessage','member_srl',Context::get('target_srl'));
+		$oMemberController = &getController('member');
+		$oMemberController->addMemberPopupMenu($url, 'test', '', 'popup');
 	}
 }
 /* End of file authentication.model.php */

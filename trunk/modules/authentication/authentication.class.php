@@ -44,6 +44,13 @@ class authentication extends ModuleObject
 		{
 			$oModuleController->insertTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdate', 'after');
 		}
+
+		/*
+		if(!$oModuleModel->getTrigger('member.getMemberMenu', 'authentication', 'model', 'triggerMemberMenu', 'before'))
+		{
+			$oModuleController->insertTrigger('member.getMemberMenu', 'authentication', 'model', 'triggerMemberMenu', 'before');
+		}
+		 */
 	}
 
 	/**
@@ -69,6 +76,7 @@ class authentication extends ModuleObject
 		if(!$oModuleModel->getTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after')) return true;
 		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMemberInsert', 'after')) return true;
 		if(!$oModuleModel->getTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdate', 'after')) return true;
+		// if(!$oModuleModel->getTrigger('member.getMemberMenu', 'authentication', 'model', 'triggerMemberMenu', 'before')) return true;
 
 		return false;
 	}
