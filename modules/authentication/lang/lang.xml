@@ -35,14 +35,6 @@
 		<value xml:lang="en"><![CDATA[Message content.]]></value>
 	</item>
 
-	<item name="dispMemberSignUpForm">
-		<value xml:lang="ko"><![CDATA[회원가입]]></value>
-		<value xml:lang="en"><![CDATA[MemberSignUp]]></value>
-	</item>
-	<item name="dispMemberModifyInfo">
-		<value xml:lang="ko"><![CDATA[회원정보수정]]></value>
-		<value xml:lang="en"><![CDATA[MemberModifyInfo]]></value>
-	</item>
 	<item name="country_codes" type="array">
 		<item name="233">
 			<value xml:lang="ko"><![CDATA[가나]]></value>
