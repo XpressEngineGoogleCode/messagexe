@@ -35,7 +35,13 @@ class authenticationAdminView extends authentication
 		Context::set('mskin_list', $mskin_list);
 
 		
-		$action_list = array('dispMemberSignUpForm', 'dispMemberModifyInfo');
+		require_once($this->module_path.'authentication.actions.php');
+		//$action_list = array('dispMemberSignUpForm', 'dispMemberModifyInfo', 'dispMemberModifyPassword', 'dispMemberLeave');
+		foreach($__AUTHENTICATION_ACTIONS__ as $key=>$val)
+		{
+			Context::setLang($key,$val);
+		}
+		$action_list = array_keys($__AUTHENTICATION_ACTIONS__);
 		Context::set('action_list', $action_list);
 
 		// set template file
