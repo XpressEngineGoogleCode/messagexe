@@ -12,8 +12,11 @@
 		<action name="procAuthenticationAdminConfig" type="controller" ruleset="insert_config" />
 		<action name="procAuthenticationAdminMigrateFromMXE" type="controller" />
 
+		<action name="getAuthenticationAdminNumber" type="model" />
+
 		<action name="procAuthenticationSendAuthCode" type="controller" ruleset="send_authcode" />
 		<action name="procAuthenticationVerifyAuthcode" type="controller" ruleset="verify_authcode" />
 		<action name="procAuthenticationUpdateStatus" type="controller" />
+
     </actions>
 </module>
