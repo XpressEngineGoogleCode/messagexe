@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon version="0.2">
+    <title xml:lang="ko">전화번호출력 애드온</title>
+    <description xml:lang="ko">
+		인증받은 전화번호를 출력합니다.
+    </description>
+    <version>0.1</version>
+    <date>2012-09-21</date>
+    <author email_address="contact@nurigo.net" link="http://nurigo.net/">
+        <name xml:lang="ko">NURIGO</name>
+    </author>
+</addon>
