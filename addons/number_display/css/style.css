@@ -1,0 +1,2 @@
+.cellphoneNumber { float:right; }
+.cellphoneNumber .loading { display:inline-block; background:url("../img/loading.gif") no-repeat; width:30px; height:30px; }

@@ -14,6 +14,7 @@
 		var response_tags = 'error message number'.split(' ');
 
 		var _this = $(this);
-		exec_xml('authentication', 'getAuthenticationAdminNumber', params, function(ret_obj) { _this.parent().append('<span>' + ret_obj['number'] + '</span>'); }, response_tags, params);
+		_this.parent().append('<span class="cellphoneNumber"><span class="loading">&nbsp;</span></span>');
+		exec_xml('authentication', 'getAuthenticationAdminNumber', params, function(ret_obj) { $('.cellphoneNumber',_this.parent()).html(ret_obj['number']); }, response_tags, params);
 	});
 })(jQuery);
