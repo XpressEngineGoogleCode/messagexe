@@ -42,6 +42,18 @@ class purplebookModel extends purplebook
 		return $GLOBALS['__purplebook_config__'];
 	}
 
+	function getModuleInstConfig($module_srl)
+	{
+		$oModuleModel = &getModel('module');
+		$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
+		if(!$module_info) $module_info = new StdClass();
+		if(!$module_info->use_point) $module_infoi->use_point = 'Y';
+		if(!$module_info->sms_point) $module_infoi->sms_point = 20;
+		if(!$module_info->lms_point) $module_infoi->lms_point = 50;
+		if(!$module_info->mms_point) $module_infoi->mms_point = 200;
+		return $module_info;
+	}
+
 	/**
 	 * 환경값 읽어오기
 	 */

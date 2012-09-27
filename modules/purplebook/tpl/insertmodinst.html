@@ -68,7 +68,34 @@
 			<p>{$lang->about_skin}</p>
 		</td>
 	</tr>
-
+	<tr>
+		<th scope="row"><div>포인트 차감유무</div></th>
+		<td>
+			<select name="use_point">
+				<option value="Y">사용</option>
+				<option value="N">미사용</option>
+			</select>
+			<p>포인트 사용유무를 선택하세요.</p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><div>SMS 포인트차감</div></th>
+		<td>
+			<input type="text" name="sms_point" value="{$module_info->sms_point}" class="inputTypeText w200" />
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><div>LMS 포인트차감</div></th>
+		<td>
+			<input type="text" name="lms_point" value="{$module_info->lms_point}" class="inputTypeText w200" />
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><div>MMS 포인트차감</div></th>
+		<td>
+			<input type="text" name="mms_point" value="{$module_info->mms_point}" class="inputTypeText w200" />
+		</td>
+	</tr>
 	<tr>
 		<th colspan="2" class="button">
 			<span class="btn"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
