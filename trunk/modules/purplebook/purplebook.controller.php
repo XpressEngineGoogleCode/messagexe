@@ -42,8 +42,15 @@ class purplebookController extends purplebook
 	 **/
 	function procPurplebookSendMsg($args=false) 
 	{
+		/*
 		$oModel = &getModel('purplebook');
-		$this->config = $oModel->getModuleConfig($args);
+		$config = $oModel->getModuleConfig($args);
+		 */
+		$module_srl = Context::get('module_srl');
+		$oPurplebookModel = &getModel('purplebook');
+		$module_info = $oPurplebookModel->getModuleInstConfig($module_srl);
+		if($module_info->module != 'purplebook') return new Object(-1,'msg_invalid_request');
+
 		$db_insert_flag=true;
 		if($args && $args->basecamp)
 		{
@@ -60,10 +67,6 @@ class purplebookController extends purplebook
 		$encode_utf16 = Context::get('encode_utf16');
 
 		$decoded = $this->getJSON('data');
-		$this->use_point = Context::get('use_point');
-		$this->sms_point = Context::get('sms_point');
-		$this->lms_point = Context::get('lms_point');
-		$this->mms_point = Context::get('mms_point');
 
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
@@ -94,6 +97,7 @@ class purplebookController extends purplebook
 			$decoded = array($decoded);
 		}
 
+		$calc_point = 0;
 		$msg_arr = array();
 		foreach($decoded as $row)
 		{
@@ -108,6 +112,9 @@ class purplebookController extends purplebook
 			$args->attachment = $row->file_srl;
 			$args->group_id = $group_id;
 			$msg_arr[] = $args;
+			if($args->type == 'sms') $calc_point += $module_info->sms_point;
+			if($args->type == 'lms') $calc_point += $module_info->lms_point;
+			if($args->type == 'mms') $calc_point += $module_info->mms_point;
 		}
 		$oTextmessageController = &getController('textmessage');
 		$output = $oTextmessageController->sendMessage($msg_arr);
@@ -115,6 +122,12 @@ class purplebookController extends purplebook
 		$this->add('success_count', $output->get('success_count'));
 		$this->add('failure_count', $output->get('failure_count'));
 		$this->add('alert_message', $output->getMessage());
+
+		// minus point
+		if($module_info->use_point=='Y')
+		{
+				$this->minusPoint($calc_point);
+		}
 	}
 
 	/**

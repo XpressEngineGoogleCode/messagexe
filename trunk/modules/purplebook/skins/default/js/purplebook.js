@@ -1,7 +1,3 @@
-/**
- * vi:set ts=4 sw=4 expandtab enc=utf8: 
- **/
-
 var DDD = new Array("02", "031", "033", "032", "042", "043", "041", "053", "054", "055", "052", "051", "063", "061", "062", "064", "011", "012", "013", "014", "015", "016", "017", "018", "019", "010", "070");
 var texting_bytes_limit = 2000;
 var max_screen = 3;
@@ -1022,6 +1018,7 @@ function send_json(content)
                     , act : "procPurplebookSendMsg"
                     , data : JSON.stringify(content)
                     , ticket : g_ticket
+                    , module_srl : g_module_srl
                     , use_point : g_use_point
                     , sms_point : g_sms_point
                     , lms_point : g_lms_point
