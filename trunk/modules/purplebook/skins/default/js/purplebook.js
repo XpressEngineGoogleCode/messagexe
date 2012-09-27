@@ -572,13 +572,6 @@ function cellphone_generalize(text)
     return obj;
 }
 
-function cellphone_clear_text()
-{
-    obj = document.getElementById("smsPurplebookTextMessage");
-    obj.value = "";
-    obj.focus();
-    cellphone_check_bytes();
-}
 
 function close_emoticon_display()
 {
@@ -973,7 +966,7 @@ function updateResultStatus() {
                 var carrier = getCarrierText(data.data[i].carrier);
                 var title = statText;
                 if (carrier.length) title += ','+carrier;
-                var $stat = jQuery('#'+data.data[i].mid);
+                var $stat = jQuery('#'+data.data[i].message_id);
                 $stat.attr('status', data.data[i].mstat);
                 $stat.attr('code', data.data[i].rcode);
                 $stat.attr('title', title);
@@ -1343,7 +1336,7 @@ function do_after_get_cashinfo(cashinfo)
 
 
 function completeGetPointInfo(ret_obj, response_tags) {
-    point = parseInt(ret_obj['point']);
+    var point = parseInt(ret_obj['point']);
     if (jQuery('#smsCurrentPoint')) jQuery('#smsCurrentPoint span:first').text(point);
 
     obj = new Object();
@@ -1357,25 +1350,30 @@ function completeGetPointInfo(ret_obj, response_tags) {
     else
         word_send = "발송";
 
-    sms_point = parseInt(jQuery('#sms_point').val());
-    lms_point = parseInt(jQuery('#lms_point').val());
-    if (!sms_point || !lms_point) {
-        alert('위젯설정에서 포인트 차감 사용으로 되어 있으나 차감할 포인트가 설정되어있지 않습니다.');
+    sms_point = parseInt(g_sms_point);
+    lms_point = parseInt(g_lms_point);
+    mms_point = parseInt(g_mms_point);
+    if (!sms_point || !lms_point || !mms_point)
+	{
+        alert('포인트 차감 사용으로 되어 있으나 차감할 포인트가 설정되어있지 않습니다.');
         return false;
     }
 
     sms_avail = calc_sms(obj, sms_point);
     lms_avail = calc_lms(obj, lms_point);
+    mms_avail = calc_mms(obj, mms_point);
 
     var count = jQuery('li', '#smsPurplebookTargetList').size();
     if (getMsgType() == "sms")
     {
-        bytes = getTextBytes(jQuery('#smsPurplebookTextMessage').val())[0];
+
+		var content = get_all_content();
+        bytes = getTextBytes(content)[0];
         npages = Math.ceil(bytes / 80);
 
         if ((count * npages) > sms_avail)
         {
-            alert(ret_obj['msg_not_enough'] + "\n"
+            alert(ret_obj['msg_not_enough_point'] + "\n"
                     + "현재 포인트: " + point + "\n"
                     + word_send + "가능 SMS 건수: " + sms_avail  + "\n"
                     + word_send + "예정 SMS 건수: " + (count * npages)
@@ -1383,11 +1381,11 @@ function completeGetPointInfo(ret_obj, response_tags) {
             return false;
         }
     }
-    else
+    else if(getMsgType() == 'lms')
     {
         if (count > lms_avail)
         {
-            alert(ret_obj['msg_not_enough'] + "\n"
+            alert(ret_obj['msg_not_enough_point'] + "\n"
                 + "현재 포인트: " + point + "\n"
                 + word_send + "가능 LMS 건수: " + lms_avail  + "\n"
                 + word_send + "예정 LMS 건수: " + count
@@ -1395,7 +1393,19 @@ function completeGetPointInfo(ret_obj, response_tags) {
             return false;
         }
     }
-    callback_func(point);
+	else
+	{
+        if (count > mms_avail)
+        {
+            alert(ret_obj['msg_not_enough_point'] + "\n"
+                + "현재 포인트: " + point + "\n"
+                + word_send + "가능 MMS 건수: " + mms_avail  + "\n"
+                + word_send + "예정 MMS 건수: " + count
+                );
+            return false;
+        }
+	}
+    get_cashinfo();
 }
 
 function completeGetCallbackList(ret_obj, response_tags) {
@@ -2434,6 +2444,13 @@ function completeGetCashInfo(ret_obj, response_tags) {
     do_after_get_cashinfo(obj);
 }
 
+function get_pointinfo()
+{
+	var params = new Array();
+	var response_tags = new Array('error','message','point','msg_not_enough_point');
+	exec_xml('purplebook', 'getPurplebookPointInfo', params, completeGetPointInfo, response_tags);
+}
+
 function get_cashinfo()
 {
     var obj = new Object();
@@ -2478,7 +2495,7 @@ function submit_messages() {
 
     // 캐쉬정보 확인후 발송루틴 호출
     if (g_use_point == 'Y')
-        get_pointinfo(get_cashinfo);
+        get_pointinfo();
     else
         get_cashinfo();
 
@@ -2610,12 +2627,6 @@ function submit_messages() {
         return countList;
     }
 
-    function get_pointinfo(callback_func)
-    {
-        var params = new Array();
-        var response_tags = new Array('error','message','point','msg_not_enough');
-        exec_xml('purplebook', 'getPurplebookPointInfo', params, completeGetPointInfo, response_tags);
-    }
 
     function add_folder_to_recipient()
     {

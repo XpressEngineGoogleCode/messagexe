@@ -15,26 +15,23 @@ class purplebookController extends purplebook
 
 	function minusPoint($point) 
 	{
-		global $lang;
-
 		$logged_info = Context::get('logged_info');
 		if(!$logged_info)
 		{
-			return new Object(-1, 'msg_log_required');
+			return new Object(-1, 'msg_login_required');
 		}
 
 		$oPointModel = &getModel('point');
 		$rest_point = $oPointModel->getPoint($logged_info->member_srl, true);
 		if($rest_point < $point)
 		{
-			$this->alert_message .= "\n{$lang->warning_not_enough_point}";
-			return false;
+			return new Object(-1, 'msg_not_enough_point');
 		}
 
 		$oPointController = &getController('point');
 		$oPointController->setPoint($logged_info->member_srl, $point, 'minus');
 
-		return true;
+		return new Object();
 	}
 
 	/**
@@ -116,18 +113,21 @@ class purplebookController extends purplebook
 			if($args->type == 'lms') $calc_point += $module_info->lms_point;
 			if($args->type == 'mms') $calc_point += $module_info->mms_point;
 		}
+
+		// minus point
+		if($module_info->use_point=='Y')
+		{
+			$output = $this->minusPoint($calc_point);
+			if(!$output->toBool()) return $output;
+		}
+
+		// send messages
 		$oTextmessageController = &getController('textmessage');
 		$output = $oTextmessageController->sendMessage($msg_arr);
 		$this->add('data', $output->get('data'));
 		$this->add('success_count', $output->get('success_count'));
 		$this->add('failure_count', $output->get('failure_count'));
 		$this->add('alert_message', $output->getMessage());
-
-		// minus point
-		if($module_info->use_point=='Y')
-		{
-				$this->minusPoint($calc_point);
-		}
 	}
 
 	/**
