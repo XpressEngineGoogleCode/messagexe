@@ -22,6 +22,8 @@ class purplebookView extends purplebook
 	function dispPurplebookIndex()
 	{
 		global $lang;
+		$oPurplebookModel = &getModel('purplebook');
+
 		$lang_list = array('sms','lms','mms','reserv_send','direct_send','msg_not_enough_money','available_sms_number','arranged_sms_number','msg_will_you_try','reservation_datetime','number_to_send','msg_will_you_send','msg_not_enough_money','available_lms_number','arranged_lms_number','available_mms_number','arranged_mms_number','msg_login_required');
 
 		$oPurplebookController = &getController('purplebook');
@@ -33,6 +35,9 @@ class purplebookView extends purplebook
 			$widget_lang->{$val} = $lang->{$val};
 		}
 		Context::set('widget_lang', $widget_lang);
+
+		$callback = $oPurplebookModel->getDefaultCallbackNumber();
+		Context::set('callback', $callback);
 
 		$this->setTemplateFile('address');
 	}

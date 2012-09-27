@@ -1,6 +1,6 @@
 <query id="getCountCallbackNumber" action="select">
     <tables>
-        <table name="purplebook_senders" />
+        <table name="purplebook_callbacks" />
     </tables>
     <columns>
         <column name="COUNT(*)" alias="count" />

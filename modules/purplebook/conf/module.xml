@@ -23,6 +23,7 @@
 		<action name="getPurplebookSharedUsers" type="model" />
 		<action name="getPurplebookProperties" type="model" />
 		<action name="getPurplebookCashInfo" type="model" />
+		<action name="getPurplebookPointInfo" type="model" />
 		<action name="getPurplebookCallbackNumbers" type="model" />
 		<action name="getPurplebookLatestNumbers" type="model" />
 		<action name="getPurplebookSavedMessages" type="model" />

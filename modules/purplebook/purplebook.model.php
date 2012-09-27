@@ -152,9 +152,31 @@ class purplebookModel extends purplebook
 		return $return_value;
 	}
 
+
 	function getPurplebookStatusListByMessageId()
 	{
+		$oTextmessageModel = &getModel('textmessage');
+		$oTextmessageController = &getController('textmessage');
+
+		// message ids
 		$message_ids_arr = explode(',', Context::get('message_ids'));
+
+		$sms = $oTextmessageModel->getCoolSMS();
+		if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
+		foreach($message_ids_arr as $message_id)
+		{
+			$result = $sms->rcheck($message_id);
+			$args->message_id = $message_id;
+			$args->status = $result['STATUS'];
+			$args->resultcode = $result['RESULT-CODE'];
+			$args->carrier = $result['CARRIER'];
+			$args->senddate = $result['SEND-DATE'];
+			$oTextmessageController->updateStatus($args);
+			unset($args);
+		}
+		$sms->disconnect();
+
+
 		$args->message_ids = "'" . implode("','", $message_ids_arr) . "'";
 		$output = executeQueryArray('purplebook.getStatusListByMessageId', $args);
 		$this->add('data', $output->data);
@@ -235,8 +257,6 @@ class purplebookModel extends purplebook
 	 **/
 	function getPurplebookPointInfo()
 	{
-		global $lang;
-
 		$logged_info = Context::get('logged_info');
 		if (!$logged_info) return new Object(-1, 'msg_login_required');
 
@@ -244,7 +264,7 @@ class purplebookModel extends purplebook
 		$rest_point = $oPointModel->getPoint($logged_info->member_srl, true);
 
 		$this->add('point', $rest_point);
-		$this->add('msg_not_enough', $lang->warning_not_enough_point);
+		$this->add('msg_not_enough_point', Context::getLang('msg_not_enough_point'));
 	}
 
 	function getSharedNodes($member_srl)
