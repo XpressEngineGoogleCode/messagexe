@@ -1,6 +1,9 @@
 <include target="header.html" />
 <load target="../../module/tpl/js/multi_order.js" />
 
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+</div>
+<h1 class="h1">인증모듈 </h1>
 <form id="fo_config" action="./" method="post" class="form" ruleset="insert_config">
 	<input type="hidden" name="act" value="procAuthenticationAdminConfig" />
 	<input type="hidden" name="module_srl" value={$module_srl} />
