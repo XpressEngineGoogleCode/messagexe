@@ -1,6 +1,6 @@
 <?php
     /**
-     * vi:set sw=4 ts=4 expandtab enc=utf8:
+     * vi:set sw=4 ts=4 expandtab fileencoding=utf8:
      * @class  mobilemessageView
      * @author diver(diver@coolsms.co.kr)
      * @brief  mobilemessageView
@@ -154,6 +154,7 @@
                 if (isset($row->{$f})) $obj->{$f} = $row->{$f};
                 else if (isset($extra_vars->{$f})) {
                     $obj->{$f} = $extra_vars->{$f};
+                    if(is_array($obj->{$f})) $obj->{$f} = implode('',$obj->{$f});
                     $obj->{$f} = str_replace('|@|', '', $obj->{$f});
                 }
             }
