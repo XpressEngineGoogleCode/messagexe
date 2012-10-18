@@ -69,6 +69,7 @@ class coolsms
 
 	var $options="";
 	var $test_mode = false;
+	var $sln_reg_key="";
 
 	/**
 	 * @brief contructor

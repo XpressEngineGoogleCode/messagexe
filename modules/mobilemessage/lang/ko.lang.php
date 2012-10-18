@@ -1,6 +1,6 @@
 <?php
     /**
-     * vi:set ts=4 sw=4 expandtab enc=utf8:
+     * vi:set ts=4 sw=4 expandtab fileencoding=utf8:
      * @file   ko.lang.php
      * @author diver(diver@coolsms.co.kr)
      * @brief  한국어
@@ -99,8 +99,6 @@
 
     $lang->about_serviceid = '<a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a> 에서 회원가입한 아이디를 입력합니다.';
     $lang->about_service_password = '<a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a> 에서 회원가입때 입력한 비밀번호를 입력합니다.';
-    $lang->about_msol_serviceid = '<a href="http://www.sendsms.kr/" target="_blank">www.sendsms.kr</a> 에서 회원가입한 아이디를 입력합니다.';
-    $lang->about_msol_service_password = '<a href="http://www.sendsms.kr/" target="_blank">www.sendsms.kr</a> 에서 회원가입때 입력한 비밀번호를 입력합니다.';
     $lang->about_cellphone_fieldname = "회원의 폰번호를 받기위해 생성하신 추가필드의 입력항목이름을 입력해 주세요.<br />만약 핸드폰번호를 받기위한 추가필드를 생성하지 않으셨다면 <a href=\"?module=admin&act=dispMemberAdminJoinFormList\">가입폼관리</a>에서 전화번호형식(phone)으로 추가해 주세요.";
     $lang->about_validationcode_fieldname = "핸드폰인증 애드온 사용시 반드시 설정해야할 항목입니다. 매뉴얼을 참고하세요.<br />핸드폰인증 애드온을 사용하지 않으신다면 비워두세요.";
     $lang->about_countrycode_fieldname = "회원별 국가번호가 저장될 수 있도록 <a href=\"?module=admin&act=dispMemberAdminJoinFormList\">가입폼관리</a>에서 한줄입력칸(text)형식으로 추가해 주세요. 해외인증 혹은 국제문자를 사용하지 않으면 비워두세요.";
