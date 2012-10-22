@@ -8,6 +8,7 @@
 		<action name="dispAuthenticationAdminConfig" type="view" admin_index="true" />
 		<action name="dispAuthenticationAdminAuthcodeList" type="view"/>
 		<action name="dispAuthenticationAdminMemberList" type="view"/>
+		<action name="dispAuthenticationAdminXLSDownload" type="view"/>
 
 		<action name="procAuthenticationAdminConfig" type="controller" ruleset="insert_config" />
 		<action name="procAuthenticationAdminMigrateFromMXE" type="controller" />
