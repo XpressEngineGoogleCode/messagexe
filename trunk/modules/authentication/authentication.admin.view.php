@@ -98,7 +98,18 @@ class authenticationAdminView extends authentication
 		Context::set('page_navigation', $output->page_navigation);
 		$this->setTemplateFile('memberlist');
 	}
-	
+
+	function dispAuthenticationAdminXLSDownload() 
+	{
+		$output = executeQuery('authentication.getEntireMemberList',$args);
+		if(!$output->toBool()) return $output;
+		Context::set('list', $output->data);
+		$this->setLayoutPath('./common/tpl');
+		$this->setLayoutFile('default_layout');
+		$this->setTemplateFile('xlsdownload');
+		header("Content-Type: Application/octet-stream;");
+		header("Content-Disposition: attachment; filename=\"LIST-" . date('Ymd') . ".xls\"");
+	}
 }
 /* End of file authentication.admin.view.php */
 /* Location: ./modules/authentication/authentication.admin.view.php */
