@@ -1,5 +1,5 @@
 /**
- * vi:set ts=4 sw=4 expandtab enc=utf8: 
+ * vi:set ts=4 sw=4 expandtab fileencoding=utf8: 
  * MessageXE
  * http://message.xpressengine.net/
  **/

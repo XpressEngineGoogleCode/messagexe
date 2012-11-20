@@ -9,7 +9,7 @@
         function MessageSender() {
             $oModel = &getModel('mobilemessage');
             $this->config = $oModel->getModuleConfig();
-            require_once($this->module_path."coolsms.php");
+            if (!class_exists('coolsms')) require_once($this->module_path."coolsms.php");
             $this->sms = new coolsms();
             $sln_reg_key = $oModel->getSlnRegKey();
             if ($sln_reg_key) $this->sms->setSRK($sln_reg_key);

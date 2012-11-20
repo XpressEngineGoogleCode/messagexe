@@ -145,7 +145,7 @@ class Cellphone
             return false;
         }
 
-        require_once($this->args->module_path . 'coolsms.php');
+        if (!class_exists('coolsms')) require_once($this->args->module_path . 'coolsms.php');
         $sms = new coolsms();
         $sms->appversion("MXE/{$this->args->version} XE/" . __ZBXE_VERSION__);
         $sms->charset("euckr");

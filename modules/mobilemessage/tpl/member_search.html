@@ -1,5 +1,4 @@
-<style>/* vi:set ts=4 sw=4 expandtab enc=utf8: */</style>
-<form id="smsMemberSearchForm" class="smsMemberSearchForm" onsubmit="return false;">
+<form action="./" id="smsMemberSearchForm" method="post" class="smsMemberSearchForm" onsubmit="return false;">
     <input type="hidden" name="act" value="dispMobilemessageMembersInGroupPaging" />
     <fieldset>
         <select name="is_admin">
@@ -24,6 +23,6 @@
             <!--@end-->
         </select>
         <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputTypeText" />
-        <span class="button black small"><button id="btnMemberSearch">{$lang->cmd_search}</button></span>
+        <span class="btn"><input type="submit" id="btnMemberSearch" value="{$lang->cmd_search}" /></span>
     </fieldset>
 </form>

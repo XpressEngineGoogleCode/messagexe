@@ -100,7 +100,7 @@
                 // add query
                 $callback_url = $callback_url . "module=mobilemessage&act=procMobilemessageUpdateResult";
 
-                require_once($this->module_path.'coolsms.php');
+                if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
 
                 $sms = new coolsms();
                 $sln_reg_key = $oModel->getSlnRegKey();
