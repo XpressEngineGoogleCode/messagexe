@@ -64,7 +64,7 @@
             $config->cs_point=0;
             $config->cs_mdrop=0;
 
-            require_once($this->module_path.'coolsms.php');
+            if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $this->getSlnRegKey();
             if ($sln_reg_key) $sms->setSRK($sln_reg_key);
@@ -472,7 +472,7 @@
         function getCashInfo($args=false) {
             $config = $this->getModuleConfig($args);
 
-            require_once($this->module_path.'coolsms.php');
+            if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $this->getSlnRegKey();
             if ($sln_reg_key) $sms->setSRK($sln_reg_key);
@@ -508,7 +508,7 @@
         function getMobilemessageCashInfo($args=false) {
             $config = $this->getModuleConfig($args);
 
-            require_once($this->module_path.'coolsms.php');
+            if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $this->getSlnRegKey();
             if ($sln_reg_key) $sms->setSRK($sln_reg_key);

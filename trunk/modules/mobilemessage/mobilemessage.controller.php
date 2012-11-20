@@ -236,7 +236,7 @@
             $this->lms_point = Context::get('lms_point');
             $this->mms_point = Context::get('mms_point');
 
-            require_once($this->module_path.'coolsms.php');
+            if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
             $this->sms = new coolsms();
             $sln_reg_key = $oModel->getSlnRegKey();
             if ($sln_reg_key) $this->sms->setSRK($sln_reg_key);
@@ -366,7 +366,7 @@
 
             $oMobilemessageModel = &getModel('mobilemessage');
 
-            require_once($this->module_path.'coolsms.php');
+            if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $oMobilemessageModel->getSlnRegKey();
             if ($sln_reg_key) $sms->setSRK($sln_reg_key);
@@ -587,7 +587,7 @@
             $oMobilemessageModel = &getModel('mobilemessage');
             $config = &$oMobilemessageModel->getModuleConfig();
 
-            require_once($this->module_path.'coolsms.php');
+            if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $oMobilemessageModel->getSlnRegKey();
             if ($sln_reg_key) $sms->setSRK($sln_reg_key);
@@ -946,7 +946,7 @@
             $oMobilemessageModel = &getModel('mobilemessage');
             $config = &$oMobilemessageModel->getModuleConfig($opts);
 
-            require_once($this->module_path.'coolsms.php');
+            if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $oMobilemessageModel->getSlnRegKey();
             if ($sln_reg_key) $sms->setSRK($sln_reg_key);
@@ -978,7 +978,7 @@
             $oMobilemessageModel = &getModel('mobilemessage');
             $config = &$oMobilemessageModel->getModuleConfig($opts);
 
-            require_once($this->module_path.'coolsms.php');
+            if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
             $sms = new coolsms();
             $sln_reg_key = $oMobilemessageModel->getSlnRegKey();
             if ($sln_reg_key) $sms->setSRK($sln_reg_key);
