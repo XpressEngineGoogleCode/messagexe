@@ -59,7 +59,7 @@
             $version = $module_info->version;
 
 			$config = $this->getModuleConfig();
-			require_once($this->module_path.'coolsms.php');
+			if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
 			$sms = new coolsms();
             $sln_reg_key = $this->getSlnRegKey();
             if ($sln_reg_key) $sms->setSRK($sln_reg_key);
