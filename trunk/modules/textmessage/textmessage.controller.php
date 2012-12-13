@@ -263,7 +263,7 @@ class textmessageController extends textmessage
 		if (!$in_args->recipient_no) return new Object(-1, 'msg_invalid_request');
 
 
-		require_once($this->module_path.'coolsms.php');
+		if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
 		$oTextmessageModel = &getModel('textmessage');
 		$config = &$oTextmessageModel->getModuleConfig();
 		// generate group id
@@ -330,10 +330,18 @@ class textmessageController extends textmessage
 			//
 			// db query arguments
 			//
-			$query_args = $in_args;
+			$query_args->message_id = $in_args->message_id;
 			$query_args->mtype = $in_args->type;
 			$query_args->group_id = $group_id;
+			$query_args->member_srl = $in_args->member_srl;
+			$query_args->user_id = $in_args->user_id;
+			$query_args->country_code = $in_args->country_code;
 			$query_args->recipient_no = $recipient_no;
+			$query_args->sender_no = $in_args->sender_no;
+			$query_args->subject = $in_args->subject;
+			$query_args->reservflag = $in_args->reservflag;
+			$query_args->reservdate = $in_args->reservdate;
+
 
 			foreach($in_args->content as $content)
 			{
@@ -352,12 +360,11 @@ class textmessageController extends textmessage
 				$query_args->content = $content;
 				$output = $this->insertTextmessage($query_args);
 				if (!$output->toBool()) return $output;
+				unset($query_args);
 
 				$total_count++;
 			}
 		}
-
-
 	}
 
 	/**
