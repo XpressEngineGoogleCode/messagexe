@@ -101,7 +101,8 @@ class authenticationAdminView extends authentication
 
 	function dispAuthenticationAdminXLSDownload() 
 	{
-		$output = executeQuery('authentication.getEntireMemberList',$args);
+		$args->list_count = 999999;
+		$output = executeQuery('authentication.getAuthenticationMemberList',$args);
 		if(!$output->toBool()) return $output;
 		Context::set('list', $output->data);
 		$this->setLayoutPath('./common/tpl');
