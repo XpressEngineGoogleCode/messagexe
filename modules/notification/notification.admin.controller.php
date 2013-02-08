@@ -13,7 +13,7 @@
 		 * @brief 모듈 환경설정값 쓰기
 		 **/
 		function procNotificationAdminConfig() {
-			$args = Context::gets('cellphone_fieldname');
+			$args = Context::gets('cellphone_fieldname', 'use_authdata');
 
 			// save module configuration.
 			$oModuleControll = getController('module');

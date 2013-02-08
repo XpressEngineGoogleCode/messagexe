@@ -16,7 +16,7 @@
 
         <action name="getNotificationAdminDelete" type="model" />
 
-        <action name="procNotificationAdminConfig" type="controller" ruleset="insertConfig" />
+        <action name="procNotificationAdminConfig" type="controller" />
 
         <action name="procNotificationAdminInsert" type="controller"  />
         <action name="procNotificationAdminDelete" type="controller"  />
