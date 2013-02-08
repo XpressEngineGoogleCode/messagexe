@@ -23,7 +23,7 @@ class notificationController extends notification
 			if($oAuthenticationModel)
 			{
 				$authinfo = $oAuthenticationModel->getAuthenticationMember($receiver->member_srl);
-				if(!$authinfo)
+				if($authinfo)
 				{
 					$args->recipient_no = $authinfo->clue;
 					$args->sender_no = $receiver->recipient_no;
