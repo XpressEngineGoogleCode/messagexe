@@ -7,12 +7,34 @@
  */
 class notificationController extends notification
 {
+	/**
+	 * @param $receiver contains the member information. (like a logged_info)
+	 */
 	function sendMessages($receiver, $content, $mail_content, $title, $sender, $noticom_info)
 	{
 		$oTextmessageController = &getController('textmessage');
 		$oNotificationModel = &getModel('notification');
+		$config = $oNotificationModel->getModuleConfig();
 
-		// SMS to member
+		// SMS to member if the authentication module connection option is activated.
+		if($config->use_authdata=='Y' && $oTextmessageController)
+		{
+			$oAuthenticationModel = &getModel('authentication');
+			if($oAuthenticationModel)
+			{
+				$authinfo = $oAuthenticationModel->getAuthenticationMember($receiver->member_srl);
+				if(!$authinfo)
+				{
+					$args->recipient_no = $authinfo->clue;
+					$args->sender_no = $receiver->recipient_no;
+					$args->content = $content;
+					$output = $oTextmessageController->sendMessage($args);
+					if (!$output->toBool()) return $output;
+				}
+			}
+		}
+
+		// SMS to member if the member field option is activated.
 		if($oNotificationModel->isConfigFieldSetted('cellphone_fieldname')&&in_array($noticom_info->sending_method,array('1','2'))&&$oTextmessageController)
 		{
 			$args->recipient_no = $oNotificationModel->getConfigValue($receiver, 'cellphone_fieldname', 'tel');
