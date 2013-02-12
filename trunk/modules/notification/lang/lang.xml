@@ -88,8 +88,8 @@
 		<value xml:lang="en"><![CDATA[Select target modules.]]></value>
 	</item>
 	<item name="help_mail_content">
-		<value xml:lang="ko"><![CDATA[%browser_title% : 브라우저제목<br />%nick_name% : 닉네임<br />%content% : 내용<br />%article_url% : 댓글 URL<br />적용할 모듈을 선택하세요.]]></value>
-		<value xml:lang="en"><![CDATA[%browser_title% : 브라우저제목<br />%nick_name% : 닉네임<br />%content% : 내용<br />%article_url% : 댓글 URL<br />적용할 모듈을 선택하세요.]]></value>
+		<value xml:lang="ko"><![CDATA[%browser_title% : 브라우저제목<br />%mid% : 모듈이름<br />%nick_name% : 닉네임<br />%content% : 내용<br />%article_url% : 댓글 URL]]></value>
+		<value xml:lang="en"><![CDATA[%browser_title% : 브라우저제목<br />%mid% : 모듈이름<br />%nick_name% : 닉네임<br />%content% : 내용<br />%article_url% : 댓글 URL]]></value>
 	</item>
 
 </lang>
