@@ -1,7 +1,7 @@
 <load target="js/list.js" />
 <include target="header.html" />
 
-<div cond="!$config" class="message info">
+<div cond="0" cond="!$config" class="message info">
 	<p>설정이 완료되지 않았습니다.</p>
 	<p><a href="{getUrl('act','dispNotificationAdminConfig')}">설정하러가기</a></p>
 </div>
@@ -36,7 +36,7 @@
 
 <!-- 버튼 -->
 <div class="btnArea">
-	<a href="{getUrl('act', 'dispNotificationAdminInsert')}" class="button"><span>{$lang->cmd_registration}</span></a>
+	<span class="btn"><a href="{getUrl('act', 'dispNotificationAdminInsert')}" class="btn">{$lang->cmd_registration}</a></span>
 </div>
 
 <!-- 페이지 네비게이션 -->
