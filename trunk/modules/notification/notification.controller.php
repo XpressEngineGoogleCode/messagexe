@@ -14,10 +14,9 @@ class notificationController extends notification
 	{
 		$oTextmessageController = &getController('textmessage');
 		$oNotificationModel = &getModel('notification');
-		$config = $oNotificationModel->getModuleConfig();
 
 		// SMS to member if the authentication module connection option is activated.
-		if($config->use_authdata=='Y' && $oTextmessageController)
+		if($noticom_info->use_authdata=='Y' && $oTextmessageController)
 		{
 			$oAuthenticationModel = &getModel('authentication');
 			if($oAuthenticationModel)
@@ -35,9 +34,9 @@ class notificationController extends notification
 		}
 
 		// SMS to member if the member field option is activated.
-		if($oNotificationModel->isConfigFieldSetted('cellphone_fieldname')&&in_array($noticom_info->sending_method,array('1','2'))&&$oTextmessageController)
+		if(isset($noticom_info->cellphone_fieldname)&&in_array($noticom_info->sending_method,array('1','2'))&&$oTextmessageController)
 		{
-			$args->recipient_no = $oNotificationModel->getConfigValue($receiver, 'cellphone_fieldname', 'tel');
+			$args->recipient_no = $oNotificationModel->getConfigValue($receiver, $noticom_info->cellphone_fieldname, 'tel');
 			$args->sender_no = $receiver->recipient_no;
 			$args->content = $content;
 			$output = $oTextmessageController->sendMessage($args);
@@ -63,7 +62,6 @@ class notificationController extends notification
 	function sendMessagesToAdmin($receiver, $content, $mail_content, $title, $sender, $noticom_info)
 	{
 		$oTextmessageController = &getController('textmessage');
-		$oNotificationModel = &getModel('notification');
 
 		// SMS to admin
 		if($noticom_info->admin_phones&&in_array($noticom_info->sending_method,array('1','2'))&&$oTextmessageController)
@@ -128,6 +126,16 @@ class notificationController extends notification
 		} else {
 			$flagSend = false;
 		}
+
+		// 역알림 사용이면서 현재 notify_message가 'Y'이면 발송 
+		if ($noticom_info->reverse_notify == 'Y') {
+			if ($obj->notify_message == 'Y') 
+				$flagSend = true;
+			else
+				$flagSend = false;
+		}
+
+
 
 		// 게시자 본인이면 보내지 않음
 		if ($logged_info && $document_member_srl == $logged_info->member_srl) $flagSend = false;

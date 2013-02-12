@@ -6,47 +6,48 @@
 
 <include target="header.html" />
 
-<form id="fo_noticom_append" action="./" method="post">
+<form id="fo_noticom_append" class="form" action="./" method="post">
 	<input type="hidden" name="module" value="notification" />
 	<input type="hidden" name="act" value="procNotificationAdminInsert" />
     <input type="hidden" name="noti_srl" value="{$notification_info->notification_srl}" />
     <input type="hidden" name="mail_content" value="{htmlspecialchars($notification_info->mail_content)}" />
 
-	<div class="table even easyList">
-		<table>
-			<tr>
-				<th scope="row">{$lang->target_module}</th>
-				<td>
+	<fieldset class="section">
+		<h2 class="xeAdmin">기본설정</h2>
+		<ul>
+			<li>
+				<p class="q">{$lang->target_module}</p>
+				<p class="a">
 					<div>
 						{@$id="module_srls"}
 						<input type="hidden" name="{$id}" id="{$id}" value="{$notification_info->module_srls}" />
-						<select name="_{$id}" id="_{$id}" size="8" class="w200 fl" style="float:left;"></select>
-						<ul class="midCommand">
-							<li><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></li>
-							<li><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></li>
-							<li><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></li>
-							<li><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></li>
-						</ul>
+						<select name="_{$id}" id="_{$id}" size="8" class="w200 fl"></select>
+						<div class="midCommand">
+							<span><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></span>
+							<span><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></span>
+							<span><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></span>
+							<span><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></span>
+						</div>
 						<script type="text/javascript">
 							if(typeof(getModuleSrlList)!=='undefined') {
 								doAddWindowLoadEventLoader( function() { getModuleSrlList('{$id}'); } );
 							}
 						</script>
 					</div>
-					<p style="clear:both;">{$lang->about_target_module}</p>
-				</td>
-			</tr>
-			<tr>
-				<th>{$lang->sedning_method}</th>
-				<td>
+				</p>
+				<p class="desc">{$lang->about_target_module}</p>
+			</li>
+			<li>
+				<p class="q">{$lang->sedning_method}</p>
+				<p class="a">
 					<input type="radio" name="sending_method" id="sending_method_1" value="1" checked="checked"|cond="$notification_info->sending_method=='1'||!$notification_info->sending_method" /><label for="sending_method_1">{$lang->textmessage_plus_email}</label>
 					<input type="radio" name="sending_method" id="sending_method_2" value="2" checked="checked"|cond="$notification_info->sending_method=='2'" /><label for="sending_method_2">{$lang->textmessage}</label>
 					<input type="radio" name="sending_method" id="sending_method_3" value="3" checked="checked"|cond="$notification_info->sending_method=='3'" /><label for="sending_method_3">{$lang->email}</label>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">{$lang->content}</th>
-				<td>
+				</p>
+			</li>
+			<li>
+				<p class="q">{$lang->content}</p>
+				<p class="a">
 					<div class="pscreen_bg">
 						<textarea name="content" class="pscreen" style="border:solid #eee 1px;">{$notification_info->content}</textarea>
 					</div>
@@ -59,29 +60,63 @@
 						<a class="button"><span class="notiReplaceVar" var="mid">{$lang->mid}</span></a>
 						<a class="button"><span class="notiReplaceVar" var="article_url">{$lang->article_url}</span></a>
 					</div>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">
+				</p>
+			</li>
+			<li>
+				<p class="q">
 					<div>{$lang->mail_content}[<a href="#helpMailContent" class="tgAnchor">?</a>]</div>
 					<div class="tgContent layer" id="helpMailContent" style="z-index:99999;margin-top:9px;">
 						<p>{$lang->help_mail_content}</p>
 					</div>
-				</th>
-				<td>
+				</p>
+				<p class="a">
 					<div>{$editor}</div>
-				</td>
-			</tr>
-			<tr>
-				<th>휴대전화 번호(관리자)</th>
-				<td><input type="text" name="admin_phones" style="width:300px;" value="{$notification_info->admin_phones}" /><p>콤마(,)로 구분 여러 개 입력가능</p></td>
-			</tr>
-			<tr>
-				<th>이메일 주소(관리자)</th>
-				<td><input type="text" name="admin_emails" style="width:300px;" value="{$notification_info->admin_emails}" /><p>콤마(,)로 구분 여러 개 입력가능</p></td>
-			</tr>
-		</table>
-	</div>
+				</p>
+			</li>
+			<li>
+				<p class="q">휴대전화 번호(관리자)</p>
+				<p class="a"><input type="text" name="admin_phones" style="width:300px;" value="{$notification_info->admin_phones}" /></p>
+				<p class="desc">콤마(,)로 구분 여러 개 입력가능</p>
+			</li>
+			<li>
+				<p class="q">이메일 주소(관리자)</p>
+				<p class="a"><input type="text" name="admin_emails" style="width:300px;" value="{$notification_info->admin_emails}" /></p>
+				<p class="desc">콤마(,)로 구분 여러 개 입력가능</p>
+			</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<h2 class="xeAdmin">옵션설정</h4>
+		<ul>
+			<li>
+				<p class="q">{$lang->cellphone_fieldname}</p>
+				<p class="a">
+					<select name="cellphone_fieldname">
+						<option value="">{$lang->select}</option>
+						<option loop="$member_config->signupForm=>$item" value="{$item->name}" selected="selected"|cond="$item->name==$notification_info->cellphone_fieldname">{$item->title}</option>
+					</select>
+				</p>
+				<p class="desc">{$lang->about_cellphone_fieldname}</p>
+			</li>
+			<li>
+				<p class="q">인증모듈 연동</p>
+				<p class="a">
+					<input type="radio" name="use_authdata" id="use_authdata_Y" value="Y" checked="checked"|cond="$notification_info->use_authdata=='Y'" /><label for="use_authdata_Y">사용함</label>
+					<input type="radio" name="use_authdata" id="use_authdata_N" value="N" checked="checked"|cond="!$notification_info->use_authdata || $notification_info->use_authdata=='N'" /><label for="use_authdata_N">사용안함</label>
+				</p>
+				<p class="desc">인증모듈에 의해 인증받은 전화번호를 수신번호로 사용합니다.</p>
+			</li>
+            <li>
+                <p class="q">역알림 사용</p>
+                <p class="a">
+					<input type="radio" name="reverse_notify" id="reverse_notify_Y" value="Y" checked="checked"|cond="$notification_info->reverse_notify=='Y'" /><label for="reverse_notify_Y">사용함</label>
+					<input type="radio" name="reverse_notify" id="reverse_notify_N" value="N" checked="checked"|cond="$notification_info->reverse_notify!='Y'" /><label for="reverse_notify_Y">사용안함</label>
+
+                </p>
+				<p class="desc">쪽지알림과 반대로 댓글자가 알림 체크를 통해 문자발송여부를 선택할 수 있습니다. 알림에 체크하여 댓글을 등록하면 게시자와 상위 댓글자에게 문자를 발송합니다.</p>
+            </li>
+		</ul>
+	</fieldset>
 
 	<div class="btnArea">
 		<span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>

@@ -55,12 +55,9 @@
 		/**
 		 * $obj : member info object.
 		 */
-		function getConfigValue(&$obj, $key, $type=null) {
+		function getConfigValue(&$obj, $fieldname, $type=null) {
 			$return_value = null;
 			$config = $this->getModuleConfig();
-
-			$fieldname = $config->{$key};
-			if (!$fieldname) return null;
 
 			// 기본필드에서 확인
 			if ($obj->{$fieldname}) {

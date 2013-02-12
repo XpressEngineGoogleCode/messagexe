@@ -82,7 +82,9 @@
 		 * @brief insert notification configuration info.
 		 **/
 		function dispNotificationAdminInsert() {
+			$oMemberModel = &getModel('member');
 			$oEditorModel = &getModel('editor');
+
 			$config = $oEditorModel->getEditorConfig(0);
 			// set editor options.
 			$option->skin = $config->editor_skin;
@@ -106,6 +108,9 @@
 			$notification_info->mail_content = Context::getLang('default_mail_content');
 			Context::set('notification_info', $notification_info);
 
+			$member_config = $oMemberModel->getMemberConfig();
+			Context::set('member_config', $member_config);
+
 			$this->setTemplateFile('insert');
 		}
 
@@ -113,6 +118,8 @@
 		 * @brief modify notification configuration.
 		 **/
 		function dispNotificationAdminModify() {
+			$oMemberModel = &getModel('member');
+
 			$notification_srl = Context::get('notification_srl');
 			// load notification info
 			$args->notification_srl = $notification_srl;
@@ -156,6 +163,9 @@
 			$option->content_key_name = 'mail_content';
 			$editor = $oEditorModel->getEditor($notification_srl, $option);
 			Context::set('editor', $editor);
+
+			$member_config = $oMemberModel->getMemberConfig();
+			Context::set('member_config', $member_config);
 
 			$this->setTemplateFile('insert');
 		}
