@@ -1,4 +1,4 @@
-<query id="getNotiComInfoByModuleSrl" action="select">
+<query id="getNotiConfigByModuleSrl" action="select">
 	<tables>
 		<table name="notification_comment" alias="noticom" />
 		<table name="notification_modules" alias="modules" />
