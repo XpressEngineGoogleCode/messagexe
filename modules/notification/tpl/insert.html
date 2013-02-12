@@ -38,7 +38,7 @@
 				<p class="desc">{$lang->about_target_module}</p>
 			</li>
 			<li>
-				<p class="q">{$lang->sedning_method}</p>
+				<p class="q">{$lang->sending_method}</p>
 				<p class="a">
 					<input type="radio" name="sending_method" id="sending_method_1" value="1" checked="checked"|cond="$notification_info->sending_method=='1'||!$notification_info->sending_method" /><label for="sending_method_1">{$lang->textmessage_plus_email}</label>
 					<input type="radio" name="sending_method" id="sending_method_2" value="2" checked="checked"|cond="$notification_info->sending_method=='2'" /><label for="sending_method_2">{$lang->textmessage}</label>
@@ -52,13 +52,13 @@
 						<textarea name="content" class="pscreen" style="border:solid #eee 1px;">{$notification_info->content}</textarea>
 					</div>
 					<div>
-						<a class="button"><span class="notiReplaceVar" var="content">{$lang->comment_content}</span></a>
-						<a class="button"><span class="notiReplaceVar" var="user_id">{$lang->comment_userid}</span></a>
-						<a class="button"><span class="notiReplaceVar" var="user_name">{$lang->comment_username}</span></a>
-						<a class="button"><span class="notiReplaceVar" var="nick_name">{$lang->comment_nickname}</span></a>
-						<a class="button"><span class="notiReplaceVar" var="browser_title">{$lang->browser_title}</span></a>
-						<a class="button"><span class="notiReplaceVar" var="mid">{$lang->mid}</span></a>
-						<a class="button"><span class="notiReplaceVar" var="article_url">{$lang->article_url}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="content">{$lang->comment_content}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="user_id">{$lang->comment_userid}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="user_name">{$lang->comment_username}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="nick_name">{$lang->comment_nickname}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="browser_title">{$lang->browser_title}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="mid">{$lang->mid}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="article_url">{$lang->article_url}</span></a>
 					</div>
 				</p>
 			</li>
