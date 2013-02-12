@@ -200,7 +200,7 @@ class notificationController extends notification
 
 		// get configuration info. no configuration? just return.
 		$oModel = &getModel('notification');
-		$noticom_info = $oModel->getNotiComInfo($obj->module_srl);
+		$noticom_info = $oModel->getNotiConfig($obj->module_srl);
 		if (!$noticom_info) return;
 
 		foreach ($noticom_info as $key=>$val) {

@@ -1,7 +1,7 @@
 <load target="js/list.js" />
 <include target="header.html" />
 
-<div cond="!$config->cellphone_fieldname" class="message info">
+<div cond="!$config" class="message info">
 	<p>설정이 완료되지 않았습니다.</p>
 	<p><a href="{getUrl('act','dispNotificationAdminConfig')}">설정하러가기</a></p>
 </div>

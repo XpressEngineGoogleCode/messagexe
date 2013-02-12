@@ -139,10 +139,10 @@
 			$this->add('base_url', $config->callback_url);
 		}
 
-		function getNotiComInfo($module_srl) {
+		function getNotiConfig($module_srl) {
 			if (!$module_srl) return false;
 			$args->module_srl = $module_srl;
-			$output = executeQuery("notification.getNotiComInfoByModuleSrl", $args);
+			$output = executeQuery("notification.getNotiConfigByModuleSrl", $args);
 			if (!$output->toBool() || !$output->data) return false;
 			$noticom_infos = $output->data;
 			if (!is_array($noticom_infos)) $noticom_infos = array($output->data);
