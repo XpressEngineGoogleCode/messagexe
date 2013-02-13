@@ -12,9 +12,12 @@
 		<input type="hidden" name="module" value="{$module}" />
 		<input type="hidden" name="act" value="{$act}" />
 		<input type="hidden" name="search_key" value="Y" />
-		<ul>
-			<li>휴대폰 번호 : <input type="text" name="n_phone_number" value="{$n_phone_number}" /></li>
-		</ul>
+		<select name="search_key">
+			<option value="phone_number" selected="selected"|cond="$search_key=='phone_number'">폰번호</option>
+			<option value="user_id" selected="selected"|cond="$search_key=='user_id'">아이디</option>
+			<option value="nick_name" selected="selected"|cond="$search_key=='nick_name'">닉네임</option>
+		</select>
+		<input type="text" name="search_value" value="{$search_value}" />
 		<span class="btn"><input type="submit" value="조회" /></span>
 </form>
 

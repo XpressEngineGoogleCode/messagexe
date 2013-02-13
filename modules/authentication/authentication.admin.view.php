@@ -81,11 +81,20 @@ class authenticationAdminView extends authentication
 	{
 		$args->page = Context::get('page');
 		$search_key = Context::get('search_key');
-		if($search_key == 'Y')
+		if($search_key)
 		{
-			$phone_number = Context::get('n_phone_number');
-			$args->clue = $phone_number;
-			Context::set('n_phone_number', $phone_number);
+			switch($search_key)
+			{
+				case 'phone_number':
+					$args->clue = Context::get('search_value');
+					break;
+				case 'user_id':
+					$args->user_id = Context::get('search_value');
+					break;
+				case 'nick_name':
+					$args->nick_name = Context::get('search_value');
+					break;
+			}
 		}
 
 		$output = executeQuery('authentication.getAuthenticationMemberList',$args);
