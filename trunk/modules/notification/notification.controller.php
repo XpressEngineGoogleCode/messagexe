@@ -70,7 +70,11 @@ class notificationController extends notification
 			//$args->sender_no = $receiver->recipient_no;
 			$args->content = $content;
 			$output = $oTextmessageController->sendMessage($args);
-			if (!$output->toBool()) return $output;
+			if (!$output->toBool()) 
+			{
+				debugPrint($output);
+				return $output;
+			}
 		}
 
 		// MAIL to admin
@@ -135,10 +139,8 @@ class notificationController extends notification
 				$flagSend = false;
 		}
 
-
-
 		// 게시자 본인이면 보내지 않음
-		if ($logged_info && $document_member_srl == $logged_info->member_srl) $flagSend = false;
+		if ($oDocument->get('member_srl') == $obj->member_srl) $flagSend = false;
 
 		$tmp_obj->article_url = getFullUrl('','document_srl', $obj->document_srl);
 		$tmp_content = $this->mergeKeywords($mail_content, $tmp_obj);
@@ -164,6 +166,14 @@ class notificationController extends notification
 				$flagSend = true;
 			} else {
 				$flagSend = false;
+			}
+
+			// 역알림 사용이면서 현재 notify_message가 'Y'이면 발송 
+			if ($noticom_info->reverse_notify == 'Y') {
+				if ($obj->notify_message == 'Y') 
+					$flagSend = true;
+				else
+					$flagSend = false;
 			}
 
 			// 상위댓글자가 본인이면 보내지 않음
