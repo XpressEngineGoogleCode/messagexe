@@ -281,7 +281,7 @@ class textmessageController extends textmessage
 		{
 			$options = new StdClass();
 			$options->member_srl = 0;
-			$options->splitlimit = 5;
+			$options->splitlimit = 0;
 			$options->bytes_per_each = 80;
 			$options->checkmb = TRUE;
 		}
@@ -359,8 +359,11 @@ class textmessageController extends textmessage
 				$query_args->message_id = $message_id;
 				$query_args->content = $content;
 				$output = $this->insertTextmessage($query_args);
-				if (!$output->toBool()) return $output;
-				unset($query_args);
+				if (!$output->toBool())
+				{
+					debugPrint($output);
+					return $output;
+				}
 
 				$total_count++;
 			}
