@@ -28,6 +28,13 @@ class authenticationAdminView extends authentication
 		$config = $oAuthenticationModel->getModuleConfig();
 		Context::set('config', $config);
 
+		// Get a layout list
+		$oLayoutModel = &getModel('layout');
+		$layout_list = $oLayoutModel->getLayoutList();
+		Context::set('layout_list', $layout_list);
+		$mlayout_list = $oLayoutModel->getLayoutList(0, 'M');
+		Context::set('mlayout_list', $mlayout_list);
+
 		// get skin list
 		$skin_list = $oModuleModel->getSkins($this->module_path);
 		Context::set('skin_list',$skin_list);

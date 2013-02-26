@@ -8,6 +8,15 @@
 	<fieldset class="section">
 		<ul>
 			<li>
+				<p class="q"><label for="layout">{$lang->layout}</label></p>
+				<p class="a">
+				<select id="layout" name="layout_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$layout_list => $key,$val" value="{$val->layout_srl}" selected="selected"|cond="$val->layout_srl == $config->layout_srl">{$val->title} ({$val->layout})</option>
+				</select>
+				</p>
+			</li>
+			<li>
 				<p class="q">{$lang->skin}</p>
 				<p class="a">
 		    		<select name="skin">
@@ -16,14 +25,23 @@
 				</p>
 				<p class="desc">{$lang->about_skin}</p>
 			</li>
-			<li cond="0">
-				<p class="q">{$lang->skin}</p>
+			<li>
+				<p class="q"><label for="mlayout">{$lang->mobile_layout}</label></p>
+				<p class="a">
+				<select id="mlayout" name="mlayout_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$mlayout_list => $key,$val" value="{$val->layout_srl}" selected="selected"|cond="$val->layout_srl == $config->mlayout_srl">{$val->title} ({$val->layout})</option>
+				</select>
+				</p>
+			</li>
+			<li>
+				<p class="q">{$lang->mobile_skin}</p>
 				<p class="a">
 		    		<select name="mskin">
 						<option loop="$mskin_list=>$key,$val" value="{$key}" selected="selected"|cond="$module_info->mskin==$key">{$val->title}</option>
 					</select>
 				</p>
-				<p class="desc">{$lang->about_skin}</p>
+				<p class="desc">{$lang->about_mobile_skin}</p>
 			</li>
 			<li>
 				<p class="q">{$lang->default_country}</p>
