@@ -167,7 +167,14 @@ class authenticationController extends authentication
 	{
 		$oAuthenticationModel = &getModel('authentication');
 		$config = $oAuthenticationModel->getModuleConfig();
-		$oModule->setTemplatePath(sprintf($this->module_path.'skins/%s/', $config->skin));
+		if(Mobile::isFromMobilePhone())
+		{
+			$oModule->setTemplatePath(sprintf($this->module_path.'m.skins/%s/', $config->mskin));
+		}
+		else
+		{
+			$oModule->setTemplatePath(sprintf($this->module_path.'skins/%s/', $config->skin));
+		}
 		$oModule->setTemplateFile('index');
 
 		if($config->authcode_time_limit)
