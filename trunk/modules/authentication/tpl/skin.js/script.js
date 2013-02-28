@@ -74,6 +74,7 @@ function completeSendAuthCode(ret_obj)
 	setCookie('authentication_srl', ret_obj['authentication_srl']);
 
 	jQuery('#get_authcode').addClass('reget');
+	jQuery('#get_authcode').html('다시받기');
 	jQuery('#message_id').val(ret_obj['message_id']);
 	jQuery('#authentication_srl').val(ret_obj['authentication_srl']);
 
