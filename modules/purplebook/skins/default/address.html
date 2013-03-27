@@ -313,9 +313,12 @@
 <!--@if($act!='procWidgetGenerateCodeInPage')-->
 <script type="text/javascript">
     var g_use_point = '{$module_info->use_point}';
-	var g_sms_point = {$module_info->sms_point};
-	var g_lms_point = {$module_info->lms_point};
-	var g_mms_point = {$module_info->mms_point};
+	var g_sms_point = 0;
+	var g_lms_point = 0;
+	var g_mms_point = 0;
+	<block cond="$module_info->sms_point">g_sms_point = {$module_info->sms_point};</block>
+	<block cond="$module_info->lms_point">g_lms_point = {$module_info->lms_point};</block>
+	<block cond="$module_info->mms_point">g_mms_point = {$module_info->mms_point};</block>
     var g_manual_mid = '{$module_info->manual_mid}';
     var g_ticket = '{$ticket}';
     var g_is_logged = <!--@if($is_logged)-->true<!--@else-->false<!--@end-->;

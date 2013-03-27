@@ -1,6 +1,6 @@
-<div cond="0" class="header4">
+<div class="header4">
     <ul class="localNavigation">
-        <li <!--@if($act=='dispNstoreAdminModInstList')-->class="on"<!--@end-->><a href="{getUrl('act','dispNstoreAdminModInstList')}">상점목록</a></li>
-        <li <!--@if($act=='dispNstoreAdminMileageList')-->class="on"<!--@end-->><a href="{getUrl('act','dispNstoreAdminMileageList')}">마일리지관리</a></li>
+        <li class="on"|cond="$act=='dispPurplebookAdminModInstList'"><a href="{getUrl('act','dispPurplebookAdminModInstList')}">목록</a></li>
+        <li class="on"|cond="$act=='dispPurplebookAdminGrantInfo'"><a href="{getUrl('act','dispPurplebookAdminGrantInfo')}">권한관리</a></li>
     </ul>
 </div>
