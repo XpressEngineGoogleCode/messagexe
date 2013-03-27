@@ -67,6 +67,19 @@ class purplebookAdminView extends purplebook
 
 		$this->setTemplateFile('insertmodinst');
 	}
+
+	/**
+	 * @brief display the grant information
+	 **/
+	function dispPurplebookAdminGrantInfo() {
+		// get the grant infotmation from admin module
+		$oModuleAdminModel = &getAdminModel('module');
+		$grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
+		Context::set('grant_content', $grant_content);
+
+		$this->setTemplateFile('grant_list');
+	}
+
 }
 /* End of file purplebook.admin.view.php */
 /* Location: ./modules/purplebook/purplebook.admin.view.php */

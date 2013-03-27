@@ -43,6 +43,7 @@ class purplebookController extends purplebook
 		$oModel = &getModel('purplebook');
 		$config = $oModel->getModuleConfig($args);
 		 */
+		if(!$this->grant->send) return new Object(-1, 'msg_not_permitted');
 		$module_srl = Context::get('module_srl');
 		$oPurplebookModel = &getModel('purplebook');
 		$module_info = $oPurplebookModel->getModuleInstConfig($module_srl);

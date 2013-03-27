@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
-	<grants />
+    <grants>
+        <grant name="send" default="guest">
+            <title xml:lang="ko">발송 권한</title>
+            <title xml:lang="en">Sending messages</title>
+        </grant>
+    </grants>
 	<permissions />
 	<actions>
 		<!-- for admin -->
 		<action name="dispPurplebookAdminModInstList" type="view" standalone="true" admin_index="true" />
 		<action name="dispPurplebookAdminInsertModInst" type="view" standalone="true" />
+		<action name="dispPurplebookAdminGrantInfo" type="view" standalone="true" />
 
 		<action name="getPurplebookAdminDeleteModInst" type="model" standalone="true" />
 
