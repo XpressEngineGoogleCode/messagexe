@@ -3426,9 +3426,8 @@ function submit_messages() {
         $('#btn_pop_manual','#smsPurplebook').click(function() {
             $obj = $('#layer_manual','#smsPurplebook');
             show_and_hide($obj,null,{show_func:function(){
-                var manual_url = current_url.setQuery('mid',g_manual_mid)
                 if(!$obj.attr('first_show')) {
-                    $('.bodyArea','#smsPurplebook #layer_manual').html('<iframe src="' + manual_url + '" frameborder="0" style="border:0 none; width:100%; height:100%; padding:0; margin:0;"></iframe>');
+                    $('.bodyArea','#smsPurplebook #layer_manual').html('<iframe src="' + g_manual_url + '" frameborder="0" style="border:0 none; width:100%; height:100%; padding:0; margin:0;"></iframe>');
                     $obj.attr('first_show',true);
                 }
             }});
