@@ -217,7 +217,7 @@ span.checkbox.on { background-position:0px -13px; }
 
 /* guide and sending message window on the bottom */
 #smsMessage_top { height:21px; margin-top:20px; background:url(../img/smsMassage_bg_top.gif) no-repeat;}
-#smsMessage_bottom { height:28px; margin-bottom:100px; background:url(../img/smsMassage_bg_bottom.png) no-repeat;}
+#smsMessage_bottom { height:28px; background:url(../img/smsMassage_bg_bottom.png) no-repeat;}
 #smsMessage { position:relative; width:980px; height:230px; padding:0; margin:0; background:url(../img/smsMassage_bg_line.gif) repeat-y; z-index:1;}
 
 #smsMessage .left_button { float:left; margin-left:20px; margin-top:50px; width:82px; _margin-left:10px;}
