@@ -44,6 +44,10 @@ class purplebookAdminView extends purplebook
 		if (!is_array($list)) $list = array();
 
 		Context::set('list', $list);
+		Context::set('total_count', $output->total_count);
+		Context::set('total_page', $output->total_page);
+		Context::set('page', $output->page);
+		Context::set('page_navigation', $output->page_navigation);
 		$this->setTemplateFile('modinstlist');
 	}
 
