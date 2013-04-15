@@ -139,43 +139,6 @@ class purplebookView extends purplebook
 		exit(0);
 	}
 
-	function dispPurplebookPurplebookDownload() {
-		$logged_info = Context::get('logged_info');
-		if (!$logged_info) return new Object(-1, 'msg_not_logged');
-
-		header("Content-Type: Application/octet-stream;");
-		header("Content-Disposition: attachment; filename=\"phonelist-" . date('Ymd') . ".xls\"");
-
-		$node_id = Context::get('node_id');
-		if ($node_id && !in_array($node_id, array('f.','s.','t.'))) {
-			$args->node_id = $node_id;
-			$output = executeQuery('purplebook.getNodeInfoByNodeId', $args);
-			if (!$output->toBool()) return $output;
-			$node_route = $output->data->node_route . $node_id . '.';
-		} else {
-			if (in_array($node_id, array('f.','s.','t.'))) {
-				$node_route = $node_id;
-			} else {
-				$node_route = 'f.';
-			}
-		}
-
-		$args->user_id = $logged_info->user_id;
-		$args->node_route = $node_route;
-		$args->node_type = '2';
-
-		$oPurplebookModel = &getModel('purplebook');
-		$output = executeQueryArray('purplebook.getPurplebookByNodeRoute', $args);
-
-		require_once('purplebook.utility.php');
-		$csutil = new CSUtility();
-		Context::set('csutil', $csutil);
-		Context::set('data', $output->data);
-
-		$this->setLayoutFile('default_layout');
-		$this->setTemplateFile('purplebook_download');
-	}
-
 	/**
 	 * @brief 주소록
 	 **/

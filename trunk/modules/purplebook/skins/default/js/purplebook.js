@@ -301,7 +301,7 @@ function pb_view_properties(obj) {
 
 function pb_excel_download(obj) {
     var $node = jQuery(obj);
-    window.open(current_url.setQuery('module','purplebook').setQuery('act','dispPurplebookDownload').setQuery('node_type','2').setQuery('node_id', $node.attr('node_id')), '_excel_download');
+    window.open(current_url.setQuery('module','purplebook').setQuery('act','procPurplebookPurplebookDownload').setQuery('node_type','2').setQuery('node_id', $node.attr('node_id')), '_excel_download');
 }
 
 function pb_share_folder(obj) {
@@ -1885,7 +1885,7 @@ function pb_load_list(node) {
                 add_to_list(node_id, node_name, phone_num);
             }
 
-            jQuery('#btnPurplebookExcelDownload').attr('href', data.base_url + '?module=purplebook&act=dispPurplebookDownload&node_type=2&node_id=' + req_node_id);
+            jQuery('#btnPurplebookExcelDownload').attr('href', data.base_url + '?module=purplebook&act=dispPurplebookPurplebookDownload&node_type=2&node_id=' + req_node_id);
 
             if (data.total_page > 1)
                 updatePurplebookListCount(data.total_count);
