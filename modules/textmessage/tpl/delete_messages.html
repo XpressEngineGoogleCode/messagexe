@@ -1,12 +1,13 @@
-<div id="popHeader" class="wide">
-    <h3 class="xeAdmin">{$lang->cmd_delete} ({$lang->target} : {count($mobilemessage_list)})</h3>
+<div class="x_modal-header">
+    <h1 class="xeAdmin">{$lang->cmd_delete} ({$lang->target} : {count($mobilemessage_list)})</h1>
 </div>
 
 <input type="hidden" name="target_message_ids" value="{$message_ids}" />
 
-<div id="popBody">
-    <table cellspacing="0" class="rowTable">
-    <tr>
+<div class="x_modal-body">
+    <table cellspacing="0" class="x_table">
+		<thead>
+		<tr>
         <th scope="col"><div>{$lang->regdate}</div></th>
         <th scope="col" class="half_wide"><div>{$lang->recipient_no}</div></th>
         <th scope="col" class="half_wide"><div>{$lang->sender_no}</div></th>
@@ -14,7 +15,9 @@
         <th scope="col" class="half_wide"><div>{$lang->result_code}</div></th>
 		<th scope="col" class="half_wide"><div>{$lang->reservation_time}</div></th>
     </tr>
-    <!--@foreach($mobilemessage_list as $key => $val)-->
+	</thead>
+	<tbody>	
+	<!--@foreach($mobilemessage_list as $key => $val)-->
     <tr>
         <td class="date center nowrap">{zdate($val->regdate, "Y-m-d H:i")}</td>
         <td>{$val->recipient_no}</td>
@@ -24,11 +27,12 @@
         <td class="date center nowrap">{zdate($val->reservdate, "Y-m-d H:i")}</td>
     </tr>
     <!--@end-->
-    </table>
+	</tbody>
+</table>
 </div>
 
 <!--@if(count($mobilemessage_list))-->
-<div id="popFooter">
-        <span class="button black strong"><input type="submit" value="{$lang->cmd_delete}" /></span>
+<div class="x_modal-footer">
+	<button type="submit" class="x_btn x_btn-inverse">{$lang->cmd_delete}</button>
 </div>
 <!--@end-->

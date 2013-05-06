@@ -1,11 +1,11 @@
-<!--#include("header.html")-->
+<include target="header.html" />
 <load target="js/usagestatement.js" />
 
 <form method="get" action="./" id="mobilemessage_fo" class="form">
     <div class="table even easyList">
-        <table cellspacing="0" class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
-        <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
-        <thead>
+        <table class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
+        <caption style="text-align:right; margin-bottom:10px;">Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+        <thead style="clear:both;">
             <tr>
                 <th scope="col"><div>{$lang->no}</div></th>
                 <th scope="col"><div><input type="checkbox" value="" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
@@ -39,45 +39,32 @@
         </tbody>
         </table>
     </div>
+   </form>
+   <a href="?module={$module}&act={$act}" class="button black"><span>{$lang->up_list}</span></a>
 
-    <!-- 버튼 -->
-    <div class="btnArea">
-			<span class="btn"><a href="#delete" class="modalAnchor deleteMessages">{$lang->cmd_delete}</a></span>
-			<span class="btn"><a href="#cancelation" class="modalAnchor cancelReserv">{$lang->cmd_cancel_reserv}</a></span>
-			<a href="?module={$module}&act={$act}" class="button black"><span>{$lang->up_list}</span></a>
-    </div>
+   <!-- 페이지 네비게이션 -->
+    <div class="x_clearfix">
+		<include target="_page_navigation.html" />
+		<div class="controls x_pull-right">
+			<a href="#delete" class="modalAnchor deleteMessages x_btn">{$lang->cmd_delete}</a>
+			<a href="#cancelation" class="modalAnchor cancelReserv x_btn">{$lang->cmd_cancel_reserv}</a>
+		</div>
+	</div>
 
-    <!-- 페이지 네비게이션 -->
-    <div class="pagination a1">
-        <a href="{getUrl('page','','module_srl','')}" class="prevEnd">{$lang->first_page}</a> 
-        <!--@while($page_no = $page_navigation->getNextPage())-->
-            <!--@if($page == $page_no)-->
-                <strong>{$page_no}</strong> 
-            <!--@else-->
-                <a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
-            <!--@end-->
-        <!--@end-->
-        <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
-    </div>
-    <input type="hidden" id="mobilemessage_srls" name="mobilemessage_srls" value="12345" />
-</form>
-
-<div class="modal" id="cancelation">
+<div class="x_modal" id="cancelation">
 	<form action="./" class="fg form" method="post">
 		<input type="hidden" name="module" value="textmessage" />
 		<input type="hidden" name="act" value="procTextmessageAdminCancelReserv" />
 		<input type="hidden" name="group_id" value="{$group_id}" />
 		<input type="hidden" name="success_return_url" value="{getUrl('act', $act,'group_id',$group_id)}" />
-		<div id="cancelForm">
-		</div>
+		<div id="cancelForm"></div>
 	</form>
 </div>
-<div class="modal" id="delete">
+<div class="x_modal" id="delete">
 	<form action="./" class="fg form" method="post">
 		<input type="hidden" name="module" value="textmessage" />
 		<input type="hidden" name="act" value="procTextmessageAdminDeleteMessages" />
 		<input type="hidden" name="group_id" value="{$group_id}" />
-		<div id="deleteForm">
-		</div>
+		<div id="deleteForm"></div>
 	</form>
 </div>

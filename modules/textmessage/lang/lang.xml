@@ -157,6 +157,10 @@
 		<value xml:lang="ko"><![CDATA[설정변경]]></value>
 		<value xml:lang="en"><![CDATA[Configure]]></value>
 	</item>
+	<item name="cmd_delete">
+		<value xml:lang="ko"><![CDATA[삭제]]></value>
+		<value xml:lang="en"><![CDATA[Delete]]></value>
+	</item>
 	<item name="msg_config_required">
 		<value xml:lang="ko"><![CDATA[설정이 완료되지 않았습니다]]></value>
 		<value xml:lang="en"><![CDATA[Configuration is required]]></value>

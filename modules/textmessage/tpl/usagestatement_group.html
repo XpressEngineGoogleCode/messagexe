@@ -45,41 +45,25 @@
         </table>
     </div>
 
-    <!-- 버튼 -->
-    <div class="btnArea">
-        <span class="btn"><a href="#delete" class="modalAnchor deleteGroup">{$lang->cmd_delete}</a></span>
-        <span class="btn"><a href="#cancelation" class="modalAnchor cancelGroup">{$lang->cmd_cancel_reserv}</a></span>
-    </div>
-
-    <!-- 페이지 네비게이션 -->
-    <div class="pagination a1">
-        <a href="{getUrl('page','','module_srl','')}" class="prevEnd">{$lang->first_page}</a> 
-        <!--@while($page_no = $page_navigation->getNextPage())-->
-            <!--@if($page == $page_no)-->
-                <strong>{$page_no}</strong> 
-            <!--@else-->
-                <a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
-            <!--@end-->
-        <!--@end-->
-        <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
-    </div>
 </form>
 
-<div class="modal" id="cancelation">
-	<form action="./" class="fg form" method="post">
-		<input type="hidden" name="module" value="textmessage" />
-		<input type="hidden" name="act" value="procTextmessageAdminCancelGroup" />
-		<input type="hidden" name="success_return_url" value="{getUrl('act', $act)}" />
-		<div id="cancelForm">
-		</div>
-	</form>
+<!-- 페이지 네비게이션 -->
+<div class="x_clearfix">
+	<include target="_page_navigation.html" />
+	<div class="controls x_pull-right">
+		<a href="#delete" class="modalAnchor deleteGroup x_btn">{$lang->cmd_delete}</a>
+		<a href="#cancelation" class="modalAnchor cancelGroup x_btn">{$lang->cmd_cancel_reserv}</a>
+	</div>
 </div>
 
-<div class="modal" id="delete">
-	<form action="./" class="fg form" method="post">
-		<input type="hidden" name="module" value="textmessage" />
-		<input type="hidden" name="act" value="procTextmessageAdminDeleteGroup" />
-		<div id="deleteForm">
-		</div>
-	</form>
-</div>
+<form action="./" class="x_modal" method="post" id="cancelation">
+	<input type="hidden" name="module" value="textmessage" />
+	<input type="hidden" name="act" value="procTextmessageAdminCancelGroup" />
+	<input type="hidden" name="success_return_url" value="{getUrl('act', $act)}" />
+	<div id="cancelForm"></div>
+</form>
+<form action="./" class="x_modal" method="post" id="delete">
+	<input type="hidden" name="module" value="textmessage" />
+	<input type="hidden" name="act" value="procTextmessageAdminDeleteGroup" />
+	<div id="deleteForm"></div>
+</form>
