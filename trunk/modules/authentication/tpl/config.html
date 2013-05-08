@@ -1,148 +1,129 @@
 <include target="header.html" />
 <load target="../../module/tpl/js/multi_order.js" />
+<load target="../lang" />
 
-<form id="fo_config" action="./" method="post" class="form" ruleset="insert_config">
+<form class="x_form-horizontal" action="./" method="get" onsubmit="return procFilter(this, insert_resale);">
 	<input type="hidden" name="act" value="procAuthenticationAdminConfig" />
 	<input type="hidden" name="module_srl" value={$module_srl} />
 
-	<fieldset class="section">
-		<ul>
-			<li>
-				<p class="q"><label for="layout">{$lang->layout}</label></p>
-				<p class="a">
-				<select id="layout" name="layout_srl">
+	<section class="section">
+		<h1>기본설정</h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="layout_srl">레이아웃</label>
+			<div class="x_controls">
+				<select name="layout_srl">
 					<option value="0">{$lang->notuse}</option>
 					<option loop="$layout_list => $key,$val" value="{$val->layout_srl}" selected="selected"|cond="$val->layout_srl == $config->layout_srl">{$val->title} ({$val->layout})</option>
 				</select>
-				</p>
-			</li>
-			<li>
-				<p class="q">{$lang->skin}</p>
-				<p class="a">
-		    		<select name="skin">
-						<option loop="$skin_list=>$key,$val" value="{$key}" selected="selected"|cond="$module_info->skin==$key">{$val->title}</option>
-					</select>
-				</p>
-				<p class="desc">{$lang->about_skin}</p>
-			</li>
-			<li>
-				<p class="q"><label for="mlayout">{$lang->mobile_layout}</label></p>
-				<p class="a">
-				<select id="mlayout" name="mlayout_srl">
+				<a href="#layout_srl_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+            	<p id="layout_srl_help"hidden>{$lang->about_layout}</p>
+			</div>
+		</div>		
+		<div class="x_control-group">
+			<label class="x_control-label">스킨</label>
+			<div class="x_controls">
+				<select name="skin">
+					<option loop="$skin_list=>$key,$val" value="{$key}" selected="selected"|cond="$module_info->skin==$key">{$val->title}</option>
+				</select>
+				<a href="#skin_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="skin_help" class="x_help-block">{$lang->about_skin}</p>
+			</div>
+		</div>		
+		<div class="x_control-group">
+			<label class="x_control-label">모바일 레이아웃</label>
+			<div class="x_controls">
+				<select name="mlayout_srl">
 					<option value="0">{$lang->notuse}</option>
 					<option loop="$mlayout_list => $key,$val" value="{$val->layout_srl}" selected="selected"|cond="$val->layout_srl == $config->mlayout_srl">{$val->title} ({$val->layout})</option>
 				</select>
-				</p>
-			</li>
-			<li>
-				<p class="q">{$lang->mobile_skin}</p>
-				<p class="a">
-		    		<select name="mskin">
-						<option loop="$mskin_list=>$key,$val" value="{$key}" selected="selected"|cond="$module_info->mskin==$key">{$val->title}</option>
-					</select>
-				</p>
-				<p class="desc">{$lang->about_mobile_skin}</p>
-			</li>
-			<li>
-				<p class="q">{$lang->default_country}</p>
-				<p class="a">
-					<select name="country_code" id="country_code" class="size04">
-						<option value="">선택</option>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">모바일 스킨</label>
+			<div class="x_controls">
+				<select name="mskin">
+					<option loop="$mskin_list=>$key,$val" value="{$key}" selected="selected"|cond="$module_info->mskin==$key">{$val->title}</option>
+				</select>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">국가설정</label>
+			<div class="x_controls">
+				<select name=country_code>
+					<option value="">선택</option>
 						{@asort($lang->country_codes)}
 						<option loop="$lang->country_codes=>$key,$val" value="{$key}" selected="selected"|cond="$key == $config->country_code">{$val}</option>
-					</select>
-				<p class="desc">문자가 기본 국가로 설정된 나라로 문자를 발송하게 합니다.<br />기본은 82 대한민국입니다.</p>
-
-				</p>
-			</li>
-		</ul>
-
-		<ul>
-			<li>
-				<p class="q">{$lang->digit_number}</p>
-				<p class="a">
-					<input type="text" size="5" maxlength="2" name="digit_number" value="{$config->digit_number}" />
-				</p>
-				<p class="desc">5로 설정하면 다섯자리의 숫자값이 인증코드로 발송됩니다.</p>
-
-				</p>
-			</li>
-		</ul>
-
-		<ul>
-			<li>
-				<p class="q">{$lang->validationcode_message_limit}</p>
-				<p class="a">
-					<input type="text" size="5" maxlength="2" name="day_try_limit" value="{$config->day_try_limit}" />
-				</p>
-				<p class="desc">인증번호 횟수 제한.<br />같은번호로 일정 횟수 이상 인증번호 요청시 해당 번호를 하루동안  금지합니다.</p>
-
-				</p>
-			</li>
-		</ul>
-
-
-		<ul>
-			<li>
-				<p class="q">{$lang->validationcode_send_limit}</p>
-				<p class="a">
-					<input type="text" size="5" maxlength="2" name="authcode_time_limit" value="{$config->resend_interval}" />
-				</p>
-				<p class="desc">연이어 인증번호를 여러번 전송받을 수 없도록 합니다. 예) 20으로 설정하면 인증번호를 전송받은 후 20초 후에 재전송이 가능하게 설정됩니다.</p>
-
-				</p>
-			</li>
-		</ul>
-		<ul>
-			<li>
-				<p class="q">{$lang->validationcode_content}</p>
-				<p class="a">
-					<textarea name="message_content" rows="5" cols="40">{htmlspecialchars($config->message_content)}</textarea>
-				</p>
-				<p class="desc">%authcode%에 인증번호가 치환되어 들어갑니다. 적절한 문구로 수정가능합니다. 예) [핸드폰인증] %authcode% ☜ 인증번호를 정확히 입력해 주세요.</p>
-
-				</p>
-			</li>
-		</ul>
-		<ul>
-			<li>
-				<p class="q">{$lang->validationcode_act}</p>
-				<p class="a">
-					{@$list = array_filter(explode(',',$config->list))}
+				</select>
+				<a href="#country_code_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+            	<p id="country_code_help"hidden>문자가 기본 국가로 설정된 나라로 문자를 발송하게 합니다.<br />기본은 82 대한민국입니다.</p>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h1>인증코드설정</h1>
+		<div class="x_control-group">
+			<label class="x_control-label">인증번호 자릿수</label>
+			<div class="x_controls">
+				<input type="text" size="5" maxlength="2" name="digit_number" value="{$config->digit_number}" />
+				<a href="#digit_number_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+            	<p id="digit_number_help" class="x_help-block"hidden>5로 설정하면 다섯자리의 숫자값이 인증코드로 발송됩니다.</p>
+			</div>
+   		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">인증번호 횟수 제한</label>
+			<div class="x_controls">
+				<input type="text" size="5" maxlength="2" name="day_try_limit" value="{$config->day_try_limit}" />
+				<a href="#day_try_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+            	<p id="day_try_limit_help" class="x_help-block"hidden>같은번호로 일정 횟수 이상 인증번호 요청시 해당 번호를 하루동안 금지합니다.</p>
+			</div>
+   		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">인증번호 재전송 제한</label>
+			<div class="x_controls">
+				<input type="text" size="5" maxlength="2" name="authcode_time_limit" value="{$config->resend_interval}" />
+				<a href="#authcode_time_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+            	<p id="authcode_time_limit_help" class="x_help-block"hidden>연이어 인증번호를 여러번 전송받을 수 없도록 합니다. 예) 20으로 설정하면 인증번호를 전송받은 후 20초 후에 재전송이 가능하게 설정됩니다.</p>
+			</div>
+   		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">인증번호 치환</label>
+			<div class="x_controls">
+				<textarea name="message_content" rows="5" cols="40">{htmlspecialchars($config->message_content)}</textarea>
+				<a href="#message_content_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+            	<p id="message_content_help" class="x_help-block"hidden>%authcode%에 인증번호가 치환되어 들어갑니다. 적절한 문구로 수정가능합니다. 예) [핸드폰인증] %authcode% ☜ 인증번호를 정확히 입력해 주세요.</p>
+			</div>
+   		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">인증번호 요구 카테고리</label>
+			<div class="x_controls">
+				{@$list = array_filter(explode(',',$config->list))}
 					<input type="hidden" name="list" value="{$config->list}" />
 					<select class="multiorder_show" size="8" multiple="multiple" style="width:290px;vertical-align:top">
 						<option loop="$action_list=>$key,$val" cond="!in_array($val,$list)" value="{$val}">{Context::getLang($val)}</option>
 					</select>
-					<button type="button" class="text multiorder_add" style="vertical-align:top">{$lang->cmd_insert}</button>
+					<button type="button" class="text multiorder_add" style="vertical-align:top">추가</button>
 					<select class="multiorder_selected" size="8" multiple="multiple" style="width:290px;vertical-align:top">
 						<option loop="$list=>$key,$val" value="{$val}">{Context::getLang($val)}</option>
 					</select>
-					<button type="button" class="text multiorder_del" style="vertical-align:top">{$lang->cmd_delete}</button>
+					<button type="button" class="text multiorder_del" style="vertical-align:top">삭제</button>
 					<script type="text/javascript">
 						xe.registerApp(new xe.MultiOrderManager('list'));
-					</script>
-				</p>
-				<p class="desc">인증모듈을 사용할 액션을 선택하세요.<br />예) '회원가입'을 추가하시면 회원가입시 인증번호를 요구합니다.</p>
-
-				</p>
-			</li>
-		</ul>
-
-		<ul>
-			<li>
-				<p class="q">가로너비</p>
-				<p class="a">
-					<input type="text" size="5" name="width" value="{$config->width}" />
-				</p>
-				<p class="desc">가로너비를 설정하실 수 있습니다. 90% 혹은 650px 와 같이 입력해 주세요.</p>
-
-				</p>
-			</li>
-		</ul>
-	</fieldset>
-
+					</script>	
+					<a href="#validationcode_act_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+            		<p id="validationcode_act_help" class="x_help-block"hidden>인증모듈을 사용할 액션을 선택하세요.<br />예) '회원가입'을 추가하시면 회원가입시 인증번호를 요구합니다.</p>
+			</div>
+   		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">가로길이</label>
+			<div class="x_controls">
+				<input type="text" size="5" name="width" value="{$config->width}" />
+				<a href="#width_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+            	<p id="width_help" class="x_help-block"hidden>가로너비를 설정하실 수 있습니다. 90% 혹은 650px 와 같이 입력해 주세요.</p>
+			</div>
+		</div>
+	</section>
 	<div class="btnArea">
-		<span class="btn"><input type="submit" value="{$lang->cmd_save}" /></span>
+		<span class="btn"><input type="submit"></span>
 	</div>
 </form>
 
