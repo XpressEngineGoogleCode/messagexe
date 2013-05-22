@@ -3,21 +3,20 @@
 <include target="header.html" />
 
 <!-- 목록 -->
-<form action="./" method="get" onsubmit="return doChangeCategory(this);" id="fo_list">
-	<table cellspacing="0" class="rowTable">
+<form action="./" class="x_form-horizontal" method="get" onsubmit="return doChangeCategory(this);" id="fo_list">
+	<table cellspacing="0" class="x_table">
 		<thead>
 			<tr>
 				<th scope="col"><div>{$lang->no}</div></th>
-				<th scope="col"><div><input type="checkbox" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
 				<th scope="col">
 					<div>
-					<input type="hidden" name="module" value="{$module}" />
-					<input type="hidden" name="act" value="{$act}" />
-					<select name="module_category_srl">
-						<option value="">{$lang->module_category}</option>
-						<option loop="$module_category=>$key,$val" value="{$key}" selected="selected"|cond="$module_category_srl==$key">{$val->title}</option>
-					</select>
-					<input type="submit" name="go_button" id="go_button" value="GO" class="buttonTypeGo" />
+						<input type="hidden" name="module" value="{$module}" />
+						<input type="hidden" name="act" value="{$act}" />
+						<select name="module_category_srl">
+							<option value="">{$lang->module_category}</option>
+							<option loop="$module_category=>$key,$val" value="{$key}" selected="selected"|cond="$module_category_srl==$key">{$val->title}</option>
+						</select>
+						<input type="submit" name="go_button" id="go_button" value="GO" class="buttonTypeGo" />
 					</div>
 				</th>
 				<th scope="col" class="half_wide"><div>{$lang->mid}</div></th>
@@ -25,12 +24,14 @@
 				<th scope="col"><div>{$lang->regdate}</div></th>
 				<th scope="col" colspan="4"><div>&nbsp;</div></th>
 			</tr>
+			<tr cond="!count($list)">
+				<td colspan="7" style="text-align:center;">등록된 목록이 없습니다.</td>
+			</tr>
 		</thead>
 		<tbody>
 			<!--@foreach($list as $no => $val)-->
 			<tr>
 				<td class="center number">{$no}</td>
-				<td class="center"><input type="checkbox" name="cart" value="{$val->module_srl}" /></td>
 				<td>
 					<!--@if(!$val->module_category_srl)-->
 					<!--@if($val->site_srl)-->
@@ -54,10 +55,10 @@
 </form>
 
 <div class="btnArea">
-	<span class="btn"><a href="{getUrl('act','dispReset_passwordAdminInsertModInst','module_srl','')}">{$lang->cmd_make}</a></span>
+	<a href="{getUrl('act','dispReset_passwordAdminInsertModInst','module_srl','')}" class="x_btn">{$lang->cmd_make}</a>
 </div>
 
-<div class="modal" id="deleteInstance">
+<div class="x_modal" id="deleteInstance">
         <form action="./" class="fg form" method="post">
                 <input type="hidden" name="module" value="nstore_digital" />
                 <input type="hidden" name="act" value="procReset_passwordAdminDeleteModInst" />

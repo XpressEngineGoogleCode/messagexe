@@ -1,9 +1,13 @@
-<h1 class="h1">{$lang->cmd_reset_password}</h1>
-<div>
-	<ul class="localNavigation">
-		<li class="on"|cond="$act=='dispReset_passwordAdminModInstList'"><a href="{getUrl('act','dispReset_passwordAdminModInstList')}">모듈생성목록</a></li>
-	</ul>
+<div class="x_page-header">
+	<h1>
+		비밀번호찾기
+		<a href="#aboutModule" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+	</h1>
 </div>
+<p class="x_alert x_alert-info" id="aboutModule" hidden>휴대전화번호 인증을 통해 비밀번호를 찾는 모듈입니다.</p>
+	<ul class="x_nav x_nav-tabs">
+		<li class="x_active"|cond="$act=='dispReset_passwordAdminModInstList'"><a href="{getUrl('act','dispReset_passwordAdminModInstList')}">모듈생성목록</a></li>
+	</ul>
 <div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 <p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
