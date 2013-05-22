@@ -1,10 +1,14 @@
-<h1 class="h1">{$lang->cmd_notification}</h1>
 
-<div class="header4">
-    <ul class="localNavigation">
-        <li <!--@if($act=='dispNotificationAdminList' || $act=='dispNotificationAdminInsert' || $act=='dispNotificationAdminModify')-->class="on"<!--@end-->><a href="{getUrl('act','dispNotificationAdminList')}">{$lang->cmd_notification_setup}</a></li>
-    </ul>
+<div class="x_page-header">
+	<h1>{$lang->cmd_notification}
+		<a href="#aboutModule" data-toggle class="x_icon-question-sign">{$lang->help}</a>	
+	</h1>
 </div>
+<p class="x_alert x_alert-info" id="aboutModule" hidden>휴대폰 댓글 알림 모듈입니다.</p>
+	<ul class="x_nav x_nav-tabs">
+        <li class="x_active"<!--@if($act=='dispNotificationAdminList' || $act=='dispNotificationAdminInsert' || $act=='dispNotificationAdminModify')-->class="on"<!--@end-->><a href="{getUrl('act','dispNotificationAdminList')}">{$lang->cmd_notification_setup}</a></li>
+    </ul>
+
 <div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 <p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
