@@ -1,0 +1,29 @@
+/* Reset */
+html,
+body{height:100%; margin:0;}
+body{position:relative;margin:0;padding:0;font-size:12px;font-family:NanumGothic, Dotum, sans-serif;background:#fff;color:#000;}
+address{font-style:normal;}
+img,
+fieldset{border:0;margin:0;padding:0;}
+form{margin:0;}
+legend{position:absolute;width:0;height:0;overflow:hidden;font-size:0;line-height:0;visibility:hidden;}
+hr{display:none;}
+body, table, input, textarea, select, button, div, span, h1, h2, h3, h4, h5, a, li, p, a{ font-family:NanumGothic, ngwoff, ngeot }
+
+/* Layout */
+#nurigo{width:800px; margin:0 auto;}
+
+/* Header */
+#nurigo .header {padding:10px 0 10px 10px; border-bottom:1px solid #ddd; color:#555; font-size:13px; font-weight:bold;}
+#nurigo .explanation {padding:10px; overflow:hidden; font-color:#ddd; }
+
+/* Content */
+#nurigo .content {padding:50px 0 50px 90px; overflow:hidden;}
+#nurigo .button {display: inline-block;	zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */ *display: inline; vertical-align: baseline; margin:10px; outline: none; cursor: pointer; text-align: center; text-decoration: none; padding:10px 35px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; -webkit-box-shadow: 0 1px 2px #999; -moz-box-shadow: 0 1px 2px #999; box-shadow: 0 1px 2px #999; border:1px solid #c1c1c1;font-family:NanumGothic, Dotum, sans-serif; background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));background: -moz-linear-gradient(top,  #fff,  #ededed); filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');}
+#nurigo .button:hover {text-decoration: none;  background: #ededed; background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc)); background: -moz-linear-gradient(top,  #fff,  #dcdcdc); filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc'); border:1px solid #999;}
+#nurigo .button a {text-decoration:none; color:#555; font-size:15px;}
+#nurigo .img_phone1 {height:140px; width:100px; background:url(../img/phone03.png) no-repeat; background-position:50% 50%;}
+#nurigo .img_phone2 {height:140px; width:100px; background:url(../img/phone02.png) no-repeat; background-position:50% 50%;}
+#nurigo .img_email {height:140px; width:100px; background:url(../img/e-mail_06.png) no-repeat; background-position:50% 50%;}
+#nurigo .id_point {color:#ff9000; font-weight:bold;}
+#nurigo .password_point {color:#77b20f; font-weight:bold;}

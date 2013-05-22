@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants />
+    <permissions />
+	<menus>
+	</menus>
+    <actions>
+		<action name="dispReset_passwordAdminModInstList" type="view" admin_index="true" />
+		<action name="dispReset_passwordAdminInsertModInst" type="view" />
+
+		<action name="getReset_passwordAdminDeleteModInst" type="model" />
+
+		<action name="procReset_passwordAdminInsertModInst" type="controller" ruleset="insert_config" />
+		<action name="procReset_passwordAdminDeleteModInst" type="controller" />
+
+		<action name="dispReset_passwordIndex" type="view" index="true" />
+		<action name="dispReset_passwordFindId" type="view" />
+		<action name="dispReset_passwordFindPassword" type="view" />
+    </actions>
+</module>
