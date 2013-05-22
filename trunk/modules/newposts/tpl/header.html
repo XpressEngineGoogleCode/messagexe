@@ -1,11 +1,16 @@
 <load target="css/style.css" />
-<h1 class="h1">{$lang->cmd_newposts}</h1>
-
-<div cond="0" class="header4">
-    <ul class="localNavigation">
-        <li <!--@if($act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify')-->class="on"<!--@end-->><a href="{getUrl('act','dispNewpostsAdminList')}">{$lang->cmd_newposts_config}</a></li>
-    </ul>
+<div class="x_page-header">
+	<h1>
+		{$lang->cmd_newposts}
+		<a href="#aboutModule" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+	</h1>
 </div>
+<p class="x_alert x_alert-info" id="aboutModule" hidden>휴대폰 새 글 알림 모듈입니다.</p>
+	<ul class="x_nav x_nav-tabs">
+        <li class="x_active"|cond="$act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify'"><a href="{getUrl('act','dispNewpostsAdminList')}">새글알림목록</a></li>
+        <li cond="!module_srl && $act=='dispNewpostAdminInsert'" class="x_active"|cond="$act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify'"><a href="{getUrl('act','dispNewpostsAdminList')}">새글알림등록</a></li>
+	</ul>
+
 <div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 <p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>

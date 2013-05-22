@@ -21,7 +21,7 @@
 			<td>{htmlspecialchars(substr($val->content, 0, 24))}..</td>
 			<td>{htmlspecialchars(substr($val->mail_content, 0, 24))}..</td>
 			<td>{@$mod_mid=array()}<!--@foreach($val->module_info as $mod)-->{@$mod_mid[]=$mod->mid}<!--@end-->{join(', ', $mod_mid)}</td>
-			<td>{zdate($val->regdate)}</td>
+			<td>{zdate($val->regdate,"Y-m-d")}</td>
 			<td><a href="{getUrl('act','dispNewpostsAdminModify','config_srl',$val->config_srl)}" class="buttonSet buttonSetting"><span>{$lang->cmd_setup}</span></a></td>
 			<td><a href="#delete" class="modalAnchor deleteConfig" data-config-srl="{$val->config_srl}">{$lang->cmd_delete}</a></td>
 		</tr>
@@ -34,23 +34,15 @@
 
 <!-- 버튼 -->
 <div class="btnArea">
-	<a href="{getUrl('act', 'dispNewpostsAdminInsert')}" class="button"><span>{$lang->cmd_registration}</span></a>
+	<a href="{getUrl('act', 'dispNewpostsAdminInsert')}" class="x_btn">{$lang->cmd_registration}</a>
 </div>
 
 <!-- 페이지 네비게이션 -->
-<div class="pagination a1">
-	<a href="{getUrl('page','','module_srl','')}" class="prevEnd">{$lang->first_page}</a> 
-	<!--@while($page_no = $page_navigation->getNextPage())-->
-		<!--@if($page == $page_no)-->
-			<strong>{$page_no}</strong> 
-		<!--@else-->
-			<a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
-		<!--@end-->
-	<!--@end-->
-	<a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
+<div class="x_clearfix">
+	<include target="_page_navigation.html" />
 </div>
 
-<div class="modal" id="delete">
+<div class="x_modal" id="delete">
 	<form action="./" class="fg form" method="post">
 		<input type="hidden" name="module" value="newposts" />
 		<input type="hidden" name="act" value="procNewpostsAdminDelete" />
