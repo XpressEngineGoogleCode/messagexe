@@ -1,0 +1,77 @@
+<include target="header.html" />
+
+<form class="form" action="./" method="post" enctype="multipart/form-data" ruleset="insert_config">
+	<input type="hidden" name="module" value="reset_password" />
+	<input type="hidden" name="act" value="procReset_passwordAdminInsertModInst" />
+	<input type="hidden" name="page" value="{$page}" />
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	<input type="hidden" name="primary_key" value="{$module_info->module_srl}" />
+
+	<fieldset class="section">
+		<ul>
+			<li>
+				<p class="q"><label for="mid">{$lang->mid}</label></p>
+				<p class="a"><input type="text" name="mid" id="mid" value="{$module_info->mid}" />
+				<p class="desc">{$lang->about_mid}</p>
+			</li>
+			<li>
+				<p class="q">{$lang->module_category}</p>
+				<p class="a">
+					<select name="module_category_srl">
+						<option value="0">{$lang->notuse}</option>
+						<option loop="$module_category=>$key,$val" value="{$key}" selected="selected"|cond="$module_info->module_category_srl==$key">{$val->title}</option>
+					</select>
+				</p>
+		    	<p class="desc">{$lang->about_module_category}</p>
+			</li>
+			<li>
+				<p class="q">{$lang->browser_title}</p>
+				<p class="a">
+					<input type="text" name="browser_title" value="{htmlspecialchars($module_info->browser_title)}"  class="inputTypeText w400" id="browser_title" />
+					<a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','browser_title')}" onclick="popopen(this.href);return false;" class="buttonSet buttonSetting"><span>{$lang->cmd_find_langcode}</span></a>
+		    	<p class="desc">{$lang->about_browser_title}</p>
+			</li>
+			<li>
+				<p class="q">{$lang->layout}</p>
+				<p class="a">
+					<select name="layout_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$layout_list=>$key,$val" value="{$val->layout_srl}" selected="selected"|cond="$module_info->layout_srl==$val->layout_srl">{$val->title} ({$val->layout})</option>
+					</select>
+				</p>
+		    	<p class="desc">{$lang->about_layout}</p>
+			</li>
+			<li>
+				<p class="q">{$lang->skin}</p>
+				<p class="a">
+					<select name="skin">
+					<option loop="$skin_list=>$key,$val" value="{$key}"  selected="selected"|cond="$module_info->skin==$key">{$val->title}</option>
+					</select>
+				</p>
+		    	<p class="desc">{$lang->about_skin}</p>
+			</li>
+			<li>
+				<p class="q">{$lang->subtitle}</p>
+				<p class="a">
+					<input type="text" name="subtitle" value="{htmlspecialchars($module_info->subtitle)}"|cond="$module_info->module_srl" value="{$lang->default_subtitle}"|cond="!$module_info->module_srl" style="width:600px;" id="subtitle" />
+					<a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','subtitle')}" onclick="popopen(this.href);return false;" class="buttonSet buttonSetting"><span>{$lang->cmd_find_langcode}</span></a>
+		    	<p class="desc">{$lang->about_subtitle}</p>
+			</li>
+			<li>
+				<p class="q">{$lang->option_email}</p>
+				<p class="a">
+					<select name="option_email">
+						<option value="Y" selected="selected"|cond="$module_info->option_email=='Y'">{$lang->use}</option>
+						<option value="N" selected="selected"|cond="$module_info->option_email=='N'">{$lang->notuse}</option>
+					</select>
+				</p>
+		    	<p class="desc">{$lang->about_option_email}</p>
+			</li>
+		</ul>
+	</fieldset>
+
+	<div class="btnArea">
+		<span class="btn"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+		<span class="btn"><a href="{getUrl('act','dispReset_passwordAdminModInstList')}">{$lang->cmd_back}</a></span>
+	</div>
+</form>
