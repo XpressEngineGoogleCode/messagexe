@@ -282,7 +282,7 @@ class textmessageController extends textmessage
 			$options = new StdClass();
 			$options->member_srl = 0;
 			$options->splitlimit = 0;
-			$options->bytes_per_each = 80;
+			$options->bytes_per_each = 90;
 			$options->checkmb = TRUE;
 		}
 
