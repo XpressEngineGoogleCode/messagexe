@@ -1217,7 +1217,7 @@ function get_switch_value() {
 function getMsgType() {
     var msgtype = 'sms';
     var content = get_all_content();
-    if (getTextBytes(content)[0] > 80) {
+    if (getTextBytes(content)[0] > 90) {
         if (jQuery('#mmsSend','#smsMessage').attr('checked')) msgtype = 'lms';
     }
     var file_srl = jQuery('input[name=file_srl]', '#smsMessage').val();
@@ -1275,7 +1275,7 @@ function do_after_get_cashinfo(cashinfo)
         npages = get_page_count();
         /*
         bytes = getTextBytes(jQuery('#smsPurplebookTextMessage').val())[0];
-        npages = Math.ceil(bytes / 80);
+        npages = Math.ceil(bytes / 90);
         */
 
         if ((count * npages) > sms_avail)
@@ -1369,7 +1369,7 @@ function completeGetPointInfo(ret_obj, response_tags) {
 
 		var content = get_all_content();
         bytes = getTextBytes(content)[0];
-        npages = Math.ceil(bytes / 80);
+        npages = Math.ceil(bytes / 90);
 
         if ((count * npages) > sms_avail)
         {
@@ -1440,9 +1440,9 @@ function SliceBytePerLayer(str)
         else if ( str.charAt(i) != '\\r' || str.charAt(i) != '\\n' )
             length++;
 
-        if(length >= 80 || i == str.length - 1)
+        if(length >= 90 || i == str.length - 1)
         {
-            if(length > 80)
+            if(length > 90)
                 i--;
 
             sliceByte[sliceByte.length] = str.substring(start_idx, i + 1);
@@ -1573,7 +1573,7 @@ function display_type_switch() {
     var bytes = getTextBytes(content)[0];
     var npages = get_page_count();
     var file_srl = jQuery('input[name=file_srl]','#smsMessage').val();
-    if(!file_srl && (bytes > 80 || npages > 1)) {
+    if(!file_srl && (bytes > 90 || npages > 1)) {
         show_msgtype_switch();
     } else {
         hide_msgtype_switch();
@@ -1654,7 +1654,7 @@ function display_preview() {
     bytes = getTextBytes($current.val())[0];
    
     if (get_switch_value()=='SMS') {
-        if (bytes > 80) {
+        if (bytes > 90) {
             extend_screen();
         }
     }
@@ -3650,7 +3650,7 @@ function submit_messages() {
         $('#smsPurplebookList').delegate('li','mousedown', function() { $(this).contextMenu(menu1,{theme:'vista',offsetX:1,offsetY:1}); });
 
         // progressbar options
-        var g_progress_options = {boxImage:g_tpl_path+'img/progress/progressbar.gif',barImage:{0:g_tpl_path+'img/progress/progressbg_red.gif',50:g_tpl_path+'img/progress/progressbg_orange.gif',80:g_tpl_path+'img/progress/progressbg_yellow.gif',95:g_tpl_path+'img/progress/progressbg_green.gif'}};
+        var g_progress_options = {boxImage:g_tpl_path+'img/progress/progressbar.gif',barImage:{0:g_tpl_path+'img/progress/progressbg_red.gif',50:g_tpl_path+'img/progress/progressbg_orange.gif',90:g_tpl_path+'img/progress/progressbg_yellow.gif',95:g_tpl_path+'img/progress/progressbg_green.gif'}};
         jQuery('.progressBar','#smsMessage').progressBar(g_progress_options);
 
         // HELP balloon
