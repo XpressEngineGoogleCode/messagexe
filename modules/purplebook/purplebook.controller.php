@@ -688,7 +688,7 @@ class purplebookController extends purplebook
 		$logged_info = Context::get('logged_info');
 		if(!$logged_info) return new Object(-1, 'msg_login_required');
 
-		$data = Context::get('data');
+		$data = $this->getJSON('data');
 		$parent_node = Context::get('parent_node');
 
 		// get node_route
@@ -709,7 +709,6 @@ class purplebookController extends purplebook
 
 			$node_route = $output->data->node_route . $parent_node . '.';
 		}
-
 
 		$list = array();
 		foreach ($data as $obj)
