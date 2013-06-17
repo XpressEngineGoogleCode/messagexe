@@ -6,7 +6,7 @@ jQuery(document).ready(function (){
 });
 	*/
 
-function getAuthCode()
+function getAuthCode(target_action)
 {
 /*
 	var today = new Date();
@@ -66,6 +66,7 @@ function getAuthCode()
 	params['module'] = 'authentication';
 	params['phonenum'] = phonenum;
 	params['country_code'] = country_code;
+	params['target_action'] = target_action;
 	exec_xml('authentication', 'procAuthenticationSendAuthCode', params, completeSendAuthCode, responses);
 }
 

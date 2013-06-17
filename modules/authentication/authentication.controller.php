@@ -20,6 +20,7 @@ class authenticationController extends authentication
 	{
 		$oAuthenticationModel = &getModel('authentication');
 		$config = $oAuthenticationModel->getModuleConfig();
+		$target_action = Context::get('target_action');
 
 		// check variables
 		$phonenum = Context::get('phonenum');
@@ -29,6 +30,15 @@ class authenticationController extends authentication
 			return new Object(-1, '국가 및 휴대폰 번호를 전부 입력해주세요.');
 		}
 		$reqvars = Context::getRequestVars();
+
+		// check duplicated.
+		if($config->number_overlap == 'N' && $target_action == 'dispMemberSignUpForm')
+		{		 
+			$args->clue = $phonenum;
+			$output = executeQuery('authentication.getAuthenticationMemberCountByClue', $args);
+			if(!$output->toBool()) return $output;
+			if($output->data->count > 0) return new Object(-1, '가입하신 휴대폰 번호로 중복 가입이 불가능합니다.');
+		}
 
 		$trigger_output = ModuleHandler::triggerCall ('authentication.procAuthenticationSendAuthCode', 'before', $reqvars);
 		if(!$trigger_output->toBool ()) return $trigger_output;
@@ -175,6 +185,7 @@ class authenticationController extends authentication
 		{
 			$oModule->setTemplatePath(sprintf($this->module_path.'skins/%s/', $config->skin));
 		}
+		Context::set('target_action', $oModule->act);
 		$oModule->setTemplateFile('index');
 
 		if($config->authcode_time_limit)
