@@ -31,7 +31,7 @@
 					<input class="input01 size02" type="text" name="phonenum[]" id="phonenum_1" size="5" maxlength="4" value="010" />
 					<input class="input01 size02" type="text" name="phonenum[]" id="phonenum_2" size="5" maxlength="4" value="{$phone_2}" autofocus="autofocus" />
 					<input class="input01 size02" type="text" name="phonenum[]" id="phonenum_3" size="5" maxlength="4" value="{$phone_3}" />
-					<a href="#" onclick="getAuthCode(); return false;" id="get_authcode"><span>Get AuthCode</span></a>
+					<a href="#" onclick="getAuthCode('{$target_action}'); return false;" id="get_authcode"><span>Get AuthCode</span></a>
 					<a cond="0" href="#" onclick="getAuthCode(); return false;" id="authcode_resend"><img src="img/phone_07.gif" border="0" /></a>
 				</td>
 			</tr>

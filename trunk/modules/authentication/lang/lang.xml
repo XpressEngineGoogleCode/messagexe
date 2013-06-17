@@ -34,6 +34,22 @@
 		<value xml:lang="ko"><![CDATA[메시지 내용.]]></value>
 		<value xml:lang="en"><![CDATA[Message content.]]></value>
 	</item>
+	<item name="dispMemberSignUpForm">
+		<value xml:lang="ko"><![CDATA[회원가입]]></value>
+		<value xml:lang="en"><![CDATA[Sign Up]]></value>
+	</item>
+	<item name="dispMemberModifyInfo">
+		<value xml:lang="ko"><![CDATA[회원정보 수정]]></value>
+		<value xml:lang="en"><![CDATA[Modifying Member Info.]]></value>
+	</item>
+	<item name="dispMemberModifyPassword">
+		<value xml:lang="ko"><![CDATA[비밀번호 변경]]></value>
+		<value xml:lang="en"><![CDATA[Modifying password]]></value>
+	</item>
+	<item name="dispMemberLeave">
+		<value xml:lang="ko"><![CDATA[회원탈퇴]]></value>
+		<value xml:lang="en"><![CDATA[Leave membership]]></value>
+	</item>
 
 	<item name="country_codes" type="array">
 		<item name="233">
