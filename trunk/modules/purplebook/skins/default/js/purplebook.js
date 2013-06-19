@@ -1206,7 +1206,7 @@ function sendMessage() {
     show_and_hide($layer,null,{force_show:true});
 
     sendMessageData.send_timer = setInterval(function() {sendMessageData();  }, 3000);
-    sendMessage.update_timer = setInterval(function() { updateResultStatus(); }, 2000);
+    sendMessage.update_timer = setInterval(function() { updateResultStatus(); }, 5000);
 }
 
 function get_switch_value() {
