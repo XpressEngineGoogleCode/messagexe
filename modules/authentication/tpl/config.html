@@ -2,8 +2,9 @@
 <load target="../../module/tpl/js/multi_order.js" />
 <load target="../lang" />
 
-<form class="x_form-horizontal" action="./" method="get" onsubmit="return procFilter(this, insert_resale);">
+<form class="x_form-horizontal" action="./" method="post">
 	<input type="hidden" name="act" value="procAuthenticationAdminConfig" />
+	<input type="hidden" name="module" value="{$module}" />
 	<input type="hidden" name="module_srl" value={$module_srl} />
 
 	<section class="section">
