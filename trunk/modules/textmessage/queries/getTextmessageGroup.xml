@@ -1,0 +1,12 @@
+<query id="getTextmessageGroup" action="select">
+	<tables>
+		<table name="textmessage_groups" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="member_srl" var="member_srl" />
+		<condition operation="equal" column="group_id" var="group_id" pipe="and" />
+	</conditions>
+</query>
