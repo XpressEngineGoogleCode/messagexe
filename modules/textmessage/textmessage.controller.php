@@ -19,8 +19,18 @@ class textmessageController extends textmessage
 
 	function insertTextmessageGroup($args) 
 	{
-		// DB INSERT
-		return executeQuery('textmessage.insertTextmessageGroup', $args);
+		$output = executeQuery('textmessage.getTextmessageGroup', $args);
+		if($output->data)
+		{
+			$group_info = $output->data;
+			$group_info->total_count += $args->total_count;
+			$output = executeQuery('textmessage.updateTextmessageGroup', $group_info);
+		}
+		else
+		{
+			// DB INSERT
+			$output = executeQuery('textmessage.insertTextmessageGroup', $args);
+		}
 	}
 
 	function minusWaitingCount($group_id) 
@@ -361,7 +371,6 @@ class textmessageController extends textmessage
 				$output = $this->insertTextmessage($query_args);
 				if (!$output->toBool())
 				{
-					debugPrint($output);
 					return $output;
 				}
 
@@ -442,10 +451,6 @@ class textmessageController extends textmessage
 		$args->reservdate = $reservdate;
 		$args->total_count = $total_count;
 		$output = $this->insertTextmessageGroup($args);
-		if(!$output->toBool())
-		{
-			return $output;
-		}
 		unset($args);
 
 		// connect to server
