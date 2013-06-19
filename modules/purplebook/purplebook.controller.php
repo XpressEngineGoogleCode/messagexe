@@ -1196,7 +1196,6 @@ class purplebookController extends purplebook
 	}
 	
 	function procPurplebookPurplebookDownload() {
-	debugPrint('yaaaaaaaaaaa');
 		$logged_info = Context::get('logged_info');
 		if (!$logged_info) return new Object(-1, 'msg_not_logged');
 
