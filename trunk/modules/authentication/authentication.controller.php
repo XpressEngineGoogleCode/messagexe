@@ -87,7 +87,7 @@ class authenticationController extends authentication
 
 		$args->country_code = $country_code;
 		$args->recipient_no =  $phonenum;
-		$args->callback = '';
+		$args->sender_no = $config->sender_no;
 		if($config->message_content)
 		{
 			$content = str_replace(array("%authcode%"),array($keystr),$config->message_content);

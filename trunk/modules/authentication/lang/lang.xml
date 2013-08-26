@@ -6,9 +6,7 @@
 	<item name="authcode">
 		<value xml:lang="ko"><![CDATA[인증번호]]></value>
 	</item>
-	<item name="about_number_limit">
-		<value xml:lang="ko"><![CDATA[빈칸으로 두시면 기본 다섯자로 인증번호가 전송됩니다. 최대 여덞자 까지 가능합니다.]]></value>
-	</item>
+
 	<item name="validationcode_act">
 		<value xml:lang="ko"><![CDATA[액션선택]]></value>
 		<value xml:lang="en"><![CDATA[Select Action]]></value>
@@ -26,10 +24,7 @@
 		<value xml:lang="ko"><![CDATA[인증번호 전송횟수 제한]]></value>
 		<value xml:lang="en"><![CDATA[Authentication transmit number limit]]></value>
 	</item>
-	<item name="about_validationcode_fieldname">
-		<value xml:lang="ko"><![CDATA[핸드폰인증 애드온 사용시 반드시 설정해야할 항목입니다. 매뉴얼을 참고하세요.<br />핸드폰인증 애드온을 사용하지 않으신다면 비워두세요.]]></value>
-		<value xml:lang="en"><![CDATA[Authentication Field]]></value>
-	</item>
+
 	<item name="validationcode_content">
 		<value xml:lang="ko"><![CDATA[메시지 내용.]]></value>
 		<value xml:lang="en"><![CDATA[Message content.]]></value>
@@ -49,6 +44,16 @@
 	<item name="dispMemberLeave">
 		<value xml:lang="ko"><![CDATA[회원탈퇴]]></value>
 		<value xml:lang="en"><![CDATA[Leave membership]]></value>
+	</item>
+	<item name="about_number_limit">
+		<value xml:lang="ko"><![CDATA[빈칸으로 두시면 기본 다섯자로 인증번호가 전송됩니다. 최대 여덞자 까지 가능합니다.]]></value>
+	</item>
+	<item name="about_validationcode_fieldname">
+		<value xml:lang="ko"><![CDATA[핸드폰인증 애드온 사용시 반드시 설정해야할 항목입니다. 매뉴얼을 참고하세요.<br />핸드폰인증 애드온을 사용하지 않으신다면 비워두세요.]]></value>
+		<value xml:lang="en"><![CDATA[Authentication Field]]></value>
+	</item>
+	<item name="about_sender_no">
+		<value xml:lang="ko"><![CDATA[설정된 발신번호로 인증문자를 발송합니다.]]></value>
 	</item>
 
 	<item name="country_codes" type="array">
