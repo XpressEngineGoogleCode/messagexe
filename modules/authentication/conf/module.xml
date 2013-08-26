@@ -9,6 +9,7 @@
 		<action name="dispAuthenticationAdminAuthcodeList" type="view"/>
 		<action name="dispAuthenticationAdminMemberList" type="view"/>
 		<action name="dispAuthenticationAdminXLSDownload" type="view"/>
+		<action name="dispAuthenticationAdminSkinInfo" type="view"/>
 
 		<action name="procAuthenticationAdminConfig" type="controller" ruleset="insert_config" />
 		<action name="procAuthenticationAdminMigrateFromMXE" type="controller" />
