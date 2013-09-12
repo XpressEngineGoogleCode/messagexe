@@ -1002,6 +1002,10 @@ function send_json(content)
     }
     if (typeof(send_json.groupid_seed)=='undefined') send_json.groupid_seed = randomID(GROUPID_SEED_SIZE);
 
+	var data = JSON.stringify(content);
+	// for ie8
+	data = unescape(data.replace(/\\u/g, '%u'));
+
     jQuery.ajax({
         type : "POST"
         , contentType: "application/json; charset=utf-8"
@@ -1009,7 +1013,7 @@ function send_json(content)
         , data : { 
                     module : "purplebook"
                     , act : "procPurplebookSendMsg"
-                    , data : JSON.stringify(content)
+                    , data : data
                     , ticket : g_ticket
                     , module_srl : g_module_srl
                     , use_point : g_use_point
