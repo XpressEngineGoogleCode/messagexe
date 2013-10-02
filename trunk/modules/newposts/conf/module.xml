@@ -12,10 +12,13 @@
         <action name="dispNewpostsAdminList" type="view" admin_index="true" menu_name="newpostsConfig" menu_index="true" />
         <action name="dispNewpostsAdminInsert" type="view"  menu_name="newpostsConfig" />
         <action name="dispNewpostsAdminModify" type="view"  menu_name="newpostsConfig" />
-
+		<action name="dispNewpostsAdminSet" type="view" menu_name="newpostsConfig" />
+		
         <action name="getNewpostsAdminDelete" type="model" />
 
         <action name="procNewpostsAdminInsert" type="controller"  />
         <action name="procNewpostsAdminDelete" type="controller"  />
+		<action name="procNewpostsAdminSet" type="controller"  />
+		<action name="procNewpostsAdminModify" type="controller" />
     </actions>
 </module>

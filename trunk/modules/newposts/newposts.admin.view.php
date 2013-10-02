@@ -134,7 +134,14 @@ class newpostsAdminView extends newposts
 				$module_srls[] = $val->module_srl;
 			}
 		}
-		$config->module_srls = join(',', $module_srls);
+		if(sizeOf($module_srls)>1)
+		{
+			$config->module_srls = join(',', $module_srls);
+		}else{
+			$config->module_srls = $module_srls[0];
+		}
+
+
 		Context::set('config', $config);
 
 		// editor
@@ -157,7 +164,107 @@ class newpostsAdminView extends newposts
 		$editor = $oEditorModel->getEditor($config_srl, $option);
 		Context::set('editor', $editor);
 
-		$this->setTemplateFile('insert');
+		$this->setTemplateFile('modify');
+	}
+
+	function dispNewpostsAdminSet()
+	{
+
+		$config_srl = Context::get('config_srl');
+		// load newposts info
+		$args->config_srl = $config_srl;
+		$output = executeQuery("newposts.getConfig", $args);
+		$config = $output->data;
+		
+		$args->config_srl = $config_srl;
+		$output = executequery("newposts.getmodulesrls", $args);
+
+		if (!$output->tobool()) return $output;
+		$module_srls = array();
+
+		if ($output->tobool() && $output->data && sizeOf($output->data)!=1) 
+		{
+			foreach ($output->data as $val) 
+			{
+				$module_srls[] = $val->module_srl;
+			}
+		}else{
+			$module_srls[] = $output->data->module_srl;
+		}
+		$output = array();
+		$tmpOutput = array();
+		$nextOutput = array();
+
+		for($i=0; $i<sizeOf($module_srls); $i++)
+		{
+			$args->module_srl = $module_srls[$i];
+
+			//get Category_srl & title
+			$output = executeQuery("newposts.getDocumentCategories", $args);
+
+			foreach($output->data as $no => $val)
+			{
+				$args->category_srl = $val->category_srl;
+				$args->parent_srl = $val->parent_srl;
+				$args->title = $val->title;
+
+				executeQuery("newposts.insertAdminInfo", $args);
+				executeQuery("newposts.updateAdminInfo", $args);
+
+				$tmpOutput = executeQuery("newposts.getAdminInfo", $args);
+				//get Browser title
+				$module_info = executeQuery("newposts.getModuleInfoByModuleSrl", $args);
+				$nextOutput[ucfirst($module_info->data->browser_title)][] = $tmpOutput->data;
+			}
+		}
+
+
+//debugPrint($nextOutput);
+		// re-arrange the outputs according to Parent -> child
+		$this->arrangeElement($nextOutput);
+		
+		Context::set('outputs', $nextOutput);
+		$this->setTemplateFile('set');
+	}
+	// rearrange array : parent board -> child board
+	function arrangeElement(&$array)
+	{
+		$i = 0;
+		$copyArray = array();
+		$keys = array();
+		$sortedData = array();
+		foreach($array as $data)
+		{
+			foreach($data as $key)
+			{
+				if($key->parent_srl != 0)
+				{
+					foreach($data as $val)
+					{
+						if($val->category_srl == $key->parent_srl)
+						{
+							$insert_index = array_keys($data, $val);
+							$remove_index = array_keys($data, $key);
+
+							$out = array_splice($data, $remove_index[0], 1);
+							array_splice($data, $insert_index[0]+1, 0, $out);	
+							//$array	= $data;
+						}
+					}
+				}
+
+			}
+			$keys = array_keys($array);
+			$sortedData[$keys[$i]] = $data;
+			$i++;
+		}
+		$array = $sortedData;	
+	}
+
+	function dispNewpostsAdminSetModify()
+	{
+		
 	}
 }
+
 ?>

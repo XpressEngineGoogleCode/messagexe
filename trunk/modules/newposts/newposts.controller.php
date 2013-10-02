@@ -8,13 +8,32 @@
 class newpostsController extends newposts 
 {
 
-	function sendMessages($content, $mail_content, $title, $sender, $config) 
+	function sendMessages($content, $mail_content, $obj, $sender, $config) 
 	{
+
+		// get Phone# & email address accoring to category admin from newposts_admins table
+		$args->category_srl = $obj->category_srl;
+		$output = executeQuery("newposts.getAdminInfo", $args);
+		debugPrint($output);
+
 		$oTextmessageController = &getController('textmessage');
 		$oNewpostsModel = &getModel('newposts');
 
 		if (in_array($config->sending_method,array('1','2'))&&$oTextmessageController) 
 		{
+
+			// <현서> $config->admin_phones 를 $output->cellphone 으로 변경 
+			$args->recipient_no = explode(',',$output->data->cellphone);
+			//$args->sender_no = $receiver->recipient_no;
+			$args->content = $content;
+			debugPrint($args);
+
+			$output = $oTextmessageController->sendMessage($args);
+			debugPrint($output);
+
+			if (!$output->toBool()) return $output;
+			
+			//전체관리자 Send 분류에 상관없이 보냄
 			$args->recipient_no = explode(',',$config->admin_phones);
 			//$args->sender_no = $receiver->recipient_no;
 			$args->content = $content;
@@ -41,10 +60,14 @@ class newpostsController extends newposts
 				$sender_name = $sender->nick_name;
 			}
 			$oMail = new Mail();
-			$oMail->setTitle($title);
+			$oMail->setTitle($obj->title);
 			$oMail->setContent($mail_content);
+
+
+
 			$oMail->setSender($sender_name, $sender_email_address);
-			$target_email = explode(',',$config->admin_emails);
+			// <현서> $config->admin_emails 를 $output->email 로 변경
+			$target_email = explode(',',$output->email);
 			foreach ($target_email as $email_address) 
 			{
 				$email_address = trim($email_address);
@@ -52,6 +75,19 @@ class newpostsController extends newposts
 				$oMail->setReceiptor($email_address, $email_address);
 				$oMail->send();
 			}
+			//전체관리자 Send 
+			$target_email = explode(',',$config->admin_emails);
+			debugPrint($target_email);
+			foreach ($target_email as $email_address) 
+			{
+				$email_address = trim($email_address);
+				if (!$email_address) continue;
+				$oMail->setReceiptor($email_address, $email_address);
+				$oMail->send();
+				
+			}
+
+
 		}
 	}
 
@@ -78,7 +114,9 @@ class newpostsController extends newposts
 		$tmp_obj->article_url = getFullUrl('','document_srl', $obj->document_srl);
 		$tmp_content = $this->mergeKeywords($mail_content, $tmp_obj);
 		$tmp_message = $this->mergeKeywords($sms_message, $tmp_obj);
-		$this->sendMessages($tmp_message, $tmp_content, $obj->title, $sender, $config);
+
+		// <현서> 기존 $obj->title 을 $obj 으로 변경 
+		$this->sendMessages($tmp_message, $tmp_content, $obj, $sender, $config);
 	}
 
 	/**

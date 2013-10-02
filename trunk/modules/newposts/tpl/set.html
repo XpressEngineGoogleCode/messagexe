@@ -1,0 +1,53 @@
+<load target="js/list.js" />
+
+<include target="header.html" />
+
+
+<form action="./" method="post">
+	<input type="hidden" name="module" value="newposts" />
+	<input type="hidden" name="act" value="procNewpostsAdminSet" />
+	<input type="hidden" name="config_srl" value="{$config->config_srl}" />
+
+	<section class="section" style="margin-left: 3%;">
+		<h2 style="margin-left:0%;">분류별 담당자 지정</h2>
+		<div class="x_control-group">
+			<block cond="!count($outputs)">
+				<h3> 이 게시판에는 분류가 없습니다. </h3>
+			</block>
+			
+			<table>
+				<block loop="$outputs=>$key,$val">
+					<tr >
+						<th><h3 style="margin-left:0%;"><strong> {$key} 게시판 </h3></th>
+							
+							<table style="margin-left:0%; margin-right: 30%;" class="table even easyList">	
+								<tr>
+									<th style="width:150px;"> 분류 이름 </th>
+									<th> 핸드폰 번호 </th>
+									<th> E-메일 </th>
+								</tr>
+
+								<tr loop="$val=>$key2, $val2" style="margin-left : 10%;"|cond="$val2->parent_srl!='0'">
+									<input type="hidden" name="category_srl[]" value="{$val2->category_srl}" />
+									<td style="text-align:center;"|cond="$val2->parent_srl==0" >
+										<img src="leaf-last.gif"|cond="$val2->parent_srl!='0'" style="margin-left : 40%;"|cond="$val2->parent_srl!='0'">{$val2->title} 
+									</td>
+									<td> <input type="text" name="cellphone[]" value="{$val2->cellphone}" maxlength="11"/> </td>
+									<td> <input type="email" name="email[]" value="{$val2->email}"   /> </td>
+								</tr>
+							</table>
+					</tr>
+				</block>
+			</table>
+
+		</div>
+	</section>			
+		
+	<div class="btnArea" style="margin-top : 0%;">
+			<input type="submit" class="x_btn x_btn-primary" value="{$lang->cmd_registration}" accesskey="s" />
+			<a href="{getUrl('act','dispNewpostsAdminList')}" type="button" class="x_btn">{$lang->cmd_list}</a>
+	</div>
+	
+
+</form>
+

@@ -83,5 +83,10 @@
 		<value xml:lang="ko"><![CDATA[%browser_title% : 브라우저제목<br />%nick_name% : 닉네임<br />%content% : 내용<br />%article_url% : 문서 URL<br />]]></value>
 		<value xml:lang="en"><![CDATA[%browser_title% : 브라우저제목<br />%nick_name% : 닉네임<br />%content% : 내용<br />%article_url% : 문서 URL<br />]]></value>
 	</item>
-
+	<item name="cmd_set">
+		<value xml:lang="ko"><![CDATA[분류별 담당자변경]]></value>
+	</item>
+	<item name="cdm_setModify">
+		<value xml:lang="ko"><![CDATA[변경]]></value>
+	</item>
 </lang>

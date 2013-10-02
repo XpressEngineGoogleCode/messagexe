@@ -1,0 +1,14 @@
+<query id="updateAdminInfo" action="update">
+	<tables>
+		<table name="newposts_admins" />
+	</tables>
+	<columns>
+		<column name="parent_srl" var="parent_srl" />
+		<column name="cellphone" var="cellphone" />
+		<column name="email" var="email" />
+		<column name="title" var="title" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="category_srl" var="category_srl" notnull="notnull" />
+	</conditions>
+</query>
