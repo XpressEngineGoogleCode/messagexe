@@ -1,0 +1,11 @@
+<query id="getAdminInfo" action="select">
+	<tables>
+		<table name="newposts_admins" />
+	</tables>
+	<columns>
+		<column name="*"  />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="category_srl" var="category_srl" notnull="notnull" />
+	</conditions>
+</query>ä
