@@ -20,8 +20,8 @@
 		<tr loop="$list=>$no,$val">
 			<td>{$val->no}</td>
 			<td>{htmlspecialchars(substr($val->content, 0, 24))}..</td>
-			<td>{htmlspecialchars(substr($val->mail_content, 0, 24))}..</td>
-			<td>{@$mod_mid=array()}<!--@foreach($val->module_info as $mod)-->{@$mod_mid[]=$mod->mid}<!--@end-->{join(', ', $mod_mid)}</td>
+			<td>{htmlspecialchars(substr($val->mail_content, 0, 50))}..</td>
+			<td>{@$mod_mid=array()}<!--@foreach($val->module_info as $mod)-->{@$mod_mid[]=ucfirst($mod->mid)}<!--@end-->{join(', ', $mod_mid)}</td>
 			<td>{zdate($val->regdate,"Y-m-d")}</td>
 			<td><a href="{getUrl('act','dispNewpostsAdminModify','config_srl',$val->config_srl)}" class="buttonSet buttonSetting"><span>{$lang->cmd_setup}</span></a></td>
 			<td><a href="#delete" class="modalAnchor deleteConfig" data-config-srl="{$val->config_srl}">{$lang->cmd_delete}</a></td>

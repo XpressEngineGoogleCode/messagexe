@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* vi:set ts=4 sw=4 expandtab enc=utf8: */
 
 .phonescreen_bg {
@@ -49,3 +49,6 @@
     scrollbar-shadow-color: #f9f9ff;
     scrollbar-darkshadow-color: #f9f9ff;
 }
+
+
+.x_control-group .xpress-editor select { min-width:0; }

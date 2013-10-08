@@ -112,6 +112,8 @@ class newpostsAdminView extends newposts
 		// load newposts info
 		$args->config_srl = $config_srl;
 		$output = executeQuery("newposts.getConfig", $args);
+		if(!$output->toBool()) return $output;
+
 		$config = $output->data;
 		$extra_vars = unserialize($config->extra_vars);
 		if ($extra_vars) 
@@ -126,6 +128,7 @@ class newpostsAdminView extends newposts
 		$args->config_srl = $config_srl;
 		$output = executeQueryArray("newposts.getModuleSrls", $args);
 		if (!$output->toBool()) return $output;
+
 		$module_srls = array();
 		if ($output->toBool() && $output->data) 
 		{
@@ -134,7 +137,7 @@ class newpostsAdminView extends newposts
 				$module_srls[] = $val->module_srl;
 			}
 		}
-		if(sizeOf($module_srls)>1)
+		if(sizeOf($module_srls)!=0)
 		{
 			$config->module_srls = join(',', $module_srls);
 		}else{
@@ -169,20 +172,18 @@ class newpostsAdminView extends newposts
 
 	function dispNewpostsAdminSet()
 	{
-
+		//config 정보 가져오기
 		$config_srl = Context::get('config_srl');
-		// load newposts info
 		$args->config_srl = $config_srl;
 		$output = executeQuery("newposts.getConfig", $args);
+		if(!$output->toBool()) return $output;
 		$config = $output->data;
 		
-		$args->config_srl = $config_srl;
-		$output = executequery("newposts.getmodulesrls", $args);
-
-		if (!$output->tobool()) return $output;
+		$output = executequery("newposts.getModuleSrls", $args);
+		if (!$output->toBool()) return $output;
 		$module_srls = array();
 
-		if ($output->tobool() && $output->data && sizeOf($output->data)!=1) 
+		if ($output->toBool() && $output->data && sizeOf($output->data)!=1) 
 		{
 			foreach ($output->data as $val) 
 			{
@@ -191,38 +192,50 @@ class newpostsAdminView extends newposts
 		}else{
 			$module_srls[] = $output->data->module_srl;
 		}
-		$output = array();
 		$tmpOutput = array();
 		$nextOutput = array();
 
 		for($i=0; $i<sizeOf($module_srls); $i++)
 		{
 			$args->module_srl = $module_srls[$i];
-
+			//get Browser title
+			$module_info = executeQuery("newposts.getModuleInfoByModuleSrl", $args);
+			if(!$module_info->toBool()) return $module_info;
 			//get Category_srl & title
 			$output = executeQuery("newposts.getDocumentCategories", $args);
+			if(!$output->toBool()) return $output;
+
+			// $nextOutput 에 넣을 Object 생성 
+			$obj = new stdClass();
+			$obj->title = ucfirst($module_info->data->browser_title);
+			$obj->data = array();
 
 			foreach($output->data as $no => $val)
 			{
 				$args->category_srl = $val->category_srl;
 				$args->parent_srl = $val->parent_srl;
 				$args->title = $val->title;
-
-				executeQuery("newposts.insertAdminInfo", $args);
-				executeQuery("newposts.updateAdminInfo", $args);
-
+				$out = executeQuery("newposts.insertAdminInfo", $args);
+				if(!$out->toBool()) {
+					executeQuery("newposts.updateAdminInfo", $args);
+				}
 				$tmpOutput = executeQuery("newposts.getAdminInfo", $args);
-				//get Browser title
-				$module_info = executeQuery("newposts.getModuleInfoByModuleSrl", $args);
-				$nextOutput[ucfirst($module_info->data->browser_title)][] = $tmpOutput->data;
+				if(!$tmpOutput->toBool()) return $tmpOutput;
+
+				$obj->data[] = $tmpOutput->data;
+				
+			}
+			//분류가 없는 게시판은 $nextOutput 에서 뺀다
+			if(count($output->data)!=0)
+			{
+				$nextOutput[$module_info->data->module_srl] = $obj;
+			}else{
+				array_splice($nextOutput, $i, 1);
 			}
 		}
-
-
-//debugPrint($nextOutput);
 		// re-arrange the outputs according to Parent -> child
 		$this->arrangeElement($nextOutput);
-		
+		Context::set('config_srl', $config_srl);
 		Context::set('outputs', $nextOutput);
 		$this->setTemplateFile('set');
 	}
@@ -259,11 +272,6 @@ class newpostsAdminView extends newposts
 			$i++;
 		}
 		$array = $sortedData;	
-	}
-
-	function dispNewpostsAdminSetModify()
-	{
-		
 	}
 }
 

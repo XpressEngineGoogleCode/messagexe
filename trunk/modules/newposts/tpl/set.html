@@ -6,40 +6,31 @@
 <form action="./" method="post">
 	<input type="hidden" name="module" value="newposts" />
 	<input type="hidden" name="act" value="procNewpostsAdminSet" />
-	<input type="hidden" name="config_srl" value="{$config->config_srl}" />
+	<input type="hidden" name="config_srl" value="{$config_srl}" />
 
 	<section class="section" style="margin-left: 3%;">
-		<h2 style="margin-left:0%;">분류별 담당자 지정</h2>
+		<h2 style="margin-left:0%;">{$lang->cmd_set}</h2>
 		<div class="x_control-group">
-			<block cond="!count($outputs)">
-				<h3> 이 게시판에는 분류가 없습니다. </h3>
-			</block>
+
+		<block loop="$outputs=>$key,$val">
 			
-			<table>
-				<block loop="$outputs=>$key,$val">
-					<tr >
-						<th><h3 style="margin-left:0%;"><strong> {$key} 게시판 </h3></th>
-							
-							<table style="margin-left:0%; margin-right: 30%;" class="table even easyList">	
-								<tr>
-									<th style="width:150px;"> 분류 이름 </th>
-									<th> 핸드폰 번호 </th>
-									<th> E-메일 </th>
-								</tr>
-
-								<tr loop="$val=>$key2, $val2" style="margin-left : 10%;"|cond="$val2->parent_srl!='0'">
-									<input type="hidden" name="category_srl[]" value="{$val2->category_srl}" />
-									<td style="text-align:center;"|cond="$val2->parent_srl==0" >
-										<img src="leaf-last.gif"|cond="$val2->parent_srl!='0'" style="margin-left : 40%;"|cond="$val2->parent_srl!='0'">{$val2->title} 
-									</td>
-									<td> <input type="text" name="cellphone[]" value="{$val2->cellphone}" maxlength="11"/> </td>
-									<td> <input type="email" name="email[]" value="{$val2->email}"   /> </td>
-								</tr>
-							</table>
+		<h3 style="margin-left:0%;"><strong> {$val->title} {$lang->cmd_board} </strong></h3></th>
+				<table style="margin-left:0%; margin-right: 30%;" class="table even easyList">	
+					<tr>
+						<th style="width:150px;"> {$lang->category} </th>
+						<th> {$lang->cmd_cellphone} </th>
+						<th> {$lang->email_address} </th>
 					</tr>
-				</block>
-			</table>
-
+					<tr loop="$val->data=>$val2" style="margin-left : 10%;"|cond="$val2->parent_srl!='0'">
+						<input type="hidden" name="category_srl[]" value="{$val2->category_srl}" />
+						<td style="text-align:center;"|cond="$val2->parent_srl==0" >
+							<img src="leaf-last.gif"|cond="$val2->parent_srl!='0'" style="margin-left : 40%;"|cond="$val2->parent_srl!='0'">{$val2->title} 
+						</td>
+						<td> <input type="text" name="cellphone[]" value="{$val2->cellphone}" maxlength="11"/> </td>
+						<td> <input type="email" name="email[]" value="{$val2->email}"   /> </td>
+					</tr>
+				</table>
+		</block>
 		</div>
 	</section>			
 		

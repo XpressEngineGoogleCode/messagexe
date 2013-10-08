@@ -1,0 +1,11 @@
+<query id="getModuleCountByModuleSrl" action="select">
+	<tables>
+		<table name="newposts_modules" />
+	</tables>
+	<columns>
+		<column name="count(*)" alias="count" />
+	</columns>
+	<conditions>
+		<condition operation="in" column="module_srl" var="module_srls" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

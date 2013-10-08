@@ -7,12 +7,11 @@
 </div>
 <p class="x_alert x_alert-info" id="aboutModule" hidden>휴대폰 새 글 알림 모듈입니다.</p>
 	<ul class="x_nav x_nav-tabs">
-        <li class="x_active"|cond="$act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify'">
-			<a cond="$act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify'" href="{getUrl('act','dispNewpostsAdminList')}">새글알림목록</a></li>
-        <li cond="!module_srl && $act=='dispNewpostAdminInsert'" class="x_active"|cond="$act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify'"><a href="{getUrl('act','dispNewpostsAdminList')}">새글알림등록</a></li>
-		
-		<li class="x_active"|cond="$act=='dispNewpostsAdminSet'">
-			<a cond="$act=='dispNewpostsAdminSet'" href="{getUrl('act','dispNewpostsAdminSet')}">카테고리별 지정자 변경 </a></li>
+        <li class="x_active"|cond="$act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify' || $act=='dispNewpostsAdminSet'">
+			<a cond="$act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify' || $act=='dispNewpostsAdminSet'" href="{getUrl('act','dispNewpostsAdminList')}">새글알림목록</a></li>
+        <li cond="!module_srl && $act=='dispNewpostAdminInsert'" class="x_active"|cond="$act=='dispNewpostsAdminList' || $act=='dispNewpostsAdminInsert' || $act=='dispNewpostsAdminModify'">
+			<a href="{getUrl('act','dispNewpostsAdminList')}">새글알림등록</a>
+		</li>
 	</ul>
 
 <div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">

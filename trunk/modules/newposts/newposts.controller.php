@@ -14,31 +14,35 @@ class newpostsController extends newposts
 		// get Phone# & email address accoring to category admin from newposts_admins table
 		$args->category_srl = $obj->category_srl;
 		$output = executeQuery("newposts.getAdminInfo", $args);
-		debugPrint($output);
 
 		$oTextmessageController = &getController('textmessage');
 		$oNewpostsModel = &getModel('newposts');
 
 		if (in_array($config->sending_method,array('1','2'))&&$oTextmessageController) 
 		{
-
-			// <현서> $config->admin_phones 를 $output->cellphone 으로 변경 
+			// $args 확인후 전송번호 없을시 문자 보내지말것 
+			// $config->admin_phones 를 $output->cellphone 으로 변경 
 			$args->recipient_no = explode(',',$output->data->cellphone);
 			//$args->sender_no = $receiver->recipient_no;
 			$args->content = $content;
-			debugPrint($args);
 
-			$output = $oTextmessageController->sendMessage($args);
-			debugPrint($output);
+			if(!empty($args->recipient_no[0]))
+			{	
+				$output = $oTextmessageController->sendMessage($args);
+				if (!$output->toBool()) return $output;
+			}
 
-			if (!$output->toBool()) return $output;
-			
-			//전체관리자 Send 분류에 상관없이 보냄
+			//전체관리자 모드 : 분류에 상관없이 보냄
 			$args->recipient_no = explode(',',$config->admin_phones);
 			//$args->sender_no = $receiver->recipient_no;
 			$args->content = $content;
-			$output = $oTextmessageController->sendMessage($args);
-			if (!$output->toBool()) return $output;
+
+			if(!empty($args->recipient_no[0]))
+			{
+				$output = $oTextmessageController->sendMessage($args);
+				if (!$output->toBool()) return $output;
+			}
+			
 		}
 
 		if (in_array($config->sending_method,array('1','3'))) 
@@ -62,11 +66,8 @@ class newpostsController extends newposts
 			$oMail = new Mail();
 			$oMail->setTitle($obj->title);
 			$oMail->setContent($mail_content);
-
-
-
 			$oMail->setSender($sender_name, $sender_email_address);
-			// <현서> $config->admin_emails 를 $output->email 로 변경
+			// $config->admin_emails 를 $output->email 로 변경
 			$target_email = explode(',',$output->email);
 			foreach ($target_email as $email_address) 
 			{
@@ -77,17 +78,13 @@ class newpostsController extends newposts
 			}
 			//전체관리자 Send 
 			$target_email = explode(',',$config->admin_emails);
-			debugPrint($target_email);
 			foreach ($target_email as $email_address) 
 			{
 				$email_address = trim($email_address);
 				if (!$email_address) continue;
 				$oMail->setReceiptor($email_address, $email_address);
 				$oMail->send();
-				
 			}
-
-
 		}
 	}
 
@@ -110,12 +107,11 @@ class newpostsController extends newposts
 		$oDocument = $oDocumentModel->getDocument($obj->document_srl);
 		debugPrint('oDocument : ' . serialize($oDocument));
 */
-
 		$tmp_obj->article_url = getFullUrl('','document_srl', $obj->document_srl);
 		$tmp_content = $this->mergeKeywords($mail_content, $tmp_obj);
 		$tmp_message = $this->mergeKeywords($sms_message, $tmp_obj);
 
-		// <현서> 기존 $obj->title 을 $obj 으로 변경 
+		// 기존 $obj->title 을 $obj 으로 변경 
 		$this->sendMessages($tmp_message, $tmp_content, $obj, $sender, $config);
 	}
 
@@ -125,7 +121,7 @@ class newpostsController extends newposts
 	 **/
 	function triggerInsertDocument(&$obj) 
 	{
-		debugPrint('triggerInsertDocument obj : ' . serialize($obj));
+	//	debugPrint('triggerInsertDocument obj : ' . serialize($obj));
 		$oMemberModel = &getModel('member');
 
 		// if module_srl not set, just return with success;

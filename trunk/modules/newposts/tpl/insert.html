@@ -1,4 +1,5 @@
 <load target="css/phone.css" />
+<load target="css/newposts.css" />
 <load target="js/target.js" />
 <load target="js/newposts.js" />
 <include target="header.html" />
@@ -10,7 +11,7 @@
     <input type="hidden" name="mail_content" value="{htmlspecialchars($config->mail_content)}" />
 
 	<section class="section">
-		<h2>기본설정</h2>
+		<h2>{$lang->general_info}</h2>
 		<div class="x_control-group">
 			<label class="x_control-label">{$lang->target_module}</label>
 				<div class="x_controls">
@@ -41,12 +42,12 @@
 						<label class="x_inline" for="sending_method_3"><input type="radio" name="sending_method" id="sending_method_3" value="3" checked="checked"|cond="$config->sending_method=='3'" />{$lang->email}</label>
 				</div>
 			</div>
-			<div class="x_control-group"
-				<label class="x_control-label">휴대전화 번호(관리자)</label>
+			<div class="x_control-group">
+				<label class="x_control-label">{$lang->cmd_cellphone}({$lang->cmd_admin})</label>
 					<div class="x_controls">
 						<input type="text" name="admin_phones" style="width:300px;" value="{$config->admin_phones}" />
 						<a href="#admin_phones_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-						<p id="admin_phones_help" class="x_help-block" hidden>콤마(,)로 구분 여러 개 입력가능</p>
+						<p id="admin_phones_help" class="x_help-block" hidden>{$lang->multiple_phone_no}</p>
 					</div>
 			</div>
 		
@@ -66,25 +67,25 @@
 					</div>
 				</div>
 			<div class="x_control-group">
-					<label class="x_control-label">이메일 주소(관리자)</label>
+				<label class="x_control-label">{$lang->email_address}({$lang->cmd_admin})</label>
 						<div class="x_controls">
 							<input type="text" name="admin_emails" style="width:300px;" value="{$config->admin_emails}" />
 							<a href="#admin_emails_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-							<p id="admin_emails_help" class="x_help-block" hidden>콤마(,)로 구분 여러 개 입력가능</p>
+							<p id="admin_emails_help" class="x_help-block" hidden>{$lang->multiple_email}</p>
 						</div>
 				</div>
 			<div class="x_control-group">
-					<label class="x_control-label">발신자 정보</label>
+				<label class="x_control-label">{$lang->sender_info}</label>
 						<div class="x_controls">
-							이름: <input type="text" name="sender_name" style="width:100px;" value="{$config->sender_name}" />
-							이메일: <input type="text" name="sender_email" style="width:240px;" value="{$config->sender_email}" />
+							{$lang->cmd_name} : <input type="text" name="sender_name" style="width:100px;" value="{$config->sender_name}" />
+							{$lang->mail_content} : <input type="text" name="sender_email" style="width:240px;" value="{$config->sender_email}" />
 							<a href="#config_sender_email_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-							<p id="config_sender_email_help" class="x_help-block" hidden>입력된 이메일주소를 발신주소로 사용합니다. 비워두시면 글쓴이의 이메일 주소가 입력됩니다.</p>
+							<p id="config_sender_email_help" class="x_help-block" hidden>{$lang->help_sender_email}</p>
 						</div>
 				</div>
 			<div class="x_control-group">
 					<label class="x_control-label">{$lang->mail_content}</label>	
-						<div class="x_controls">
+						<div class="x_controls"  id="editor">
 							<a href="#mail_content_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 							<p id="mail_content_help" class="x_help-block" hidden>{$lang->help_mail_content}</p>
 							<div>{$editor}</div>
