@@ -139,4 +139,20 @@
 		<value xml:lang="ko"><![CDATA[입력된 이메일주소를 발신주소로 사용합니다. 비워두시면 글쓴이의 이메일 주소가 입력됩니다]]></value>
 		<value xml:lang="en"><![CDATA[The email you are entering here will be the sender's email. If empty, the email address of the writer will be the sender's email. ]]></value>
 	</item>
+	<item name="sender_cellphone">
+		<value xml:lang="ko"><![CDATA[발신자 번호]]></value>
+		<value xml:lang="en"><![CDATA[Mobile Number(Sender)]]></value>
+	</item>
+	<item name="sender_phone_help">
+		<value xml:lang="ko"><![CDATA[발신자 번호입니다.]]></value>
+		<value xml:lang="en"><![CDATA[This will be the sender's phone number. ]]></value>
+	</item>
+	<item name="title_txtmsg">
+		<value xml:lang="ko"><![CDATA[문자보내기]]></value>
+		<value xml:lang="en"><![CDATA[Sending Text message]]></value>
+	</item>
+	<item name="title_email">
+		<value xml:lang="ko"><![CDATA[E-mail 보내기]]></value>
+		<value xml:lang="en"><![CDATA[Sending E-mail]]></value>
+	</item>
 </lang>

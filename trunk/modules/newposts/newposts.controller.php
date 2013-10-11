@@ -25,7 +25,9 @@ class newpostsController extends newposts
 			$args->recipient_no = explode(',',$output->data->cellphone);
 			//$args->sender_no = $receiver->recipient_no;
 			$args->content = $content;
-
+			$args->sender_no = $config->sender_phone;
+			debugPrint($args);
+			debugPrint($config);
 			if(!empty($args->recipient_no[0]))
 			{	
 				$output = $oTextmessageController->sendMessage($args);

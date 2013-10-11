@@ -55,7 +55,7 @@ class newpostsAdminController extends newposts
 
 	function procNewpostsAdminModify()
 	{
-		$params = Context::gets('admin_phones','admin_emails','sender_name','sender_email','content','mail_content','module_srls','msgtype','sending_method');
+		$params = Context::gets('admin_phones','admin_emails','sender_phone','sender_name','sender_email','content','mail_content','module_srls','msgtype','sending_method');
 		$params->config_srl = Context::get('config_srl');
 		// Insert 와 다른점은 이건 Modify 로 Redirect 하고 Insert 는 Insert 로 Redirect
 		// 모듈 입력을 하지 않앗을 경우 에러메시지 & Redirect
