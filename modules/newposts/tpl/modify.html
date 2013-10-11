@@ -12,13 +12,13 @@
     <input type="hidden" name="mail_content" value="{htmlspecialchars($config->mail_content)}" />
 
 	<section class="section">
-		<h2>{$lang->general_info}</h2>
+	<h2>{$lang->general_info}</h2>
 		<div class="x_control-group">
 			<label class="x_control-label">{$lang->target_module}</label>
 				<div class="x_controls">
 						{@$id="module_srls"}
 						<input type="hidden" name="{$id}" id="{$id}" value="{$config->module_srls}" />
-						<select name="_{$id}" id="_{$id}" size="8" class="w200 fl" style="float:left;"></select>
+						<select name="_{$id}" id="_{$id}" size="8" class="w200 fl" style="float:left; width: 265px;"></select>
 						<div class="midCommand">
 							<span><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></span>
 							<span><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></span>
@@ -43,19 +43,33 @@
 						<label class="x_inline" for="sending_method_3"><input type="radio" name="sending_method" id="sending_method_3" value="3" checked="checked"|cond="$config->sending_method=='3'" />{$lang->email}</label>
 				</div>
 			</div>
+	</section>
+
+	<section class="section">
+		<h2>{$lang->title_txtmsg}</h2>
+
 			<div class="x_control-group">
 				<label class="x_control-label">{$lang->cmd_cellphone}({$lang->cmd_admin})</label>
 					<div class="x_controls">
-						<input type="text" name="admin_phones" style="width:300px;" value="{$config->admin_phones}" />
+						<input type="text" name="admin_phones" style="width:250px;" value="{$config->admin_phones}" />
 						<a href="#admin_phones_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 						<p id="admin_phones_help" class="x_help-block" hidden>{$lang->multiple_phone_no}</p>
 					</div>
 			</div>
-		
+
+			<div class="x_control-group">
+				<label class="x_control-label">{$lang->sender_cellphone}</label>
+					<div class="x_controls">
+						<input type="text" name="sender_phone" style="width:250px;" value="{$config->sender_phone}" />
+						<a href="#sender_phone_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+						<p id="sender_phone_help" class="x_help-block" hidden>{$lang->sender_phone_help}</p>
+					</div>
+			</div>
+
 			<div class="x_control-group">
 				<label class="x_control-label">{$lang->content}</label>
 					<div class="x_controls">
-						<textarea rows="4" cols="8" name="content" class="pscreen" style="border:solid #eee 1px;">{$config->content}</textarea>
+						<textarea rows="4" cols="8" name="content" class="pscreen" style="border:solid #eee 1px; width:250px;">{$config->content}</textarea>
 						<div>
 							<a class="btn"><span class="notiReplaceVar" var="content">{$lang->document_content}</span></a>
 							<a class="btn"><span class="notiReplaceVar" var="user_id">{$lang->document_userid}</span></a>
@@ -67,6 +81,10 @@
 						</div>
 					</div>
 				</div>
+	</section>
+		
+	<section class="section">
+		<h2>{$lang->title_email}</h2>
 			<div class="x_control-group">
 				<label class="x_control-label">{$lang->email_address}({$lang->cmd_admin})</label>
 						<div class="x_controls">
@@ -92,7 +110,7 @@
 							<div>{$editor}</div>
 						</div>
 			</div>
-		</section>	
+	</section>	
 
 	<div class="btnArea">
 		<input type="submit" class="x_btn x_btn-primary" value="{$lang->cmd_modify}" accesskey="s" />

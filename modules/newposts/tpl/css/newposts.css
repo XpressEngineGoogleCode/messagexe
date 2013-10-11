@@ -2,4 +2,4 @@
 /* vi:set ts=4 sw=4 expandtab enc=utf8: */
 
 
-.x_control-group .x_control-group .xpress-editor select { min-width:0; }
+.section .x_control-group .xpress-editor select { min-width:0; }
