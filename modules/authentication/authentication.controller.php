@@ -208,7 +208,7 @@ class authenticationController extends authentication
 
 		if(in_array(Context::get('act'), $action_list) && $_SESSION['authentication_pass'] != 'Y')
 		{
-			$this->startAuthentication(&$oModule);
+			$this->startAuthentication($oModule);
 		}
 		return new Object();
 	}
