@@ -1,0 +1,29 @@
+<query id="getPurplebookList" action="select">
+	<tables>
+		<table name="purplebook" alias="book" />
+		<table name="purplebook_share" alias="share" type="left join" />
+        <conditions>
+            <condition operation="equal" column="book.node_id" default="share.node_id" />
+        </conditions>
+	</tables>
+	<columns>
+		<column name="book.node_id" alias="node_id" />
+		<column name="book.user_id" alias="user_id" />
+		<column name="book.node_route" alias="node_route" />
+		<column name="book.node_name" alias="node_name" />
+		<column name="book.node_type" alias="node_type" />
+		<column name="book.phone_num" alias="phone_num" />
+		<column name="book.subfolder" alias="subfolder" />
+		<column name="book.subnode" alias="subnode" />
+		<column name="book.regdate" alias="regdate" />
+		<column name="COUNT(share.node_id)" alias="shared_count" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="user_id" var="user_id" notnull="notnull" pipe="and" />
+		<condition operation="equal" column="node_route" var="node_route" default="." pipe="and" />
+		<condition operation="equal" column="node_type" default="1" pipe="and" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="node_name" order="asc" />
+	</navigation>
+</query>

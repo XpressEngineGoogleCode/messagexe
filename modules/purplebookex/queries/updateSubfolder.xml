@@ -1,0 +1,11 @@
+<query id="updateSubfolder" action="update">
+	<tables>
+		<table name="purplebook" />
+	</tables>
+	<columns>
+		<column name="subfolder" var="subfolder" default="0" notnull="notnull" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="node_id" var="node_id" notnull="notnull" />
+	</conditions>
+</query>

@@ -1,0 +1,14 @@
+<query id="getDefaultCallbackNumber" action="select">
+    <tables>
+        <table name="purplebook_callbacks" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="member_srl" var="member_srl" notnull="notnull" filter="number" />
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="flag_default" order="desc" />
+    </navigation>
+</query>

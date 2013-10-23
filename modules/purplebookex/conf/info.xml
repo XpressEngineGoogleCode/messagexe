@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+    <title xml:lang="ko">퍼플북ex</title>
+    <description xml:lang="ko">퍼플북ex 입니다. </description>
+    <version>1.0</version>
+    <date>2013-10-15</date>
+    <category>service</category>
+    <author email_address="contact@nurigo.net" link="http://www.coolsms.co.kr">
+        <name xml:lang="ko">NURIGO</name>
+    </author>
+</module>

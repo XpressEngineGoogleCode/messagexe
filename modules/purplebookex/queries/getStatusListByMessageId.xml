@@ -1,0 +1,16 @@
+<query id="getStatusListByMessageId" action="select">
+    <tables>
+        <table name="textmessages" />
+    </tables>
+    <columns>
+        <column name="message_id" />
+        <column name="recipient_no" />
+        <column name="mstat" />
+        <column name="rcode" />
+        <column name="senddate" />
+        <column name="carrier" />
+    </columns>
+    <conditions>
+        <condition operation="in" column="message_id" var="message_ids" notnull="notnull" />
+    </conditions>
+</query>

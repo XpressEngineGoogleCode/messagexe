@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="ko">프리미엄</title>
+    <description xml:lang="ko">프리미엄스킨입니다</description>
+    <version>0.9</version>
+    <date>2011-03-28</date>
+    <link>http://www.coolsms.co.kr</link>
+
+    <author email_address="ksjade@nurigo.net" link="http://www.coolsms.co.kr">
+        <name xml:lang="ko">KS Jade</name>
+    </author>
+
+    <colorset>
+        <color name="white">
+            <title xml:lang="ko">하얀색(기본)</title>
+        </color>
+    </colorset>
+</skin>
