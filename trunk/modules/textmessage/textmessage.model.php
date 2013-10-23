@@ -45,7 +45,7 @@
             return __SOLUTION_REGISTRATION_KEY__;
         }
 
-		function &getCoolSMS() 
+		function &getCoolSMS($args=NULL) 
 		{
 			static $sms = NULL;
 
@@ -53,7 +53,6 @@
 			{
 				return $sms;
 			}
-
             $oModuleModel = &getModel('module');
             $module_info = $oModuleModel->getModuleInfoXml($this->module);
             $version = $module_info->version;
@@ -64,9 +63,20 @@
             $sln_reg_key = $this->getSlnRegKey();
             if ($sln_reg_key) $sms->setSRK($sln_reg_key);
 			$sms->appversion("MXE2/" . $version . ", XE/" . __ZBXE_VERSION__);
-			if ($config->service_id && $config->password) {
-				$sms->setuser($config->service_id, $config->password);
-			}
+
+			$logged_info = Context::get('logged_info');
+			if(!$args)
+			{	
+				if ($config->service_id && $config->password) 
+				{
+					$sms->setuser($config->service_id, $config->password);
+				}
+			}else
+			{
+				$sms->setuser($logged_info->user_id, $logged_info->password, "");
+			}	
+
+
 			$sms->charset('utf8');
 			return $sms;
 		}
