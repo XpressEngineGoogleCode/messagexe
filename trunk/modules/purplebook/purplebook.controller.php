@@ -39,10 +39,6 @@ class purplebookController extends purplebook
 	 **/
 	function procPurplebookSendMsg($args=false) 
 	{
-		/*
-		$oModel = &getModel('purplebook');
-		$config = $oModel->getModuleConfig($args);
-		 */
 		$all_args = Context::getRequestVars();
 
 		if(!$this->grant->send) return new Object(-1, 'msg_not_permitted');
@@ -69,7 +65,7 @@ class purplebookController extends purplebook
 		$decoded = $this->getJSON('data');
 
 		$oTextmessageModel = &getModel('textmessage');
-		$sms = &$oTextmessageModel->getCoolSMS();
+		$sms = &$oTextmessageModel->getCoolSMS($args);
 
 		// group id
 		$groupid_seed = Context::get('groupid_seed');
