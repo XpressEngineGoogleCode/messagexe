@@ -1,0 +1,10 @@
+<query id="deletePurplebook" action="delete">
+	<tables>
+		<table name="purplebook" />
+	</tables>
+	<columns />
+	<conditions>
+		<condition operation="equal" column="member_srl" var="member_srl" notnull="notnull" />
+		<condition operation="equal" column="node_id" var="node_id" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

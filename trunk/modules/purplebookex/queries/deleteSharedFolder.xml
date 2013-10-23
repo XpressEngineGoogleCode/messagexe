@@ -1,0 +1,9 @@
+<query id="deleteSharedFolder" action="delete">
+	<tables>
+		<table name="purplebook_share" />
+	</tables>
+	<conditions>
+        <condition operation="equal" column="share_member" var="share_member" filter="number" notnull="notnull" />
+        <condition operation="equal" column="node_id" var="node_id" filter="number" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

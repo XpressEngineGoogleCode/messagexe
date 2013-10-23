@@ -1,0 +1,12 @@
+<query id="insertReceiver" action="insert">
+	<tables>
+		<table name="purplebook_receivers" />
+	</tables>
+	<columns>
+		<column name="receiver_srl" var="receiver_srl" filter="number" notnull="notnull" />
+		<column name="member_srl" var="member_srl" notnull="notnull" />
+		<column name="phone_num" var="phone_num" notnull="notnull" />
+		<column name="ref_name" var="ref_name" default="" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>

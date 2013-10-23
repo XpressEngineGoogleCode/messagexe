@@ -1,0 +1,10 @@
+<query id="insertSharedFolder" action="insert">
+	<tables>
+		<table name="purplebook_share" />
+	</tables>
+	<columns>
+		<column name="node_id" var="node_id" notnull="notnull" />
+		<column name="share_member" var="share_member" notnull="notnull" />
+		<column name="regdate" var="regdate" default="curdate()" />
+	</columns>
+</query>
