@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="0.2">
     <title xml:lang="ko">퍼플북ex</title>
-    <description xml:lang="ko">퍼플북ex 입니다. </description>
+	<description xml:lang="ko">
+		퍼플북ex 는 coolsms 에서 퍼플북 이용시에 coolsms 사이트 로그인상의 아이디와 비번으로 퍼플북을 이용하는 확장입니다.  
+	</description>
     <version>1.0</version>
     <date>2013-10-15</date>
     <category>service</category>
