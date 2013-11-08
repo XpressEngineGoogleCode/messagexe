@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+    <title xml:lang="ko">문자서비스ex</title>
+	<description xml:lang="ko">
+		문자서비스ex 는 회사내에서 coolsms 사이트에만 적용하도록 만든 확장입니다.  
+	</description>
+    <version>1.0</version>
+    <date>2013-11-08</date>
+    <category>service</category>
+    <author email_address="contact@nurigo.net" link="http://www.coolsms.co.kr">
+        <name xml:lang="ko">NURIGO</name>
+    </author>
+</module>
