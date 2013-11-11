@@ -22,7 +22,7 @@ class purplebookController extends purplebook
 		}
 
 		$oPointModel = &getModel('point');
-		$rest_point = $oPointModel->getPoint($logged_info->member_srl, true);
+		$rest_point = $oPointModel->getPoint($logged_info->member_srl, TRUE);
 		if($rest_point < $point)
 		{
 			return new Object(-1, 'msg_not_enough_point');
@@ -37,34 +37,29 @@ class purplebookController extends purplebook
 	/**
 	 * @brief procPurplebookSendMsg
 	 **/
-	function procPurplebookSendMsg($args=false) 
+	function procPurplebookSendMsg($args=FALSE) 
 	{
+		$oTextmessageModel = &getModel('textmessage');
 		$all_args = Context::getRequestVars();
 
-		if(!$this->grant->send) return new Object(-1, 'msg_not_permitted');
+		if(!$this->grant->send) 
+			return new Object(-1, 'msg_not_permitted');
 		$module_srl = Context::get('module_srl');
 		$oPurplebookModel = &getModel('purplebook');
 		$module_info = $oPurplebookModel->getModuleInstConfig($module_srl);
-		if($module_info->module != 'purplebook') return new Object(-1,'msg_invalid_request');
+		if($module_info->module != 'purplebook') 
+			return new Object(-1,'msg_invalid_request');
 
-		$db_insert_flag=true;
-		if($args && $args->basecamp)
-		{
-			$db_insert_flag=false;
-		}
+		$options=new StdClass();
+		if($args && $args->basecamp) $options->disable_db = TRUE;
 
 		// check ticket
 		$ticket = Context::get('ticket');
 		if(!$ticket || !$this->validateTicket($ticket))
-		{
 			return new Object(-1, 'msg_invalid_ticket');
-		}
 
 		$encode_utf16 = Context::get('encode_utf16');
-
 		$decoded = $this->getJSON('data');
-
-		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS($args);
 
 		// group id
@@ -122,7 +117,7 @@ class purplebookController extends purplebook
 
 		// send messages
 		$oTextmessageController = &getController('textmessage');
-		$output = $oTextmessageController->sendMessage($msg_arr);
+		$output = $oTextmessageController->sendMessage($msg_arr, $options);
 		$this->add('data', $output->get('data'));
 		$this->add('success_count', $output->get('success_count'));
 		$this->add('failure_count', $output->get('failure_count'));
@@ -160,9 +155,7 @@ class purplebookController extends purplebook
 		$args->member_srl= $member_srl;
 		$output = executeQuery('purplebook.getPurplebook', $args);
 		if(!$output->toBool())
-		{
 			return $output;
-		}
 		$node_route = $output->data->node_route . $node_id . '.';
 
 		// get subfolder count
@@ -171,9 +164,7 @@ class purplebookController extends purplebook
 		$args->node_route = $node_route;
 		$output = executeQuery('purplebook.getSubfolder', $args);
 		if(!$output->toBool())
-		{
 			return $output;
-		}
 		if($output->data) $subfolder = $output->data->subfolder;
 
 		// update subfolder count
@@ -195,19 +186,13 @@ class purplebookController extends purplebook
 		$args->node_id = $node_id;
 		$args->member_srl = $member_srl;
 		$output = executeQuery('purplebook.getPurplebook', $args);
-		if(!$output->toBool())
-		{
-			return $output;
-		}
+		if(!$output->toBool())	return $output;
 		$node_route = $output->data->node_route . $node_id . '.';
 
 		unset($args);
 		$args->node_route = $node_route;
 		$output = executeQuery('purplebook.getSubnode', $args);
-		if(!$output->toBool())
-		{
-			return $output;
-		}
+		if(!$output->toBool())	return $output;
 		if($output->data) $subnode = $output->data->subnode;
 
 		unset($args);
@@ -225,9 +210,7 @@ class purplebookController extends purplebook
 	function updatePurplebook($args) 
 	{
 		if(!$args->node_id)
-		{
 			return new Object(-1, 'msg_invalid_request');
-		}
 		$query_id = 'purplebook.updatePurplebook';
 		return executeQuery($query_id, $args);
 	}
@@ -257,12 +240,12 @@ class purplebookController extends purplebook
 		$tt_hourmin = intval($tt_hour) * 100 + intval($tt_min);
 
 		if($ft_hourmin < $tt_hourmin) {
-			if($cur_dt_hourmin >= $ft_hourmin && $cur_dt_hourmin <= $tt_hourmin) return true;
+			if($cur_dt_hourmin >= $ft_hourmin && $cur_dt_hourmin <= $tt_hourmin) return TRUE;
 		} else {
-			if($cur_dt_hourmin >= $ft_hourmin || $cur_dt_hourmin <= $tt_hourmin) return true;
+			if($cur_dt_hourmin >= $ft_hourmin || $cur_dt_hourmin <= $tt_hourmin) return TRUE;
 		}
 
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -275,22 +258,22 @@ class purplebookController extends purplebook
 
 		switch($wday) {
 			case 1:
-				if($obj->mon == "Y") return true;
+				if($obj->mon == "Y") return TRUE;
 			case 2:
-				if($obj->tue == "Y") return true;
+				if($obj->tue == "Y") return TRUE;
 			case 3:
-				if($obj->wed == "Y") return true;
+				if($obj->wed == "Y") return TRUE;
 			case 4:
-				if($obj->thu == "Y") return true;
+				if($obj->thu == "Y") return TRUE;
 			case 5:
-				if($obj->fri == "Y") return true;
+				if($obj->fri == "Y") return TRUE;
 			case 6:
-				if($obj->sat == "Y") return true;
+				if($obj->sat == "Y") return TRUE;
 			case 7:
-				if($obj->sun == "Y") return true;
+				if($obj->sun == "Y") return TRUE;
 		}
 
-		return false;
+		return FALSE;
 	}
 
 
@@ -309,7 +292,7 @@ class purplebookController extends purplebook
 			case 'AUTO':
 				require_once('purplebook.utility.php');
 				$csutil = new CSUtility();
-				if($csutil->strlen_utf8($msg->content, true) > $config->limit_bytes)
+				if($csutil->strlen_utf8($msg->content, TRUE) > $config->limit_bytes)
 					$msgtype = 'LMS';
 				else
 					$msgtype = 'SMS';
@@ -320,7 +303,7 @@ class purplebookController extends purplebook
 				} else {
 					require_once('purplebook.utility.php');
 					$csutil = new CSUtility();
-					if($csutil->strlen_utf8($msg->content, true) > $config->limit_bytes)
+					if($csutil->strlen_utf8($msg->content, TRUE) > $config->limit_bytes)
 						$msgtype = 'LMS';
 					else
 						$msgtype = 'SMS';
@@ -330,12 +313,11 @@ class purplebookController extends purplebook
 		return $msgtype;
 	}
 
-	function getCallbackNumber($callback_number_type, $callback_number_direct, $member_srl, $member_phonenum=false) 
+	function getCallbackNumber($callback_number_type, $callback_number_direct, $member_srl, $member_phonenum=FALSE) 
 	{
 		$oMemberModel = &getModel('member');
 		$oModel = &getModel('purplebook');
 		$config = $oModel->getModuleConfig();
-
 		$callback_number = "";
 		switch($callback_number_type)
 		{
@@ -381,9 +363,9 @@ class purplebookController extends purplebook
 
 	function validateTicket($ticket) 
 	{
-		if(!isset($_SESSION['PURPLEBOOK_TICKET'])) return false;
-		if($ticket == $_SESSION['PURPLEBOOK_TICKET']) return true;
-		return false;
+		if(!isset($_SESSION['PURPLEBOOK_TICKET'])) return FALSE;
+		if($ticket == $_SESSION['PURPLEBOOK_TICKET']) return TRUE;
+		return FALSE;
 	}
 
 	function procPurplebookFilePicker()
@@ -404,7 +386,6 @@ class purplebookController extends purplebook
 		}
 
 		$vars = Context::gets('addfile','filter');
-
 		$source_file = $vars->addfile['tmp_name'];
 		if(!is_uploaded_file($source_file))
 		{
@@ -514,14 +495,14 @@ class purplebookController extends purplebook
 	{
 		// login check
 		$logged_info = Context::get('logged_info');
-		if(!$logged_info) return false;
+		if(!$logged_info) return FALSE;
 
 		// check permission for node_id
 		$args->node_id = $node_id;
 		$output = executeQuery('purplebook.getNodeInfoByNodeId',$args);
-		if(!$output->toBool() || !$output->data) return false;
-		if($output->data->member_srl != $logged_info->member_srl) return false;
-		return true;
+		if(!$output->toBool() || !$output->data) return FALSE;
+		if($output->data->member_srl != $logged_info->member_srl) return FALSE;
+		return TRUE;
 	}
 
 	function procPurplebookUpdateName() 
@@ -613,7 +594,6 @@ class purplebookController extends purplebook
 		$args->message_srl = getNextSequence();
 		$args->member_srl = $logged_info->member_srl;
 		$args->content = Context::get('content');
-
 		$output = executeQuery('purplebook.insertMessage', $args);
 		if(!$output->toBool()) return $output;
 	}
@@ -627,12 +607,9 @@ class purplebookController extends purplebook
 		if(!$logged_info) return new Object(-1, 'msg_login_required');
 
 		$parent_node = Context::get('parent_node');
-
 		// deny adding to trashcan and folder shared
 		if(in_array($parent_node, array('t.','s.')))
-		{
 			return new Object(-1, 'msg_cannot_create_folder');
-		}
 
 		// get node_route
 		if(in_array($parent_node, array('f.','t.','s.')))
@@ -1169,13 +1146,8 @@ class purplebookController extends purplebook
 
 		$args->member_srl = $logged_info->member_srl;
 		$args->receiver_srl = Context::get('receiver_srl');
-
 		$output = executeQuery('purplebook.deleteReceiverByReceiverSrl', $args);
-		if(!$output->toBool())
-		{
-			return $output;
-		}
-
+		if(!$output->toBool())	return $output;
 		$this->setMessage('success_deleted');
 	}
 
@@ -1186,10 +1158,8 @@ class purplebookController extends purplebook
 
 		$args->member_srl = $logged_info->member_srl;
 		$args->message_srl = Context::get('message_srl');
-
 		$output = executeQuery('purplebook.deleteRecentMessage', $args);
 		if(!$output->toBool()) return $output;
-
 		$this->setMessage('success_deleted');
 	}
 	
