@@ -24,7 +24,11 @@ class purplebookexController extends purplebookController
 
 	function procPurplebookSendMsg()
 	{
-		$args->basecamp = true;
+		//
+		//basecamp true = coolsms site 
+		//  true = coolsms login = textmessage login
+		//       = puplebook local db recording disable
+		$args->basecamp = TRUE;
 		$output = parent::procPurplebookSendMsg($args);
 		if($output && !$output->toBool()) return $output;
 	}
@@ -36,14 +40,13 @@ class purplebookexController extends purplebookController
 			return new $Object(-1, 'msg_invalid_request');
 		$msgids = explode(',', $target_msgids);
 
-		$opts->basecamp = true;
+		$opts->basecamp = TRUE;
 		$output = $this->cancelMessage($msgids, $opts);
 		if(!$output->toBool())
 		{
 			$this->setMessage('cancel_failed');
 			return $output;
 		}
-
 		$this->setMessage('success_cancel');
 	}
 
@@ -54,7 +57,7 @@ class purplebookexController extends purplebookController
 			return new Object(-1, 'msg_invalide_request');
 		$group_ids = explode(',', $target_group_ids);
 
-		$opts->basecamp=true;
+		$opts->basecamp=TRUE;
 		$output = $this->cancelGroupMessages($group_ids, $opts);
 		if(!$output->toBool())
 		{
