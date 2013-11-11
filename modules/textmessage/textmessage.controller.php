@@ -20,6 +20,7 @@ class textmessageController extends textmessage
 	function insertTextmessageGroup($args) 
 	{
 		$output = executeQuery('textmessage.getTextmessageGroup', $args);
+		if(!$output->toBool()) return $output;
 		if($output->data)
 		{
 			$group_info = $output->data;
@@ -31,6 +32,7 @@ class textmessageController extends textmessage
 			// DB INSERT
 			$output = executeQuery('textmessage.insertTextmessageGroup', $args);
 		}
+		return $output;
 	}
 
 	function minusWaitingCount($group_id) 
@@ -91,21 +93,16 @@ class textmessageController extends textmessage
 			else $this->minusFailureCount($group_id);
 		}
 		if ($status == '1' && $resultcode == '00')
-		{
 			$this->minusSendingCount($group_id);
-		}
+
 		if ($status == '1' && $resultcode != '00')
-		{
 			$this->minusFailureCount($group_id);
-		}
+		
 		if ($status == '2' && $resultcode != '00')
-		{
 			$this->minusFailureCount($group_id);
-		}
+		
 		if ($status == '2' && $resultcode == '00')
-		{
 			$this->minusSuccessCount($group_id);
-		}
 	}
 
 	function plusCount($group_id, $status, $resultcode) 
@@ -116,29 +113,21 @@ class textmessageController extends textmessage
 			else $this->plusFailureCount($group_id);
 		}
 		if ($status == '1' && $resultcode == '00') 
-		{
 			$this->plusSendingCount($group_id);
-		}
+
 		if ($status == '1' && $resultcode != '00') 
-		{
 			$this->plusFailureCount($group_id);
-		}
+
 		if ($status == '2' && $resultcode != '00') 
-		{
 			$this->plusFailureCount($group_id);
-		}
+
 		if ($status == '2' && $resultcode == '00') 
-		{
 			$this->plusSuccessCount($group_id);
-		}
 	}
 
-
-
-	function updateStatus($in_args,$skip_minus=false) 
+	function updateStatus($in_args,$skip_minus=FALSE) 
 	{
 		$oTextmessageModel = &getModel('textmessage');
-
 		$message_info = $oTextmessageModel->getMessageInfo($in_args->message_id);
 
 		// minus
@@ -160,7 +149,8 @@ class textmessageController extends textmessage
 	{
 		if (!$in_args->type) $in_args->type = 'SMS';
 		$in_args->type = strtoupper($in_args->type);
-		if (!in_array($in_args->type, array('SMS', 'LMS', 'MMS'))) $in_args->type = 'SMS';
+		if (!in_array($in_args->type, array('SMS', 'LMS', 'MMS'))) 
+			$in_args->type = 'SMS';
 		return $in_args->type;
 	}
 
@@ -185,17 +175,17 @@ class textmessageController extends textmessage
 		{
 			if ($in_args->subject)
 			{
-				$in_args->subject = coolsms::strcut_utf8($in_args->subject, 20, true);
+				$in_args->subject = coolsms::strcut_utf8($in_args->subject, 20, TRUE);
 			}
 			else
 			{
-				$in_args->subject = coolsms::strcut_utf8($in_args->content, 20, true);
+				$in_args->subject = coolsms::strcut_utf8($in_args->content, 20, TRUE);
 			}
 			return $in_args->subject;
 		}
 		else
 		{
-			$in_args->subject = coolsms::strcut_utf8($in_args->content, 20, true);
+			$in_args->subject = coolsms::strcut_utf8($in_args->content, 20, TRUE);
 			return $in_args->subject;
 		}
 		return NULL;
@@ -257,7 +247,7 @@ class textmessageController extends textmessage
 	 *  $args->content = '메시지 내용'
 	 *  $args->reservdate = 'YYYYMMDDHHMISS'
 	 *  $args->subject = 'LMS제목'
-	 *  $args->country_code = '국가번호'
+	 *  $args->country_code = '국가번호
 	 *  $args->country_iso_code = '국가ISO코드'
 	 *  $args->attachment = 첨부파일
 	 *  $args->encode_utf16 = true or false
@@ -270,10 +260,11 @@ class textmessageController extends textmessage
 		//
 		// validate parameters
 		//
-		if (!$in_args->recipient_no) return new Object(-1, 'msg_invalid_request');
+		if (!$in_args->recipient_no) 
+			return new Object(-1, 'msg_invalid_request');
 
-
-		if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
+		if (!class_exists('coolsms')) 
+			require_once($this->module_path.'coolsms.php');
 		$oTextmessageModel = &getModel('textmessage');
 		$config = &$oTextmessageModel->getModuleConfig();
 		// generate group id
@@ -285,35 +276,29 @@ class textmessageController extends textmessage
 		{
 			$group_id = coolsms::keygen();
 		}
-
 		// options' default values
-		if(!$options)
-		{
-			$options = new StdClass();
-			$options->member_srl = 0;
-			$options->splitlimit = 0;
-			$options->bytes_per_each = 90;
-			$options->checkmb = TRUE;
-		}
-
+		//
+		// 
+		if(!$options) $options = new StdClass();
+		if(!$options->member_srl) $options->member_srl = 0;
+		if(!$options->splitlimit) $options->splitlimit = 0;
+		if(!$options->bytes_per_each) $options->bytes_per_each = 90;
+		if(!$options->checkmb) $options->checkmb = TRUE;
 		//
 		// compose values
 		//
 		$this->composeType($in_args);
 		$this->composeAttachment($in_args);
-		if (!is_array($in_args->recipient_no)) $in_args->recipient_no = array($in_args->recipient_no);
-		if (!$in_args->country_code) $in_args->country_code = $config->default_country;
+		if (!is_array($in_args->recipient_no)) 
+			$in_args->recipient_no = array($in_args->recipient_no);
+		if (!$in_args->country_code) 
+			$in_args->country_code = $config->default_country;
 		$this->composeSubject($in_args);
 		$this->composeSize($in_args, $options);
 		$this->composeMessage($in_args, $options);
-
 		// create sms object
 		$sms = &$oTextmessageModel->getCoolSMS();
-		if($in_args->encode_utf16)
-		{
-			$sms->encode_utf16();
-		}
-
+		if($in_args->encode_utf16)	$sms->encode_utf16();
 		//
 		// adding messages
 		//
@@ -333,10 +318,7 @@ class textmessageController extends textmessage
 			$sms_args->subject = $in_args->subject;
 			//$sms_args->country_iso_code = $in_args->country_iso_code;
 			if ($in_args->type=='MMS')
-			{	
 				$sms_args->attachment = $in_args->attachment;
-			}
-
 			//
 			// db query arguments
 			//
@@ -351,12 +333,9 @@ class textmessageController extends textmessage
 			$query_args->subject = $in_args->subject;
 			$query_args->reservflag = $in_args->reservflag;
 			$query_args->reservdate = $in_args->reservdate;
-
-
 			foreach($in_args->content as $content)
 			{
 				$message_id = coolsms::keygen();
-
 				// add sms
 				$sms_args->msgid = $message_id;
 				$sms_args->msg = $content;
@@ -364,23 +343,22 @@ class textmessageController extends textmessage
 					$failure_count++;
 					$alert = $sms->lasterror();
 				}
-
 				// insert db record
 				$query_args->message_id = $message_id;
 				$query_args->content = $content;
-				$output = $this->insertTextmessage($query_args);
-				if (!$output->toBool())
+				if(!$options->disable_db)	
 				{
-					return $output;
+					$output = $this->insertTextmessage($query_args);
+					if(!$output->toBool())
+						return $output;
 				}
-
 				$total_count++;
 			}
 		}
 	}
 
 	/**
-	 * @brief 메시지 전송
+	 * @brief 메시지 전송, $in_args에 값이 있을 경우 전송대기열에 넣고 전송처리
 	 * @param[in] $args
 	 *  $args->type = 'SMS' or 'LMS' or 'MMS' // default = 'SMS'
 	 *  $args->recipient_no = '수신번호'
@@ -400,30 +378,18 @@ class textmessageController extends textmessage
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
 
+		// $in_args에 값이 있을 경우 전송대기열에 넣고 전송처리
 		if($in_args)
 		{
-			//
-			// add messages
-			//
-			if(!is_array($in_args))
-			{
-				$in_args = array($in_args);
-			}
+			if(!is_array($in_args)) $in_args = array($in_args);
 			foreach($in_args as $arg)
 			{
 				$output = $this->addMessage($arg, $options);
-				if($output && !$output->toBool())
-				{
-					return $output;
-				}
+				if($output && !$output->toBool())	return $output;
 			}
 		}
-
 		if(!$sms->count())
-		{
 			return new Object();
-		}
-
 		$first_msg = $sms->msgl[0];
 		$total_count = $sms->count();
 
@@ -444,24 +410,23 @@ class textmessageController extends textmessage
 		$args->subject =  $subject;
 		$args->content =  $message;
 		if (!$args->subject)
-		{
 			$args->subject = $message;
-		}
 		$args->reservflag = $reservflag;
 		$args->reservdate = $reservdate;
 		$args->total_count = $total_count;
-		$output = $this->insertTextmessageGroup($args);
+		if(!$options->disable_db)
+		{
+			$output = $this->insertTextmessageGroup($args);
+			if(!$output->toBool()) return $output;
+		}
 		unset($args);
 
 		// connect to server
 		if(!$sms->connect()) 
-		{
 			return new Object(-1, 'error_cannot_connect');
-		}
 
 		$sending_count=0;
 		$failure_count=0;
-
 		$data = array();
 		if($sms->send())
 		{
@@ -486,8 +451,9 @@ class textmessageController extends textmessage
 				$args->message_id = $row["MESSAGE-ID"];
 				$args->status = '9';
 				$args->resultcode = $row["RESULT-CODE"];
-				$output = $this->updateStatus($args,true);
-				if (!$output->toBool()) $alert = $output->getMessage();
+				$output = $this->updateStatus($args,TRUE);
+				if (!$output->toBool()) 
+					$alert = $output->getMessage();
 
                 $obj = new StdClass();
                 $obj->result_code = $row["RESULT-CODE"];
@@ -499,8 +465,6 @@ class textmessageController extends textmessage
 		}
 		$sms->disconnect();
 		$sms->emptyall();
-
-
 
 		if ($failure_count > 0)
 		{
@@ -517,46 +481,36 @@ class textmessageController extends textmessage
 		return $output;
 	}
 
-	function cancelMessage($msgids, $opts=false)
+	function cancelMessage($msgids, $opts=FALSE)
 	{
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
-
 		if (!$sms->connect())
-		{
 			return new Object(-1, 'warning_cannot_connect');
-		}
 
 		foreach ($msgids as $id)
 		{
 			$sms->cancel($id);
 		}
-
 		$sms->disconnect();
-
 		return new Object();
 	}
 
 	/**
 	 * @brief 문자취소(그룹)
 	 **/
-	function cancelGroupMessages($group_ids, $opts=false)
+	function cancelGroupMessages($group_ids, $opts=FALSE)
 	{
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
-
 		if(!$sms->connect())
-		{
 			return new Object(-1, 'warning_cannot_connect');
-		}
 
 		foreach($group_ids as $gid)
 		{
 			$sms->groupcancel($gid);
 		}
-
 		$sms->disconnect();
-
 		return new Object();
 	}
 
@@ -572,9 +526,7 @@ class textmessageController extends textmessage
 		   $args->group_id = $group_id;
 		   $output = executeQuery('textmessage.deleteMessagesByGroupId', $args);
 		   if (!$output->toBool())
-		   {
 			   return $output;
-		   }
 		   $output = executeQuery('textmessage.deleteGroupMessage', $args);
 		   return $output;
 	}
