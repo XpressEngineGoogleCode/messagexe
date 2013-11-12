@@ -69,6 +69,37 @@ class purplebookexModel extends purplebookModel
 		$this->add('lms_price', $result["LMS-PRICE"]);
 		$this->add('mms_price', $result["MMS-PRICE"]);
 	}
+
+	/**
+	 * @brief 메인DB의 전송결과를 직접 가져온다
+	 */
+	function getPurplebookStatusListByMessageId()
+	{
+		$oTextmessageModel = &getModel('textmessage');
+		$oTextmessageController = &getController('textmessage');
+
+		// message ids
+		$message_ids_arr = explode(',', Context::get('message_ids'));
+
+		$args->basecamp = true;
+		$sms = $oTextmessageModel->getCoolSMS($args);
+		if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
+		$data = array();
+		foreach($message_ids_arr as $message_id)
+		{
+			$result = $sms->rcheck($message_id);
+			$args->message_id = $message_id;
+			$args->mstat = $result['STATUS'];
+			$args->rcode = $result['RESULT-CODE'];
+			$args->carrier = $result['CARRIER'];
+			$args->senddate = $result['SEND-DATE'];
+			$data[] = $args;
+			unset($args);
+		}
+		$sms->disconnect();
+
+		$this->add('data', $data);
+	}
 }
 /* End of file purplebook.model.php */
 /* Location: ./modules/purplebook/purplebook.model.php */
