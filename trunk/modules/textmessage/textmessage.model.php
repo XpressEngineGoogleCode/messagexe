@@ -175,7 +175,7 @@
 		function getCashInfo($args=false) {
 			$config = $this->getModuleConfig($args);
 
-			$sms = &$this->getCoolSMS();
+			$sms = &$this->getCoolSMS($args);
 
 			// connect
 			if (!$sms->connect()) {
