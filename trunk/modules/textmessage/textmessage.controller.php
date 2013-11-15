@@ -264,7 +264,7 @@ class textmessageController extends textmessage
 			return new Object(-1, 'msg_invalid_request');
 
 		if (!class_exists('coolsms')) 
-			require_once($this->module_path.'coolsms.php');
+			require_once(_XE_PATH_.'modules/textmessage/coolsms.php');
 		$oTextmessageModel = &getModel('textmessage');
 		$config = &$oTextmessageModel->getModuleConfig();
 		// generate group id
