@@ -8,7 +8,7 @@ span.checkbox.on { background-position:0px -13px; }
 #smsPurplebook .btn_blank { cursor:default; }
 
 /* title */
-#hearder_title { position:relative; height:60px; margin-bottom:0; background:url(../img/address_title.gif) no-repeat 0 15px; }
+#hearder_title { position:relative; height:60px; margin-bottom:0;  }
 #hearder_title .quick_menu { position:relative; float:right; display:inline; margin-bottom:10px; width:350px; height:55px;}
 #hearder_title .quick_menu ul { list-style:none; padding:0; margin:0;}
 #hearder_title .quick_menu li { float:left; padding:0; margin:0 10px; }
