@@ -196,6 +196,7 @@
 			$obj->add('sms_price', $result["SMS-PRICE"]);
 			$obj->add('lms_price', $result["LMS-PRICE"]);
 			$obj->add('mms_price', $result["MMS-PRICE"]);
+			$obj->add('deferred_payment', $result["DEFERRED-PAYMENT"]);
 
 			return $obj;
 		}

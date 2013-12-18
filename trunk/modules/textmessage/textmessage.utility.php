@@ -1,8 +1,8 @@
 <?php
     /**
-     * vi:set sw=4 ts=4 expandtab enc=utf8:
+     * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
      * @class  CSUtility
-     * @author diver(diver@coolsms.co.kr)
+     * @author contact@nurigo.net
      * @brief  CSUtility
      */
     class CSUtility {
