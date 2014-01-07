@@ -336,9 +336,6 @@
 		<item name="51">
 			<value xml:lang="ko"><![CDATA[페루]]></value>
 		</item>
-		<item name="1">
-			<value xml:lang="ko"><![CDATA[푸에르토리코]]></value>
-		</item>
 		<item name="995">
 			<value xml:lang="ko"><![CDATA[그루지아]]></value>
 		</item>
@@ -554,9 +551,6 @@
 		</item>
 		<item name="509">
 			<value xml:lang="ko"><![CDATA[아이티]]></value>
-		</item>
-		<item name="1">
-			<value xml:lang="ko"><![CDATA[캐나다]]></value>
 		</item>
 		<item name="590">
 			<value xml:lang="ko"><![CDATA[과들루프]]></value>
