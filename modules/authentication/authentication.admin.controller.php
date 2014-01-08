@@ -18,6 +18,22 @@ class authenticationAdminController extends authentication
 	{
 		$args = Context::getRequestVars();
 
+		if(!trim(strip_tags($args->agreement)))
+		{
+			$agreement_file = _XE_PATH_.'files/authentication/agreement_' . Context::get('lang_type') . '.txt';
+			FileHandler::removeFile($agreement_file);
+			$args->agreement = NULL;
+		}
+
+		// check agreement value exist
+		if($args->agreement)
+		{
+			$agreement_file = _XE_PATH_.'files/authentication/agreement_' . Context::get('lang_type') . '.txt';
+			$output = FileHandler::writeFile($agreement_file, $args->agreement);
+
+			unset($args->agreement);
+		}
+
 		// save module configuration.
 		$oModuleController = getController('module');
 		$output = $oModuleController->insertModuleConfig('authentication', $args);

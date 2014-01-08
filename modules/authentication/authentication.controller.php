@@ -177,6 +177,7 @@ class authenticationController extends authentication
 	{
 		$oAuthenticationModel = &getModel('authentication');
 		$config = $oAuthenticationModel->getModuleConfig();
+		$config->agreement = $oAuthenticationModel->_getAgreement();
 		if(Mobile::isFromMobilePhone())
 		{
 			$oModule->setTemplatePath(sprintf($this->module_path.'m.skins/%s/', $config->mskin));

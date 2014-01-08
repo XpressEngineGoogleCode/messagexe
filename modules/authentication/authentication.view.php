@@ -11,6 +11,7 @@ class authenticationView extends authentication
 	{
 		$oAuthenticationModel = &getModel('authentication');
 		$config = $oAuthenticationModel->getModuleConfig();
+		$config->agreement = $oAuthenticationModel->_getAgreement();
 		$this->setTemplatePath($this->module_path."skins/{$config->skin}");
 	}
 	/*

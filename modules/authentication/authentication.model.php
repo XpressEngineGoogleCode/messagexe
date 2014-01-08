@@ -56,6 +56,34 @@ class authenticationModel extends authentication
 		return $output->data;
 	}
 
+	function _getAgreement()
+	{
+		$agreement_file = _XE_PATH_.'files/authentication/agreement_' . Context::get('lang_type') . '.txt';
+		if(is_readable($agreement_file))
+		{
+			return FileHandler::readFile($agreement_file);
+		}
+
+		$db_info = Context::getDBInfo();
+		$agreement_file = _XE_PATH_.'files/authentication/agreement_' . $db_info->lang_type . '.txt';
+		if(is_readable($agreement_file))
+		{
+			return FileHandler::readFile($agreement_file);
+		}
+
+		$lang_selected = Context::loadLangSelected();
+		foreach($lang_selected as $key => $val)
+		{
+			$agreement_file = _XE_PATH_.'files/authentication/agreement_' . $key . '.txt';
+			if(is_readable($agreement_file))
+			{
+				return FileHandler::readFile($agreement_file);
+			}
+		}
+
+		return null;
+	}
+
 	function triggerMemberMenu($in_args)
 	{
 		$url = getUrl('','module','authentication','act','dispAuthenticationSendMessage','member_srl',Context::get('target_srl'));

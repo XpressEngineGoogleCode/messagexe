@@ -49,4 +49,6 @@
 #phone #footer { height:auto; background:#666; font-family:"굴림", "돋움"; font-size:13px; color:#fff; }
 #phone #footer span { display:inline-block; padding:20px; }
 
-
+#phone .agreement{border:1px solid #ddd;padding:15px 15px 10px 15px;border-radius:5px;background:#f8f8f8;margin-bottom:15px}
+#phone .agreement>.text{max-height:200px;overflow:auto}
+#phone .agreement>.confirm{padding:10px 0 0 0;margin:10px 0 0 0;border-top:1px dotted #ccc}

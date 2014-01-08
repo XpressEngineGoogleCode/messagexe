@@ -1,12 +1,13 @@
 <include target="header.html" />
 <load target="../../module/tpl/js/multi_order.js" />
 <load target="../lang" />
+<load target="../../editor/tpl/js/editor_module_config.js" usecdn="true" />
 
 <form class="x_form-horizontal" action="./" method="post">
 	<input type="hidden" name="act" value="procAuthenticationAdminConfig" />
 	<input type="hidden" name="module" value="{$module}" />
 	<input type="hidden" name="module_srl" value={$module_srl} />
-	<input type="hidden" name="agreement" value="{$config->agreement}" />
+	<input type="hidden" name="agreement" value="{htmlspecialchars($config->agreement)}" />
 
 	<section class="section">
 		<h1>기본설정</h1>
@@ -92,7 +93,7 @@
 			</div>
 		</div>
 	</section>
-	<section>
+	<section class="section">
 		<h1>인증코드설정</h1>
 		<div class="x_control-group">
 			<label class="x_control-label">인증번호 자릿수</label>
@@ -148,11 +149,15 @@
    		</div>
 
 	</section>
-	<section>
+	<section class="section">
 		<h1>약관설정</h1>
 		<div class="x_control-group">
-			<label class="x_control-label" for="agreement">개인정보취급 동의서</label>
+			<label class="x_control-label" for="agreement">내용</label>
 			<div class="x_controls">{$editor}</div>
+<style scoped>
+#smart_content,
+#smart_content>.tool{clear:none !important}
+</style>
 		</div>
 	</section>
 	<div class="btnArea">
