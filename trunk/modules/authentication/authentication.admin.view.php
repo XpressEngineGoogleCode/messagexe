@@ -26,6 +26,8 @@ class authenticationAdminView extends authentication
 		$module_srl = Context::get('module_srl');
 
 		$config = $oAuthenticationModel->getModuleConfig();
+		$config->agreement = $oAuthenticationModel->_getAgreement();
+		
 		Context::set('config', $config);
 
 		// Get a layout list
