@@ -41,6 +41,21 @@ class authenticationAdminView extends authentication
 		$mskin_list = $oModuleModel->getSkins($this->module_path, "m.skins");
 		Context::set('mskin_list', $mskin_list);
 
+		$oEditorModel = getModel('editor');
+		Context::set('editor_skin_list', $oEditorModel->getEditorSkinList());
+
+		// get an editor
+		$option = new stdClass();
+		$option->primary_key_name = 'temp_srl';
+		$option->content_key_name = 'agreement';
+		$option->allow_fileupload = false;
+		$option->enable_autosave = false;
+		$option->enable_default_component = true;
+		$option->enable_component = true;
+		$option->resizable = true;
+		$option->height = 300;
+		$editor = $oEditorModel->getEditor(0, $option);
+		Context::set('editor', $editor);
 		
 		require_once($this->module_path.'authentication.actions.php');
 		//$action_list = array('dispMemberSignUpForm', 'dispMemberModifyInfo', 'dispMemberModifyPassword', 'dispMemberLeave');

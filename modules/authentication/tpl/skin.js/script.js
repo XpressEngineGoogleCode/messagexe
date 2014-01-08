@@ -274,8 +274,9 @@ function verifyAuthCode()
 
 	params['authentication_srl'] = jQuery("#authentication_srl").val();
 	params['authcode'] = jQuery('#authcode').val();
+	if(jQuery("#accept_agree").is(":checked")) params['accept_agreement'] = jQuery('#accept_agree').val();
 
-	exec_xml('authentication', 'procAuthenticationVerifyAuthcode', params, completeVerifyAuthcode, responses);
+	exec_xml('authentication', 'procAuthenticationVerifyAuthCode', params, completeVerifyAuthcode, responses);
 }
 
 

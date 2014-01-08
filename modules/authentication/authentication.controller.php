@@ -116,7 +116,7 @@ class authenticationController extends authentication
 		$this->setMessage('인증번호를 발송하였습니다.');
 	}
 
-	function procAuthenticationVerifyAuthcode()
+	function procAuthenticationVerifyAuthCode()
 	{
 		$reqvars = Context::getRequestVars();
 

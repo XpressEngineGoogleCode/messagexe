@@ -6,6 +6,7 @@
 	<input type="hidden" name="act" value="procAuthenticationAdminConfig" />
 	<input type="hidden" name="module" value="{$module}" />
 	<input type="hidden" name="module_srl" value={$module_srl} />
+	<input type="hidden" name="agreement" value="{$config->agreement}" />
 
 	<section class="section">
 		<h1>기본설정</h1>
@@ -146,6 +147,13 @@
 			</div>
    		</div>
 
+	</section>
+	<section>
+		<h1>약관설정</h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="agreement">개인정보취급 동의서</label>
+			<div class="x_controls">{$editor}</div>
+		</div>
 	</section>
 	<div class="btnArea">
 		<button type="submit" class="x_btn">저장</button>
