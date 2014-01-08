@@ -9,11 +9,24 @@
 		<div id="header">
 		<h1><img src="img/phone_02.gif" alt="휴대폰인증" /></h1>
 	</div><!-- #header// -->
-	<form method="post" action="./" ruleset="verify_authcode">
-		<input type="hidden" name="act" value="procAuthenticationVerifyAuthcode" />
+	<form method="post" action="./" >
+		<input type="hidden" name="act" value="procAuthenticationVerifyAuthCode" />
 		<input type="hidden" id="authentication_srl" name="authentication_srl" value={$authentication_srl} />
 		<input type="hidden" name="module" value="authentication" />
 		<input type="hidden" id="message_id" value="" />
+
+		<div class="agreement" cond="$config->agreement">
+			<div class="text">
+				{$config->agreement}
+			</div>
+			<div class="confirm">
+				<label for="accept_agree">
+					<input type="checkbox" name="accept_agreement" value="Y" id="accept_agree" />
+					{$lang->about_accept_agreement}
+				</label>
+			</div>
+		</div>
+
 		<table class="container">
 			<tr>
 				<th class="orangeTop">국가선택</th>

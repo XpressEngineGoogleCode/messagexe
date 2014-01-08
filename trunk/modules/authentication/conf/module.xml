@@ -17,8 +17,7 @@
 		<action name="getAuthenticationAdminNumber" type="model" />
 
 		<action name="procAuthenticationSendAuthCode" type="controller" ruleset="send_authcode" />
-		<action name="procAuthenticationVerifyAuthcode" type="controller" ruleset="verify_authcode" />
+		<action name="procAuthenticationVerifyAuthCode" type="controller" ruleset="verify_authcode" />
 		<action name="procAuthenticationUpdateStatus" type="controller" />
-
     </actions>
 </module>
