@@ -6,14 +6,18 @@ jQuery(document).ready(function (){
 });
 	*/
 
-jQuery(document).ready(function ()
-		{
-			
-
-		});
-
 function getAuthCode(target_action)
 {
+	accept_agreement = null;
+	if(jQuery("#accept_agree").is(":checked")) accept_agreement = jQuery('#accept_agree').val(); // 약관 체크
+	if(jQuery("#no_agreement").val()) accept_agreement = jQuery('#no_agreement').val(); // 약관이 없을때는 그냥 통과
+
+	if(accept_agreement == null) 
+	{
+		alert("약관동의 값은 필수입니다.");
+		return;
+	}
+
 /*
 	var today = new Date();
 	alert(today.getMonth());
@@ -281,7 +285,6 @@ function verifyAuthCode()
 	params['authentication_srl'] = jQuery("#authentication_srl").val();
 	params['authcode'] = jQuery('#authcode').val();
 	if(jQuery("#accept_agree").is(":checked")) params['accept_agreement'] = jQuery('#accept_agree').val(); // 약관 체크
-
 	if(jQuery("#no_agreement").val()) params['accept_agreement'] = jQuery('#no_agreement').val(); // 약관이 없을때는 그냥 통과
 
 	exec_xml('authentication', 'procAuthenticationVerifyAuthCode', params, completeVerifyAuthcode, responses);
