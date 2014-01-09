@@ -6,6 +6,10 @@
 	<item name="authcode">
 		<value xml:lang="ko"><![CDATA[인증번호]]></value>
 	</item>
+	<item name="about_accept_agreement">
+		<value xml:lang="ko"><![CDATA[약관을 모두 읽엇으며 동의합니다.]]></value>
+		<value xml:lang="en"><![CDATA[accept_agreement]]></value>
+	</item>
 
 	<item name="validationcode_act">
 		<value xml:lang="ko"><![CDATA[액션선택]]></value>
