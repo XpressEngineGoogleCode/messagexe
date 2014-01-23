@@ -53,11 +53,6 @@ class purplebookController extends purplebook
 		$options=new StdClass();
 		if($args && $args->basecamp) $options->disable_db = TRUE;
 
-		// check ticket
-		$ticket = Context::get('ticket');
-		if(!$ticket || !$this->validateTicket($ticket))
-			return new Object(-1, 'msg_invalid_ticket');
-
 		$encode_utf16 = Context::get('encode_utf16');
 		$decoded = $this->getJSON('data');
 		$sms = &$oTextmessageModel->getCoolSMS($args);
@@ -349,23 +344,6 @@ class purplebookController extends purplebook
 		$callback_number = str_replace('|@|', '', $callback_number);
 
 		return $callback_number;
-	}
-
-	function getTicket() 
-	{
-		if(!isset($_SESSION['PURPLEBOOK_TICKET']))
-		{
-			$ticket = md5(strval(rand()));
-			$_SESSION['PURPLEBOOK_TICKET'] = $ticket;
-		}
-		return $_SESSION['PURPLEBOOK_TICKET'];
-	}
-
-	function validateTicket($ticket) 
-	{
-		if(!isset($_SESSION['PURPLEBOOK_TICKET'])) return FALSE;
-		if($ticket == $_SESSION['PURPLEBOOK_TICKET']) return TRUE;
-		return FALSE;
 	}
 
 	function procPurplebookFilePicker()
