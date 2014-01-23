@@ -55,6 +55,6 @@
 		<action name="procPurplebookDeleteReceiverNumber" type="controller" standalone="true" />
 		<action name="procPurplebookSaveMessage" type="controller" standalone="true" />
 		<action name="procPurplebookDeleteMessage" type="controller" standalone="true" />
-		<action name="procPurplebookPurplebookDownload" type="controller" standalone="true" />
+		<action name="procPurplebookPurplebookDownload" type="controller" standalone="true" method="GET|POST" />
 	</actions>
 </module>
