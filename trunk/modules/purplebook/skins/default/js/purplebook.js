@@ -1018,7 +1018,6 @@ function send_json(content)
                     module : "purplebook"
                     , act : "procPurplebookSendMsg"
                     , data : data
-                    , ticket : g_ticket
                     , module_srl : g_module_srl
                     , use_point : g_use_point
                     , sms_point : g_sms_point
