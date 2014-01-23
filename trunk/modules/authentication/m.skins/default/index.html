@@ -11,7 +11,7 @@
 
 <div id="phone">
 	<div id="header">
-		<h1>휴대폰번호 인증</h1>
+		<h1>휴대폰번호 인증mobile</h1>
 	</div><!-- #header// -->
 	<div class="cc">
 	<form method="post" action="./" ruleset="verify_authcode">
@@ -19,6 +19,20 @@
 		<input type="hidden" id="authentication_srl" name="authentication_srl" value={$authentication_srl} />
 		<input type="hidden" name="module" value="authentication" />
 		<input type="hidden" id="message_id" value="" />
+		<input type="hidden" name="accept_agreement" value="Y" id="no_agreement" cond="!$config->agreement" />
+
+		<div class="agreement" cond="$config->agreement">
+			<div class="text">
+				{$config->agreement}
+			</div>
+			<div class="confirm">
+				<label for="accept_agree">
+					<input type="checkbox" name="accept_agreement" value="Y" id="accept_agree" />
+					{$lang->about_accept_agreement}
+				</label>
+			</div>
+		</div>
+
 		<div class="container">
 			<ul>
 				<li>
@@ -35,7 +49,7 @@
 					<span class="phone_tit">휴대폰번호</span>
 					<span class="phone_area">	
 						<input class="input02 size02" type="text" name="phonenum[]" id="phonenum_1" size="5" value="" />
-						<a href="#" onclick="getAuthCode(); return false;" id="get_authcode" class="button gray number_btn">인증번호 받기</a>
+						<a href="#" onclick="getAuthCode('{$target_action}'); return false;" id="get_authcode" class="button gray number_btn">인증번호 받기</a>
 						<a cond="0" href="#" onclick="getAuthCode(); return false;" id="authcode_resend"><img src="img/phone_07.gif" border="0" /></a>
 					</span>
 				</li>
