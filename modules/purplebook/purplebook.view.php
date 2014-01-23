@@ -26,9 +26,6 @@ class purplebookView extends purplebook
 
 		$lang_list = array('sms','lms','mms','reserv_send','direct_send','msg_not_enough_money','available_sms_number','arranged_sms_number','msg_will_you_try','reservation_datetime','number_to_send','msg_will_you_send','msg_not_enough_money','available_lms_number','arranged_lms_number','available_mms_number','arranged_mms_number','msg_login_required');
 
-		$oPurplebookController = &getController('purplebook');
-		Context::set('ticket', $oPurplebookController->getTicket());
-
 		$widget_lang = new StdClass();
 		foreach ($lang_list as $val)
 		{
