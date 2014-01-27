@@ -24,6 +24,17 @@ class authenticationController extends authentication
 
 		// check variables
 		$phonenum = Context::get('phonenum');
+
+		if(!preg_match("/^(010|011|016|017|018|019)/", $phonenum))
+		{
+			return new Object(-1, "번호를 제대로 입력해주세요.");
+		}
+
+		if(preg_match('/[^0-9]/i', $phonenum))
+		{
+			return new Object(-1, "숫자만 입력 가능합니다.");
+		}
+
 		$country_code = Context::get('country_code');
 		if(!$phonenum || !$country_code)
 		{
