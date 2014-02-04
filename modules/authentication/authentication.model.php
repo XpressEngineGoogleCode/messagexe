@@ -84,6 +84,15 @@ class authenticationModel extends authentication
 		return null;
 	}
 
+	function getContent()
+	{
+		$tpl_path = sprintf('%sskins/default/', $this->module_path);
+		$tpl_file = 'index.html';
+
+		$oTemplate = TemplateHandler::getInstance();
+		return $oTemplate->compile($tpl_path, $tpl_file);
+	}
+
 	function triggerMemberMenu($in_args)
 	{
 		$url = getUrl('','module','authentication','act','dispAuthenticationSendMessage','member_srl',Context::get('target_srl'));
