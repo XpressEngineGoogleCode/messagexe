@@ -71,6 +71,15 @@
             return $content;
         }
 
+        function dispIndex($no, $page, $count)
+        {
+                if($page == 1)
+                    return $no;
+                else
+                    return ($page-1)*$count+$no;
+
+        }
+
         function dispFullnumber($country, $phonenum) {
             if (strlen($phonenum) > 0 && substr($phonenum, 0, 1) == '0') $phonenum = substr($phonenum, 1);
             return $country . $phonenum;

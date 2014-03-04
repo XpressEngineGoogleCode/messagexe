@@ -1,6 +1,5 @@
 <include target="header.html" />
 <load target="js/usagestatement.js" />
-
 <form method="get" action="./" id="mobilemessage_fo" class="form">
     <div class="table even easyList">
         <table class="<!--@if($current_version_int > $version_115)-->rowTable<!--@else-->adminTable<!--@end-->">
@@ -11,29 +10,25 @@
                 <th scope="col"><div><input type="checkbox" name="cart" value="" /></div></th>
                 <th scope="col" class=""><div>{$lang->mtype}</div></th>
 				<th scope="col" class="quarter_wide"><div>{$lang->recipient_no}</div></th>
-				<th scope="col" class=""><div>{$lang->user_name}</div></th>
 				<th scope="col" class=""><div>{$lang->reservation}</div></th>
                 <th scope="col" class="quarter_wide"><div>{$lang->content}</div></th>
 				<th scope="col" class=""><div>{$lang->status}</div></th>
 				<th scope="col" class="quarter_wide"><div>{$lang->sent_time}</div></th>
 				<th scope="col" class="quarter_wide"><div>{$lang->result_code}</div></th>
-				<th scope="col" class="quarter_wide"><div>{$lang->carrier}</div></th>
             </tr>
         </thead>
         <tbody>
             <!--@foreach($message_list as $no => $val)-->
             <tr class="row{$cycle_idx}">
-                <td>{$no}</td>
+				<td>{$csutil->dispIndex($no, $page, $list_count)}</td>
                 <td><input type="checkbox" name="cart" value="{$val->message_id}" /></td>
-                <td>{$val->mtype}</td>
-                <td>{htmlspecialchars($val->recipient_no)}</td>
-                <td><!--@if(!$val->ref_username)-->-<!--@else-->{htmlspecialchars($val->ref_username)}<!--@end--></td>
+                <td>{$val->type}</td>
+                <td>{htmlspecialchars($val->recipient_number)}</td>
 				<td><span cond="$val->reservflag=='Y'" class="reservdate">{zdate($val->reservdate, "Y-m-d H:i")}</span><span cond="$val->reservflag=='N'">-</span></td>
-				<td title="{htmlspecialchars($val->content)}">{htmlspecialchars($csutil->dispContent($val->content))}</td>
-				<td>{$csutil->dispStatus($val->mstat)}</td>
-				<td>{zdate($val->senddate, "Y-m-d H:i:s")}</td>
-				<td <!--@if($val->rcode != '00')-->style="color: #ee7989;"<!--@end-->>{$val->rcode}:{htmlspecialchars($csutil->dispResultCode($val->rcode))}</td>
-				<td><span cond="$val->carrier=='SKT'">SKT</span><span cond="$val->carrier=='LGT'">LGU+</span><span cond="$val->carrier=='KTF'">KT</span></td>
+				<td title="{htmlspecialchars($val->text)}">{htmlspecialchars($csutil->dispContent($val->text))}</td>
+				<td>{$csutil->dispStatus($val->status)}</td>
+				<td>{zdate($val->sent_time, "Y-m-d H:i:s")}</td>
+				<td <!--@if($val->result_code != '00')-->style="color: #ee7989;"<!--@end-->>{$val->result_code}:{htmlspecialchars($csutil->dispResultCode($val->result_code))}</td>
             </tr>
             <!--@end-->
         </tbody>

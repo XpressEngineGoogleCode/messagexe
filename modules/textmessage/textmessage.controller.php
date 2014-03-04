@@ -11,6 +11,8 @@ class textmessageController extends textmessage
 	{
 	}
 
+
+/*
 	function insertTextmessage($args) 
 	{
 		// DB INSERT
@@ -237,7 +239,7 @@ class textmessageController extends textmessage
 		}
 		$in_args->content = $content_arr;
 	}
-
+ */
 	/**
 	 * @brief 메시지 전송
 	 * @param[in] $args
@@ -255,8 +257,10 @@ class textmessageController extends textmessage
 	 * @param[in] $user_id true means auto, false means none, otherwise, use in userid
 	 * @return Object(error, message)
 	 **/
+	/*
 	function addMessage($in_args, $options=NULL) 
 	{
+		return json_encode($in_args);	
 		//
 		// validate parameters
 		//
@@ -356,6 +360,7 @@ class textmessageController extends textmessage
 			}
 		}
 	}
+	 */
 
 	/**
 	 * @brief 메시지 전송, $in_args에 값이 있을 경우 전송대기열에 넣고 전송처리
@@ -373,147 +378,88 @@ class textmessageController extends textmessage
 	 * @param[in] $user_id true means auto, false means none, otherwise, use in userid
 	 * @return Object(error, message)
 	 **/
-	function sendMessage($in_args=NULL, $options=NULL) 
+	function sendMessage($in_args) 
 	{
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
-
 		// $in_args에 값이 있을 경우 전송대기열에 넣고 전송처리
-		if($in_args)
+		
+		if(is_array($in_args))
 		{
-			if(!is_array($in_args)) $in_args = array($in_args);
-			foreach($in_args as $arg)
-			{
-				$output = $this->addMessage($arg, $options);
-				if($output && !$output->toBool())	return $output;
-			}
-		}
-		if(!$sms->count())
-			return new Object();
-		$first_msg = $sms->msgl[0];
-		$total_count = $sms->count();
+			$options->extension = json_encode($in_args);
+			if(!$in_args->from)		$options->from = $in_args->from;
+			if(!$in_args->type)		$options->type = $in_args->type;
+			if(!$in_args->image)	$options->image = $in_args->image;
+			if(!$in_args->text)		$options->text = $in_args->text;
+			if(!$in_args->refname)		$options->refname = $in_args->refname;
+			if(!$in_args->country)		$options->country = $in_args->country;
+			if(!$in_args->subject)		$options->subject = $in_args->subject;
+			if(!$in_args->srk)		$options->srk = $in_args->srk;
 
-		//
-		// insert group info.
-		//
-		$group_id = $first_msg['GROUP-ID'];
-		$mtype = $first_msg['TYPE'];
-		$subject = $first_msg['SUBJECT'];
-		$message = $first_msg['MESSAGE'];
-		if (isset($first_msg['RESERVDATE']))
-		{
-			$reservdate = $first_msg['RESERVDATE'];
-			$reservflag = 'Y';
-		}
-		$args->group_id = $group_id;
-		$args->mtype = $mtype;
-		$args->subject =  $subject;
-		$args->content =  $message;
-		if (!$args->subject)
-			$args->subject = $message;
-		$args->reservflag = $reservflag;
-		$args->reservdate = $reservdate;
-		$args->total_count = $total_count;
-		if(!$options->disable_db)
-		{
-			$output = $this->insertTextmessageGroup($args);
-			if(!$output->toBool()) return $output;
-		}
-		unset($args);
-
-		// connect to server
-		if(!$sms->connect()) 
-			return new Object(-1, 'error_cannot_connect');
-
-		$sending_count=0;
-		$failure_count=0;
-		$data = array();
-		if($sms->send())
-		{
-			$result = $sms->getr();
-			foreach ($result as $row) {
-				if ($row["RESULT-CODE"] == "00") {
-					$sending_count++;
-				} else {
-					$failure_count++;
-				}
-
-				switch($row["RESULT-CODE"]) {
-					case "20":
-						$alert = "[MessageXE 설정오류] 존재하지 않는 아이디이거나 패스워드가 틀립니다.";
-						break;
-					case "30":
-						$alert = "잔액이 모두 소진되어 전송실패 했습니다.";
-						break;
-					case "58":
-						$alert = "해당 번호로 전송할 경로가 없습니다.";
-				}
-				$args->message_id = $row["MESSAGE-ID"];
-				$args->status = '9';
-				$args->resultcode = $row["RESULT-CODE"];
-				$output = $this->updateStatus($args,TRUE);
-				if (!$output->toBool()) 
-					$alert = $output->getMessage();
-
-                $obj = new StdClass();
-                $obj->result_code = $row["RESULT-CODE"];
-                $obj->group_id = $row["GROUP-ID"];
-                $obj->message_id = $row["MESSAGE-ID"];
-                $obj->called_number = $row["CALLED-NUMBER"];
-                $data[] = $obj;
-			}
-		}
-		$sms->disconnect();
-		$sms->emptyall();
-
-		if ($failure_count > 0)
-		{
-			$output = new Object(-1, $alert);
+			$result = $sms->send($options);
 		}
 		else
 		{
-			// success
-			$output = new Object(0, $alert);
+			$result = $sms->send($in_args);
 		}
-		$output->add('data', $data);
-		$output->add('success_count', $sending_count);
-		$output->add('failure_count', $failure_count);
+
+		if($result->code)
+		{
+			$output = new Object(-1, $result->code);
+		}
+		else
+		{
+			$output = new Object();	
+		}
+		//$output->add('data', $data);
+		$output->add('success_count', $result->success_count);
+		$output->add('failure_count', $result->error_count);
 		return $output;
+	
+
 	}
 
-	function cancelMessage($msgids, $opts=FALSE)
+	function getResult($args=null)
 	{
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
-		if (!$sms->connect())
-			return new Object(-1, 'warning_cannot_connect');
+		$result = $sms->sent($args);
+		return $result;
+	}
 
-		foreach ($msgids as $id)
-		{
-			$sms->cancel($id);
-		}
-		$sms->disconnect();
-		return new Object();
+	/* 예약전송 취소하기
+	 * 
+	 */
+	function cancelMessage($msgid, $opts=FALSE)
+	{
+		$oTextmessageModel = &getModel('textmessage');
+		$sms = &$oTextmessageModel->getCoolSMS();
+		$options = new stdClass();
+		$options->mid = $msgid;
+		$result = $sms->cancel($options);
+		if($result->code)	
+			return new Object(-1, $result->code);
+		else
+			return new Object();
 	}
 
 	/**
 	 * @brief 문자취소(그룹)
 	 **/
-	function cancelGroupMessages($group_ids, $opts=FALSE)
+	function cancelGroupMessages($grpid, $opts=FALSE)
 	{
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
-		if(!$sms->connect())
-			return new Object(-1, 'warning_cannot_connect');
-
-		foreach($group_ids as $gid)
-		{
-			$sms->groupcancel($gid);
-		}
-		$sms->disconnect();
+		$options = new stdClass();
+		$options->gid = $grpid;
+		$result = $sms->cancel($options);
+		if($ressult->code)
+			return new Object(-1, $result->code);
 		return new Object();
 	}
 
+
+/*
 	function deleteMessage($message_id)
 	{
 		   $args->message_id = $message_id;
@@ -530,5 +476,6 @@ class textmessageController extends textmessage
 		   $output = executeQuery('textmessage.deleteGroupMessage', $args);
 		   return $output;
 	}
+ */
 }
 ?>

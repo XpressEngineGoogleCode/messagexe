@@ -81,9 +81,16 @@
             $this->setTemplateFile('config');
 		}
 
-        function dispTextmessageAdminUsageStatement() {
+
+		//발송내역
+		function dispTextmessageAdminUsageStatement() {
             $oTextmessageModel = &getModel('textmessage');
             $config = $oTextmessageModel->getModuleConfig();
+
+/*
+//예전에는 나온 결과를 클릭했을때 그 결과에 따른
+//디테일이 출력됬으나 지금은 있는 그대로 전부 출력되므로
+//아래 기능은 존재이유가 없는듯
 
             if (Context::get('group_id')) {
                 $args->group_id = Context::get('group_id');
@@ -94,21 +101,33 @@
                 $output = $oTextmessageModel->getMessageGroups($args);
                 $this->setTemplateFile('usagestatement_group');
             }
+ */
 
+			$sms = $oTextmessageModel->getCoolSMS();
+			$count = 20;
+			$options->count = $count;
+			$options->page = Context::get('page');
+			$output = $sms->sent($options);
+			$output->total_page = ceil($output->total_count / $count);
+			$page = new PageHandler($output->total_count, $output->total_page, 1, $count);
+			$output->page_navigation = $page;
+			//
             // 템플릿에 쓰기 위해서 context::set
             Context::set('total_count', $output->total_count);
             Context::set('total_page', $output->total_page);
             Context::set('page', $output->page);
+			Context::set('list_count', $output->list_count);
             Context::set('message_list', $output->data);
             Context::set('page_navigation', $output->page_navigation);
-
             require_once('textmessage.utility.php');
             $csutil = new CSUtility();
             Context::set('csutil', $csutil);
             Context::set('config', $config);
 
+			$this->setTemplateFile('usagestatement_list');
         }
 
+/*
         function dispTextmessageAdminStatisticsDaily() {
             $logged_info = Context::get('logged_info');
             if (!Context::get('stats_date')) Context::set('stats_date', date('Ymd'));

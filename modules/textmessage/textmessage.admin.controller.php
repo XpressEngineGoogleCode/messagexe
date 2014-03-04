@@ -18,6 +18,7 @@
 			$args = Context::gets('service_id', 'password', 'callback_url', 'encode_utf16');
 
 			// send callback-url to server
+			/*
 			if ($args->callback_url) {
 				$callback_url = $args->callback_url;
 				// choose '?' or '&' whether the callback_url has '?' notation.
@@ -32,6 +33,7 @@
 					$sms->disconnect();
 				}
 			}
+			 */
 
 			// save module configuration.
 			$oModuleControll = getController('module');

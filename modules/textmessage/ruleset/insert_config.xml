@@ -4,6 +4,6 @@
     </customrules>
     <fields>
 		<field name="service_id" required="true" length="1:20" rule="userid" />
-		<field name="password" required="true" length="1:20" />
+		<field name="password" required="true" length="1:40" />
     </fields>
 </ruleset>
