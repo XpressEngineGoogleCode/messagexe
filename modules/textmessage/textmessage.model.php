@@ -156,13 +156,12 @@
 			$result = $sms->balance();
 			
 			$obj = new Object();
-			$obj->add('cash', $result->CASH);
-			$obj->add('point', $result->POINT);
+			$obj->add('cash', $result->cash);
+			$obj->add('point', $result->point);
 			$obj->add('sms_price', '20');
 			$obj->add('lms_price', '50');
 			$obj->add('mms_price', '200');
-			$obj->add('deferred_payment', $result["DEFERRED-PAYMENT"]);
-
+			//$obj->add('deferred_payment', $result["DEFERRED-PAYMENT"]);
 			return $obj;
 		}
 
