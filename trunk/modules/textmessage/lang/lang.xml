@@ -4,6 +4,14 @@
 		<value xml:lang="ko"><![CDATA[서비스ID]]></value>
 		<value xml:lang="en"><![CDATA[Service ID]]></value>
 	</item>
+	<item name="service_api_key">
+		<value xml:lang="ko"><![CDATA[서비스 API Key]]></value>
+		<value xml:lang="en"><![CDATA[Service API Key]]></value>
+	</item>
+	<item name="service_api_secret">
+		<value xml:lang="ko"><![CDATA[서비스 API Secret]]></value>
+		<value xml:lang="en"><![CDATA[Service API Secret]]></value>
+	</item>
 	<item name="service_password">
 		<value xml:lang="ko"><![CDATA[비밀번호]]></value>
 		<value xml:lang="en"><![CDATA[Password]]></value>
@@ -172,12 +180,12 @@
 	</item>
 
 	<item name="about_service_id">
-		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a> 에서 회원가입한 아이디를 입력합니다.]]></value>
-		<value xml:lang="en"><![CDATA[Input the ID you registered on <a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a>]]></value>
+		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/index.php?mid=service_setup&act=dispSmsconfigCredentials" target="_blank">www.coolsms.co.kr/</a>에서 확인하실수 있습니다. ]]></value>
+		<value xml:lang="en"><![CDATA[You can check your api_key at <a href="http://www.coolsms.co.kr/index.php?mid=service_setup&act=dispSmsconfigCredentials" target="_blank">www.coolsms.co.kr/</a>]]></value>
 	</item>
 	<item name="about_service_password">
-		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a> 에서 회원가입때 입력한 비밀번호를 입력합니다.]]></value>
-		<value xml:lang="en"><![CDATA[Input the password you registered on <a href="http://www.coolsms.co.kr/acct/signup.php" target="_blank">www.coolsms.co.kr</a>]]></value>
+		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/index.php?mid=service_setup&act=dispSmsconfigCredentials" target="_blank">www.coolsms.co.kr/</a> 에서 확인하실수 있습니다. ]]></value>
+		<value xml:lang="en"><![CDATA[You can check your api_secret at <a href="http://www.coolsms.co.kr/index.php?mid=service_setup&act=dispSmsconfigcredentials" target="_blank">www.coolsms.co.kr/</a>]]></value>
 	</item>
 	<item name="about_callback_url">
 		<value xml:lang="ko"><![CDATA[<i>http://도메인/설치경로</i> 형태로 입력하세요. 예) http://www.example.org/xe/<br />잘못된 URL을 설정하시면 [전송결과 자동갱신] 및 [엑셀다운로드 기능]이 오작동 할 수 있습니다.<br />]]></value>

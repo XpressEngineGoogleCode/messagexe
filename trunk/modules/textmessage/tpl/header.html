@@ -4,8 +4,7 @@
 <load target="js/script.js" />
 
 <div class="x_page-header">
-	<h1>
-		문자메시지
+	<h1> 문자메시지
 		<a href="#aboutModule" data-toggle class="x_icon-question-sign">{$lang->help}</a>
 	</h1>
 </div>
@@ -13,12 +12,12 @@
     <ul class="x_nav x_nav-tabs">
 		<li class="x_active"|cond="$act=='dispTextmessageAdminIndex'"><a href="{getUrl('act','dispTextmessageAdminIndex')}">{$lang->dashboard}</a></li>
 		<li class="x_active"|cond="$act=='dispTextmessageAdminUsageStatement'"><a href="{getUrl('act','dispTextmessageAdminUsageStatement')}">{$lang->usage_statement}</a></li>
-		<li class="x_active"|cond="$act=='dispTextmessageAdminStatisticsDaily'"><a href="{getUrl('act','dispTextmessageAdminStatisticsDaily')}">{$lang->statistics}</a></li>
+		<!--li class="x_active"|cond="$act=='dispTextmessageAdminStatisticsDaily'"><a href="{getUrl('act','dispTextmessageAdminStatisticsDaily')}">{$lang->statistics}</a></li-->
     </ul>
 
 <block cond="$cs_error_message">
-{@$XE_VALIDATOR_MESSAGE=$cs_error_message}
+	{@$XE_VALIDATOR_MESSAGE=$cs_error_message}
 </block>
 <div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-<p>{$XE_VALIDATOR_MESSAGE}</p>
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>

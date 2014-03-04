@@ -47,37 +47,10 @@
 
 		function &getCoolSMS($args=NULL) 
 		{
-			static $sms = NULL;
-
-			if ($sms)
-			{
-				return $sms;
-			}
-            $oModuleModel = &getModel('module');
-            $module_info = $oModuleModel->getModuleInfoXml($this->module);
-            $version = $module_info->version;
-
 			$config = $this->getModuleConfig();
 			if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
-			$sms = new coolsms();
-            $sln_reg_key = $this->getSlnRegKey();
-            if ($sln_reg_key) $sms->setSRK($sln_reg_key);
-			$sms->appversion("MXE2/" . $version . ", XE/" . __ZBXE_VERSION__);
 
-			$logged_info = Context::get('logged_info');
-			if(!$args)
-			{	
-				if ($config->service_id && $config->password) 
-				{
-					$sms->setuser($config->service_id, $config->password);
-				}
-			}else
-			{
-				$sms->setuser($logged_info->user_id, $logged_info->password, "");
-			}	
-
-
-			$sms->charset('utf8');
+			$sms = new coolsms($config->service_id, $config->password);
 			return $sms;
 		}
 
@@ -95,23 +68,25 @@
 			$config->cs_point=0;
 			$config->cs_mdrop=0;
 
-			$sms = $this->getCoolSMS();
+			$sms = &$this->getCoolSMS();
+			if ($sms->balance()) 
+			{
+				$remain = $sms->balance();
+				$config->cs_cash = $remain->cash;
+				$config->cs_point = $remain->point;
+			//	$config->cs_mdrop = $remain['DROP'];
+				$config->sms_price = 20;
+				$config->lms_price = 50;
+				$config->mms_price = 200;
 
-			if ($sms->connect()) {
-				$remain = $sms->remain();
-				$config->cs_cash = $remain['CASH'];
-				$config->cs_point = $remain['POINT'];
-				$config->cs_mdrop = $remain['DROP'];
-				$config->sms_price = $remain['SMS-PRICE'];
-				$config->lms_price = $remain['LMS-PRICE'];
-				$config->mms_price = $remain['MMS-PRICE'];
 				$config->sms_volume = ((int)$config->cs_cash / (int)$config->sms_price) + ((int)$config->cs_point / (int)$config->sms_price) + (int)$cs_mdrop;
 				$config->lms_volume = ((int)$config->cs_cash / (int)$config->lms_price) + ((int)$config->cs_point / (int)$config->lms_price) + ((int)$cs_mdrop / 3);
 				$config->mms_volume = ((int)$config->cs_cash / (int)$config->mms_price) + ((int)$config->cs_point / (int)$config->mms_price) + ((int)$cs_mdrop / 10);
-				if ($remain['RESULT-CODE'] != '00')
+
+				if ($remain->code)
 				{
 					Context::set('cs_is_logged', false);
-					switch ($remain['RESULT-CODE'])
+					switch ($remain->code)
 					{
 						case '20':
 							Context::set('cs_error_message', '<font color="red">존재하지 않는 아이디이거나 패스워드가 틀립니다.</font><br /><a href="' . getUrl('act','dispTextmessageAdminConfig') . '">설정변경</a>');
@@ -120,14 +95,14 @@
 							Context::set('cs_error_message', '<font color="red">사용가능한 SMS 건수가 없습니다.</font>');
 							break;
 						default:
-							Context::set('cs_error_message', '<font color="red">오류코드:'.$remain['RESULT-CODE'].'</font>');
+							Context::set('cs_error_message', '<font color="red">오류코드:'.$remain->code.'</font>');
 					}
 				}
 				else
 				{
 					Context::set('cs_is_logged', true);
 				}
-				$sms->disconnect();
+			//	$sms->disconnect();
 			} else {
 				Context::set('cs_is_logged', false);
 				Context::set('cs_error_message', '<font color="red">서비스 서버에 연결할 수 없습니다.<br />일부 웹호스팅에서 외부로 나가는 포트 접속을 허용하지 않고 있습니다.<br /></font>');
@@ -176,31 +151,26 @@
 			$config = $this->getModuleConfig($args);
 
 			$sms = &$this->getCoolSMS($args);
-
-			// connect
-			if (!$sms->connect()) {
-				// cannot connect
-				return new Object(-1, 'cannot connect to server.');
-			}
-
+			
 			// get cash info
-			$result = $sms->remain();
-
-			// disconnect
-			$sms->disconnect();
-
+			$result = $sms->balance();
+			
 			$obj = new Object();
-			$obj->add('cash', $result["CASH"]);
-			$obj->add('point', $result["POINT"]);
-			$obj->add('mdrop', $result["DROP"]);
-			$obj->add('sms_price', $result["SMS-PRICE"]);
-			$obj->add('lms_price', $result["LMS-PRICE"]);
-			$obj->add('mms_price', $result["MMS-PRICE"]);
+			$obj->add('cash', $result->CASH);
+			$obj->add('point', $result->POINT);
+			$obj->add('sms_price', '20');
+			$obj->add('lms_price', '50');
+			$obj->add('mms_price', '200');
 			$obj->add('deferred_payment', $result["DEFERRED-PAYMENT"]);
 
 			return $obj;
 		}
 
+
+
+		/**
+		 *   Data no longer stored in local DB
+		 */
 		function getMessageGroups($args) {
             if (!$args->page) $args->page = Context::get('page');
             if (!$args->list_count) $args->list_count = 40;
