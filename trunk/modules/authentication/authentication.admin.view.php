@@ -68,6 +68,10 @@ class authenticationAdminView extends authentication
 		$action_list = array_keys($__AUTHENTICATION_ACTIONS__);
 		Context::set('action_list', $action_list);
 
+		$member_config = $oMemberModel->getMemberConfig();
+		Context::set("member_config", $member_config);
+
+
 		// set template file
 		$this->setTemplateFile('config');
 	}
