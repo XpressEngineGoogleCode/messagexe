@@ -93,6 +93,32 @@ class authenticationModel extends authentication
 		return $oTemplate->compile($tpl_path, $tpl_file);
 	}
 
+	/**
+	 * $obj : member info object.
+	 */
+	function getConfigValue(&$obj, $fieldname, $type=null) {
+		$return_value = null;
+		$config = $this->getModuleConfig();
+
+		// 기본필드에서 확인
+		if ($obj->{$fieldname}) {
+			$return_value = $obj->{$fieldname};
+		}
+
+		// 확장필드에서 확인
+		if ($obj->extra_vars) {
+			$extra_vars = unserialize($obj->extra_vars);
+			if ($extra_vars->{$fieldname}) {
+				$return_value = $extra_vars->{$fieldname};
+			}
+		}
+		if ($type=='tel' && is_array($return_value)) {
+			$return_value = implode($return_value);
+		}
+
+		return $return_value;
+	}
+
 	function triggerMemberMenu($in_args)
 	{
 		$url = getUrl('','module','authentication','act','dispAuthenticationSendMessage','member_srl',Context::get('target_srl'));

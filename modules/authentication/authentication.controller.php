@@ -237,8 +237,8 @@ class authenticationController extends authentication
 			if(!$output->toBool()) return $output;
 			$authinfo = $output->data;
 
-			$args->authcode = $authinfo->authcode;
 			$args->member_srl = $in_args->member_srl;
+			$args->authcode = $authinfo->authcode;
 			$args->clue = $authinfo->clue;
 			$args->country_code = $authinfo->country_code;
 			$output = executeQuery('authentication.insertAuthenticationMember', $args);
@@ -253,6 +253,9 @@ class authenticationController extends authentication
 	{
 		if($_SESSION['authentication_srl'])
 		{
+			$oAuthenticationModel = &getModel('authentication');;
+			$authentication_config = $oAuthenticationModel->getModuleConfig();
+
 			$args->authentication_srl = $_SESSION['authentication_srl'];
 			$output = executeQuery('authentication.getAuthentication', $args);
 			if(!$output->toBool()) return $output;
@@ -262,6 +265,13 @@ class authenticationController extends authentication
 			$args->member_srl = $in_args->member_srl;
 			$args->clue = $authinfo->clue;
 			$args->country_code = $authinfo->country_code;
+
+			if($authentication_config->cellphone_fieldname){
+				$field_name = $authentication_config->cellphone_fieldname;
+				$field_array = unserialize($in_args->extra_vars)->$field_name;
+
+				$args->clue = $field_array[0].$field_array[1].$field_array[2];
+			}
 
 			$output = executeQuery('authentication.deleteAuthenticationMember', $args);
 			if(!$output->toBool()) return $output;
