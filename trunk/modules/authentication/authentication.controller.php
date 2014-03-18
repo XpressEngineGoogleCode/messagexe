@@ -68,7 +68,6 @@ class authenticationController extends authentication
 		{
 			return new Object(-1, '잦은 인증번호 요청으로 금지되셨습니다. 1일뒤에 다시 시도해주십시오.');
 		}
-
 		// check day try limit
 		$today = date("YmdHis", time()-$config->resend_interval);
 		$args->clue = $phonenum;
@@ -93,7 +92,6 @@ class authenticationController extends authentication
 		$_SESSION['authentication_srl'] = $args->authentication_srl;
 		$this->add('authentication_srl', $args->authentication_srl);
 		Context::set('authentication_srl', $_SESSION['authentication_srl']);
-
 		//unset($args);
 
 		$args->country_code = $country_code;
@@ -111,7 +109,6 @@ class authenticationController extends authentication
 		//$args->encode_utf16 = $encode_utf16; 
 		$controller = &getController('textmessage');
 		$output = $controller->sendMessage($args);
-
 		if (!$output->toBool())
 		{
 			return $output;
@@ -120,10 +117,8 @@ class authenticationController extends authentication
 		$obj = $data[0];
 		$message_id = $obj->message_id;
 		$this->add('message_id', $message_id);
-
 		$trigger_output = ModuleHandler::triggerCall ('authentication.procAuthenticationSendAuthCode', 'after', $args);
 		if(!$trigger_output->toBool ()) return $trigger_output;
-
 		$this->setMessage('인증번호를 발송하였습니다.');
 	}
 
@@ -266,12 +261,14 @@ class authenticationController extends authentication
 			$args->clue = $authinfo->clue;
 			$args->country_code = $authinfo->country_code;
 
+			/*
 			if($authentication_config->cellphone_fieldname){
 				$field_name = $authentication_config->cellphone_fieldname;
 				$field_array = unserialize($in_args->extra_vars)->$field_name;
 
 				$args->clue = $field_array[0].$field_array[1].$field_array[2];
 			}
+			*/
 
 			$output = executeQuery('authentication.deleteAuthenticationMember', $args);
 			if(!$output->toBool()) return $output;
