@@ -24,38 +24,60 @@ if (in_array(Context::get('act'), array('dispMemberSignUpForm', 'dispMemberModif
         $authentication_config = $oAuthenticationModel->getModuleConfig();
         $authentication_info = $oAuthenticationModel->getAuthenticationInfo($_SESSION['authentication_srl']);
 
-        if(strlen($authentication_info->clue) > 10){
-			$phone[0] = substr($authentication_info->clue,0,3);
-			$phone[1] = substr($authentication_info->clue,3,4);
-			$phone[2] = substr($authentication_info->clue,-4,4);
-		}else{
-			$phone[0] = substr($authentication_info->clue,0,3);
-			$phone[1] = substr($authentication_info->clue,3,3);
-			$phone[2] = substr($authentication_info->clue,-4,4);
-        }
-
+        $oMemberModel = &getModel('member');
+        $memberConfig = $oMemberModel->getMemberConfig();
+        $signupForm = $memberConfig->signupForm;
+        
         if($authentication_config->cellphone_fieldname){
             $field_name = $authentication_config->cellphone_fieldname;
-            Context::addHtmlHeader("
-                <script>
-                jQuery(document).ready(function (){
-                    var phone_nums = [
-                        {num:'{$phone[0]}'},
-                        {num:'{$phone[1]}'},
-                        {num:'{$phone[2]}'}
-                    ];
 
-                console.log(phone_nums[0].num);
+            foreach($signupForm as $k => $v)
+            {
+                if($v->name == $authentication_config->cellphone_fieldname)
+                {
+                    $field_type = $v->type;
+                }
+            }
 
-                    var inp = document.getElementsByName('phone[]');
-                    for(i=0;i<inp.length; i++) {
-                        inp[i].value = phone_nums[i].num;
-                    }
+            if($field_type == 'tel'){
+                if(strlen($authentication_info->clue) > 10){
+                    $phone[0] = substr($authentication_info->clue,0,3);
+                    $phone[1] = substr($authentication_info->clue,3,4);
+                    $phone[2] = substr($authentication_info->clue,-4,4);
+                }else{
+                    $phone[0] = substr($authentication_info->clue,0,3);
+                    $phone[1] = substr($authentication_info->clue,3,3);
+                    $phone[2] = substr($authentication_info->clue,-4,4);
+                }
+                Context::addHtmlHeader("
+                    <script>
+                        jQuery(document).ready(function (){
+                            var phone_nums = [
+                                {num:'{$phone[0]}'},
+                                {num:'{$phone[1]}'},
+                                {num:'{$phone[2]}'}
+                            ];
 
-                    jQuery('input[name=\'phone[]\']').attr('readonly',true);
-                });
-                </script>
-                    ");
+                            var inp = document.getElementsByName('{$field_name}[]');
+                            for(i=0;i<inp.length; i++) {
+                                inp[i].value = phone_nums[i].num;
+                            }
+
+                            jQuery('input[name=\'{$field_name}[]\']').attr('readonly',true);
+                        });
+                    </script>
+               ");
+            }else if($field_type == 'text'){
+                Context::addHtmlHeader("
+                    <script>
+                        jQuery(document).ready(function (){
+                            jQuery('#{$field_name}').val('{$authentication_info->clue}');
+
+                            jQuery('#{$field_name}').attr('readonly',true);
+                        });
+                    </script>
+               ");
+            }
         }
     }
 ?>
