@@ -48,7 +48,7 @@
 				<li>
 					<span class="phone_tit">휴대폰번호</span>
 					<span class="phone_area">	
-						<input class="input02 size02" type="text" name="phonenum[]" id="phonenum_1" size="5" value="ex)01000000000" onfocus="if (this.value=='ex)01000000000') this.value='';" />
+						<input class="input02 size02" type="text" name="phonenum[]" id="phonenum_1" size="5" value="ex)01000000000" style="color:gray;" onfocus="if (this.value=='ex)01000000000') this.value=''; this.style.color='black';" />
 						<a href="#" onclick="getAuthCode('{$target_action}'); return false;" id="get_authcode" class="button gray number_btn">인증번호 받기</a>
 						<a cond="0" href="#" onclick="getAuthCode(); return false;" id="authcode_resend"><img src="img/phone_07.gif" border="0" /></a>
 					</span>
