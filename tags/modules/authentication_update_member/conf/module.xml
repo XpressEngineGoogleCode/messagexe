@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants />
+    <permissions />
+	<menus>
+	</menus>
+    <actions>
+		<action name="dispAuthentication_update_memberAdminIndex" type="view" admin_index="true" />
+		<action name="procAuthentication_update_memberAdminCopy" type="controller" />
+    </actions>
+</module>
