@@ -45,12 +45,16 @@
             return __SOLUTION_REGISTRATION_KEY__;
         }
 
-		function &getCoolSMS($args=NULL) 
+		function &getCoolSMS($api_key=NULL, $api_secret=NULL) 
 		{
 			$config = $this->getModuleConfig();
 			if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
 
-			$sms = new coolsms($config->service_id, $config->password);
+			if(!$api_key && !$api_secret)
+				$sms = new coolsms($config->service_id, $config->password);
+			else
+				$sms = new coolsms($api_key, $api_secret);
+
 			return $sms;
 		}
 
@@ -194,5 +198,7 @@
 			$output = executeQuery('textmessage.getTextmessageInfo',$args);
 			return $output->data;
 		}
+
+		
 }
 ?>

@@ -383,26 +383,42 @@ class textmessageController extends textmessage
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
 		// $in_args에 값이 있을 경우 전송대기열에 넣고 전송처리
-		
+	debugPrint($in_args);	
+		$options = new stdClass();
+
+		// Purplebook has different Key names. 
+		if($in_args->recipient_no)	$options->to = $in_args->recipient_no;
+		elseif($in_args->to) 		$options->to = $in_args->to;
+
+		if($in_args->sender_no) 	$options->from = $in_args->sender_no;
+		elseif($in_args->from)		$options->from = $in_args->from;
+
+		if($in_args->type)			$options->type = $in_args->type;
+		if($in_args->image)			$options->image = $in_args->image;
+		if($in_args->content)		$options->text = $in_args->content;
+		if($in_args->refname)		$options->refname = $in_args->refname;
+		if($in_args->country)		$options->country = $in_args->country;
+		if($in_args->subject)		$options->subject = $in_args->subject;
+		if($in_args->srk)			$options->srk = $in_args->srk;
+		if($in_args->extension) 	$options->extension = $in_args->extension;
+/*
 		if(is_array($in_args))
 		{
 			$options->extension = json_encode($in_args);
-			if(!$in_args->from)		$options->from = $in_args->from;
-			if(!$in_args->type)		$options->type = $in_args->type;
-			if(!$in_args->image)	$options->image = $in_args->image;
-			if(!$in_args->text)		$options->text = $in_args->text;
-			if(!$in_args->refname)		$options->refname = $in_args->refname;
-			if(!$in_args->country)		$options->country = $in_args->country;
-			if(!$in_args->subject)		$options->subject = $in_args->subject;
-			if(!$in_args->srk)		$options->srk = $in_args->srk;
-
+		
 			$result = $sms->send($options);
 		}
 		else
 		{
-			$result = $sms->send($in_args);
+			debugprint($in_args);
+			$result = $sms->send($options);
 		}
+ */
+		debugprint($in_args);
+		debugprint($options);
+		$result = $sms->send($options);
 
+			debugPrint($result);
 		if($result->code)
 		{
 			$output = new Object(-1, $result->code);
