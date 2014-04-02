@@ -148,4 +148,5 @@
 
             $this->setTemplateFile('stats_monthly');
         }
-	}
+ */
+}

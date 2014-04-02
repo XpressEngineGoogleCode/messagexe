@@ -1,5 +1,12 @@
 <?php
 
+/**
+ *
+ *   Copyright (C) 2008-2014 NURIGO
+ *   http://www.coolsms.co.kr
+ *
+ **/
+
 class coolsms
 {
 	private $api_key;
@@ -65,6 +72,7 @@ class coolsms
 		$this->salt = uniqid();
 		$this->timestamp = (string)time();
 
+		$options->User_Agent = "PHP";
 		$options->salt = $this->salt;
 		$options->timestamp = $this->timestamp;
 		$options->api_key = $this->api_key;
@@ -144,6 +152,18 @@ class coolsms
 		return $this->getResult();
 	}
 
+	/**
+	 * 	@GET status method
+	 * 	@options must contain api_key, salt, signature
+	 * 	@return an object(registdate, sms_average, sms_sk_average, sms_kt_average, sms_lg_average, mms_average, mms_sk_average, mms_kt_average, mms_lg_average)
+	 * 	this method is made for Coolsms inc. internal use
+	 */
+	public function status($options) 
+	{
+		$this->setMethod('status', 0);
+		$this->addInfos($options);	
+		return $this->getResult();
+	}
+
 }
 ?>
-
