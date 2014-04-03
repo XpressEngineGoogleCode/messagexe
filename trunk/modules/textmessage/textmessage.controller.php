@@ -383,7 +383,6 @@ class textmessageController extends textmessage
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
 		// $in_args에 값이 있을 경우 전송대기열에 넣고 전송처리
-	debugPrint($in_args);	
 		$options = new stdClass();
 
 		// Purplebook has different Key names. 
@@ -414,11 +413,21 @@ class textmessageController extends textmessage
 			$result = $sms->send($options);
 		}
  */
-		debugprint($in_args);
-		debugprint($options);
+		// send message
 		$result = $sms->send($options);
 
-			debugPrint($result);
+		if($result)
+		{
+			$result->called_number = $options->to;
+			$extension = json_decode($options->extension);
+			foreach($extension as $row)
+			{
+				
+				if(strpos($result->called_number, $row->to))
+					$result->called_number .= ",".$row->to;
+			}
+
+		}
 		if($result->code)
 		{
 			$output = new Object(-1, $result->code);
@@ -427,7 +436,7 @@ class textmessageController extends textmessage
 		{
 			$output = new Object();	
 		}
-		//$output->add('data', $data);
+		$output->add('data', $result);
 		$output->add('success_count', $result->success_count);
 		$output->add('failure_count', $result->error_count);
 		return $output;
