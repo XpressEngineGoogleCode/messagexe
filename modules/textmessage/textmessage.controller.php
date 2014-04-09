@@ -400,35 +400,30 @@ class textmessageController extends textmessage
 		if($in_args->subject)		$options->subject = $in_args->subject;
 		if($in_args->srk)			$options->srk = $in_args->srk;
 		if($in_args->extension) 	$options->extension = $in_args->extension;
-/*
-		if(is_array($in_args))
-		{
-			$options->extension = json_encode($in_args);
+
+		$opt = new stdClass();
+		$send_result = new stdClass();
+		$send_result = $sms->send($options);
+		$opt->gid = $send_result->group_id;
+
+		$count = 0;
+		do {
+			$sent_result = $this->getResult($opt);
+			sleep(1);
+			$count++;
+		}while($sent_result->code && $count < 30);
 		
-			$result = $sms->send($options);
-		}
-		else
+		$result = array();
+		foreach ($sent_result->data as $row => $val)
 		{
-			debugprint($in_args);
-			$result = $sms->send($options);
-		}
- */
-		// send message
-		$result = $sms->send($options);
-
-		if($result)
-		{
-			$result->called_number = $options->to;
-			$extension = json_decode($options->extension);
-			foreach($extension as $row)
-			{
-				
-				if(strpos($result->called_number, $row->to))
-					$result->called_number .= ",".$row->to;
-			}
-
-		}
-		if($result->code)
+			$obj = new stdClass();
+			$obj->result_code = $val->result_code;
+			$obj->group_id = $val->group_id;
+			$obj->message_id = $val->message_id;
+			$obj->called_number = $val->recipient_number;
+			$result[] = $obj;	
+		}	
+		if($sent_result->code)
 		{
 			$output = new Object(-1, $result->code);
 		}
@@ -437,11 +432,9 @@ class textmessageController extends textmessage
 			$output = new Object();	
 		}
 		$output->add('data', $result);
-		$output->add('success_count', $result->success_count);
-		$output->add('failure_count', $result->error_count);
+		$output->add('success_count', $send_result->success_count);
+		$output->add('failure_count', $send_result->error_count);
 		return $output;
-	
-
 	}
 
 	function getResult($args=null)
