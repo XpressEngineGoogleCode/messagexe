@@ -26,8 +26,6 @@ class newpostsController extends newposts
 			//$args->sender_no = $receiver->recipient_no;
 			$args->content = $content;
 			$args->sender_no = $config->sender_phone;
-			debugPrint($args);
-			debugPrint($config);
 			if(!empty($args->recipient_no[0]))
 			{	
 				$output = $oTextmessageController->sendMessage($args);
@@ -35,18 +33,19 @@ class newpostsController extends newposts
 			}
 
 			//전체관리자 모드 : 분류에 상관없이 보냄
-			$args->recipient_no = explode(',',$config->admin_phones);
+			//$args->recipient_no = explode(',',$config->admin_phones);
+			$args->recipient_no[0] = str_replace('|@|', '', $obj->extra_vars1);
 			//$args->sender_no = $receiver->recipient_no;
 			$args->content = $content;
-
+			debugPrint($args);
 			if(!empty($args->recipient_no[0]))
 			{
-				$output = $oTextmessageController->sendMessage($args);
-				if (!$output->toBool()) return $output;
+			//	$output = $oTextmessageController->sendMessage($args);
+			//	if (!$output->toBool()) return $output;
 			}
 			
 		}
-
+	
 		if (in_array($config->sending_method,array('1','3'))) 
 		{
 			if ($config->sender_email)
@@ -70,7 +69,9 @@ class newpostsController extends newposts
 			$oMail->setContent($mail_content);
 			$oMail->setSender($sender_name, $sender_email_address);
 			// $config->admin_emails 를 $output->email 로 변경
-			$target_email = explode(',',$output->email);
+			//$target_email = explode(',',$output->email);
+			$target_email[0] = $obj->email_address;
+			debugPrint($target_email);
 			foreach ($target_email as $email_address) 
 			{
 				$email_address = trim($email_address);
@@ -80,6 +81,7 @@ class newpostsController extends newposts
 			}
 			//전체관리자 Send 
 			$target_email = explode(',',$config->admin_emails);
+			
 			foreach ($target_email as $email_address) 
 			{
 				$email_address = trim($email_address);
@@ -93,16 +95,13 @@ class newpostsController extends newposts
 	function processNewposts(&$config,&$obj,&$sender,&$module_info) 
 	{
 		$oMemberModel = &getModel('member');
-
 		// message content
 		$sms_message = $this->mergeKeywords($config->content, $obj);
 		$sms_message = $this->mergeKeywords($sms_message, $module_info);
 		$sms_message = str_replace("&nbsp;", "", strip_tags($sms_message));
-
 		// mail content
 		$mail_content = $this->mergeKeywords($config->mail_content, $obj);
 		$mail_content = $this->mergeKeywords($mail_content, $module_info);
-
 /*
 		// get document info.
 		$oDocumentModel = &getModel('document');

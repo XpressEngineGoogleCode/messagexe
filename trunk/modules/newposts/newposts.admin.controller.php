@@ -74,7 +74,6 @@ class newpostsAdminController extends newposts
 		$output = executeQuery('newposts.getModuleCountByModuleSrlNConfigSrl', $args);
 		if(!$output->toBool()) return $output;
 		$count = $output->data->count;
-		debugPrint($count);
 		if($count != '0')
 		{
 			$this->setMessage('notify_exist_module');
@@ -83,7 +82,6 @@ class newpostsAdminController extends newposts
 			$this->setRedirectUrl($redirectUrl);
 			return;
 		}
-
 
 		//프로세스
 		$this->processNewpostsAdmin($params);
@@ -95,6 +93,7 @@ class newpostsAdminController extends newposts
 
 	function processNewpostsAdmin(&$parm)
 	{
+		
 		// 파라미터에 config_srl 있으면 지우고 다시만들고 없으면 새로 받아오고
 		$args->config_srl = $parm->config_srl;
 		if ($parm->config_srl) 
@@ -153,7 +152,6 @@ class newpostsAdminController extends newposts
 		$cellphone = Context::get('cellphone');
 		$email = Context::get('email');
 		$config_srl = Context::get('config_srl');
-		debugPrint($config_srl);
 		for($i=0; $i<sizeOf($category_srl); $i++)
 		{
 			$args->cellphone = $cellphone[$i];
