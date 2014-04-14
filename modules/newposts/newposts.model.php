@@ -41,6 +41,7 @@ class newpostsModel extends newposts
 				}
 			}
 		}
+		debugPrint($config_list);
 		return $config_list;
 	}
 }

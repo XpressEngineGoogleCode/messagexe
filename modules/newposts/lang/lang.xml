@@ -63,6 +63,18 @@
 		<value xml:lang="ko"><![CDATA[문서 URL]]></value>
 		<value xml:lang="en"><![CDATA[Article URL]]></value>
 	</item>
+	<item name="extra_var1">
+		<value xml:lang="ko"><![CDATA[Extra_vars1]]></value>
+		<value xml:lang="en"><![CDATA[Extra_vars1]]></value>
+	</item>
+	<item name="extra_var2">
+		<value xml:lang="ko"><![CDATA[Extra_vars2]]></value>
+		<value xml:lang="en"><![CDATA[Extra_vars2]]></value>
+	</item>
+	<item name="extra_var3">
+		<value xml:lang="ko"><![CDATA[Extra_vars3]]></value>
+		<value xml:lang="en"><![CDATA[Extra_vars3]]></value>
+	</item>	
 	<item name="cmd_newposts">
 		<value xml:lang="ko"><![CDATA[새글알림]]></value>
 		<value xml:lang="en"><![CDATA[Notification]]></value>

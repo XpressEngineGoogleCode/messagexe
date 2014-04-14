@@ -18,11 +18,21 @@ class newposts extends ModuleObject
 		{
 			if (is_array($val)) $val = join($val);
 			if (is_string($key) && is_string($val)) {
-				if (substr($key,0,10)=='extra_vars') $val = str_replace('|@|', '-', $val);
+				if (substr($key,0,10)=='extra_vars') 
+					$val = str_replace('|@|', '-', $val);
+				elseif(!$val)
+					$val = "";
 				$text = preg_replace("/%" . preg_quote($key) . "%/", $val, $text);
 			}
 		}
-		return $text;
+		$pattern = "/%[a-z]+_[a-z]+\d%/";
+		$text = preg_split("/[\s,]+/", $text);
+		foreach($text as $key)
+		{
+			if(!preg_match($pattern, $key))
+				$output .= $key . "\n";
+		}
+		return $output;
 	}
 
 	/**
@@ -81,6 +91,9 @@ class newposts extends ModuleObject
 		}
 		if(!$oDB->isColumnExists("newposts_config","sender_email")) {
 			$oDB->addColumn("newposts_config","sender_email", "varchar","250");
+		}
+		if(!$oDB->isColumnExists("newposts_config","sender_phone")) {
+			$oDB->addColumn("newposts_config", "sender_phone", "varchar", "250");
 		}
 	}
 

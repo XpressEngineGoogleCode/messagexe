@@ -63,7 +63,6 @@ class newpostsAdminView extends newposts
 		}
 		Context::set('list', $config_list);
 
-
 		$oNewpostsModel = &getModel('newposts');
 		$config = $oNewpostsModel->getModuleConfig();
 		Context::set('config',$config);
@@ -123,7 +122,6 @@ class newpostsAdminView extends newposts
 				$config->{$key} = $val;
 			}
 		}
-
 		// load module srls
 		$args->config_srl = $config_srl;
 		$output = executeQueryArray("newposts.getModuleSrls", $args);
