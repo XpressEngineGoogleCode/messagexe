@@ -216,6 +216,26 @@ class authenticationController extends authentication
 	}
 
 	/*
+	 * 외부페이지에서 직접 procMemberInsert를 호출하지 못하게 막는다. 
+	 */
+	function triggerMemberInsertBefore(&$in_args)
+	{
+		$oAuthenticationModel = &getModel('authentication');
+		$config = $oAuthenticationModel->getModuleConfig();
+
+		$action_list = array_filter(explode(',',$config->list));
+
+		if(!in_array("dispMemberSignUpForm", $action_list)) return new Object();
+
+		if($_SESSION['authentication_pass'] != 'Y')
+		{
+			return new Object(-1, "msg_invalid_request");
+		}
+
+		return new Object();
+	}
+
+	/*
 	 * 회원가입후 member_srl과 인증정보들을 authentication_member table에 넣는다.
 	 */
 	function triggerMemberInsert(&$in_args)
