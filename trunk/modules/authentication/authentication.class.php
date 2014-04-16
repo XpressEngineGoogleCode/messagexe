@@ -45,6 +45,12 @@ class authentication extends ModuleObject
 			$oModuleController->insertTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdate', 'after');
 		}
 
+		// 2014ww@w.w/04/16 추가 외부 페이지에서 바로 procMemberInsert로 가는것을 방지
+		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMemberInsertBefroe', 'before'))
+		{
+			$oModuleController->insertTrigger('member.insertMember', 'authentication', 'controller', 'triggerMemberInsertBefore', 'before');
+		}
+
 		/*
 		if(!$oModuleModel->getTrigger('member.getMemberMenu', 'authentication', 'model', 'triggerMemberMenu', 'before'))
 		{
@@ -76,6 +82,9 @@ class authentication extends ModuleObject
 		if(!$oModuleModel->getTrigger('moduleHandler.proc', 'authentication', 'controller', 'triggerModuleHandlerProc', 'after')) return true;
 		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMemberInsert', 'after')) return true;
 		if(!$oModuleModel->getTrigger('member.updateMember', 'authentication', 'controller', 'triggerMemberUpdate', 'after')) return true;
+
+		// 2014/04/16 추가 외부 페이지에서 바로 procMemberInsert로 가는것을 방지
+		if(!$oModuleModel->getTrigger('member.insertMember', 'authentication', 'controller', 'triggerMemberInsertBefore', 'before')) return true;
 		// if(!$oModuleModel->getTrigger('member.getMemberMenu', 'authentication', 'model', 'triggerMemberMenu', 'before')) return true;
 
 		return false;
