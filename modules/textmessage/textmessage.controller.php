@@ -406,6 +406,7 @@ class textmessageController extends textmessage
 		$send_result = $sms->send($options);
 		$opt->gid = $send_result->group_id;
 
+		/*
 		$count = 0;
 		do {
 			$sent_result = $this->getResult($opt);
@@ -432,6 +433,7 @@ class textmessageController extends textmessage
 			$output = new Object();	
 		}
 		$output->add('data', $result);
+		 */
 		$output->add('success_count', $send_result->success_count);
 		$output->add('failure_count', $send_result->error_count);
 		return $output;
