@@ -10,11 +10,35 @@ class notificationController extends notification
 	/**
 	 * @param $receiver contains the member information. (like a logged_info)
 	 */
-	function sendMessages($receiver, $content, $mail_content, $title, $sender, $noticom_info)
+	function sendMessages($receiver, $content, $mail_content, $title, $sender, $noticom_info, $obj)
 	{
 		$oTextmessageController = &getController('textmessage');
 		$oNotificationModel = &getModel('notification');
-
+		
+		$oDocumentModel = &getModel('document');
+		$documentSrl = array();
+		$documentSrl[0] = $obj->document_srl;
+		$output = $oDocumentModel->getDocumentExtraVarsFromDB($documentSrl);
+		if(!$output->toBool()) return $output;
+		foreach($output->data as $row)
+		{
+			if($row->eid == 'phone')
+				$extra_vars1 = str_replace('|@|', '', $row->value);
+		}
+		$args->recipient_no = $extra_vars1;
+		$args->content = $content;
+	//	$output = $oTextmessageController->sendMessage($args);
+	//	if(!$output->toBool()) return $output;
+		$documentSrl = $obj->document_srl;
+		$output = $oDocumentModel->getDocument($documentSrl)->variables;
+		
+		$oMail = new Mail();
+		$oMail->setTitle($title);
+		$oMail->setContent($mail_content);
+		$oMail->setSender($sender->nick_name, $sender->email_address);
+		$oMail->setReceiptor($output->nick_name, $output->email_address);
+		$oMail->send();
+	
 		// SMS to member if the authentication module connection option is activated.
 		if($noticom_info->use_authdata=='Y' && $oTextmessageController)
 		{
@@ -67,12 +91,11 @@ class notificationController extends notification
 		if($noticom_info->admin_phones&&in_array($noticom_info->sending_method,array('1','2'))&&$oTextmessageController)
 		{
 			$args->recipient_no = explode(',',$noticom_info->admin_phones);
-			//$args->sender_no = $receiver->recipient_no;
+			$args->sender_no = $noticom_info->sender_phone;
 			$args->content = $content;
 			$output = $oTextmessageController->sendMessage($args);
 			if (!$output->toBool()) 
 			{
-				debugPrint($output);
 				return $output;
 			}
 		}
@@ -145,7 +168,8 @@ class notificationController extends notification
 		$tmp_obj->article_url = getFullUrl('','document_srl', $obj->document_srl);
 		$tmp_content = $this->mergeKeywords($mail_content, $tmp_obj);
 		$tmp_message = $this->mergeKeywords($sms_message, $tmp_obj);
-		if ($flagSend) $this->sendMessages($receiver, $tmp_message, $tmp_content, $title, $sender, $noticom_info);
+		if ($flagSend) 
+			$this->sendMessages($receiver, $tmp_message, $tmp_content, $title, $sender, $noticom_info, $obj);
 		$this->sendMessagesToAdmin($receiver, $tmp_message, $tmp_content, $title, $sender, $noticom_info);
 
 		/**
@@ -195,7 +219,6 @@ class notificationController extends notification
 	 **/
 	function triggerInsertComment(&$obj) {
 		$oMemberModel = &getModel('member');
-
 		// if module_srl not set, just return with success;
 		if (!$obj->module_srl) return;
 
@@ -220,7 +243,6 @@ class notificationController extends notification
 		$oModel = &getModel('notification');
 		$noticom_info = $oModel->getNotiConfig($obj->module_srl);
 		if (!$noticom_info) return;
-
 		foreach ($noticom_info as $key=>$val) {
 			$this->processNotification($val,$obj,$sender,$module_info);
 		}
