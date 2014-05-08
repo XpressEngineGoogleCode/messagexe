@@ -23,6 +23,18 @@
 		<value xml:lang="ko"><![CDATA[대상모듈]]></value>
 		<value xml:lang="en"><![CDATA[Target Module]]></value>
 	</item>
+	<item name="general_info">
+		<value xml:lang="ko"><![CDATA[기본 설정]]></value>
+		<value xml:lang="en"><![CDATA[General Information]]></value>
+	</item>
+	<item name="title_txtmsg">
+		<value xml:lang="ko"><![CDATA[문자 설정]]></value>
+		<value xml:lang="en"><![CDATA[SMS Setting]]></value>
+	</item>
+	<item name="title_option">
+		<value xml:lang="ko"><![CDATA[옵션 설정]]></value>
+		<value xml:lang="en"><![CDATA[Option Setting]]></value>
+	</item>
 	<item name="content">
 		<value xml:lang="ko"><![CDATA[문자메시지]]></value>
 		<value xml:lang="en"><![CDATA[TextMessage]]></value>
@@ -35,6 +47,26 @@
 		<value xml:lang="ko"><![CDATA[전송방식]]></value>
 		<value xml:lang="en"><![CDATA[Sending Method]]></value>
 	</item>
+	<item name="cmd_cellphone">
+		<value xml:lang="ko"><![CDATA[핸드폰 번호]]></value>
+		<value xml:lang="en"><![CDATA[Mobile No.]]></value>
+	</item>
+	<item name="cmd_admin">
+		<value xml:lang="ko"><![CDATA[관리자]]></value>
+		<value xml:lang="en"><![CDATA[Admin]]></value>
+	</item>
+	<item name="multiple_phone_no">
+		<value xml:lang="ko"><![CDATA[콤마(,)로 구분하여 여러개 입력가능]]></value>
+		<value xml:lang="en"><![CDATA[You can enter many phone numbers by inserting commas(,).]]></value>
+	</item>
+	<item name="sender_cellphone">
+		<value xml:lang="ko"><![CDATA[발신자 번호]]></value>
+		<value xml:lang="en"><![CDATA[Mobile Number(Sender)]]></value>
+	</item>
+	<item name="sender_phone_help">
+		<value xml:lang="ko"><![CDATA[발신자 번호입니다.]]></value>
+		<value xml:lang="en"><![CDATA[This will be the sender's phone number. ]]></value>
+	</item>
 	<item name="textmessage_plus_email">
 		<value xml:lang="ko"><![CDATA[문자+이메일]]></value>
 		<value xml:lang="en"><![CDATA[TextMessage + Email]]></value>
@@ -46,6 +78,10 @@
 	<item name="email">
 		<value xml:lang="ko"><![CDATA[이메일]]></value>
 		<value xml:lang="en"><![CDATA[Email]]></value>
+	</item>
+	<item name="title_email">
+		<value xml:lang="ko"><![CDATA[E-mail 설정]]></value>
+		<value xml:lang="en"><![CDATA[E-mail Setting]]></value>
 	</item>
 	<item name="comment_content">
 		<value xml:lang="ko"><![CDATA[댓글내용]]></value>

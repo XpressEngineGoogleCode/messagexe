@@ -35,6 +35,7 @@
 		function procNotificationAdminInsert() {
 			$params = Context::gets('content','mail_content','module_srls','msgtype','sending_method','cellphone_fieldname','use_authdata');
 			$extra_vars = new StdClass();
+			$extra_vars->sender_phone = Context::get('sender_phone');
 			$extra_vars->admin_phones = Context::get('admin_phones');
 			$extra_vars->admin_emails = Context::get('admin_emails');
 			$extra_vars->cellphone_fieldname = Context::get('cellphone_fieldname');

@@ -13,29 +13,29 @@
     <input type="hidden" name="mail_content" value="{htmlspecialchars($notification_info->mail_content)}" />
 
 	<section class="section">
-		<h2>기본설정</h2>
+		<h2>{$lang->general_info}</h2>
 		<div class="x_control-group">
 			<label class="x_control-label">{$lang->target_module}</label>
 				<div class="x_controls">
-						{@$id="module_srls"}
-						<input type="hidden" name="{$id}" id="{$id}" value="{$notification_info->module_srls}" />
-						<select name="_{$id}" id="_{$id}" size="8" class="w200 fl"></select>
-						<div class="midCommand">
-							<span><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></span>
-							<span><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></span>
-							<span><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></span>
-							<span><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></span>
-						
-						<script type="text/javascript">
-							if(typeof(getModuleSrlList)!=='undefined') {
-								doAddWindowLoadEventLoader( function() { getModuleSrlList('{$id}'); } );
-							}
-						</script>
-						<a href="#about_target_module_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-						<p id="about_target_module_help" class="x_help-block" hidden>{$lang->about_target_module}</p>
+					{@$id="module_srls"}
+					<input type="hidden" name="{$id}" id="{$id}" value="{$notification_info->module_srls}" />
+					<select name="_{$id}" id="_{$id}" size="8" class="w200 fl"></select>
+					<div class="midCommand">
+						<span><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></span>
+						<span><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></span>
+						<span><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></span>
+						<span><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></span>
+					
+					<script type="text/javascript">
+						if(typeof(getModuleSrlList)!=='undefined') {
+							doAddWindowLoadEventLoader( function() { getModuleSrlList('{$id}'); } );
+						}
+					</script>
+					<a href="#about_target_module_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+					<p id="about_target_module_help" class="x_help-block" hidden>{$lang->about_target_module}</p>
 					</div>
-			</div>
-
+				</div>
+		
 			<div class="x_control-group">
 				<label class="x_control-label">{$lang->sending_method}</label>
 					<div class="x_controls">
@@ -45,48 +45,69 @@
 					</div>
 			</div>
 
-			<div class="x_control-group">
-				<label class="x_control-label">{$lang->content}</label>
-					<div class="x_controls">
-						<textarea rows="4" cols="8" name="content" class="pscreen" style="border:solid #eee 1px;">{$notification_info->content}</textarea>
-						<div>
-							<a class="btn"><span class="notiReplaceVar" var="content">{$lang->comment_content}</span></a>
-							<a class="btn"><span class="notiReplaceVar" var="user_id">{$lang->comment_userid}</span></a>
-							<a class="btn"><span class="notiReplaceVar" var="user_name">{$lang->comment_username}</span></a>
-							<a class="btn"><span class="notiReplaceVar" var="nick_name">{$lang->comment_nickname}</span></a>
-							<a class="btn"><span class="notiReplaceVar" var="browser_title">{$lang->browser_title}</span></a>
-							<a class="btn"><span class="notiReplaceVar" var="mid">{$lang->mid}</span></a>
-							<a class="btn"><span class="notiReplaceVar" var="article_url">{$lang->article_url}</span></a>
-						</div>
+		</section>
+	<section class="section">
+		<h2>{$lang->title_txtmsg}</h2>
+
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->cmd_cellphone}({$lang->cmd_admin})</label>
+				<div class="x_controls">
+					<input type="text" name="admin_phones" style="width:250px;" value="{$notification_info->admin_phones}" />
+					<a href="#admin_phones_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+					<p id="admin_phones_help" class="x_help-block" hidden>{$lang->multiple_phone_no}</p>
+				</div>
+		</div>
+
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->sender_cellphone}</label>
+				<div class="x_controls">
+					<input type="text" name="sender_phone" style="width:250px;" value="{$notification_info->sender_phone}" />
+					<a href="#sender_phone_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+					<p id="sender_phone_help" class="x_help-block" hidden>{$lang->sender_phone_help}</p>
+				</div>
+		</div>
+
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->content}</label>
+				<div class="x_controls">
+					<textarea rows="4" cols="8" name="content" class="pscreen" style="border:solid #eee 1px; width: 250px;">{$notification_info->content}</textarea>
+					<div>
+						<a class="btn"><span class="notiReplaceVar" var="content">{$lang->comment_content}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="user_id">{$lang->comment_userid}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="user_name">{$lang->comment_username}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="nick_name">{$lang->comment_nickname}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="browser_title">{$lang->browser_title}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="mid">{$lang->mid}</span></a>
+						<a class="btn"><span class="notiReplaceVar" var="article_url">{$lang->article_url}</span></a>
 					</div>
 				</div>
-				<div class="x_control-group">
-					<label class="x_control-label">{$lang->mail_content}</label>	
-						<div class="x_controls">
-							<a href="#mail_content_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-							<p id="mail_content_help" class="x_help-block" hidden>{$lang->help_mail_content}</p>
-							<div>{$editor}</div>
-						</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<h2>{$lang->title_email}</h2>
+
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->email_address}({$lang->cmd_admin})</label>
+				<div class="x_controls">
+					<input type="text" name="admin_emails" style="width:300px;" value="{$notification_info->admin_emails}" />
+					<a href="#admin_emails_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+					<p id="admin_emails_help" class="x_help-block" hidden>콤마(,)로 구분 여러 개 입력가능</p>
 				</div>
-				<div class="x_control-group">
-					<label class="x_control-label">휴대전화 번호(관리자)</label>
-						<div class="x_controls">
-							<input type="text" name="admin_phones" style="width:300px;" value="{$notification_info->admin_phones}" />
-							<a href="#admin_phones_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-							<p id="admin_phones_help" class="x_help-block" hidden>콤마(,)로 구분 여러 개 입력가능</p>
-						</div>
+		</div>
+
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->mail_content}</label>	
+				<div class="x_controls">
+					<a href="#mail_content_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+					<p id="mail_content_help" class="x_help-block" hidden>{$lang->help_mail_content}</p>
+					<div>{$editor}</div>
 				</div>
-				<div class="x_control-group">
-					<label class="x_control-label">이메일 주소(관리자)</label>
-						<div class="x_controls">
-							<input type="text" name="admin_emails" style="width:300px;" value="{$notification_info->admin_emails}" />
-							<a href="#admin_emails_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-							<p id="admin_emails_help" class="x_help-block" hidden>콤마(,)로 구분 여러 개 입력가능</p>
-						</div>
-				</div>
+		</div>
+				
 	</section>
 	<section class="section">
-		<h2>옵션설정</h2>
+		<h2>{$lang->title_option}</h2>
 			<div class="x_control-group">
 				<label class="x_control-label">{$lang->cellphone_fieldname}</label>
 					<div class="x_controls">
