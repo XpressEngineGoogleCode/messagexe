@@ -386,7 +386,13 @@ class textmessageController extends textmessage
 		$options = new stdClass();
 
 		// Purplebook has different Key names. 
-		if($in_args->recipient_no)	$options->to = $in_args->recipient_no;
+		if($in_args->recipient_no)
+		{
+			if(is_array($in_args->recipient_no))
+				$options->to = implode(',' , $in_args->recipient_no);
+			else
+				$options->to = $in_args->recipient_no;
+		}
 		elseif($in_args->to) 		$options->to = $in_args->to;
 
 		if($in_args->sender_no) 	$options->from = $in_args->sender_no;
