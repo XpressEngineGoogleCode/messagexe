@@ -27,7 +27,6 @@ class coolsms
 
 	public function curlProcess()
 	{
-		print_r($this->content);
 		$ch = curl_init(); 
 		// 1 = POST , 0 = GET
 		if($this->method==1)

@@ -407,6 +407,7 @@ class textmessageController extends textmessage
 		if($in_args->subject)		$options->subject = $in_args->subject;
 		if($in_args->srk)			$options->srk = $in_args->srk;
 		if($in_args->extension) 	$options->extension = $in_args->extension;
+		if($in_args->reservdate) 	$options->datetime = $in_args->reservdate;
 
 		$opt = new stdClass();
 		$send_result = new stdClass();
