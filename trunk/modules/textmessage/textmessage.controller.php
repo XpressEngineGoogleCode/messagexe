@@ -399,6 +399,7 @@ class textmessageController extends textmessage
 		elseif($in_args->from)		$options->from = $in_args->from;
 
 		if($in_args->type)			$options->type = $in_args->type;
+		if($in_args->attachment) 	$options->image = $in_args->attachment;
 		if($in_args->image)			$options->image = $in_args->image;
 		if($in_args->content)		$options->text = $in_args->content;
 		if($in_args->refname)		$options->refname = $in_args->refname;
@@ -412,34 +413,7 @@ class textmessageController extends textmessage
 		$send_result = $sms->send($options);
 		$opt->gid = $send_result->group_id;
 
-		/*
-		$count = 0;
-		do {
-			$sent_result = $this->getResult($opt);
-			sleep(1);
-			$count++;
-		}while($sent_result->code && $count < 30);
-		
-		$result = array();
-		foreach ($sent_result->data as $row => $val)
-		{
-			$obj = new stdClass();
-			$obj->result_code = $val->result_code;
-			$obj->group_id = $val->group_id;
-			$obj->message_id = $val->message_id;
-			$obj->called_number = $val->recipient_number;
-			$result[] = $obj;	
-		}	
-		if($sent_result->code)
-		{
-			$output = new Object(-1, $result->code);
-		}
-		else
-		{
-			$output = new Object();	
-		}
-		$output->add('data', $result);
-		 */
+		$output = new Object();
 		$output->add('success_count', $send_result->success_count);
 		$output->add('failure_count', $send_result->error_count);
 		return $output;
