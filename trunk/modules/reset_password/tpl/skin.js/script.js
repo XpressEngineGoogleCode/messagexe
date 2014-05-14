@@ -261,10 +261,11 @@ function verifyAuthCode()
 
 	params['authentication_srl'] = jQuery("#authentication_srl").val();
 	params['authcode'] = jQuery('#authcode').val();
+	params['accept_agreement'] = 'Y'; // 약관 체크
 	var user_id = jQuery('#user_id').val();
 	if(user_id) params['user_id'] = user_id;
 
-	exec_xml('authentication', 'procAuthenticationVerifyAuthcode', params, completeVerifyAuthcode, responses);
+	exec_xml('authentication', 'procAuthenticationVerifyAuthCode', params, completeVerifyAuthcode, responses);
 }
 
 
