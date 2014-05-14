@@ -382,10 +382,9 @@ class textmessageController extends textmessage
 	{
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
-		// $in_args에 값이 있을 경우 전송대기열에 넣고 전송처리
 		$options = new stdClass();
 
-		// Purplebook has different Key names. 
+		// 기존 Textmessage 와 다른 args 옵션으로 인한 동기화하기 
 		if($in_args->recipient_no)
 		{
 			if(is_array($in_args->recipient_no))
@@ -394,10 +393,8 @@ class textmessageController extends textmessage
 				$options->to = $in_args->recipient_no;
 		}
 		elseif($in_args->to) 		$options->to = $in_args->to;
-
 		if($in_args->sender_no) 	$options->from = $in_args->sender_no;
 		elseif($in_args->from)		$options->from = $in_args->from;
-
 		if($in_args->type)			$options->type = $in_args->type;
 		if($in_args->attachment) 	$options->image = $in_args->attachment;
 		if($in_args->image)			$options->image = $in_args->image;
@@ -409,14 +406,20 @@ class textmessageController extends textmessage
 		if($in_args->extension) 	$options->extension = $in_args->extension;
 		if($in_args->reservdate) 	$options->datetime = $in_args->reservdate;
 
-		$opt = new stdClass();
-		$send_result = new stdClass();
-		$send_result = $sms->send($options);
-		$opt->gid = $send_result->group_id;
+		$result = new stdClass();
+		// Msg 전송
+		$result = $sms->send($options);
+		
+		// send 에러시 error_count & success_count 비어있을 경우
+		if(!$result->error_count)
+		{
+			$result->error_count = count(explode(',', $options->to));
+			$result->success_count = 0;
+		}
 
 		$output = new Object();
-		$output->add('success_count', $send_result->success_count);
-		$output->add('failure_count', $send_result->error_count);
+		$output->add('success_count', $result->success_count);
+		$output->add('failure_count', $result->error_count);
 		return $output;
 	}
 
