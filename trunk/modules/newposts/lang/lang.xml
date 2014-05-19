@@ -136,7 +136,7 @@
 		<value xml:lang="en"><![CDATA[Email Address]]></value>
 	</item>
 	<item name="general_info">
-		<value xml:lang="ko"><![CDATA[기본설정]]></value>
+		<value xml:lang="ko"><![CDATA[기본 설정]]></value>
 		<value xml:lang="en"><![CDATA[General Information]]></value>
 	</item>
 	<item name="multiple_phone_no">
@@ -160,11 +160,11 @@
 		<value xml:lang="en"><![CDATA[This will be the sender's phone number. ]]></value>
 	</item>
 	<item name="title_txtmsg">
-		<value xml:lang="ko"><![CDATA[문자보내기]]></value>
-		<value xml:lang="en"><![CDATA[Sending Text message]]></value>
+		<value xml:lang="ko"><![CDATA[문자 설정]]></value>
+		<value xml:lang="en"><![CDATA[SMS Setting]]></value>
 	</item>
 	<item name="title_email">
-		<value xml:lang="ko"><![CDATA[E-mail 보내기]]></value>
-		<value xml:lang="en"><![CDATA[Sending E-mail]]></value>
+		<value xml:lang="ko"><![CDATA[E-mail 설정]]></value>
+		<value xml:lang="en"><![CDATA[E-mail Setting]]></value>
 	</item>
 </lang>

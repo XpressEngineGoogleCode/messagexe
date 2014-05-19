@@ -176,8 +176,8 @@ class newpostsAdminView extends newposts
 		$output = executeQuery("newposts.getConfig", $args);
 		if(!$output->toBool()) return $output;
 		$config = $output->data;
-		
 		$output = executequery("newposts.getModuleSrls", $args);
+		
 		if (!$output->toBool()) return $output;
 		$module_srls = array();
 
@@ -205,23 +205,39 @@ class newpostsAdminView extends newposts
 
 			// $nextOutput 에 넣을 Object 생성 
 			$obj = new stdClass();
-			$obj->title = ucfirst($module_info->data->browser_title);
+			$obj->title = $module_info->data->browser_title;
 			$obj->data = array();
 
-			foreach($output->data as $no => $val)
+			if(is_array($output->data))
 			{
-				$args->category_srl = $val->category_srl;
-				$args->parent_srl = $val->parent_srl;
-				$args->title = $val->title;
+				foreach($output->data as $no => $val)
+				{
+					$args->category_srl = $val->category_srl;
+					$args->parent_srl = $val->parent_srl;
+					$args->title = $val->title;
+					$out = executeQuery("newposts.insertAdminInfo", $args);
+					if(!$out->toBool()) {
+						executeQuery("newposts.updateAdminInfo", $args);
+					}
+					$tmpOutput = executeQuery("newposts.getAdminInfo", $args);
+					if(!$tmpOutput->toBool()) return $tmpOutput;
+
+					$obj->data[] = $tmpOutput->data;
+					
+				}
+			}
+			else
+			{
+				$args->category_srl = $output->data->category_srl;
+				$args->parent_srl = $output->data->parent_srl;
+				$args->title = $output->data->title;
 				$out = executeQuery("newposts.insertAdminInfo", $args);
 				if(!$out->toBool()) {
 					executeQuery("newposts.updateAdminInfo", $args);
 				}
 				$tmpOutput = executeQuery("newposts.getAdminInfo", $args);
 				if(!$tmpOutput->toBool()) return $tmpOutput;
-
 				$obj->data[] = $tmpOutput->data;
-				
 			}
 			//분류가 없는 게시판은 $nextOutput 에서 뺀다
 			if(count($output->data)!=0)
