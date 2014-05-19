@@ -10,8 +10,8 @@ class newpostsController extends newposts
 
 	function sendMessages($content, $mail_content, $obj, $sender, $config) 
 	{
-
 		// get Phone# & email address accoring to category admin from newposts_admins table
+		
 		$args->category_srl = $obj->category_srl;
 		$output = executeQuery("newposts.getAdminInfo", $args);
 
@@ -20,30 +20,23 @@ class newpostsController extends newposts
 
 		if (in_array($config->sending_method,array('1','2'))&&$oTextmessageController) 
 		{
-			// $args 확인후 전송번호 없을시 문자 보내지말것 
-			// $config->admin_phones 를 $output->cellphone 으로 변경 
-			$args->recipient_no = explode(',',$output->data->cellphone);
-			//$args->sender_no = $receiver->recipient_no;
-			$args->content = $content;
-			$args->sender_no = $config->sender_phone;
-			if(!empty($args->recipient_no[0]))
-			{	
+			if($output->data->cellphone)
+			{
+				$args->recipient_no = explode(',',$output->data->cellphone);
+				$args->content = $content;
+				$args->sender_no = $config->sender_phone;
 				$output = $oTextmessageController->sendMessage($args);
 				if (!$output->toBool()) return $output;
 			}
 
 			//전체관리자 모드 : 분류에 상관없이 보냄
-			//$args->recipient_no = explode(',',$config->admin_phones);
-			$args->recipient_no[0] = str_replace('|@|', '', $obj->extra_vars1);
-			//$args->sender_no = $receiver->recipient_no;
+			$args->recipient_no = explode(',',$config->admin_phones);
 			$args->content = $content;
-			debugPrint($args);
-			if(!empty($args->recipient_no[0]))
+			if(count($args->recipient_no))
 			{
-			//	$output = $oTextmessageController->sendMessage($args);
-			//	if (!$output->toBool()) return $output;
+				$output = $oTextmessageController->sendMessage($args);
+				if (!$output->toBool()) return $output;
 			}
-			
 		}
 	
 		if (in_array($config->sending_method,array('1','3'))) 
@@ -71,7 +64,6 @@ class newpostsController extends newposts
 			// $config->admin_emails 를 $output->email 로 변경
 			//$target_email = explode(',',$output->email);
 			$target_email[0] = $obj->email_address;
-			debugPrint($target_email);
 			foreach ($target_email as $email_address) 
 			{
 				$email_address = trim($email_address);
@@ -122,7 +114,7 @@ class newpostsController extends newposts
 	 **/
 	function triggerInsertDocument(&$obj) 
 	{
-	//	debugPrint('triggerInsertDocument obj : ' . serialize($obj));
+		debugprint($obj);
 		$oMemberModel = &getModel('member');
 
 		// if module_srl not set, just return with success;
