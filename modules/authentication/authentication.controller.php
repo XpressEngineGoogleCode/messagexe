@@ -64,7 +64,7 @@ class authenticationController extends authentication
 			return new Object(-1, '잦은 인증번호 요청으로 금지되셨습니다. 1일뒤에 다시 시도해주십시오.');
 		}
 		// check day try limit
-		$today = date("YmdHis", time()-$config->resend_interval);
+		$today = date("YmdHis", time()-$config->authcode_time_limit);
 		$args->clue = $phonenum;
 		$args->regdate = $today;
 		$output = executeQuery('authentication.getTryCountByClue', $args);
@@ -72,7 +72,7 @@ class authenticationController extends authentication
 		unset($args);
 		if($output->data->count > 0)
 		{
-			return new Object(-1, $config->resend_interval . '초 동안 다시 받으실 수 없습니다. 전송확인 버튼을 눌러 수신받지 못하는 사유를 확인하세요.');
+			return new Object(-1, $config->authcode_time_limit . '초 동안 다시 받으실 수 없습니다. 전송확인 버튼을 눌러 수신받지 못하는 사유를 확인하세요.');
 		}
 
 		// save auth info
