@@ -115,7 +115,7 @@
 		<div class="x_control-group">
 			<label class="x_control-label">인증번호 재전송 제한</label>
 			<div class="x_controls">
-				<input type="text" size="5" maxlength="2" name="authcode_time_limit" value="{$config->resend_interval}" />
+				<input type="text" size="5" maxlength="2" name="authcode_time_limit" value="{$config->authcode_time_limit}" />
 				<a href="#authcode_time_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
             	<p id="authcode_time_limit_help" class="x_help-block" hidden>연이어 인증번호를 여러번 전송받을 수 없도록 합니다. 예) 20으로 설정하면 인증번호를 전송받은 후 20초 후에 재전송이 가능하게 설정됩니다.</p>
 			</div>
