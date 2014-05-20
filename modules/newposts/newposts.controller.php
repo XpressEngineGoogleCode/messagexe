@@ -20,11 +20,11 @@ class newpostsController extends newposts
 
 		if (in_array($config->sending_method,array('1','2'))&&$oTextmessageController) 
 		{
+			$args->sender_no = $config->sender_phone;
 			if($output->data->cellphone)
 			{
 				$args->recipient_no = explode(',',$output->data->cellphone);
 				$args->content = $content;
-				$args->sender_no = $config->sender_phone;
 				$output = $oTextmessageController->sendMessage($args);
 				if (!$output->toBool()) return $output;
 			}
