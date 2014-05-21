@@ -40,8 +40,8 @@ class purplebookexController extends purplebookController
 			return new $Object(-1, 'msg_invalid_request');
 		$msgids = explode(',', $target_msgids);
 
-		$opts->basecamp = TRUE;
-		$output = $this->cancelMessage($msgids, $opts);
+		$basecamp = TRUE;
+		$output = $this->cancelMessage($msgids, $basecamp);
 		if(!$output->toBool())
 		{
 			$this->setMessage('cancel_failed');
@@ -57,8 +57,8 @@ class purplebookexController extends purplebookController
 			return new Object(-1, 'msg_invalide_request');
 		$group_ids = explode(',', $target_group_ids);
 
-		$opts->basecamp=TRUE;
-		$output = $this->cancelGroupMessages($group_ids, $opts);
+		$basecamp=TRUE;
+		$output = $this->cancelGroupMessages($group_ids, $basecamp);
 		if(!$output->toBool())
 		{
 			$this->setMessage('cancel_failed');

@@ -48,57 +48,27 @@ class purplebookexModel extends purplebookModel
 
 	function getPurplebookCashInfo($args=false)
 	{
-		$config = $this->getModuleConfig($args);
-		$oTextmessageModel = &getModel('textmessage');
-		$args->basecamp = true;
+
+		/*
 		$sms = &$oTextmessageModel->getCoolSMS($args);
 		// connect
 		if (!$sms->connect()) {
 			// cannot connect
 			return new Object(-1, 'cannot connect to server.');
 		}
-		// get cash info
-		$result = $sms->remain();
-		// disconnect
-		$sms->disconnect();
-
-		$this->add('cash', $result["CASH"]);
-		$this->add('point', $result["POINT"]);
-		$this->add('mdrop', $result["DROP"]);
-		$this->add('sms_price', $result["SMS-PRICE"]);
-		$this->add('lms_price', $result["LMS-PRICE"]);
-		$this->add('mms_price', $result["MMS-PRICE"]);
-	}
-
-	/**
-	 * @brief 메인DB의 전송결과를 직접 가져온다
-	 */
-	function getPurplebookStatusListByMessageId()
-	{
+		// get cash info		 
+		*/
 		$oTextmessageModel = &getModel('textmessage');
-		$oTextmessageController = &getController('textmessage');
+		$basecamp = true;
 
-		// message ids
-		$message_ids_arr = explode(',', Context::get('message_ids'));
+		// get cash info
+		$result = $oTextmessageModel->getCashInfo($basecamp);
 
-		$args->basecamp = true;
-		$sms = $oTextmessageModel->getCoolSMS($args);
-		if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
-		$data = array();
-		foreach($message_ids_arr as $message_id)
-		{
-			$result = $sms->rcheck($message_id);
-			$args->message_id = $message_id;
-			$args->mstat = $result['STATUS'];
-			$args->rcode = $result['RESULT-CODE'];
-			$args->carrier = $result['CARRIER'];
-			$args->senddate = $result['SEND-DATE'];
-			$data[] = $args;
-			unset($args);
-		}
-		$sms->disconnect();
-
-		$this->add('data', $data);
+		$this->add('cash', $result->get('cash'));
+		$this->add('point', $result->get('point'));
+		$this->add('sms_price', $result->get('sms_price'));
+		$this->add('lms_price', $result->get('lms_price'));
+		$this->add('mms_price', $result->get('mms_price'));
 	}
 }
 /* End of file purplebook.model.php */
