@@ -378,39 +378,41 @@ class textmessageController extends textmessage
 	 * @param[in] $user_id true means auto, false means none, otherwise, use in userid
 	 * @return Object(error, message)
 	 **/
-	function sendMessage($in_args) 
+	function sendMessage($args, $basecamp) 
 	{
 		$oTextmessageModel = &getModel('textmessage');
-		$sms = &$oTextmessageModel->getCoolSMS();
+		$sms = &$oTextmessageModel->getCoolSMS($basecamp);
+		debugprint($sms);
 		$options = new stdClass();
 
 		// 기존 Textmessage 와 다른 args 옵션으로 인한 동기화하기 
-		if($in_args->recipient_no)
+		if($args->recipient_no)
 		{
-			if(is_array($in_args->recipient_no))
-				$options->to = implode(',' , $in_args->recipient_no);
+			if(is_array($args->recipient_no))
+				$options->to = implode(',' , $args->recipient_no);
 			else
-				$options->to = $in_args->recipient_no;
+				$options->to = $args->recipient_no;
 		}
-		elseif($in_args->to) 		$options->to = $in_args->to;
-		if($in_args->sender_no) 	$options->from = $in_args->sender_no;
-		elseif($in_args->from)		$options->from = $in_args->from;
-		if($in_args->type)			$options->type = $in_args->type;
-		if($in_args->attachment) 	$options->image = $in_args->attachment;
-		if($in_args->image)			$options->image = $in_args->image;
-		if($in_args->content)		$options->text = $in_args->content;
-		if($in_args->refname)		$options->refname = $in_args->refname;
-		if($in_args->country)		$options->country = $in_args->country;
-		if($in_args->subject)		$options->subject = $in_args->subject;
-		if($in_args->srk)			$options->srk = $in_args->srk;
-		if($in_args->extension) 	$options->extension = $in_args->extension;
-		if($in_args->reservdate) 	$options->datetime = $in_args->reservdate;
+		elseif($args->to) 		$options->to = $args->to;
+		if($args->sender_no) 	$options->from = $args->sender_no;
+		elseif($args->from)		$options->from = $args->from;
+		if($args->type)			$options->type = $args->type;
+		if($args->attachment) 	$options->image = $args->attachment;
+		if($args->image)		$options->image = $args->image;
+		if($args->content)		$options->text = $args->content;
+		if($args->refname)		$options->refname = $args->refname;
+		if($args->country)		$options->country = $args->country;
+		if($args->subject)		$options->subject = $args->subject;
+		if($args->srk)			$options->srk = $args->srk;
+		if($args->extension) 	$options->extension = $args->extension;
+		if($args->reservdate) 	$options->datetime = $args->reservdate;
 
 		$options->mode = "test";
 
 		$result = new stdClass();
 		// Msg 전송
 		$result = $sms->send($options);
+		debugprint($result);
 		if($result->code)
 		{
 			$result->error_count = count(explode(',', $options->to));
