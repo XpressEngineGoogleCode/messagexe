@@ -39,7 +39,6 @@ class purplebookController extends purplebook
 	 **/
 	function procPurplebookSendMsg($args=FALSE) 
 	{
-		$oTextmessageModel = &getModel('textmessage');
 		$all_args = Context::getRequestVars();
 
 		if(!$this->grant->send) 
@@ -50,32 +49,10 @@ class purplebookController extends purplebook
 		if($module_info->module != 'purplebook') 
 			return new Object(-1,'msg_invalid_request');
 
-		$options=new StdClass();
-		if($args && $args->basecamp) $options->disable_db = TRUE;
+		if($args && $args->basecamp) $basecamp = $args->basecamp;
 
 		$encode_utf16 = Context::get('encode_utf16');
 		$decoded = $this->getJSON('data');
-		$sms = &$oTextmessageModel->getCoolSMS($args);
-
-		// group id
-		$groupid_seed = Context::get('groupid_seed');
-		if($groupid_seed)
-		{
-			if($groupid_seed == $_SESSION['PURPLEBOOK_GROUPID_SEED'])
-			{
-				$group_id = $_SESSION['PURPLEBOOK_GROUPID'];
-			}
-			else
-			{
-				$group_id = coolsms::keygen();
-				$_SESSION['PURPLEBOOK_GROUPID_SEED'] = $groupid_seed;
-				$_SESSION['PURPLEBOOK_GROUPID'] = $group_id;
-			}
-		}
-		else
-		{
-			$group_id = coolsms::keygen();
-		}
 
 		$error_count=0;
 		if(!is_array($decoded))
@@ -85,23 +62,61 @@ class purplebookController extends purplebook
 
 		$calc_point = 0;
 		$msg_arr = array();
-		foreach($decoded as $row)
+		$args = new StdClass();
+		$args->extension = Array();
+
+		foreach($decoded as $key => $row)
 		{
-			$args = new StdClass();
 			$args->type = $row->msgtype;
-			$args->recipient_no = $row->recipient;
+
+			// 문자창을 여러개를 동시에 보낼때 첫번째 문자 내용만 args->content에 저장한다.
+			if(!$args->content) $args->content = $row->text;
+
+			if($before_num != $row->recipient){
+				if($args_to) $args_to = $args_to . ', ' . $row->recipient;
+				else $args_to = $row->recipient;
+
+				if($args->recipient_no) $args->recipient_no = $args->recipient_no . ', ' . $row->recipient;
+				else $args->recipient_no = $row->recipient;
+			}
+
+			if($first_num == $row->recipient || !$args_text){
+				if($args_text) $args_text = $args_text . ',' . $row->text; 
+				else $args_text = $row->text;
+			}
+
 			$args->sender_no = $row->callback;
 			$args->subject = $row->subject;
-			$args->content = $row->text;
 			$args->country_code = $row->country;
 			$args->reservdate = $row->reservdate;
 			$args->attachment = $row->file_srl;
 			$args->group_id = $group_id;
-			$msg_arr[] = $args;
+
+			
 			if($args->type == 'sms') $calc_point += $module_info->sms_point;
 			if($args->type == 'lms') $calc_point += $module_info->lms_point;
 			if($args->type == 'mms') $calc_point += $module_info->mms_point;
+
+			$before_num = $row->recipient;
+			if(!$first_num) $first_num = $row->recipient;
 		}
+
+		explode(",",$args->extenstion);
+
+		$args_text = explode(",", $args_text);
+
+		$delay = 0;
+		foreach($args_text as $key => $value){
+			$delay = $delay + 2;
+			$args->extension[$key]->to = $args_to;
+			$args->extension[$key]->text = $value;
+			$args->extension[$key]->delay = $delay;
+		}
+
+		// 첫번째 문자내용은 args->content에 들어가 있기 때문에 extension의 첫번째 array를 빼준다.
+		array_shift($args->extension);
+
+		$args->extension = json_encode($args->extension);
 
 		// minus point
 		if($module_info->use_point=='Y')
@@ -112,7 +127,8 @@ class purplebookController extends purplebook
 
 		// send messages
 		$oTextmessageController = &getController('textmessage');
-		$output = $oTextmessageController->sendMessage($msg_arr, $options);
+		$output = $oTextmessageController->sendMessage($args, $basecamp);
+
 		$this->add('data', $output->get('data'));
 		$this->add('success_count', $output->get('success_count'));
 		$this->add('failure_count', $output->get('failure_count'));
@@ -402,29 +418,20 @@ class purplebookController extends purplebook
 					return;
 				break;
 		}
-
-		$max_width = "640";
-		$max_height = "480";
+		
+		$max_width = 1024;
+		$max_height = 1024;
 		$target_ext = 'jpg';
 		$file_srl = getNextSequence();
 		$path = $oPurplebookModel->getFilePickerPath($file_srl);
 		$save_filename = sprintf('%s%s.%s',$path, $file_srl, $target_ext);
 
-		if($ext != 'jpg' || $width > $max_width || $height > $max_height)
+		if($width > $max_width) $width = $max_width;
+		if($height > $max_height) $height = $max_height;
+		if(!FileHandler::createImageFile($source_file, $save_filename, $width, $height, $target_ext, 'ratio'))
 		{
-			FileHandler::createImageFile($source_file, $save_filename, $max_width, $max_height, $target_ext);
-		}
-		else
-		{
-			// create directory 
-			$path = dirname($save_filename);
-			if(!is_dir($path)) FileHandler::makeDir($path);
-			// move file
-			if(!@move_uploaded_file($source_file, $save_filename)) {
-				Context::set('message', Context::getLang('msg_error_occured'));
-				return;
-
-			}
+			Context::set('message', Context::getLang('msg_error_occured'));
+			return;
 		}
 
 		$output = $this->insertFile($save_filename, $file_srl);
@@ -1141,7 +1148,8 @@ class purplebookController extends purplebook
 		$this->setMessage('success_deleted');
 	}
 	
-	function procPurplebookPurplebookDownload() {
+	function procPurplebookPurplebookDownload() 
+	{
 		$logged_info = Context::get('logged_info');
 		if (!$logged_info) return new Object(-1, 'msg_not_logged');
 
