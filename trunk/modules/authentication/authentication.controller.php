@@ -59,10 +59,12 @@ class authenticationController extends authentication
 		$output = executeQuery('authentication.getTryCountByClue', $args);
 		if (!$output->toBool()) return $output;
 		unset($args);
+		/*
 		if($output->data->count > $config->day_try_limit)
 		{
 			return new Object(-1, '잦은 인증번호 요청으로 금지되셨습니다. 1일뒤에 다시 시도해주십시오.');
 		}
+		 */
 		// check day try limit
 		$today = date("YmdHis", time()-$config->authcode_time_limit);
 		$args->clue = $phonenum;
@@ -108,10 +110,9 @@ class authenticationController extends authentication
 		{
 			return $output;
 		}
-		$data = $output->get('data');
-		$obj = $data[0];
-		$message_id = $obj->message_id;
-		$this->add('message_id', $message_id);
+		$group_id = $output->get('group_id');
+
+		$this->add('group_id', $group_id);
 		$trigger_output = ModuleHandler::triggerCall ('authentication.procAuthenticationSendAuthCode', 'after', $args);
 		if(!$trigger_output->toBool ()) return $trigger_output;
 		$this->setMessage('인증번호를 발송하였습니다.');
@@ -157,19 +158,11 @@ class authenticationController extends authentication
 	{
 		$oTextmessageModel = &getModel('textmessage');
 		$oTextmessageController = &getController('textmessage');
-
-		$message_id = Context::get('message_id');
-
 		$sms = $oTextmessageModel->getCoolSMS();
-		if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
-		$result = $sms->rcheck($message_id);
-		$args->message_id = $message_id;
-		$args->status = $result['STATUS'];
-		$args->resultcode = $result['RESULT-CODE'];
-		$args->carrier = $result['CARRIER'];
-		$args->senddate = $result['SEND-DATE'];
-		$oTextmessageController->updateStatus($args);
-		$sms->disconnect();
+
+		$args->gid = Context::get('group_id');
+		$result = $sms->sent($args);
+		if($result->data) $result = $result->data[0];
 
 		$this->add('result', $result);
 	}
@@ -187,8 +180,6 @@ class authenticationController extends authentication
 		{
 			$oModule->setTemplatePath(sprintf($this->module_path.'skins/%s/', $config->skin));
 		}
-		Context::set('target_action', $oModule->act);
-		$oModule->setTemplateFile('index');
 
 		if($config->authcode_time_limit)
 		{
@@ -196,6 +187,9 @@ class authenticationController extends authentication
 		}
 		Context::set('number_limit', $config->number_limit);
 		Context::set('config', $config);
+		Context::set('target_action', $oModule->act);
+
+		$oModule->setTemplateFile('index');
 	}
 
 	/**
