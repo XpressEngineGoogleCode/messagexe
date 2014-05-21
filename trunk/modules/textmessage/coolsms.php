@@ -20,12 +20,13 @@ class coolsms
 	private $result;
 	private $basecamp;
 
-	public function __construct($api_key, $api_secret, $basecamp = false)
+	public function __construct($api_key, $api_secret, $basecamp=false)
 	{
+		debugprint($basecamp);
 		if($basecamp)
 		{
 			$this->coolsms_user = $api_key;
-			$this->basecamp = TRUE;
+			$this->basecamp = true;
 		}
 		else
 			$this->api_key = $api_key;

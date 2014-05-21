@@ -55,15 +55,15 @@
             return __SOLUTION_REGISTRATION_KEY__;
         }
 
-		function &getCoolSMS($api_key=NULL, $api_secret=NULL) 
+		function &getCoolSMS($basecamp=false) 
 		{
 			$config = $this->getModuleConfig();
 			if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
-
-			if(!$api_key && !$api_secret)
+			
+			if($basecamp)
 				$sms = new coolsms($config->cs_user_id, $config->cs_password, TRUE);
 			else
-				$sms = new coolsms($api_key, $api_secret);
+				$sms = new coolsms($config->service_id, $config->password);
 
 			return $sms;
 		}
