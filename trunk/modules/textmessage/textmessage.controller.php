@@ -411,9 +411,8 @@ class textmessageController extends textmessage
 		$result = new stdClass();
 		// Msg 전송
 		$result = $sms->send($options);
-		
 		// send 에러시 error_count & success_count 비어있을 경우
-		if(!isset($result->error_count))
+		if($result->code)
 		{
 			$result->error_count = count(explode(',', $options->to));
 			$result->success_count = 0;
