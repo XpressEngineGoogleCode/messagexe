@@ -22,7 +22,6 @@ class coolsms
 
 	public function __construct($api_key, $api_secret, $basecamp=false)
 	{
-		debugprint($basecamp);
 		if($basecamp)
 		{
 			$this->coolsms_user = $api_key;

@@ -161,10 +161,10 @@
 		/**
 		 * @brief CashInfo
 		 **/
-		function getCashInfo($args=false) {
-			$config = $this->getModuleConfig($args);
+		function getCashInfo($basecamp=false) {
+			$config = $this->getModuleConfig();
 
-			$sms = &$this->getCoolSMS($args);
+			$sms = &$this->getCoolSMS($basecamp);
 			
 			// get cash info
 			$result = $sms->balance();
