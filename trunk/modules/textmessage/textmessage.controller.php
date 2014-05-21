@@ -382,7 +382,6 @@ class textmessageController extends textmessage
 	{
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS($basecamp);
-		debugprint($sms);
 		$options = new stdClass();
 
 		// 기존 Textmessage 와 다른 args 옵션으로 인한 동기화하기 
@@ -412,7 +411,6 @@ class textmessageController extends textmessage
 		$result = new stdClass();
 		// Msg 전송
 		$result = $sms->send($options);
-		debugprint($result);
 		if($result->code)
 		{
 			$result->error_count = count(explode(',', $options->to));
