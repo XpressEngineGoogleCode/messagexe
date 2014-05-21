@@ -18,10 +18,18 @@ class coolsms
 	private $timestamp;
 	private $salt;
 	private $result;
+	private $basecamp;
 
-	public function __construct($api_key, $api_secret)
+	public function __construct($api_key, $api_secret, $basecamp = false)
 	{
-		$this->api_key = $api_key;
+		if($basecamp)
+		{
+			$this->coolsms_user = $api_key;
+			$this->basecamp = TRUE;
+		}
+		else
+			$this->api_key = $api_key;
+
 		$this->api_secret = $api_secret;
 	}
 
@@ -91,7 +99,10 @@ class coolsms
 		$options->User_Agent = "PHP REST API v1.0";
 		$options->salt = $this->salt;
 		$options->timestamp = $this->timestamp;
-		$options->api_key = $this->api_key;
+		if($this->basecamp)
+			$options->coolsms_user = $this->coolsms_user;
+		else
+			$options->api_key = $this->api_key;
 		$options->signature = $this->getSignature();
 
 		$this->setContent($options);
