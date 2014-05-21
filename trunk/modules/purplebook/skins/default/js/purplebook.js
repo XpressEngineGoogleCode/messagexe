@@ -321,10 +321,8 @@ function clearTrash() {
     params['node_id'] = 't.';
     var response_tags = new Array('error','message');
     exec_xml('purplebook', 'procPurplebookDeleteNode', params, function() {
-            /*
+		/*
         var sel = jQuery('#smsPurplebookTree').jstree("_get_node", jQuery('node_2'));
-
-        console.log(sel);
         */
         var obj = document.getElementById('node_2');
         jQuery('#smsPurplebookTree').jstree('refresh',obj);
@@ -478,19 +476,19 @@ function ifnull(str)
 function calc_sms(cashinfo, point)
 {
     if (point == undefined) point = 20;
-    return Math.floor(cashinfo.cash / point) + Math.floor(cashinfo.point / point) + cashinfo.mdrop;
+    return Math.floor(cashinfo.cash / point) + Math.floor(cashinfo.point / point);
 }
 
 function calc_lms(cashinfo, point)
 {
     if (point == undefined) point = 50;
-    return Math.floor(cashinfo.cash / point) + Math.floor(cashinfo.point / point) + Math.floor(cashinfo.mdrop / 3);
+    return Math.floor(cashinfo.cash / point) + Math.floor(cashinfo.point / point);
 }
 
 function calc_mms(cashinfo, point)
 {
     if (point == undefined) point = 200;
-    return Math.floor(cashinfo.cash / point) + Math.floor(cashinfo.point / point) + Math.floor(cashinfo.mdrop / 10);
+    return Math.floor(cashinfo.cash / point) + Math.floor(cashinfo.point / point);
 }
 function getTextBytes(text)
 {
@@ -931,71 +929,6 @@ function isArray(obj) {
    } // try 
 } // isArray() 
 
-/**
- * update result
- **/
-function updateResultStatus() {
-    var speed = g_update_speed;
-    if (typeof(updateResultStatus.idx)=='undefined') updateResultStatus.idx=0;
-    $list = jQuery('.status','#smsPurplebookTargetList li');
-    var target_message_ids = new Array;
-
-    for (var i = 0; i < speed; i++) {
-        if (updateResultStatus.idx >= $list.size()) {
-            updateResultStatus.idx = 0;
-            break;
-        }
-        if ($list.eq(updateResultStatus.idx).attr('status')!='2') {
-            target_message_ids[target_message_ids.length] = $list.eq(updateResultStatus.idx).attr('id');
-        }
-        updateResultStatus.idx++;
-    }
-
-    if (!target_message_ids.length) return false;
-
-    var message_ids_str = target_message_ids.join(',');
-    jQuery.ajax({
-        type : "POST"
-        , contentType: "application/json; charset=utf-8"
-        , url : "./"
-        , data : { 
-                    module : "purplebook"
-                    , act : "getPurplebookStatusListByMessageId"
-                    , message_ids : message_ids_str
-                 }
-        , dataType : "json"
-        , success : function (data) {
-            for (var i = 0; i < data.data.length; i++) {
-                var statText = getResultText(data.data[i].mstat,data.data[i].rcode);
-                var carrier = getCarrierText(data.data[i].carrier);
-                var title = statText;
-                if (carrier.length) title += ','+carrier;
-                var $stat = jQuery('#'+data.data[i].message_id);
-                $stat.attr('status', data.data[i].mstat);
-                $stat.attr('code', data.data[i].rcode);
-                $stat.attr('title', title);
-                var cls = getResultClass(data.data[i].mstat,data.data[i].rcode);
-                $stat.removeClass(cls);
-                $stat.addClass(cls);
-            }
-        }
-        , error : function (xhttp, textStatus, errorThrown) { 
-            alert(errorThrown + " " + textStatus); 
-        }
-    });
-        /*
-    jQuery.exec_json('mobilemessage.getMobilemessageListByMessageId', { message_ids:message_ids_str }, function(data) {
-        for (var i = 0; i < data.data.length; i++) {
-            var stat = getResultHtml(data.data[i].mstat,data.data[i].rcode);
-            jQuery('#'+data.data[i].mid).attr('status', data.data[i].mstat);
-            jQuery('#'+data.data[i].mid).attr('code', data.data[i].rcode);
-            jQuery('#'+data.data[i].mid).html(stat);
-        }
-    });
-    */
-    return true;
-}
-
 function send_json(content)
 {
     if (typeof(send_json.total_count)=='undefined') send_json.total_count=0;
@@ -1040,15 +973,6 @@ function send_json(content)
             send_json.success_count += data.success_count;
 
             //if (data.alert_message.length > 0) alert(data.alert_message);
-
-            // update result info
-            for (i = 0; i < data.data.length; i++) {
-                obj = data.data[i];
-                var extra_class = ' ' + getResultClass('0',obj.result_code);
-                var stat = ' ' + getResultText('0',obj.result_code);
-                jQuery('.statusBox','#smsPurplebookTargetList #tel'+obj.called_number).append('<span id="' + obj.message_id + '" class="status' + extra_class + '" title="' + stat + '"></span>');
-            }
-
             pb_display_progress();
         }
         , error : function (xhttp, textStatus, errorThrown) { 
@@ -1213,7 +1137,6 @@ function sendMessage() {
     show_and_hide($layer,null,{force_show:true});
 
     sendMessageData.send_timer = setInterval(function() {sendMessageData();  }, 3000);
-    sendMessage.update_timer = setInterval(function() { updateResultStatus(); }, 5000);
 }
 
 function get_switch_value() {
@@ -1275,7 +1198,6 @@ function do_after_get_cashinfo(cashinfo)
         message += getLang('direct_send');
     message += ']\n';
 
-
     var count = jQuery('li', '#smsPurplebookTargetList').size();
     if (msg_type == "sms")
     {
@@ -1289,9 +1211,9 @@ function do_after_get_cashinfo(cashinfo)
         {
             message += getLang('msg_not_enough_money') + "\n"
                     + getLang('available_sms_number') + sms_avail  + "\n"
-                    + getLang('arranged_sms_number') + (count * npages) + "\n"
-                    + getLang('msg_will_you_try');
-            if (!confirm(message)) return false;
+                    + getLang('arranged_sms_number') + (count * npages) + "\n";
+			alert(message);
+            return false;
         }
         else
         {
@@ -1307,9 +1229,9 @@ function do_after_get_cashinfo(cashinfo)
         {
             message += getLang('msg_not_enough_money') + "\n"
                     + getLang('available_lms_number') + lms_avail  + "\n"
-                    + getLang('arranged_lms_number') + (count) + "\n"
-                    + getLang('msg_will_you_try');
-            if (!confirm(message)) return false;
+                    + getLang('arranged_lms_number') + (count) + "\n";
+            alert(message);
+            return false;
         }
         else
         {
@@ -1324,9 +1246,9 @@ function do_after_get_cashinfo(cashinfo)
         {
             message += getLang('msg_not_enough_money') + "\n"
                     + getLang('available_mms_number') + mms_avail  + "\n"
-                    + getLang('arranged_mms_number') + (count) + "\n"
-                    + getLang('msg_will_you_try');
-            if (!confirm(message)) return false;
+                    + getLang('arranged_mms_number') + (count) + "\n";
+            alert(message);
+            return false;
         } else {
             if (reservflag == '1') message += getLang('reservation_datetime', ': ') + date_format(texting_pickup_reservdate()) + '\n';
             message += getLang('number_to_send') + count + '\n';
@@ -1349,7 +1271,7 @@ function completeGetPointInfo(ret_obj, response_tags) {
     obj = new Object();
     obj.cash = 0;
     obj.point = point;
-    obj.mdrop = 0;
+    
 
     reservflag = document.getElementById("smsPurplebookReservFlag").value;
     if (reservflag == "1")
@@ -2444,7 +2366,7 @@ function completeGetCashInfo(ret_obj, response_tags) {
     var obj = new Object();
     obj.cash = parseInt(ret_obj['cash']);
     obj.point = parseInt(ret_obj['point']);
-    obj.mdrop = parseInt(ret_obj['mdrop']);
+    //obj.mdrop = parseInt(ret_obj['mdrop']);
     obj.sms_price = parseInt(ret_obj['sms_price']);
     obj.lms_price = parseInt(ret_obj['lms_price']);
     obj.mms_price = parseInt(ret_obj['mms_price']);
@@ -2463,10 +2385,10 @@ function get_cashinfo()
     var obj = new Object();
     obj.cash = 0;
     obj.point = 0;
-    obj.mdrop = 0;
+    
 
     var params = new Array();
-    var response_tags = new Array('error','message','cash','point','mdrop','sms_price','lms_price','mms_price');
+    var response_tags = new Array('error','message','cash','point','sms_price','lms_price','mms_price');
     exec_xml('purplebook', 'getPurplebookCashInfo', params, completeGetCashInfo, response_tags);
 }
 
@@ -3466,7 +3388,7 @@ function submit_messages() {
         });
         */
 
-        // 사진삭제
+        // 사진추가
         $('#btn_attach_pic','#smsMessage').click(function() {
             $obj = $('#layer_upload','#smsMessage');
             show_and_hide($obj);

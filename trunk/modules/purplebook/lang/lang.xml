@@ -16,7 +16,7 @@
         <value xml:lang="ko"><![CDATA[바로전송]]></value>
     </item>
     <item name="msg_not_enough_money">
-        <value xml:lang="ko"><![CDATA[사용가능한 잔액이 모자랍니다. 취소를 선택하고 충전 후 사용하세요]]></value>
+        <value xml:lang="ko"><![CDATA[사용가능한 잔액이 모자랍니다. 충전 후 사용해주세요.]]></value>
     </item>
     <item name="available_sms_number">
         <value xml:lang="ko"><![CDATA[가능 SMS 건수: ]]></value>

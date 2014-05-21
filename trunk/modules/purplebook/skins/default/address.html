@@ -24,6 +24,8 @@
 <p class="page_title">웹에서 보내기</p>
 </div>
 
+<p>- 전송결과는 coolsms 전송결과 페이지에서 확인할수 있습니다. <a href="http://www.coolsms.co.kr/report" target="_blank"> 바로가기</a></p>
+
 <div id="smsPurplebook_top"></div>
 <div id="smsPurplebook">
 	<div class="purplebook_left">	
@@ -124,7 +126,7 @@
             <button class="btn_append" id="btnDirectAdd" title="받는사람에 추가">추가</button>
             <button class="pop_recent" title="최근입력 번호목록">최근입력번호</button>
 		</div>
-        <div class="title_info"><span class="checkbox" id="smsPurplebookToggleTarget" title="선택전환"></span><span class="name">이름</span><span class="h_number">핸드폰</span><span class="h_delete">삭제</span><span class="status">상태</span></div>
+        <div class="title_info"><span class="checkbox" id="smsPurplebookToggleTarget" title="선택전환"></span><span class="name">이름</span><span class="h_number">핸드폰</span><span class="h_delete">삭제</span></div>
 		<div class="bodyArea"><ul id="smsPurplebookTargetList"></ul></div>
 		<div class="bottomArea">
             <a class="pop_addrbook" href="#" title="체크 목록 주소록에 복사"><img src="img/btn_goaddress.gif" alt="주소록으로" /></a>
@@ -249,7 +251,6 @@
             <button class="btn_show_layer" title="발신번호 관리">발신번호관리</button>
 		</div>
 		<div class="submit_btn">
-            
             <a class="btn_forward" id="btnSimplePhoneSend" href="#"><img src="img/btn_forward.png" alt="보내기" /></a>
 			<a class="btn_booking" id="btnSimplePhoneReserv" href="#"><img src="img/btn_booking.png" alt="예약전송" /></a>
             <input type="hidden" value="0" id="smsPurplebookReservFlag" />
@@ -323,7 +324,7 @@
     var g_manual_url = '{$module_info->manual_url}';
     var g_is_logged = <!--@if($is_logged)-->true<!--@else-->false<!--@end-->;
     var g_lang = {};
-    var g_send_speed = 100;
+    var g_send_speed = 1000;
     var g_update_speed = 50;
 	var g_tpl_path = '{$tpl_path}';
 	var g_module_srl = '{$module_info->module_srl}';

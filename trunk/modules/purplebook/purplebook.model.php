@@ -54,105 +54,7 @@ class purplebookModel extends purplebook
 		return $module_info;
 	}
 
-	/**
-	 * 환경값 읽어오기
-	 */
-	function getConfig()
-	{
-		$oModuleModel = &getModel('module');
-		$config = $oModuleModel->getModuleConfig('purplebook');
-
-		// country code
-		if (!$config->default_country) $config->default_country = '82';
-		if ($config->default_country == '82') $config->limit_bytes = 80;
-		else $config->limit_bytes = 160;
-
-		// callback
-		$callback = explode("|@|", $config->callback); // source
-		$config->a_callback = $callback;        // array
-		$config->s_callback = join($callback);  // string
-
-		// admin_phone
-		if (!is_array($config->admin_phones))
-			$config->admin_phones = explode("|@|", $config->admin_phones);
-
-		// 캐쉬, 포인트, 문자방울 잔량 가져오기
-		$config->cs_cash=0;
-		$config->cs_point=0;
-		$config->cs_mdrop=0;
-
-		require_once($this->module_path.'coolsms.php');
-		$sms = new coolsms();
-		$sln_reg_key = $this->getSlnRegKey();
-		if ($sln_reg_key) $sms->enable_resale();
-		$sms->appversion("MXE/" . $this->version . " XE/" . __ZBXE_VERSION__);
-		if ($config->cs_userid && $config->cs_passwd) {
-			$sms->setuser($config->cs_userid, $config->cs_passwd);
-			if ($sms->connect()) {
-				$remain = $sms->remain();
-				$config->cs_cash = $remain['CASH'];
-				$config->cs_point = $remain['POINT'];
-				$config->cs_mdrop = $remain['DROP'];
-				if ($remain['RESULT-CODE'] != '00')
-				{
-					Context::set('cs_is_logged', false);
-					switch ($remain['RESULT-CODE'])
-					{
-						case '20':
-							Context::set('cs_error_message', '<font color="red">존재하지 않는 아이디이거나 패스워드가 틀립니다.</font>');
-							break;
-						case '30':
-							Context::set('cs_error_message', '<font color="red">사용가능한 SMS 건수가 없습니다.</font>');
-							break;
-						default:
-							Context::set('cs_error_message', '<font color="red">오류코드:'.$remain['RESULT-CODE'].'</font>');
-					}
-				}
-				else
-				{
-					Context::set('cs_is_logged', true);
-				}
-				$sms->disconnect();
-			} else {
-				Context::set('cs_is_logged', false);
-				Context::set('cs_error_message', '<font color="red">서비스 서버에 연결할 수 없습니다.<br />일부 웹호스팅에서 외부로 나가는 포트 접속을 허용하지 않고 있습니다.<br /><a href="http://message.xpressengine.net/18243690">사용불가 웹호스팅</a> 문서를 참고하시고 목록에 없다면 신고하여 주세요.</font>');
-			}
-		}
-		Context::set('cs_cash', $config->cs_cash);
-		Context::set('cs_point', $config->cs_point);
-		Context::set('cs_mdrop', $config->cs_mdrop);
-
-		return $config;
-	}
-
-	function getConfigValue(&$obj, $key, $type=null)
-	{
-		$return_value = null;
-		$config = $this->getModuleConfig();
-
-		$fieldname = $config->{$key};
-		if (!$fieldname) return null;
-
-		// 기본필드에서 확인
-		if ($obj->{$fieldname}) {
-			$return_value = $obj->{$fieldname};
-		}
-
-		// 확장필드에서 확인
-		if ($obj->extra_vars) {
-			$extra_vars = unserialize($obj->extra_vars);
-			if ($extra_vars->{$fieldname}) {
-				$return_value = $extra_vars->{$fieldname};
-			}
-		}
-		if ($type=='tel' && is_array($return_value)) {
-			$return_value = implode($return_value);
-		}
-
-		return $return_value;
-	}
-
-
+	/*
 	function getPurplebookStatusListByMessageId()
 	{
 		$oTextmessageModel = &getModel('textmessage');
@@ -162,25 +64,28 @@ class purplebookModel extends purplebook
 		$message_ids_arr = explode(',', Context::get('message_ids'));
 
 		$sms = $oTextmessageModel->getCoolSMS();
-		if (!$sms->connect()) return new Object(-2, 'warning_cannot_connect');
+		$result_array = Array();
+
 		foreach($message_ids_arr as $message_id)
 		{
-			$result = $sms->rcheck($message_id);
+			if(!$message_id) return;
+			$option->mid = $message_id;
+			$result = $sms->sent($option);
+
 			$args->message_id = $message_id;
-			$args->status = $result['STATUS'];
-			$args->resultcode = $result['RESULT-CODE'];
-			$args->carrier = $result['CARRIER'];
-			$args->senddate = $result['SEND-DATE'];
-			$oTextmessageController->updateStatus($args);
+			$args->status = $result->data[0]->status;
+			$args->resultcode = $result->data[0]->result_code;
+			$args->carrier = $result->data[0]->carrier;
+			$args->senddate = $result->data[0]->sent_time;
+
+			$result_array[] = $args;
+
 			unset($args);
 		}
-		$sms->disconnect();
 
-
-		$args->message_ids = "'" . implode("','", $message_ids_arr) . "'";
-		$output = executeQueryArray('purplebook.getStatusListByMessageId', $args);
-		$this->add('data', $output->data);
+		$this->add('data', $result_array);
 	}
+	*/
 
 	function getAddressList($args) {
 		$query_id = 'purplebook.getPurplebookList';
@@ -230,26 +135,16 @@ class purplebookModel extends purplebook
 		$config = $this->getModuleConfig($args);
 
 		$oTextmessageModel = &getModel('textmessage');
-		$sms = &$oTextmessageModel->getCoolSMS();
-
-		// connect
-		if (!$sms->connect()) {
-			// cannot connect
-			return new Object(-1, 'cannot connect to server.');
-		}
 
 		// get cash info
-		$result = $sms->remain();
+		$result = $oTextmessageModel->getCashInfo();
 
-		// disconnect
-		$sms->disconnect();
-
-		$this->add('cash', $result["CASH"]);
-		$this->add('point', $result["POINT"]);
-		$this->add('mdrop', $result["DROP"]);
-		$this->add('sms_price', $result["SMS-PRICE"]);
-		$this->add('lms_price', $result["LMS-PRICE"]);
-		$this->add('mms_price', $result["MMS-PRICE"]);
+		$this->add('cash', $result->get('cash'));
+		$this->add('point', $result->get('point'));
+		//$this->add('mdrop', $result["DROP"]);
+		$this->add('sms_price', '20');
+		$this->add('lms_price', '50');
+		$this->add('mms_price', '200');
 	}
 
 	/**
