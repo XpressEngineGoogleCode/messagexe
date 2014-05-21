@@ -18,6 +18,16 @@
 			if (!$GLOBALS['__textmessage_config__']) {
 				$oModuleModel = &getModel('module');
 				$config = $oModuleModel->getModuleConfig('textmessage');
+
+				// get logged_info
+				$oMemberModel = &getModel('member');
+				$logged_info = $oMemberModel->getLoggedInfo();
+				if($logged_info)
+				{
+					$config->cs_user_id = $logged_info->user_id;
+					$config->cs_password = $logged_info->password;
+				}
+
 				// country code
 				if (!$config->default_country) $config->default_country = '82';
 				if ($config->default_country == '82') $config->limit_bytes = 80;
@@ -51,7 +61,7 @@
 			if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
 
 			if(!$api_key && !$api_secret)
-				$sms = new coolsms($config->service_id, $config->password);
+				$sms = new coolsms($config->cs_user_id, $config->cs_password, TRUE);
 			else
 				$sms = new coolsms($api_key, $api_secret);
 

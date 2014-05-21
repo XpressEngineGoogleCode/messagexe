@@ -411,7 +411,6 @@ class textmessageController extends textmessage
 		$result = new stdClass();
 		// Msg 전송
 		$result = $sms->send($options);
-		// send 에러시 error_count & success_count 비어있을 경우
 		if($result->code)
 		{
 			$result->error_count = count(explode(',', $options->to));
@@ -464,25 +463,5 @@ class textmessageController extends textmessage
 			return new Object(-1, $result->code);
 		return new Object();
 	}
-
-
-/*
-	function deleteMessage($message_id)
-	{
-		   $args->message_id = $message_id;
-		   $output = executeQuery('textmessage.deleteMessage', $args);
-		   return $output;
-	}
-
-	function deleteGroupMessage($group_id)
-	{
-		   $args->group_id = $group_id;
-		   $output = executeQuery('textmessage.deleteMessagesByGroupId', $args);
-		   if (!$output->toBool())
-			   return $output;
-		   $output = executeQuery('textmessage.deleteGroupMessage', $args);
-		   return $output;
-	}
- */
 }
 ?>
