@@ -18,7 +18,7 @@ function getAuthCode(target_action)
 		return;
 	}
 
-/*
+	/*
 	var today = new Date();
 	alert(today.getMonth());
 	alert(today.format("yymmddHHMMss"));
@@ -72,7 +72,7 @@ function getAuthCode(target_action)
 
 	// call an ajax to get the auth-code 
 	var params = new Array();
-	var responses = ['error','message','authentication_srl','message_id'];
+	var responses = ['error','message','authentication_srl','group_id'];
 	params['module'] = 'authentication';
 	params['phonenum'] = phonenum;
 	params['country_code'] = country_code;
@@ -86,7 +86,7 @@ function completeSendAuthCode(ret_obj)
 
 	jQuery('#get_authcode').addClass('reget');
 	jQuery('#get_authcode').html('다시받기');
-	jQuery('#message_id').val(ret_obj['message_id']);
+	jQuery('#group_id').val(ret_obj['group_id']);
 	jQuery('#authentication_srl').val(ret_obj['authentication_srl']);
 
 	alert(ret_obj['message']);
@@ -96,8 +96,8 @@ function completeSendAuthCode(ret_obj)
 
 function updateStatus()
 {
-	message_id = jQuery('#message_id').val();
-	if(!message_id)
+	group_id = jQuery('#group_id').val();
+	if(!group_id)
 	{
 		alert('인증번호 받기 버튼을 클릭하세요. 인증번호 전송 후 확인이 가능합니다.');
 		return false;
@@ -109,7 +109,7 @@ function updateStatus()
 		var params = new Array();	
 		var responses = ['error','message', 'result'];
 
-		params['message_id'] = message_id;
+		params['group_id'] = group_id;
 
 		exec_xml('authentication', 'procAuthenticationUpdateStatus', params, completeUpdate, responses);
 	}
@@ -117,8 +117,8 @@ function updateStatus()
 
 function completeUpdate(ret_obj)
 {
-	var r_status = ret_obj['result']['STATUS'];
-	var r_code = ret_obj['result']['RESULT-CODE'];
+	var r_status = ret_obj['result']['status'];
+	var r_code = ret_obj['result']['result_code'];
 	var r_code = parseInt(r_code, 10);
 	var $notice = jQuery('#footer #notice');
 
@@ -255,7 +255,6 @@ function completeUpdate(ret_obj)
 			$notice.html('대기상태입니다.');
 			break;
 		}
-
 	}
 
 	else
@@ -272,8 +271,8 @@ function completeVerifyAuthcode(ret_obj)
 
 function verifyAuthCode()
 {
-	message_id = jQuery('#message_id').val();
-	if(!message_id)
+	group_id = jQuery('#group_id').val();
+	if(!group_id)
 	{
 		alert('인증번호 받기 버튼을 클릭하세요. 인증번호 전송 후 확인이 가능합니다.');
 		return false;
