@@ -406,12 +406,14 @@ class textmessageController extends textmessage
 		if($in_args->extension) 	$options->extension = $in_args->extension;
 		if($in_args->reservdate) 	$options->datetime = $in_args->reservdate;
 
+		$options->mode = "test";
+
 		$result = new stdClass();
 		// Msg 전송
 		$result = $sms->send($options);
 		
 		// send 에러시 error_count & success_count 비어있을 경우
-		if(!$result->error_count)
+		if(!isset($result->error_count))
 		{
 			$result->error_count = count(explode(',', $options->to));
 			$result->success_count = 0;
@@ -420,6 +422,8 @@ class textmessageController extends textmessage
 		$output = new Object();
 		$output->add('success_count', $result->success_count);
 		$output->add('failure_count', $result->error_count);
+		if($result->group_id) $output->add('group_id', $result->group_id);
+
 		return $output;
 	}
 
