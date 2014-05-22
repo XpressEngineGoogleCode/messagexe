@@ -80,10 +80,13 @@ class purplebookController extends purplebook
 				else $args->recipient_no = $row->recipient;
 			}
 
-			if($first_num == $row->recipient || !$args_text){
-				if($args_text) $args_text = $args_text . ',' . $row->text; 
-				else $args_text = $row->text;
+			if($first_num == $row->recipient && !$args_text){
+				$args_text = $row->text;
 			}
+			else if($first_num == $row->recipient && $args_text){
+				 $args_text = $args_text . '@^#*' . $row->text; 
+			}
+
 
 			$args->sender_no = $row->callback;
 			$args->subject = $row->subject;
@@ -91,7 +94,6 @@ class purplebookController extends purplebook
 			$args->reservdate = $row->reservdate;
 			$args->attachment = $row->file_srl;
 			$args->group_id = $group_id;
-
 			
 			if($args->type == 'sms') $calc_point += $module_info->sms_point;
 			if($args->type == 'lms') $calc_point += $module_info->lms_point;
@@ -100,21 +102,20 @@ class purplebookController extends purplebook
 			$before_num = $row->recipient;
 			if(!$first_num) $first_num = $row->recipient;
 		}
+		explode(",",$args->extension);
 
-		explode(",",$args->extenstion);
-
-		$args_text = explode(",", $args_text);
+		if($args_text) $args_text = explode("@^#*", $args_text);
 
 		$delay = 0;
-		foreach($args_text as $key => $value){
-			$delay = $delay + 2;
-			$args->extension[$key]->to = $args_to;
-			$args->extension[$key]->text = $value;
-			$args->extension[$key]->delay = $delay;
+		if(count($args_text) > 0)
+		{
+			foreach($args_text as $key => $value){
+				$delay = $delay + 2;
+				$args->extension[$key]->to = $args_to;
+				$args->extension[$key]->text = $value;
+				$args->extension[$key]->delay = $delay;
+			}
 		}
-
-		// 첫번째 문자내용은 args->content에 들어가 있기 때문에 extension의 첫번째 array를 빼준다.
-		array_shift($args->extension);
 
 		$args->extension = json_encode($args->extension);
 
