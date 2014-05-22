@@ -175,7 +175,7 @@
 			$obj->add('sms_price', '20');
 			$obj->add('lms_price', '50');
 			$obj->add('mms_price', '200');
-			//$obj->add('deferred_payment', $result["DEFERRED-PAYMENT"]);
+			$obj->add('deferred_payment', $result->deferred_payment);
 			return $obj;
 		}
 
