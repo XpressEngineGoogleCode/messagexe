@@ -27,7 +27,7 @@ class textmessageController extends textmessage
 	 * @param[in] $user_id true means auto, false means none, otherwise, use in userid
 	 * @return Object(error, message)
 	 **/
-	function sendMessage($args, $basecamp) 
+	function sendMessage($args, $basecamp=FALSE) 
 	{
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS($basecamp);
@@ -58,6 +58,7 @@ class textmessageController extends textmessage
 		//$options->mode = "test";
 
 		$result = new stdClass();
+
 		// Msg 전송
 		$result = $sms->send($options);
 		if($result->code)

@@ -50,15 +50,15 @@
 		}
 
         function getSlnRegKey() {
-            if (!file_exists($this->module_path.'resale.info.php')) return false;
-            require_once($this->module_path.'resale.info.php');
+            if (!file_exists('resale.info.php')) return false;
+            require_once('resale.info.php');
             return __SOLUTION_REGISTRATION_KEY__;
         }
 
 		function &getCoolSMS($basecamp=false) 
 		{
 			$config = $this->getModuleConfig();
-			if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
+			if (!class_exists('coolsms')) require_once('coolsms.php');
 			
 			if($basecamp)
 				$sms = new coolsms($config->cs_user_id, $config->cs_password, TRUE);
