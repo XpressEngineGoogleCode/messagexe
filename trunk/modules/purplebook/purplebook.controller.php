@@ -64,6 +64,7 @@ class purplebookController extends purplebook
 		$msg_arr = array();
 		$args = new StdClass();
 		$args->extension = Array();
+		$delimiter = $this->getDelimiter();
 
 		foreach($decoded as $key => $row)
 		{
@@ -84,7 +85,7 @@ class purplebookController extends purplebook
 				$args_text = $row->text;
 			}
 			else if($first_num == $row->recipient && $args_text){
-				 $args_text = $args_text . '@^#*' . $row->text; 
+				 $args_text = $args_text . $delimiter . $row->text; 
 			}
 
 
@@ -104,7 +105,7 @@ class purplebookController extends purplebook
 		}
 		explode(",",$args->extension);
 
-		if($args_text) $args_text = explode("@^#*", $args_text);
+		if($args_text) $args_text = explode($delimiter, $args_text);
 
 		$delay = 0;
 		if(count($args_text) > 0)
@@ -1186,6 +1187,13 @@ class purplebookController extends purplebook
 		$this->setLayoutFile('default_layout');
 		$this->setTemplatePath($this->module_path.'tpl');
 		$this->setTemplateFile('purplebook_download');
+	}
+
+	function getDelimiter(){
+		for ($i = 0; $i < 5; $i++) {
+			$result = $result . "@" . mt_rand(1, 9);
+		}
+		return $result;
 	}
 
 
