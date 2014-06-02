@@ -56,18 +56,19 @@ class textmessageController extends textmessage
 		if($args->reservdate) 	$options->datetime = $args->reservdate;
 
 		//$options->mode = "test";
-
 		$result = new stdClass();
 
 		// Msg 전송
 		$result = $sms->send($options);
+
+		$output = new Object();
 		if($result->code)
 		{
 			$result->error_count = count(explode(',', $options->to));
 			$result->success_count = 0;
+			$output->add('error_code', $result->code);
 		}
-
-		$output = new Object();
+		
 		$output->add('success_count', $result->success_count);
 		$output->add('failure_count', $result->error_count);
 		if($result->group_id) $output->add('group_id', $result->group_id);
