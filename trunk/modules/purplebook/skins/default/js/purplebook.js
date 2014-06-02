@@ -971,8 +971,9 @@ function send_json(content)
 
             send_json.failure_count += data.failure_count;
             send_json.success_count += data.success_count;
-
+			if(data.error_code) send_json.error_code = data.error_code;
             //if (data.alert_message.length > 0) alert(data.alert_message);
+			
             pb_display_progress();
         }
         , error : function (xhttp, textStatus, errorThrown) { 
@@ -1008,6 +1009,8 @@ function pb_display_progress() {
     jQuery('.total_count','#smsMessage #layer_status').text(send_json.total_count);
     jQuery('.success_count','#smsMessage #layer_status').text(send_json.success_count);
     jQuery('.failure_count','#smsMessage #layer_status').text(send_json.failure_count);
+	jQuery('.error_code','#smsMessage #layer_status').text("");
+	if(send_json.error_code) jQuery('.error_code','#smsMessage #layer_status').text(send_json.error_code);
 }
 
 function sendMessageData() {
@@ -1097,6 +1100,12 @@ function sendMessage() {
     if (sendMessageData.send_timer) clearInterval(sendMessageData.send_timer);
     if (sendMessage.update_timer) clearInterval(sendMessage.update_timer);
 
+
+	// display progress
+	send_json.total_count = 0;
+	send_json.success_count = 0;
+	send_json.failure_count = 0;
+	send_json.error_code = null;
 
     // clear status text
     jQuery('.text','#smsMessage #layer_status').text('전송중입니다...');
