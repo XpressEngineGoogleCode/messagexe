@@ -312,3 +312,4 @@ span.checkbox.on { background-position:0px -13px; }
 /* layer popup (sending status) */
 #smsMessage #layer_status { top:-190px; width:226px; height:180px; }
 #smsMessage #layer_status .bodyArea { height:100px; }
+#smsMessage #layer_status .error_code { color:red; }

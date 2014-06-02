@@ -135,6 +135,7 @@ class purplebookController extends purplebook
 		$this->add('success_count', $output->get('success_count'));
 		$this->add('failure_count', $output->get('failure_count'));
 		$this->add('alert_message', $output->getMessage());
+		if($output->get('error_code')) $this->add('error_code', $output->get('error_code'));
 	}
 
 	/**
