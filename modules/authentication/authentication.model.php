@@ -14,7 +14,8 @@ class authenticationModel extends authentication
 	{
 	}
 
-	function getModuleConfig() {
+	function getModuleConfig() 
+	{
 		if (!$GLOBALS['__authentication_config__'])
 		{
 			$oModuleModel = &getModel('module');
@@ -96,7 +97,8 @@ class authenticationModel extends authentication
 	/**
 	 * $obj : member info object.
 	 */
-	function getConfigValue(&$obj, $fieldname, $type=null) {
+	function getConfigValue(&$obj, $fieldname, $type=null) 
+	{
 		$return_value = null;
 		$config = $this->getModuleConfig();
 
@@ -117,6 +119,30 @@ class authenticationModel extends authentication
 		}
 
 		return $return_value;
+	}
+
+	function getDelayStatus()
+	{
+		$oTextmessageModel = &getModel('textmessage');
+		$sms = $oTextmessageModel->getCoolSMS();
+		$options->count=1;
+		$status = $sms->status($options);
+
+		if(count($status)>0){
+			return $status[0];
+		}
+
+		return NULL;
+	}
+
+	function getDelayStatusString($sms)
+	{
+		$string = NULL;
+		if($sms <= 60) $string = "양호";
+		else if($sms > 60 && $sms <= 120) $string = "보통";
+		else $string = "정체";
+
+		return $string;
 	}
 
 	function triggerMemberMenu($in_args)
