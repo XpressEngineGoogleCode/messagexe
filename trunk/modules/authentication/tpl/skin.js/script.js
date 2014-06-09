@@ -104,10 +104,11 @@ function updateStatus()
 	}
 	else
 	{
+		jQuery("#footer").css("display","block");
 		jQuery("#footer #notice").html('확인중...');
 
 		var params = new Array();	
-		var responses = ['error','message', 'result'];
+		var responses = ['error','message', 'result', 'status'];
 
 		params['group_id'] = group_id;
 

@@ -57,11 +57,28 @@
 			<span>휴대폰번호를 정확하게 입력하였는지 확인해주세요.</span>
 		</div>
 	</form>
+	
+	<span class="delay_status">통신사별 문자발송상태 : SKT = {$status->sms_sk}, KT = {$status->sms_kt}, LG = {$status->sms_lg}</span>
 	<div id="content">
 		<span>인증번호가 오지 않는다면? <a href="#" onclick="updateStatus(); return false" class="green green_btn">전송확인</a></span>
 		<div id="footer">
-			<span id="notice"></span>
+			<span id="notice">TEST</span>
 		</div><!-- #footer// -->
 	</div>
-	
+	<div>
+		<span>주의!
+			<br /> 1. 휴대폰번호를 정확하게 입력하였는지 확인해주세요. 
+			
+			<br /> 2. 전송이 완료 됬는데 문자가 오지 않았다면 스팸필터링을 확인해주세요.
+			<br /> 이통사별 스팸 확인법
+					<br />SKT => <a href="http://www.tworld.co.kr" target="_blank">http://www.tworld.co.kr</a>->상품->부가서비스->통화->스팸필터링 또는
+					tstore : <a href="http://m.tstore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000029241&strPrePageNm=0c05003H&strDisplayOrder=1&strPid=0000029241&strBannerId=&strSearchword=%EC%8A%A4%ED%8C%B8%EC%B0%A8%EB%8B%A8&dateKey=MW140526141328208730#" target="_black">t스팸필터링</a> 
+					appstore : <a href="https://itunes.apple.com/kr/app/tseupaempilteoling/id447324256?mt=8" target="_black">t스팸필터링</a>앱에서 확인.
+					<br />KT => <a href="http://www.olleh.com" target="_blank">http://www.olleh.com</a>->폰서비스->문자/통화/주소록->스팸차단 서비스 또는
+					googleplay : <a href="https://play.google.com/store/apps/details?id=com.olleh.spam" target="_black">올레스팸차단</a> 
+					appstore : <a href="https://itunes.apple.com/kr/app/olleseupaemchadan/id397692999?mt=8" target="_black">올레스팸차단</a>앱에서 확인.
+					<br />LG => <a href="http://www.uplus.co.kr" target="_blank">http://www.uplus.co.kr</a>->개인->모바일->부가서비스->통화보호->스팸차단 또는 
+					googleplay : <a href="https://play.google.com/store/apps/details?id=com.lguplus.blocksmishing" target="_black">U+스팸차단</a>앱에서 확인.
+		</span>
+	</div><!-- #footer// -->
 </div>

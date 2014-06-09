@@ -157,7 +157,6 @@ class authenticationController extends authentication
 	function procAuthenticationUpdateStatus() 
 	{
 		$oTextmessageModel = &getModel('textmessage');
-		$oTextmessageController = &getController('textmessage');
 		$sms = $oTextmessageModel->getCoolSMS();
 
 		$args->gid = Context::get('group_id');
@@ -185,6 +184,17 @@ class authenticationController extends authentication
 		{
 			Context::set('time_limit', $config->authcode_time_limit);
 		}
+
+		// 전송지연 현황 보여주기 
+		$status = $oAuthenticationModel->getDelayStatus();
+		if($status != NULL)
+		{
+			$status->sms_sk = $oAuthenticationModel->getDelayStatusString($status->sms_sk_average);
+			$status->sms_kt = $oAuthenticationModel->getDelayStatusString($status->sms_kt_average);
+			$status->sms_lg = $oAuthenticationModel->getDelayStatusString($status->sms_lg_average);
+			Context::set('status', $status);
+		}
+
 		Context::set('number_limit', $config->number_limit);
 		Context::set('config', $config);
 		Context::set('target_action', $oModule->act);

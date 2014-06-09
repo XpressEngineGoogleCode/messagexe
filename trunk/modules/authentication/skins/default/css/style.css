@@ -29,9 +29,8 @@ span#notice { color:#0179ff; }
 div#content { background:#fff; padding:15px; margin-top:15px; color:#555; }
 div#content a.green_btn { padding:10px; color:#fff; margin-left:10px; font-weight:bold; }
 
-
 /* footer */
-#phone #footer { height:auto; font-size:13px; color:#fff; }
+#phone #footer { height:auto; font-size:13px; color:#fff; display:none;}
 #phone #footer span { display:inline-block; padding:20px; }
 
 #phone .agreement{border:1px solid #ddd;padding:15px 15px 10px 15px;border-radius:5px;background:#f8f8f8;margin-bottom:15px}
