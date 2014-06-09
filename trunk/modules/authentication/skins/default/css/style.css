@@ -1,52 +1,37 @@
 @charset "utf-8";
 
-/* common */
-#phone {margin:0; padding:0; font-family:'돋움','Dotum','굴림','Gulim'; font-size:12px; color:#666; }
-#phone h1 {margin:0; padding:0;}
-#phone img {border: none; vertical-align: middle;} 
-#phone .mgt {margin-top:20px;}
+/* title */
+h1.au_h1 { border-bottom:4px solid #a0a0a0; padding:10px 0; color:#555; font-size:20px; }
+h1.au_h1 span.au_title { border-bottom:4px solid #5d9ade; padding:10px 20px; }
+#header { margin-bottom:10px; }
 
-/* header */
-#phone #header {height:55px; position:relative;}
-#phone #header h1 {position:absolute;}
+/* container */
 
-/* text style */
-#phone .exTxt {font-size:12px; color:#999; line-height:1.3em; margin:5px 0 0 0; padding:0;}
+div.container dl.container_dl { background:#fff; margin-bottom:10px; line-height:4em; overflow:hidden; }
+div.container dl.container_dl dt { width:18%; float:left; padding:0 20px; text-align:right; background:#c9ced2; font-size:20px; font-weight:bold; color:#fff; }
+div.container dl.container_dl dd { position:relative; }
+div.container dl.container_dl dd select { border:0; width:76%; font:normal 15px 'NanumGothic'; padding:10px; color:#666; } 
+div.container dl.container_dl dd input { border:0; width:70%; font:normal 15px 'NanumGothic'; padding:14px; color:#666 !important; } 
+div.container dl.container_dl dd a.btn_wrap { color:#fff; font-weight:bold; width:15%; text-align:center; font-size:14px; position:absolute; right:0;} 
+div.container dl.container_dl dd a.submit { width:10%; }
+span#notice { color:#0179ff; }
 
-/* input style */
-#phone .input01 {height:26px; font-size:16px; color:#666; border:1px solid #dadada; vertical-align:middle; padding:0 0 0 4px; line-height:26px;}
-#phone .input01:focus {border-color:#ff9435; color:#ff9435;}
-#phone .input02:focus {border-color:#ff9435; }
+/* button_background */
+.blue { background:#45a9e7; }
+.gray { background:#96a3a4; }
+.green { background:#83c897; }
+.reget { background:#eb9001; }
+.pink { background:#ec6045; }
+.dark_blue { background:#3893ca; }
+.purple { background:#ab6fc9; }
+.midnight_blue { background:#3b5065; }
 
-/* input size */
-#phone .size01 {width:70px;}
-#phone .size02 {width:100px;}
-#phone .size03 {width:100px;}
-#phone .size04 {width:160px;}
+div#content { background:#fff; padding:15px; margin-top:15px; color:#555; }
+div#content a.green_btn { padding:10px; color:#fff; margin-left:10px; font-weight:bold; }
 
-/* confirm */
-#phone .confirm {vertical-align:middle;}
-
-/* table style */
-#phone .container {width:100%; border-collapse:collapse;}
-#phone .container th {width:140px; padding:0 20px 0 0; text-align:right; border-top:1px solid #dadada; border-bottom:1px solid #dadada; font-size:16px; background:#f9f9f9;}
-#phone .container td {padding:10px; text-align:left; border-top:1px solid #dadada; border-bottom:1px solid #dadada; font-size:16px;}
-#phone .container select {font-size:17px; color:#666; height:26px; vertical-align:middle; font-family:'돋움','Dotum','굴림','Gulim'; line-height:26px; padding:2px;}
-#phone .container caption {padding:0 0 7px 10px; font-size:16px; font-weight:bold; color:#ff9435; text-align:left;}
-#phone .orangeTop {border-top:1px solid #ff9435 !important;}
-#phone .orangeBottom {border-bottom:1px solid #ff9435 !important;}
-
-/* content */
-#phone #content {height: 50px; background: #F6F6F6; padding:20px 20px 0 20px; border-bottom:1px solid #ff9435 !important; }
-
-/* btn */
-#phone #bn {width:100%; height: 40px; font-family:"굴림", "돋움"; font-size="13px"; padding: 20px;}
-#phone #get_authcode { display:inline-block; background:url("../img/get_authcode.gif") no-repeat; width:109px; height:28px; }
-#phone #get_authcode span { display:inline-block; text-indent:-99999px; }
-#phone #get_authcode.reget { zoom: 1; *display: inline; vertical-align:middle; margin: 0 2px; outline: none; cursor: pointer; text-align: center; text-decoration: none; font: 14px/100% Arial, Helvetica, sans-serif; text-shadow: 0 1px 1px rgba(0,0,0,.3); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); color: #e8f0de; border: solid 1px #538312; background: #64991e; background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e)); background: -moz-linear-gradient(top,  #7db72f,  #4e7d0e); filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e'); width:100px; text-align:center; line-height:2em;  vertical-align:middle; }
 
 /* footer */
-#phone #footer { height:auto; background:#666; font-family:"굴림", "돋움"; font-size:13px; color:#fff; }
+#phone #footer { height:auto; font-size:13px; color:#fff; }
 #phone #footer span { display:inline-block; padding:20px; }
 
 #phone .agreement{border:1px solid #ddd;padding:15px 15px 10px 15px;border-radius:5px;background:#f8f8f8;margin-bottom:15px}

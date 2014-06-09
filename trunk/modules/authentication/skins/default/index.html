@@ -6,8 +6,8 @@
 </div>
 
 <div id="phone" style="width:{$config->width}"|cond="$config->width">
-		<div id="header">
-		<h1><img src="img/phone_02.gif" alt="휴대폰인증" /></h1>
+	<div id="header">
+			<h1 class="au_h1"><span class="au_title">휴대폰번호 인증</span></h1>
 	</div><!-- #header// -->
 	<form method="post" action="./" >
 		<input type="hidden" name="act" value="procAuthenticationVerifyAuthCode" />
@@ -28,39 +28,40 @@
 			</div>
 		</div>
 
-		<table class="container">
-			<tr>
-				<th class="orangeTop">국가선택</th>
-				<td class="orangeTop">
+		<div class="container">
+			<dl class="container_dl">
+				<dt class="orangeTop">국가선택</dt>
+				<dd class="orangeTop">
 					<select name="country_code" id="country_code" class="size04">
 						<option value=''>선택</option>
 						{@asort($lang->country_codes)}
 						<option loop="$lang->country_codes=>$key,$val" value="{$key}" selected="selected"|cond="$config->country_code == $key">{$val}</option>
 					</select>
-				</td>
-			</tr>
-			<tr>
-				<th>휴대폰번호</th>
-				<td>	
+				</dd>
+			</dl>
+			<dl class="container_dl">
+				<dt>휴대폰번호</dt>
+				<dd>	
 					<input class="input01 size04" type="text" name="phonenum[]" id="phonenum_1" size="5" value="ex)01000000000" style="color:gray;" onfocus="if (this.value=='ex)01000000000') this.value=''; this.style.color='black';" maxlength="15" title="- 없이 전화번호를 입력하세요" />
-					<a href="#" onclick="getAuthCode('{$target_action}'); return false;" id="get_authcode"><span>Get AuthCode</span></a>
-					<a cond="0" href="#" onclick="getAuthCode(); return false;" id="authcode_resend"><img src="img/phone_07.gif" border="0" /></a>
-				</td>
-			</tr>
-			<tr>
-				<th class="orangeBottom">인증번호</th>
-				<td class="orangeBottom">
+					<a href="#" onclick="getAuthCode('{$target_action}'); return false;" id="get_authcode" class="btn_wrap blue"><span>인증번호 받기</span></a>
+					<a cond="0" href="#" onclick="getAuthCode(); return false;" id="authcode_resend"></a>
+				</dd>
+			</dl>
+			<dl class="container_dl">
+				<dt class="orangeBottom">인증번호</dt>
+				<dd class="orangeBottom">
 					<input class="input01 size03" type="text" id="authcode" name="authcode" maxlength="{$config->digit_number}" />
-					<a href="#" onclick="verifyAuthCode(); return false"><img src="img/phone_10.gif"></a>
-				</td>
-			</tr>
-		</table>
+					<a href="#" onclick="verifyAuthCode(); return false" class="btn_wrap gray submit">확인</a>
+				</dd>
+			</dl>
+			<span>휴대폰번호를 정확하게 입력하였는지 확인해주세요.</span>
+		</div>
 	</form>
 	<div id="content">
-		<img src="img/phone_17.gif" /><span>인증번호가 오지 않는다면? <a href="#" onclick="updateStatus(); return false"><img src="img/phone_14.gif"></a></span>
+		<span>인증번호가 오지 않는다면? <a href="#" onclick="updateStatus(); return false" class="green green_btn">전송확인</a></span>
+		<div id="footer">
+			<span id="notice"></span>
+		</div><!-- #footer// -->
 	</div>
-	<div id="footer">
-		<span id="notice">주의! 휴대폰번호를 정확하게 입력하였는지 확인해주세요.</span>
-	</div><!-- #footer// -->
 	
 </div>
