@@ -210,9 +210,8 @@ class authenticationController extends authentication
 
 		if($layout_info)
 		{
-			$this->module_info->layout_srl = $config->layout_srl;
-			$this->setLayoutPath($layout_info->path);
-			$this->setLayoutFile($layout_info->layout);
+			$oModule->setLayoutPath($layout_info->path);
+			$oModule->setLayoutFile("layout");
 
 			debugPrint("Co-2");
 			debugPrint($layout_info->layout);
