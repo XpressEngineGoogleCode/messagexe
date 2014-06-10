@@ -7,7 +7,7 @@
 
 <div id="phone" style="width:{$config->width}"|cond="$config->width">
 	<div id="header">
-			<h1 class="au_h1"><span class="au_title">휴대폰번호 인증</span></h1>
+		<h2 class="au_h1"><div class="au_title">휴대폰번호 인증</div></h2>
 	</div><!-- #header// -->
 	<form method="post" action="./" >
 		<input type="hidden" name="act" value="procAuthenticationVerifyAuthCode" />
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 
-		<div class="container">
+		<div class="au_container">
 			<dl class="container_dl">
 				<dt class="orangeTop">국가선택</dt>
 				<dd class="orangeTop">
@@ -54,31 +54,45 @@
 					<a href="#" onclick="verifyAuthCode(); return false" class="btn_wrap gray submit">확인</a>
 				</dd>
 			</dl>
-			<span>휴대폰번호를 정확하게 입력하였는지 확인해주세요.</span>
 		</div>
 	</form>
 	
-	<span class="delay_status">통신사별 문자발송상태 : SKT = {$status->sms_sk}, KT = {$status->sms_kt}, LG = {$status->sms_lg}</span>
-	<div id="content">
+	<div id="au_content">
 		<span>인증번호가 오지 않는다면? <a href="#" onclick="updateStatus(); return false" class="green green_btn">전송확인</a></span>
 		<div id="footer">
-			<span id="notice">TEST</span>
+			<div id="notice" class="con_box"></div>
 		</div><!-- #footer// -->
+		<div class="delay_status">
+			<p><strong>통신사별 문자발송상태</strong></p>
+			<span class="text_group"><span class="text_green text_bold">SKT</span><span class="text_bold text_black">{$status->sms_sk}</span></span>
+			<span class="text_group"><span class="text_green text_bold">KT</span><span class="text_bold text_black">{$status->sms_kt}</span></span>
+			<span class="text_group"><span class="text_green text_bold">LG</span><span class="text_bold text_black">{$status->sms_lg}</span></span>
+		</div>
 	</div>
-	<div>
-		<span>주의!
-			<br /> 1. 휴대폰번호를 정확하게 입력하였는지 확인해주세요. 
-			
-			<br /> 2. 전송이 완료 됬는데 문자가 오지 않았다면 스팸필터링을 확인해주세요.
-			<br /> 이통사별 스팸 확인법
-					<br />SKT => <a href="http://www.tworld.co.kr" target="_blank">http://www.tworld.co.kr</a>->상품->부가서비스->통화->스팸필터링 또는
-					tstore : <a href="http://m.tstore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000029241&strPrePageNm=0c05003H&strDisplayOrder=1&strPid=0000029241&strBannerId=&strSearchword=%EC%8A%A4%ED%8C%B8%EC%B0%A8%EB%8B%A8&dateKey=MW140526141328208730#" target="_black">t스팸필터링</a> 
-					appstore : <a href="https://itunes.apple.com/kr/app/tseupaempilteoling/id447324256?mt=8" target="_black">t스팸필터링</a>앱에서 확인.
-					<br />KT => <a href="http://www.olleh.com" target="_blank">http://www.olleh.com</a>->폰서비스->문자/통화/주소록->스팸차단 서비스 또는
-					googleplay : <a href="https://play.google.com/store/apps/details?id=com.olleh.spam" target="_black">올레스팸차단</a> 
-					appstore : <a href="https://itunes.apple.com/kr/app/olleseupaemchadan/id397692999?mt=8" target="_black">올레스팸차단</a>앱에서 확인.
-					<br />LG => <a href="http://www.uplus.co.kr" target="_blank">http://www.uplus.co.kr</a>->개인->모바일->부가서비스->통화보호->스팸차단 또는 
-					googleplay : <a href="https://play.google.com/store/apps/details?id=com.lguplus.blocksmishing" target="_black">U+스팸차단</a>앱에서 확인.
-		</span>
+
+	<div class="au_section">
+			<p class="text_warning text_bold">주의!</p>
+			<p>
+			1. 휴대폰번호를 정확하게 입력하였는지 확인해주세요.
+		<br /> 2. 전송이 완료 됬는데 문자가 오지 않았다면 스팸필터링을 확인해주세요.</p>
+			<div class="warning">
+				<p class="center"><strong>이동 통신사별 스팸 확인법</strong></p>
+				<ul class="spam_wrap">
+					<li>
+						<p class="spam_title">SKT</p><a href="http://www.tworld.co.kr" target="_blank">http://www.tworld.co.kr</a><br />상품->부가서비스->통화->스팸필터링
+						<br />tstore : <a href="http://m.tstore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000029241&strPrePageNm=0c05003H&strDisplayOrder=1&strPid=0000029241&strBannerId=&strSearchword=%EC%8A%A4%ED%8C%B8%EC%B0%A8%EB%8B%A8&dateKey=MW140526141328208730#" target="_black">t스팸필터링</a> 
+						<br />appstore : <a href="https://itunes.apple.com/kr/app/tseupaempilteoling/id447324256?mt=8" target="_black">t스팸필터링</a>앱에서 확인
+					</li>
+					<li>
+						<p class="spam_title">KT</p><a href="http://www.olleh.com" target="_blank">http://www.olleh.com</a><br />폰서비스->문자/통화/주소록->스팸차단 서비스
+						<br />googleplay : <a href="https://play.google.com/store/apps/details?id=com.olleh.spam" target="_black">올레스팸차단</a> 
+						<br />appstore : <a href="https://itunes.apple.com/kr/app/olleseupaemchadan/id397692999?mt=8" target="_black">올레스팸차단</a>앱에서 확인
+					</li>
+					<li>
+						<p class="spam_title">LG</p><a href="http://www.uplus.co.kr" target="_blank">http://www.uplus.co.kr</a><br />개인->모바일->부가서비스->통화보호->스팸차단 
+						<br />googleplay : <a href="https://play.google.com/store/apps/details?id=com.lguplus.blocksmishing" target="_black">U+스팸차단</a>앱에서 확인
+					</li>
+				</ul>
+		</div>
 	</div><!-- #footer// -->
 </div>
