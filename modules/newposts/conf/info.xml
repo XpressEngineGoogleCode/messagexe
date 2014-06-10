@@ -2,8 +2,8 @@
 <module version="0.2">
     <title xml:lang="ko">새글알림</title>
     <description xml:lang="ko">새 글이 등록되면 문자와 메일로 알려줍니다.</description>
-    <version>2.1.1</version>
-    <date>2013-10-08</date>
+    <version>2.1.3</version>
+    <date>2014-06-10</date>
     <category>service</category>
     <author email_address="contact@nurigo.net" link="http://www.coolsms.co.kr">
         <name xml:lang="ko">NURIGO</name>
