@@ -58,7 +58,7 @@ class textmessageController extends textmessage
 		//$options->mode = "test";
 		$result = new stdClass();
 
-		// Msg 전송
+		// 문자 전송
 		$result = $sms->send($options);
 
 		$output = new Object();
@@ -76,6 +76,9 @@ class textmessageController extends textmessage
 		return $output;
 	}
 
+	/*
+	 * @brief 전송결과값 가져오기
+	 */
 	function getResult($args=null)
 	{
 		$oTextmessageModel = &getModel('textmessage');
@@ -84,8 +87,8 @@ class textmessageController extends textmessage
 		return $result;
 	}
 
-	/* 예약전송 취소하기
-	 * 
+	/* 
+	 * @brief 예약전송 취소하기
 	 */
 	function cancelMessage($msgid, $basecamp=FALSE)
 	{
@@ -115,4 +118,5 @@ class textmessageController extends textmessage
 		return new Object();
 	}
 }
-?>
+/* End of file textmessage.controller.php */
+/* Location: ./modules/textmessage.controller.php */

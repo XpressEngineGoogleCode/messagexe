@@ -1,9 +1,0 @@
-<filter name="cancel" module="textmessage" act="procTextmessageAdminCancelReserv">
-    <form />
-    <parameter />
-    <response callback_func="completeMobilemessageCancel">
-        <tag name="error" />
-        <tag name="message" />
-        <tag name="page" />
-    </response>
-</filter>
