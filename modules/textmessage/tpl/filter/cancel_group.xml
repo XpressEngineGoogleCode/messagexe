@@ -1,9 +1,0 @@
-<filter name="cancel_group" module="textmessage" act="procTextmessageAdminCancelGroup">
-    <form />
-    <parameter />
-    <response callback_func="completeCancelGroupMessages">
-        <tag name="error" />
-        <tag name="message" />
-        <tag name="page" />
-    </response>
-</filter>
