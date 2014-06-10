@@ -36,11 +36,23 @@ class authenticationAdminController extends authentication
 
 		// save module configuration.
 		$oModuleController = getController('module');
-		$output = $oModuleController->insertModuleConfig('authentication', $args);
+		$output = $oModuleController->updateModuleConfig('authentication', $args);
 
 		$this->setMessage('success_saved');
 
 		$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispAuthenticationAdminConfig');
+		$this->setRedirectUrl($redirectUrl);
+	}
+
+	function procAuthenticationAdminDesignConfig()
+	{
+		$args = Context::getRequestVars();
+		$oModuleController = getController('module');
+		$output = $oModuleController->updateModuleConfig('authentication', $args);
+
+		$this->setMessage('success_saved');
+
+		$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispAuthenticationAdminDesign');
 		$this->setRedirectUrl($redirectUrl);
 	}
 

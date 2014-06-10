@@ -199,6 +199,29 @@ class authenticationController extends authentication
 		Context::set('config', $config);
 		Context::set('target_action', $oModule->act);
 
+		
+
+		$oLayoutModel = &getModel('layout');
+		$layout_info = $oLayoutModel->getLayout($config->layout_srl);
+
+		debugPrint("Co-1");
+		debugPrint($config);
+		debugPrint($layout_info);
+
+		if($layout_info)
+		{
+			$this->module_info->layout_srl = $config->layout_srl;
+			$this->setLayoutPath($layout_info->path);
+			$this->setLayoutFile($layout_info->layout);
+
+			debugPrint("Co-2");
+			debugPrint($layout_info->layout);
+		}
+
+		/*
+		$oModule->setLayoutPath('./common/tpl');
+		$oModule->setLayoutFile('default_layout');
+		 */
 		$oModule->setTemplateFile('index');
 	}
 
