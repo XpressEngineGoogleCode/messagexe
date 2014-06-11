@@ -5,28 +5,27 @@
  * @author wiley (wiley@xnurigo.net)
  * @brief  textmessage controller class of textmessage module
  **/
-class textmessageAdminController extends textmessage {
+class textmessageAdminController extends textmessage 
+{
 	/**
 	 * @brief initialization
 	 * @return none
 	 **/
-	function init() {
-	}
+	function init() { }
 
 	/**
 	 * @brief 기본설정 module config 에 저장
 	 **/
-	function procTextmessageAdminInsertConfig() {
+	function procTextmessageAdminInsertConfig() 
+	{
 		$oTextmessageModel = &getModel('textmessage');
-
-		$args = Context::gets('service_id', 'password', 'callback_url', 'encode_utf16');
+		$args = Context::gets('api_key', 'api_secret', 'callback_url', 'encode_utf16');
 
 		// save module configuration.
 		$oModuleControll = getController('module');
 		$output = $oModuleControll->insertModuleConfig('textmessage', $args);
 
 		$this->setMessage('success_saved');
-
 		$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispTextmessageAdminConfig');
 		$this->setRedirectUrl($redirectUrl);
 	}
@@ -34,7 +33,8 @@ class textmessageAdminController extends textmessage {
 	/**
 	 * @brief 예약취소 
 	 **/
-	function procTextmessageAdminCancelReserv() {
+	function procTextmessageAdminCancelReserv() 
+	{
 		$target_message_ids = Context::get('cart');
 		if(!$target_message_ids) return new Object(-1, 'msg_invalid_request');
 
@@ -53,7 +53,8 @@ class textmessageAdminController extends textmessage {
 	/**
 	 * @brif 예약 단체 취소
 	 **/
-	function procTextmessageAdminCancelGroup() {
+	function procTextmessageAdminCancelGroup() 
+	{
 		$target_group_ids = Context::get('target_group_ids');
 		if(!$target_group_ids) return new Object(-1, 'msg_invalid_request');
 

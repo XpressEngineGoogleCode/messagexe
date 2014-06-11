@@ -179,11 +179,11 @@
 		<value xml:lang="en"><![CDATA[Requested]]></value>
 	</item>
 
-	<item name="about_service_id">
+	<item name="about_api_key">
 		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/index.php?mid=service_setup&act=dispSmsconfigCredentials" target="_blank">www.coolsms.co.kr/</a>에서 확인하실수 있습니다. ]]></value>
 		<value xml:lang="en"><![CDATA[You can check your api_key at <a href="http://www.coolsms.co.kr/index.php?mid=service_setup&act=dispSmsconfigCredentials" target="_blank">www.coolsms.co.kr/</a>]]></value>
 	</item>
-	<item name="about_service_password">
+	<item name="about_api_secret">
 		<value xml:lang="ko"><![CDATA[<a href="http://www.coolsms.co.kr/index.php?mid=service_setup&act=dispSmsconfigCredentials" target="_blank">www.coolsms.co.kr/</a> 에서 확인하실수 있습니다. ]]></value>
 		<value xml:lang="en"><![CDATA[You can check your api_secret at <a href="http://www.coolsms.co.kr/index.php?mid=service_setup&act=dispSmsconfigcredentials" target="_blank">www.coolsms.co.kr/</a>]]></value>
 	</item>

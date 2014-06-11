@@ -5,7 +5,8 @@
  * @author wiley(wiley@nurigo.net)
  * @brief  textmessageModel
  */
-class textmessageModel extends textmessage {
+class textmessageModel extends textmessage 
+{
 
 	function init() { }
 
@@ -14,7 +15,8 @@ class textmessageModel extends textmessage {
 	 */
 	function getModuleConfig() 
 	{
-		if (!$GLOBALS['__textmessage_config__']) {
+		if (!$GLOBALS['__textmessage_config__']) 
+		{
 			$oModuleModel = &getModel('module');
 			$config = $oModuleModel->getModuleConfig('textmessage');
 
@@ -69,7 +71,7 @@ class textmessageModel extends textmessage {
 		if($basecamp)
 			$sms = new coolsms($config->cs_user_id, $config->cs_password, TRUE);
 		else
-			$sms = new coolsms($config->service_id, $config->password);
+			$sms = new coolsms($config->api_key, $config->api_secret);
 
 		return $sms;
 	}
@@ -80,7 +82,8 @@ class textmessageModel extends textmessage {
 	function getConfig() 
 	{
 		$config = $this->getModuleConfig('textmessage');
-		if (!$config->service_id || !$config->password) {
+		if (!$config->api_key || !$config->api_secret) 
+		{
 			return false;
 		}
 
@@ -121,7 +124,9 @@ class textmessageModel extends textmessage {
 			{
 				Context::set('cs_is_logged', true);
 			}
-		} else {
+		} 
+		else 
+		{
 			Context::set('cs_is_logged', false);
 			Context::set('cs_error_message', '<font color="red">서비스 서버에 연결할 수 없습니다.<br />일부 웹호스팅에서 외부로 나가는 포트 접속을 허용하지 않고 있습니다.<br /></font>');
 		}
@@ -147,18 +152,22 @@ class textmessageModel extends textmessage {
 		if (!$fieldname) return null;
 
 		// 기본필드에서 확인
-		if ($obj->{$fieldname}) {
+		if ($obj->{$fieldname}) 
+		{
 			$return_value = $obj->{$fieldname};
 		}
 
 		// 확장필드에서 확인
-		if ($obj->extra_vars) {
+		if ($obj->extra_vars) 
+		{
 			$extra_vars = unserialize($obj->extra_vars);
-			if ($extra_vars->{$fieldname}) {
+			if ($extra_vars->{$fieldname}) 
+			{
 				$return_value = $extra_vars->{$fieldname};
 			}
 		}
-		if ($type=='tel' && is_array($return_value)) {
+		if ($type=='tel' && is_array($return_value)) 
+		{
 			$return_value = implode($return_value);
 		}
 

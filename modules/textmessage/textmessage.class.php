@@ -6,20 +6,23 @@
  * @brief  base class of textmessage module
  **/
 
-class textmessage extends ModuleObject {
+class textmessage extends ModuleObject 
+{
 
 	/**
 	 * @brief install textmessage module
 	 * @return new Object
 	 **/
-	function moduleInstall() {
+	function moduleInstall() 
+	{
 		return new Object();
 	}
 
 	/**
 	 * @brief if update is necessary it returns true
 	 **/
-	function checkUpdate() {
+	function checkUpdate() 
+	{
 		return false;
 	}
 
@@ -27,7 +30,8 @@ class textmessage extends ModuleObject {
 	 * @brief update module
 	 * @return new Object
 	 **/
-	function moduleUpdate() {
+	function moduleUpdate() 
+	{
 		return new Object();
 	}
 
@@ -35,8 +39,7 @@ class textmessage extends ModuleObject {
 	 * @brief regenerate cache file
 	 * @return none
 	 **/
-	function recompileCache() {
-	}
+	function recompileCache() { }
 }
 /* End of file textmessage.class.php */
 /* Location: ./modules/textmessage.class.php */

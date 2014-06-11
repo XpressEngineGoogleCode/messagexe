@@ -7,12 +7,10 @@
  */
 class textmessageController extends textmessage 
 {
-	function init() 
-	{
-	}
+	function init() { }
 
 	/**
-	 * @brief 메시지 전송, $in_args에 값이 있을 경우 전송대기열에 넣고 전송처리
+	 * @brief 메시지 전송 
 	 * @param[in] $args
 	 *  $args->type = 'SMS' or 'LMS' or 'MMS' // default = 'SMS'
 	 *  $args->recipient_no = '수신번호'
@@ -42,8 +40,10 @@ class textmessageController extends textmessage
 				$options->to = $args->recipient_no;
 		}
 		elseif($args->to) 		$options->to = $args->to;
+
 		if($args->sender_no) 	$options->from = $args->sender_no;
 		elseif($args->from)		$options->from = $args->from;
+
 		if($args->type)			$options->type = $args->type;
 		if($args->attachment) 	$options->image = $args->attachment;
 		if($args->image)		$options->image = $args->image;

@@ -199,7 +199,8 @@ class coolsms
 			$d = get_object_vars($d);
 		}
  
-		if (is_array($d)) {
+		if (is_array($d)) 
+		{
 			/*
 			* Return array converted to object
 			* Using __FUNCTION__ (Magic constant)
@@ -207,7 +208,8 @@ class coolsms
 			*/
 			return array_map(__FUNCTION__, $d);
 		}
-		else {
+		else 
+		{
 			// Return array
 			return $d;
 		}
