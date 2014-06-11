@@ -61,22 +61,9 @@
 		<span>인증번호가 오지 않는다면? <a href="#" onclick="updateStatus(); return false" class="green green_btn">전송확인</a></span>
 		<div id="footer">
 			<div id="notice" class="con_box"></div>
-			
-		</div><!-- #footer// -->
-		<div class="delay_status" id="au_delay_status">
-			<p><strong>통신사별 문자발송상태</strong></p>
-			<span class="text_group"><span class="text_green text_bold">SKT</span><span class="text_bold text_black">{$status->sms_sk}</span></span>
-			<span class="text_group"><span class="text_green text_bold">KT</span><span class="text_bold text_black">{$status->sms_kt}</span></span>
-			<span class="text_group"><span class="text_green text_bold">LG</span><span class="text_bold text_black">{$status->sms_lg}</span></span>
-		</div>
-
-		<div class="au_section">
-			<p class="text_warning text_bold">주의!</p>
-			<p>
-			1. 휴대폰번호를 정확하게 입력하였는지 확인해주세요.
-			<br /> 2. 전송이 완료 됬는데 문자가 오지 않았다면 스팸필터링을 확인해주세요.</p>
-				<div class="warning">
-					<p class="center"><strong>이동 통신사별 스팸 확인법</strong></p>
+			<div class="au_section">
+				<div>
+					<p class="center">이동 통신사별 스팸 확인법</p>
 					<ul class="spam_wrap">
 						<li>
 							<p class="spam_title">SKT</p><a href="http://www.tworld.co.kr" target="_blank">http://www.tworld.co.kr</a><br />상품->부가서비스->통화->스팸필터링
@@ -94,7 +81,16 @@
 						</li>
 					</ul>
 			</div>
-		</div><!-- .au_section// -->
+		</div><!-- .au_section// -->	
+		</div><!-- #footer// -->
+		<div class="delay_status" id="au_delay_status">
+			<p><strong>통신사별 문자발송상태</strong></p>
+			<span class="text_group"><span class="text_green text_bold">SKT</span><span class="text_bold text_black">{$status->sms_sk}</span></span>
+			<span class="text_group"><span class="text_green text_bold">KT</span><span class="text_bold text_black">{$status->sms_kt}</span></span>
+			<span class="text_group"><span class="text_green text_bold">LG</span><span class="text_bold text_black">{$status->sms_lg}</span></span>
+		</div>
+
+	
 	</div>
 
 	
