@@ -123,9 +123,12 @@ function completeUpdate(ret_obj)
 	var r_code = parseInt(r_code, 10);
 	var $notice = jQuery('#footer #notice');
 
+	jQuery("#au_delay_status").css("display","block");
+
 	if(r_status == 2 && r_code == 00)
 	{
-		$notice.html('전송완료. 만약 메시지가 도착하지 않으셨다면 스팸함을 확인해주세요.');
+		$notice.html('전송완료. 만약 메시지가 도착하지 않으셨다면 스팸여부를 확인해주세요.');
+		jQuery(".au_section").css("display","block");
 	}
 
 	else if(r_status == 2 && r_code != 0)
