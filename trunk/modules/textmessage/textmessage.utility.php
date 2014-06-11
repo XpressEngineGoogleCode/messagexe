@@ -5,12 +5,14 @@
  * @author contact@nurigo.net
  * @brief  CSUtility
  */
-class CSUtility {
-	function CSUtility() {
-	}
+class CSUtility 
+{
+	function CSUtility() { }
 
-	function dispStatus($mstat) {
-		switch ($mstat) {
+	function dispStatus($mstat) 
+	{
+		switch ($mstat) 
+		{
 			case "9":
 				return "대기중";
 			case "1":
@@ -19,7 +21,8 @@ class CSUtility {
 				return "전송완료";
 		}
 	}
-	function dispResultCode($rcode) {
+	function dispResultCode($rcode) 
+	{
 		$statset = array("00" => "정상"
 			, "10" => "잘못된 번호"
 			, "11" => "상위 서비스망 스팸 인식됨"
@@ -62,9 +65,11 @@ class CSUtility {
 	 * @brief 긴내용 잘라서 출력
 	 * @history 2009/11/05 mb_strcut이 오동작해서 abbreviate로 교체(iconv 변환으로 비효율적).
 	 */
-	function dispContent($content) {
+	function dispContent($content) 
+	{
 		$content = iconv("utf-8", "euc-kr//TRANSLIT", $content);
-		if (strlen($content) > 20) {
+		if (strlen($content) > 20) 
+		{
 			$content = $this->abbreviate($content, 20);
 		}
 		$content = iconv("euc-kr", "utf-8//TRANSLIT", $content);
@@ -80,7 +85,8 @@ class CSUtility {
 
 	}
 
-	function dispFullnumber($country, $phonenum) {
+	function dispFullnumber($country, $phonenum) 
+	{
 		if (strlen($phonenum) > 0 && substr($phonenum, 0, 1) == '0') $phonenum = substr($phonenum, 1);
 		return $country . $phonenum;
 	}
@@ -88,9 +94,11 @@ class CSUtility {
 	/**
 	 * @brief - 기호 붙여서 돌려줌.
 	 **/
-	function getDashTel($phonenum) {
+	function getDashTel($phonenum) 
+	{
 		$phonenum = str_replace('-', '', $phonenum);
-		switch (strlen($phonenum)) {
+		switch (strlen($phonenum)) 
+		{
 			case 10:
 				$initial = substr($phonenum, 0, 3);
 				$medium = substr($phonenum, 3, 3);
@@ -110,13 +118,14 @@ class CSUtility {
 	/**
 	 * @brief 한글 깨짐없이 자르기(완성형 한글만 가능)
 	 **/
-	function cutout($msg, $limit) {
+	function cutout($msg, $limit) 
+	{
 		$msg = substr($msg, 0, $limit);
 			if (strlen($msg) < $limit)
 			$limit = strlen($msg);
 
 		$countdown = 0;
-		for ($i = $limit - 1; $i >= 0; $i--) {	 
+		for ($i = $limit - 1; $i >= 0; $i--) {	
 			if (ord(substr($msg,$i,1)) < 128) break;
 			$countdown++;
 		}
@@ -131,14 +140,16 @@ class CSUtility {
 	 * @param[in] msg 문자열
 	 * @param[in] limit 자를 바이트 수
 	 **/
-	function abbreviate($msg, $limit) {
+	function abbreviate($msg, $limit) 
+	{
 		if ($limit >= strlen($msg))
 			return $msg;
 		else
 			return $this->cutout($msg, $limit) . "..";
 	}
 
-	function strcut_utf8($str, $len, $checkmb=false, $tail='') {
+	function strcut_utf8($str, $len, $checkmb=false, $tail='') 
+	{
 		/**
 		 * UTF-8 Format
 		 * 0xxxxxxx = ASCII, 110xxxxx 10xxxxxx or 1110xxxx 10xxxxxx 10xxxxxx
@@ -166,7 +177,8 @@ class CSUtility {
 		return join('', $ret).$tail;
 	}
 
-	function strlen_utf8($str, $checkmb = false) {
+	function strlen_utf8($str, $checkmb = false) 
+	{
 		preg_match_all('/[\xE0-\xFF][\x80-\xFF]{2}|./', $str, $match); // BMP 대상
 		$m = $match[0];
 		$mlen = count($m); // length of matched characters
@@ -174,10 +186,10 @@ class CSUtility {
 		if (!$checkmb) return $mlen;
 
 		$count=0;
-		for ($i=0; $i < $mlen; $i++) {
+		for ($i=0; $i < $mlen; $i++) 
+		{
 			$count += ($checkmb && strlen($m[$i]) > 1)?2:1;
 		}
-
 		return $count;
 	}
 

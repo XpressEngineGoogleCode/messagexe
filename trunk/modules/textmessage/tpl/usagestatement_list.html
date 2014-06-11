@@ -6,14 +6,18 @@
         <caption style="text-align:right; margin-bottom:10px;">
 			<span style="float: left;">
 				<select name="search_code" id="search_code" onchange="refresh()" style="width:140px; margin-top : 10px;">
-					<option value="all" selected|cond="$search_code=='all'">전체보기 </option>
+					<option value="all" selected|cond="$search_code=='all'">전송결과 코드 </option>
 					<option value="00" selected|cond="$search_code=='00'">00:정상</option>
+					<option value="30" selected|cond="$search_code=='30'">30:가능전송잔량없음</option>
+					<option value="32" selected|cond="$search_code=='32'">32:가입자없음</option>
+					<option value="47" selected|cond="$search_code=='47'">47:착신거절</option>
 					<option value="49" selected|cond="$search_code=='49'">49:Format Error</option>
 					<option value="58" selected|cond="$search_code=='58'">58:전송경로없음</option>
 					<option value="60" selected|cond="$search_code=='60'">60:취소</option>
+					<option value="99" selected|cond="$search_code=='99'">99:대기상태<option>
 				</select>
 				<select name="msg_type" id="msg_type" onchange="refresh()" style="width: 80px; margin-top: 10px;">
-					<option value="all" selected|cond="$msg_type=='all'">전체보기 </option>
+					<option value="all" selected|cond="$msg_type=='all'">문자 종류 </option>
 					<option value="sms" selected|cond="$msg_type=='sms'">SMS </option>
 					<option value="lms" selected|cond="$msg_type=='lms'">LMS </option>
 					<option value="mms" selected|cond="$msg_type=='mms'">MMS </option>

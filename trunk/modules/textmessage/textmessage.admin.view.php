@@ -6,12 +6,14 @@
  * @brief  textmessage view class of textmessage module
  **/
 
-class textmessageAdminView extends textmessage {
+class textmessageAdminView extends textmessage 
+{
 	/**
 	 * @brief Initilization
 	 * @return none
 	 **/
-	function init() {
+	function init() 
+	{
 		// 템플릿 경로 지정 (board의 경우 tpl에 관리자용 템플릿 모아놓음)
 		$template_path = sprintf("%stpl/",$this->module_path);
 		$this->setTemplatePath($template_path);
@@ -21,7 +23,8 @@ class textmessageAdminView extends textmessage {
 	 * @brief Display Super Admin Dashboard
 	 * @return none
 	 **/
-	function dispTextmessageAdminIndex() {
+	function dispTextmessageAdminIndex() 
+	{
 		$oTextmessageModel = &getModel('textmessage');
 		$config = $oTextmessageModel->getConfig();
 		if (!$config) Context::set('isSetupCompleted', false);
@@ -31,22 +34,26 @@ class textmessageAdminView extends textmessage {
 		//Retrieve recent news and set them into context
 		$newest_news_url = sprintf("http://www.coolsms.co.kr/?module=newsagency&act=getNewsagencyArticle&inst=notice&loc=%s", _XE_LOCATION_);
 		$cache_file = sprintf("%sfiles/cache/cool_news.%s.cache.php", _XE_PATH_, _XE_LOCATION_);
-		if(!file_exists($cache_file) || filemtime($cache_file)+ 60*60 < time()) {
+		if(!file_exists($cache_file) || filemtime($cache_file)+ 60*60 < time()) 
+		{
 			// Considering if data cannot be retrieved due to network problem, modify filemtime to prevent trying to reload again when refreshing textmessageistration page
 			// Ensure to access the textmessage registration page even though news cannot be displayed
 			FileHandler::writeFile($cache_file,'');
 			FileHandler::getRemoteFile($newest_news_url, $cache_file, null, 1, 'GET', 'text/html', array('REQUESTURL'=>getFullUrl('')));
 		}
 
-		if(file_exists($cache_file)) {
+		if(file_exists($cache_file)) 
+		{
 			$oXml = new XmlParser();
 			$buff = $oXml->parse(FileHandler::readFile($cache_file));
 
 			$item = $buff->zbxe_news->item;
-			if($item) {
+			if($item) 
+			{
 				if(!is_array($item)) $item = array($item);
 
-				foreach($item as $key => $val) {
+				foreach($item as $key => $val) 
+				{
 					$obj = null;
 					$obj->title = $val->body;
 					$obj->date = $val->attrs->date;
@@ -65,7 +72,8 @@ class textmessageAdminView extends textmessage {
 	/**
 	 * 기본설정 페이지
 	 */
-	function dispTextmessageAdminConfig() {
+	function dispTextmessageAdminConfig() 
+	{
 		$oTextmessageModel = &getModel('textmessage');
 		$config = $oTextmessageModel->getConfig();
 
@@ -83,7 +91,8 @@ class textmessageAdminView extends textmessage {
 	}
 
 	//발송내역 페이지 
-	function dispTextmessageAdminUsageStatement() {
+	function dispTextmessageAdminUsageStatement() 
+	{
 		$oTextmessageModel = &getModel('textmessage');
 		$config = $oTextmessageModel->getModuleConfig();
 		$sms = $oTextmessageModel->getCoolSMS();
