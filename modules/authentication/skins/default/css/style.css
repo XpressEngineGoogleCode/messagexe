@@ -42,10 +42,10 @@ ul.spam_wrap p.spam_title { font-size:15px; font-weight:bold; color:#777; }
 div#au_content { background:#fdfdfd; padding:15px; margin-top:15px; color:#555; }
 div#au_content a.green_btn { padding:10px; color:#fff; margin-left:10px; font-weight:bold; text-decoration:none; }
 div#au_content .con_box { background:#fffdf6; padding:10px; color:#666; margin:20px 0 10px; font-size:12px;}
-div#au_content div.delay_status { background:#fbfff6; padding:10px; color:#666; font-size:12px; margin-top:20px; }
+div#au_content div.delay_status { background:#fbfff6; padding:10px; color:#666; font-size:12px; margin-top:20px; display:none; }
 
 /* section */
-.au_section { margin-top:15px; color:#555; background:#fcfcfc; padding:15px; line-height:1.5em; }
+.au_section { margin-top:15px; color:#555; background:#fcfcfc; padding:15px; line-height:1.5em; display:none;}
 .au_section .warning { background:#fff6f6; padding:10px; }
 .au_section .warning a { color:#1e9dd8; text-decoration:none; }
 
