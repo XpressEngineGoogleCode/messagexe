@@ -193,6 +193,17 @@ class textmessageModel extends textmessage
 		$obj->add('mms_price', '200');
 		return $obj;
 	}
+	
+	/*
+	 * @brief 전송결과값 가져오기
+	 */
+	function getResult($args=null)
+	{
+		$oTextmessageModel = &getModel('textmessage');
+		$sms = &$oTextmessageModel->getCoolSMS();
+		$result = $sms->sent($args);
+		return $result;
+	}
 }
 /* End of file textmessage.model.php */
 /* Location: ./modules/textmessage.model.php */
