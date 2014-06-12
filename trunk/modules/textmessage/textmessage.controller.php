@@ -61,7 +61,6 @@ class textmessageController extends textmessage
 
 		//$options->mode = "test";
 		$result = new stdClass();
-		debugprint($options);
 
 		// 문자 전송
 		$result = $sms->send($options);
@@ -79,17 +78,6 @@ class textmessageController extends textmessage
 		if($result->group_id) $output->add('group_id', $result->group_id);
 
 		return $output;
-	}
-
-	/*
-	 * @brief 전송결과값 가져오기
-	 */
-	function getResult($args=null)
-	{
-		$oTextmessageModel = &getModel('textmessage');
-		$sms = &$oTextmessageModel->getCoolSMS();
-		$result = $sms->sent($args);
-		return $result;
 	}
 
 	/* 
