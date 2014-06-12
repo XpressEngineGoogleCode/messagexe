@@ -30,6 +30,10 @@ class textmessageController extends textmessage
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS($basecamp);
 		$options = new stdClass();
+		if($oTextmessageModel->getSlnRegKey() && !$args->srk)
+		{
+			$options->srk = $oTextmessageModel->getSlnRegKey();
+		}
 
 		// 기존 Textmessage 와 다른 args 옵션으로 인한 동기화하기 
 		if($args->recipient_no)
@@ -57,6 +61,7 @@ class textmessageController extends textmessage
 
 		//$options->mode = "test";
 		$result = new stdClass();
+		debugprint($options);
 
 		// 문자 전송
 		$result = $sms->send($options);
