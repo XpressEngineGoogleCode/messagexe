@@ -17,13 +17,13 @@ div.au_container dl.container_dl dd a.submit { width:10%; }
 
 /* button_background */
 .au_blue { background:#45a9e7; }
-.gray { background:#5e5e5e; }
-.green { background:#83c897; }
+.au_gray { background:#5e5e5e; }
+.au_green { background:#83c897; }
 .reget { background:#eb9001; }
-.pink { background:#ec6045; }
-.dark_blue { background:#3893ca; }
-.purple { background:#ab6fc9; }
-.midnight_blue { background:#3b5065; }
+.au_pink { background:#ec6045; }
+.au_dark_blue { background:#3893ca; }
+.au_purple { background:#ab6fc9; }
+.au_midnight_blue { background:#3b5065; }
 
 /* text-color */
 .center { text-align:center; font-size:13px; margin:0; }
