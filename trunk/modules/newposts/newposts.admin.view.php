@@ -126,7 +126,6 @@ class newpostsAdminView extends newposts
 		$args->config_srl = $config_srl;
 		$output = executeQueryArray("newposts.getModuleSrls", $args);
 		if (!$output->toBool()) return $output;
-
 		$module_srls = array();
 		if ($output->toBool() && $output->data) 
 		{
@@ -135,13 +134,13 @@ class newpostsAdminView extends newposts
 				$module_srls[] = $val->module_srl;
 			}
 		}
+
 		if(sizeOf($module_srls)!=0)
 		{
 			$config->module_srls = join(',', $module_srls);
 		}else{
 			$config->module_srls = $module_srls[0];
 		}
-
 
 		Context::set('config', $config);
 

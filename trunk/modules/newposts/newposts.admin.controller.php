@@ -18,7 +18,7 @@ class newpostsAdminController extends newposts
 	 **/
 	function procNewpostsAdminInsert() 
 	{
-		$params = Context::gets('admin_phones','admin_emails','sender_name','sender_email','content','mail_content','module_srls','msgtype','sending_method');
+		$params = Context::gets('admin_phones','admin_emails', 'sender_phone', 'sender_name','sender_email','content','mail_content','module_srls','msgtype','sending_method');
 
 		// 모듈 입력을 하지 않앗을 경우 에러메시지 & Redirect
 		if(!$params->module_srls)
@@ -29,6 +29,7 @@ class newpostsAdminController extends newposts
 			$this->setRedirectUrl($redirectUrl);
 			return;
 		}
+		/*
 		//선택한 모듈이 다른 새글알림에 사용되엇는지 확인
 		$module_srls = explode(',', $params->module_srls);
 		$args->module_srls = $module_srls;
@@ -44,6 +45,7 @@ class newpostsAdminController extends newposts
 			$this->setRedirectUrl($redirectUrl);
 			return;
 		}
+		 */
 
 		//프로세스
 		$this->processNewpostsAdmin($params);
@@ -67,6 +69,7 @@ class newpostsAdminController extends newposts
 			$this->setRedirectUrl($redirectUrl);
 			return;
 		}
+		/*
 		//선택한 모듈이 다른 새글알림에 사용되엇는지 확인
 		$module_srls = explode(',', $params->module_srls);
 		$args->module_srls = $module_srls;
@@ -82,6 +85,7 @@ class newpostsAdminController extends newposts
 			$this->setRedirectUrl($redirectUrl);
 			return;
 		}
+		 */
 
 		//프로세스
 		$this->processNewpostsAdmin($params);
@@ -93,9 +97,7 @@ class newpostsAdminController extends newposts
 
 	function processNewpostsAdmin(&$parm)
 	{
-		
 		// 파라미터에 config_srl 있으면 지우고 다시만들고 없으면 새로 받아오고
-		$args->config_srl = $parm->config_srl;
 		if ($parm->config_srl) 
 		{
 			// delete existences
