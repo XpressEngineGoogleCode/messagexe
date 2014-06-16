@@ -128,9 +128,15 @@ class authenticationModel extends authentication
 		$options->count=1;
 		$status = $sms->status($options);
 
-		if(count($status)>0){
-			return $status[0];
+		if($status->code || !$status) return NULL; 
+
+		if(gettype($status)=="array")
+		{
+			if(count($status)>0){
+				return $status[0];
+			}
 		}
+		else return $status;
 
 		return NULL;
 	}
