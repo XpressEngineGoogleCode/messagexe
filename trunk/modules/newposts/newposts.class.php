@@ -66,7 +66,8 @@ class newposts extends ModuleObject
 		if(!$oDB->isColumnExists("newposts_config","sender_name")) return true;
 		// 2012.03.06 add newposts_config.sender_email
 		if(!$oDB->isColumnExists("newposts_config","sender_email")) return true;
-
+		// 2014.06.16 add newposts_config.sender_phones
+		if(!$oDB->isColumnExists("newposts_config","sender_phone")) return true;
 
 		return false;
 	}

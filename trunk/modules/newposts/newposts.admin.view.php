@@ -114,6 +114,9 @@ class newpostsAdminView extends newposts
 		if(!$output->toBool()) return $output;
 
 		$config = $output->data;
+		if(!$config)
+			return new Object(-1, 'Can not read config information');
+
 		$extra_vars = unserialize($config->extra_vars);
 		if ($extra_vars) 
 		{
