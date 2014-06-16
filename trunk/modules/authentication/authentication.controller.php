@@ -106,10 +106,8 @@ class authenticationController extends authentication
 		//$args->encode_utf16 = $encode_utf16; 
 		$controller = &getController('textmessage');
 		$output = $controller->sendMessage($args);
-		if (!$output->toBool())
-		{
-			return $output;
-		}
+		if(!$output->toBool()) return $output;
+		if($output->get('error_code')) return new Object(-1, $output->get('error_code'));
 		$group_id = $output->get('group_id');
 
 		$this->add('group_id', $group_id);
