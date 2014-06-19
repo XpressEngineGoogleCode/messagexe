@@ -151,6 +151,27 @@ class authenticationModel extends authentication
 		return $string;
 	}
 
+	function getErrorMessage($error_message)
+	{
+		switch($error_message)
+		{
+			case "InvalidAPIKey":
+				$error_message = "문자메시지 모듈의 관리자 설정을 확인해주세요.";
+				break;
+			case "SignatureDoesNotMatch":
+				$error_message = "문자메시지 모듈의 관리자 설정을 확인해주세요.";
+				break;
+			case "NotEnoughBalance":
+				$error_message = "잔액이 부족합니다.";
+				break;
+			case "InternalError":
+				$error_message = "서버오류";
+				break;
+		}
+
+		return $error_message;
+	}
+
 	function triggerMemberMenu($in_args)
 	{
 		$url = getUrl('','module','authentication','act','dispAuthenticationSendMessage','member_srl',Context::get('target_srl'));

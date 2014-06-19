@@ -107,7 +107,11 @@ class authenticationController extends authentication
 		$controller = &getController('textmessage');
 		$output = $controller->sendMessage($args);
 		if(!$output->toBool()) return $output;
-		if($output->get('error_code')) return new Object(-1, $output->get('error_code'));
+		if($output->get('error_code'))
+		{
+			$error_message = $oAuthenticationModel->getErrorMessage($output->get('error_code'));
+			return new Object(-1, $error_message);
+		}
 		$group_id = $output->get('group_id');
 
 		$this->add('group_id', $group_id);
