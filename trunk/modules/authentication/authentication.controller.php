@@ -31,6 +31,7 @@ class authenticationController extends authentication
 		}
 
 		$country_code = Context::get('country_code');
+
 		if(!$phonenum || !$country_code)
 		{
 			return new Object(-1, '국가 및 휴대폰 번호를 전부 입력해주세요.');
@@ -59,12 +60,11 @@ class authenticationController extends authentication
 		$output = executeQuery('authentication.getTryCountByClue', $args);
 		if (!$output->toBool()) return $output;
 		unset($args);
-		/*
 		if($output->data->count > $config->day_try_limit)
 		{
 			return new Object(-1, '잦은 인증번호 요청으로 금지되셨습니다. 1일뒤에 다시 시도해주십시오.');
 		}
-		 */
+
 		// check day try limit
 		$today = date("YmdHis", time()-$config->authcode_time_limit);
 		$args->clue = $phonenum;
@@ -79,7 +79,7 @@ class authenticationController extends authentication
 
 		// save auth info
 		$args->authentication_srl = getNextSequence();
-		$args->country_code = $country_code;
+		$args->country = $country_code;
 		$args->clue = $phonenum;
 		$args->authcode = $keystr;
 		$args->ipaddress = $_SERVER['REMOTE_ADDR'];
@@ -89,9 +89,7 @@ class authenticationController extends authentication
 		$_SESSION['authentication_srl'] = $args->authentication_srl;
 		$this->add('authentication_srl', $args->authentication_srl);
 		Context::set('authentication_srl', $_SESSION['authentication_srl']);
-		//unset($args);
 
-		$args->country_code = $country_code;
 		$args->recipient_no =  $phonenum;
 		$args->sender_no = $config->sender_no;
 		if($config->message_content)
@@ -105,6 +103,7 @@ class authenticationController extends authentication
 		}
 		//$args->encode_utf16 = $encode_utf16; 
 		$controller = &getController('textmessage');
+
 		$output = $controller->sendMessage($args);
 		if(!$output->toBool()) return $output;
 		if($output->get('error_code'))
