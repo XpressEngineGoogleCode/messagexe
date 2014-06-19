@@ -16,6 +16,7 @@ class purplebookView extends purplebook
 	{
 		// 템플릿 경로 설정
 		if (!$this->module_info->skin) $this->module_info->skin = 'default';
+		Context::set("module_skin", $this->module_info->skin);
 		$this->setTemplatePath($this->module_path."skins/{$this->module_info->skin}");
 	}
 

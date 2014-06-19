@@ -630,6 +630,28 @@ class purplebookModel extends purplebook
 		}
 		$this->add('data', $data);
 	}
+
+
+	// 특수문자 레이어
+	function getSpecialChar()
+	{
+		$oModuleModel = &getModel("module");
+		$oTemplate = &TemplateHandler::getInstance();
+
+		$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
+
+		$path = $this->module_path."skins/".$module_info->skin;
+		$file_name = "layer_chars.html";
+
+		$data = $oTemplate->compile($path, $file_name);
+
+		$this->add('data', $data);
+
+		debugPrint("HEY-1");
+		debugPrint($path);
+		debugPrint($file_name);
+		debugPrint($data);
+	}
 }
 /* End of file purplebook.model.php */
 /* Location: ./modules/purplebook/purplebook.model.php */

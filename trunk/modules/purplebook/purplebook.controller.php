@@ -63,7 +63,7 @@ class purplebookController extends purplebook
 		$calc_point = 0;
 		$msg_arr = array();
 		$args = new StdClass();
-		$args->extension = Array();
+		$args->extension = array();
 		$delimiter = $this->getDelimiter();
 
 		foreach($decoded as $key => $row)
@@ -103,8 +103,6 @@ class purplebookController extends purplebook
 			$before_num = $row->recipient;
 			if(!$first_num) $first_num = $row->recipient;
 		}
-		explode(",",$args->extension);
-
 		if($args_text) $args_text = explode($delimiter, $args_text);
 
 		$delay = 0;
@@ -120,6 +118,8 @@ class purplebookController extends purplebook
 
 		$args->extension = json_encode($args->extension);
 
+		debugPrint("WHAT_!");
+		debugPrint($args);
 		// minus point
 		if($module_info->use_point=='Y')
 		{
@@ -422,20 +422,25 @@ class purplebookController extends purplebook
 				break;
 		}
 		
-		$max_width = 1024;
-		$max_height = 1024;
-		$target_ext = 'jpg';
 		$file_srl = getNextSequence();
 		$path = $oPurplebookModel->getFilePickerPath($file_srl);
-		$save_filename = sprintf('%s%s.%s',$path, $file_srl, $target_ext);
+		$save_filename = sprintf('%s%s.%s',$path, $file_srl, $type);
 
-		if($width > $max_width) $width = $max_width;
-		if($height > $max_height) $height = $max_height;
-		if(!FileHandler::createImageFile($source_file, $save_filename, $width, $height, $target_ext, 'ratio'))
-		{
-			Context::set('message', Context::getLang('msg_error_occured'));
-			return;
-		}
+		// create directory
+        if(!is_dir($path))
+        {
+            FileHandler::makeDir($path);
+        }
+
+        if(!FileHandler::moveFile($source_file, $save_filename))
+        {
+            Context::set('message', Context::getLang('msg_error_occured'));
+            return;
+        }
+		
+		debugPrint("HEY-1");
+		debugPrint($save_filename);
+		debugPrint($file_srl);
 
 		$output = $this->insertFile($save_filename, $file_srl);
 		if(!$output->toBool())
