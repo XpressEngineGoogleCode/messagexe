@@ -19,7 +19,6 @@
 <!--%load_js_plugin("ui.datepicker")-->
 <block cond="!$module_info->manual_url">{@$module_info->manual_url = "http://www.coolsms.co.kr/purplebook_manual"}</block>
 
-
 <div id="hearder_title">
 <p class="page_title">웹에서 보내기</p>
 </div>
@@ -194,14 +193,7 @@
         <input type="hidden" name="cancel_file_srl" value="" />
 
         <div id="layer_chars" class="layer draggable border-radius8">
-			<div class="title"><p>특수문자</p><span class="btn_closex pngFix"><a href="#"><img class="pngFix" src="img/pop_btn_close.gif" alt="close" /></a></span></div>
-            <div class="bodyArea">
-                <ul>
-                    <!--@for($i = 1;$i <= 67; $i++)-->
-                    <li  class="pngFix"<!--@if($i >= 48 && $i <= 51)-->class="h37"<!--@end-->><a href="javascript:AddChar({$i});"><img src="img/icon_gspecial{$i}.gif"/></a></li>
-                    <!--@end-->
-                </ul>
-            </div>
+			
         </div><!-- 특수문자 레이어 -->
         <div id="layer_upload" class="layer draggable border-radius8">
 			<div class="title"><p>사진업로드</p><span class="btn_closex"><a href="#"><img class="pngFix" src="img/pop_btn_close.gif" alt="close" /></a></span></div>
@@ -315,6 +307,7 @@
 
 <!--@if($act!='procWidgetGenerateCodeInPage')-->
 <script type="text/javascript">
+	var g_mid = '{$mid}';
     var g_use_point = '{$module_info->use_point}';
 	var g_sms_point = 0;
 	var g_lms_point = 0;

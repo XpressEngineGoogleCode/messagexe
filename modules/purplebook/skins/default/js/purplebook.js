@@ -3355,6 +3355,16 @@ function submit_messages() {
 
         // 특수문자창
         $('#btn_pop_chars','#smsMessage .left_button').click(function() {
+			var params = new Array();
+			params['g_mid'] = g_mid;
+            var response_tags = new Array('error','message','data');
+            exec_xml('purplebook', 'getSpecialChar', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery("#layer_chars").html(ret_obj["data"]);
+				}
+            }, response_tags);
+
             $obj = $('#layer_chars','#smsMessage');
             show_and_hide($obj);
             return false;
@@ -3610,3 +3620,20 @@ function submit_messages() {
         });
     });
 }) (jQuery);
+
+function opwer(){
+		alert("WQEQWE");
+		console.log(jQuery(this));
+
+		$obj = jQuery(this).parents('[id^=layer_]');
+
+		consloe.log($obj);
+		
+		show_and_hide($obj);
+		return false;
+	}
+
+jQuery(document).ready(function (){
+	
+
+});
