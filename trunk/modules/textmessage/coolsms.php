@@ -11,7 +11,7 @@ class coolsms
 {
 	private $api_key;
 	private	$api_secret;
-	private $host = "http://api.coolsms.co.kr";
+	private $host = "https://api.coolsms.co.kr";
 	private $version = 1;
 	private $path;
 	private $method;
@@ -61,7 +61,7 @@ class coolsms
 		if(curl_errno($ch))
 		{
 			//$this->setError('-1', curl_error($ch));
-			echo curl_error($ch);
+			echo "CURL_ERROR : ".curl_error($ch);
 		}
 		curl_close ($ch);
 	}
@@ -74,7 +74,7 @@ class coolsms
 			foreach($options as $key => $val)
 			{
 				if($key != "image")
-					$this->content[$key] = $val;
+					$this->content[$key] = sprintf("\0%s", $val);
 				else
 					$this->content[$key] = "@".realpath("./$val");
 			}
