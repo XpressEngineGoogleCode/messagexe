@@ -9,15 +9,15 @@ h2.au_h1 .au_title { border-bottom:4px solid #5d9ade; font-size:20px !important;
 div.au_container { margin-bottom:20px; width:100%; font-size:13px; }
 div.au_container dl.container_dl { background:#fdfdfd; margin-bottom:10px; line-height:4em; overflow:hidden; }
 div.au_container dl.container_dl dt { width:18%; float:left; padding:0 20px; text-align:right; background:#c9ced2; font-size:18px; font-weight:bold; color:#fff; }
-div.au_container dl.container_dl dd { position:relative; }
-div.au_container dl.container_dl dd select { border:0; width:79%; background:#fdfdfd; font:normal 15px 'NanumGothic'; padding:10px; color:#666; } 
-div.au_container dl.container_dl dd input { border:0; width:70%; font:normal 15px 'NanumGothic'; padding:14px; color:#666 !important; background:#fdfdfd;} 
+div.au_container dl.container_dl dd { position:relative; margin-left:23%; }
+div.au_container dl.container_dl dd select { border:0; width:96%; background:#fdfdfd; font:normal 15px 'NanumGothic'; padding:10px; color:#666; outline:none; } 
+div.au_container dl.container_dl dd input { border:0; width:96%; position:absolute; font:normal 15px 'NanumGothic'; padding:14px; color:#666 !important; background:#fdfdfd; outline:none; } 
 div.au_container dl.container_dl dd a.btn_wrap { color:#fff !important; font-weight:bold; width:20%; text-align:center; font-size:13px; position:absolute; right:0; text-decoration:none; } 
 div.au_container dl.container_dl dd a.submit { width:10%; }
 
 /* button_background */
 .au_blue { background:#45a9e7; }
-.au_gray { background:#5e5e5e; }
+.au_gray { background:#5e5e5e; padding:0 10px; }
 .au_green { background:#83c897; }
 .reget { background:#eb9001; }
 .au_pink { background:#ec6045; }
