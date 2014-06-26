@@ -2739,7 +2739,7 @@ function submit_messages() {
 
         $('.phonescreen').autoResize({extraSpace:10, animate:false});
 
-        $('#btnAddAddress').click(function() {
+        $('#btnAddAddress').live('click',function() {
             append_address();
             return false;
         });
@@ -2775,14 +2775,47 @@ function submit_messages() {
         });
 
         $('.pop_append','#smsPurplebook').click(function() {
-            $obj = $('#layer_append','#smsPurplebook');
-            show_and_hide($obj,null,{show_func:function(){$('#inputPurplebookName',$obj).focus();}});
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_append';
+
+			layer_id = '#layer_append';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					$obj = jQuery(layer_id);
+
+					show_and_hide($obj,null,{show_func:function(){$('#inputPurplebookName',$obj).focus();}});
+				}
+			}, response_tags);
+			
             return false;
         });
 
         $('.pop_recent','#smsPurplebook').click(function() {
-            $obj = $('#layer_recent','#smsPurplebook');
-            show_and_hide($obj,null,{show_func:pb_load_recent_numbers});
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_recent';
+
+			layer_id = '#layer_recent';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					$obj = jQuery(layer_id,'#smsPurplebook');
+					show_and_hide($obj,null,{show_func:pb_load_recent_numbers});
+				}
+			}, response_tags);
+			
             return false;
         });
 
@@ -3139,8 +3172,25 @@ function submit_messages() {
 
         // 대량추가 선택
         $('#smsPurplebookAddBulk').click(function() {
-            $obj = $('#layer_mass','#smsPurplebook');
-            show_and_hide($obj);
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_mass';
+
+			layer_id = '#layer_mass';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+
+					$obj = jQuery(layer_id,'#smsPurplebook');
+					show_and_hide($obj);
+				}
+			}, response_tags);
+			
             return false;
         });
 
@@ -3202,8 +3252,25 @@ function submit_messages() {
 
         // 예약전송 눌렀을 때
         $('#btnSimplePhoneReserv','#smsMessage').click(function() {
-            $obj = $('#layer_reserv','#smsMessage');
-            show_and_hide($obj,null,{uppermost:false});
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_reserv';
+
+			layer_id = '#layer_reserv';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+
+					$obj = jQuery(layer_id,'#smsMessage');
+					show_and_hide($obj,null,{uppermost:false});
+				}
+			}, response_tags);
+			
             return false;
         });
 
@@ -3217,7 +3284,7 @@ function submit_messages() {
         });
 
         // 대량추가::점검하기
-        $('#btnVerifyList').click(function() {
+        $('#btnVerifyList').live('click',function() {
             var obj = cellphone_generalize($('#smsPurplebookBulkList').val());
             $('#smsPurplebookBulkList').val(obj.text);
             $('span.total', '#layer_mass').text('총 ' + obj.count + ' 명');
@@ -3225,18 +3292,18 @@ function submit_messages() {
         });
 
         // 대량추가
-        $('#btnAddList','#smsPurplebook').click(function() {
+        $('#btnAddList','#smsPurplebook').live('click',function() {
             alert(addRecipient($('#smsPurplebookBulkList').val()) + " 명을 추가했습니다.");
             update_screen();
             return false;
         });
         // 비우기
-        $('#btnEmptyList').click(function() {
+        $('#btnEmptyList').live('click',function() {
             $('#smsPurplebookBulkList').val('');
             return false;
         });
 
-        $('#smsPurplebookBulkList').click(function() {
+        $('#smsPurplebookBulkList').live('click',function() {
             if (!$(this).attr('firstclick'))
             {
                 $(this).val('');
@@ -3255,8 +3322,24 @@ function submit_messages() {
 
         // 중복번호 버튼
         $('.pop_overlap','#smsPurplebook').click(function() {
-            $obj = $('#layer_overlap','#smsPurplebook');
-            show_and_hide($obj);
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_overlap';
+
+			layer_id = '#layer_overlap';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					$obj = jQuery(layer_id,'#smsPurplebook');
+					show_and_hide($obj);
+				}
+			}, response_tags);
+			
             return false;
         });
 
@@ -3331,10 +3414,27 @@ function submit_messages() {
 
         // 저장된 입력내용
         $('.pop_messages','#smsPurplebookContentInput').live('click',function() {
-            $obj = $('#layer_messages','#smsMessage');
-            $obj.css('left', $(this).position().left);
-            set_active_textarea($(this).parent().next().children('textarea'));
-            show_and_hide($obj, null, {show_func:pb_load_saved_messages});
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_messages';
+
+			layer_id = '#layer_messages';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					$obj = jQuery(layer_id,'#smsMessage');
+
+					$obj.css('left', $('#layer_messages').position().left);
+					set_active_textarea($('#layer_messages').parent().next().children('textarea'));
+					show_and_hide($obj, null, {show_func:pb_load_saved_messages});
+				}
+			}, response_tags);
+			
             return false;
         });
 
@@ -3346,40 +3446,107 @@ function submit_messages() {
             show_and_hide($layer);
         });
 
+		// 머지기능
+        $('.pop_merge','#smsPurplebookContentInput').live('click',function() {
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_merge';
+
+			layer_id = '#layer_merge';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					$obj = jQuery(layer_id,'#smsMessage');
+
+					show_and_hide($obj, null, {show_func:pb_load_saved_messages});
+				}
+			}, response_tags);
+			
+            return false;
+        });
+
         // 발신번호관리창
         $('.btn_show_layer','#smsMessage .right_button').click(function() {
-            $obj = $('#layer_sendid','#smsMessage');
-            show_and_hide($obj, null, {show_func:refreshCallbackList});
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_sendid';
+
+			layer_id = '#layer_sendid';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+
+					$obj = jQuery(layer_id,'#smsMessage');
+					
+					show_and_hide($obj, null, {show_func:refreshCallbackList});
+				}
+			}, response_tags);
+
             return false;
         });
 
         // 특수문자창
         $('#btn_pop_chars','#smsMessage .left_button').click(function() {
 			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
 			params['g_mid'] = g_mid;
-            var response_tags = new Array('error','message','data');
-            exec_xml('purplebook', 'getSpecialChar', params, function(ret_obj) {
+			params['layer_name'] = 'layer_chars';
+
+			layer_id = '#layer_chars';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
 				if(ret_obj["data"])
 				{
-					jQuery("#layer_chars").html(ret_obj["data"]);
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					$obj = jQuery(layer_id,'#smsMessage');
+					show_and_hide($obj);
 				}
-            }, response_tags);
-
-            $obj = $('#layer_chars','#smsMessage');
-            show_and_hide($obj);
+			}, response_tags);
+			
             return false;
         });
 
         // 사용법 레이어
         $('#btn_pop_manual','#smsPurplebook').click(function() {
-            $obj = $('#layer_manual','#smsPurplebook');
-            show_and_hide($obj,null,{show_func:function(){
-                if(!$obj.attr('first_show')) {
-                    $('.bodyArea','#smsPurplebook #layer_manual').html('<iframe src="' + g_manual_url + '" frameborder="0" style="border:0 none; width:100%; height:100%; padding:0; margin:0;"></iframe>');
-                    $obj.attr('first_show',true);
-                }
-            }});
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_manual';
+
+			layer_id = '#layer_manual';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+
+					$obj = jQuery(layer_id);
+
+					show_and_hide($obj,null,{show_func:function(){
+						if(!$obj.attr('first_show')) {
+							$('.bodyArea','#smsPurplebook #layer_manual').html('<iframe src="' + g_manual_url + '" frameborder="0" style="border:0 none; width:100%; height:100%; padding:0; margin:0;"></iframe>');
+							$obj.attr('first_show',true);
+						}
+					}});
+				}
+			}, response_tags);
+
             return false;
+
         });
 
         // 휴지통 비우기
@@ -3389,7 +3556,7 @@ function submit_messages() {
         });
 
         // 예약전송
-        $('#btn_reserv_send','#smsMessage').click(function() {
+        $('#btn_reserv_send','#smsMessage').live('click',function() {
             if (!g_is_logged) {
                 alert(getLang('msg_login_required'));
                 return false;
@@ -3409,19 +3576,36 @@ function submit_messages() {
 
         // 사진추가
         $('#btn_attach_pic','#smsMessage').click(function() {
-            $obj = $('#layer_upload','#smsMessage');
-            show_and_hide($obj);
-            var url = request_uri
-                .setQuery('module', 'purplebook')
-                .setQuery('act', 'dispPurplebookFilePicker')
-                .setQuery('input', 'file_srl')
-                .setQuery('filter', 'jpg,gif,png,jpeg');
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
 
-            XE.filepicker.selected = jQuery('[name=file_srl]', '#smsMessage').get(0);
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_upload';
 
-            $('.bodyArea','#smsMessage #layer_upload').html('<iframe src="' + url + '" frameborder="0" style="border:0 none; width:100%; height:100%; padding:0; margin:0;"></iframe>');
+			layer_id = '#layer_upload';
 
-                /*
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+
+					$obj = jQuery(layer_id,'#smsMessage');
+
+					var url = request_uri
+						.setQuery('module', 'purplebook')
+						.setQuery('act', 'dispPurplebookFilePicker')
+						.setQuery('input', 'file_srl')
+						.setQuery('filter', 'jpg,gif,png,jpeg');
+
+					XE.filepicker.selected = jQuery('[name=file_srl]', '#smsMessage').get(0);
+
+					$('.bodyArea','#smsMessage #layer_upload').html('<iframe src="' + url + '" frameborder="0" style="border:0 none; width:100%; height:100%; padding:0; margin:0;"></iframe>');
+
+					show_and_hide($obj);
+				}
+			}, response_tags);
+			/*
             XE.filepicker.open(jQuery('[name=file_srl]', '#smsMessage').get(0), '');
             */
 
@@ -3621,19 +3805,10 @@ function submit_messages() {
     });
 }) (jQuery);
 
-function opwer(){
-		alert("WQEQWE");
-		console.log(jQuery(this));
-
-		$obj = jQuery(this).parents('[id^=layer_]');
-
-		consloe.log($obj);
-		
-		show_and_hide($obj);
-		return false;
-	}
-
-jQuery(document).ready(function (){
-	
-
-});
+function closeLayer(id)
+{
+	jQuery(id).html('');
+	$obj = jQuery(id);
+	show_and_hide($obj);
+	return false;
+}

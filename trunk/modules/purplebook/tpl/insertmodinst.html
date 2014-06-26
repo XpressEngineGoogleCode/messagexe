@@ -74,6 +74,17 @@
 				<p id="manual_url_help" class="x_help-block" hidden>미입력시 다음의 URL을 사용합니다. http://www.coolsms.co.kr/purplebook_manual</p>
 			</div>
 		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="disable_strip">특수문자디코딩</label>
+			<div class="x_controls">
+				<select name="disable_strip">
+				<option value="N" selected="selected"|cond="$module_info->disable_strip=='N'">미사용</option>
+				<option value="Y" selected="selected"|cond="$module_info->disable_strip=='Y'">사용</option>
+				</select>
+				<a href="#use_disable_strip" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="use_disable_strip" class="x_help-block" hidden>문자내용이 비정상적으로 수신될때 이 항목을 '사용'으로 설정해 주세요.</p>
+			</div>
+		</div>
 	</section>
 	<section class="section">
 		<h2 class="h2">포인트 설정</h2>

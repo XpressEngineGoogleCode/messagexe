@@ -564,7 +564,7 @@ class purplebookModel extends purplebook
 	function getPurplebookLatestNumbers()
 	{
 		$logged_info = Context::get('logged_info');
-		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'login_required');
+		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'msg_login_required');
 
 		$args->member_srl = $logged_info->member_srl;
 		$output = executeQueryArray('purplebook.getRecentReceivers', $args);
@@ -587,7 +587,7 @@ class purplebookModel extends purplebook
 	function getPurplebookSavedMessages()
 	{
 		$logged_info = Context::get('logged_info');
-		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'login_required');
+		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'msg_login_required');
 
 		$args->member_srl = $logged_info->member_srl;
 		$output = executeQueryArray('purplebook.getKeepingInfo', $args);
@@ -609,7 +609,7 @@ class purplebookModel extends purplebook
 	function getPurplebookSearchFolder()
 	{
 		$logged_info = Context::get('logged_info');
-		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'login_required');
+		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'msg_login_required');
 
 		$search = Context::get('search');
 		$args->member_srl = $logged_info->member_srl;
@@ -632,25 +632,25 @@ class purplebookModel extends purplebook
 	}
 
 
-	// 특수문자 레이어
-	function getSpecialChar()
+	// 레이어 템플릿 가져오기
+	function getPopupLayer()
 	{
+		$logged_info = Context::get('logged_info');
+		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'msg_login_required');
+
 		$oModuleModel = &getModel("module");
 		$oTemplate = &TemplateHandler::getInstance();
+
+		if(!Context::get('g_mid') || !Context::get('layer_name')) return false;
 
 		$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
 
 		$path = $this->module_path."skins/".$module_info->skin;
-		$file_name = "layer_chars.html";
+		$file_name = Context::get('layer_name').".html";
 
 		$data = $oTemplate->compile($path, $file_name);
 
 		$this->add('data', $data);
-
-		debugPrint("HEY-1");
-		debugPrint($path);
-		debugPrint($file_name);
-		debugPrint($data);
 	}
 }
 /* End of file purplebook.model.php */

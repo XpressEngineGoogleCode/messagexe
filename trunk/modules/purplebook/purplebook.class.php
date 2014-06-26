@@ -88,14 +88,19 @@ class purplebook extends ModuleObject
     }
 
     function getJSON($name)
-    {
+	{
+		$oModuleModel = &getModel('module');
+
+		$module_srl = Context::get('module_srl');
+		$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
+
         // 1.1.2 버젼부터는 get_magic_quotes_gpc에 따라서 On이면 addslashes된 상태이고 Off이면 raw상태로 넘어온다.
-        if(get_magic_quotes_gpc())
-        {
+        if(get_magic_quotes_gpc() && $module_info->disable_strip != 'Y')
+		{
             $json_string = stripslashes(Context::get($name));
         }
         else
-        {
+		{
             $json_string = Context::get($name);
         }
         require_once('JSON.php');
