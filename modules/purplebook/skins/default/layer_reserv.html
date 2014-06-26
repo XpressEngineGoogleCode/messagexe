@@ -1,0 +1,22 @@
+<div class="title"><p>예약전송하기</p><span class="btn_closex" onClick="closeLayer('#layer_reserv')"><a href="#"><img class="pngFix" src="img/pop_btn_close.gif" alt="close" /></a></span></div>
+<div class="bodyArea">
+<!--  <div class="datepickup">
+	<div id="smsReservationInputDate"></div>
+</div> -->
+<div class="reservtime">
+	<input id="inputReservationDate" class="inputTypeText" value="{zdate('Ymd', date('Y-m-d'))}" /><br />
+	<select id="inputReservationHour">
+		<!--@for($i = 0;$i < 24; $i++)-->
+		<option value="{$i}"<!--@if(intval(date('H'))==$i)--> selected="selected"<!--@end-->>{$i}</option>
+		<!--@end-->
+	</select>시 
+	<select id="inputReservationMinute">
+		<!--@for($i = 0;$i < 60; $i++)-->
+		<option value="{$i}"<!--@if(intval(date('i'))==$i)--> selected="selected"<!--@end-->>{$i}</option>
+		<!--@end-->
+	</select>분
+</div>
+<span class="buts">
+	<a id="btn_reserv_send" href="#"><img src="img/btn_reserv_send.gif" alt="예약전송" /></a>
+</span>
+</div>

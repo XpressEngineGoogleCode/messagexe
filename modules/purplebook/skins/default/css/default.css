@@ -150,7 +150,7 @@ span.checkbox.on { background-position:0px -13px; }
 .purplebook_left #layer_manual .bodyArea { height:180px;}
 
 /* layer popup (add address) */
-.purplebook_left #layer_append { bottom:40px; right:15px; width:236px; height:80px; }
+.purplebook_left #layer_append { bottom:40px; right:15px; width:236px; height:100px; }
 .purplebook_left #layer_append .bodyArea #inputPurplebookName { width:60px; }
 .purplebook_left #layer_append .bodyArea #inputPurplebookPhone { width:90px; margin-left:2px; }
 .purplebook_left #layer_append .bodyArea a#btnAddAddress img { position:relative; top:5px; left:2px;}
@@ -313,3 +313,8 @@ span.checkbox.on { background-position:0px -13px; }
 #smsMessage #layer_status { top:-190px; width:226px; height:180px; }
 #smsMessage #layer_status .bodyArea { height:100px; }
 #smsMessage #layer_status .error_code { color:red; }
+
+
+#smsMessage .center_display .top_btn button.pop_merge { float:left; display:block; margin-left:3px; width:83px; height:37px; background:url(../img/folderopen.png) no-repeat; border: 0 none; text-indent:-1000em; cursor:pointer;}
+
+#smsMessage #layer_merge { top:-100px; }
