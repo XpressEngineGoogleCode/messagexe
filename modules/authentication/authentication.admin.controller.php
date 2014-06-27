@@ -34,6 +34,11 @@ class authenticationAdminController extends authentication
 			unset($args->agreement);
 		}
 
+		if(!$args->sender_no) $args->sender_no = NULL;
+		if(!$args->message_content) $args->message_content = NULL;
+		if(!$args->list) $args->list = NULL;
+		if(!$args->cellphone_fieldname) $args->cellphone_fieldname = NULL;
+
 		// save module configuration.
 		$oModuleController = getController('module');
 		$output = $oModuleController->updateModuleConfig('authentication', $args);
@@ -48,6 +53,9 @@ class authenticationAdminController extends authentication
 	{
 		$args = Context::getRequestVars();
 		$oModuleController = getController('module');
+
+		if(!$args->width) $args->width = NULL;
+
 		$output = $oModuleController->updateModuleConfig('authentication', $args);
 
 		$this->setMessage('success_saved');
