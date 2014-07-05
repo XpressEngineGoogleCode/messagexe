@@ -66,7 +66,7 @@ class textmessageModel extends textmessage
 	function &getCoolSMS($basecamp=false) 
 	{
 		$config = $this->getModuleConfig();
-		if (!class_exists('coolsms')) require_once($this->module_path.'coolsms.php');
+		if (!class_exists('coolsms')) require_once('coolsms.php');
 		
 		if($basecamp)
 			$sms = new coolsms($config->cs_user_id, $config->cs_password, TRUE);
