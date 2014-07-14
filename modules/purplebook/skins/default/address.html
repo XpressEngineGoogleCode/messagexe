@@ -116,6 +116,7 @@
 		<div class="add_list">
 			<input type="text" id="inputDirectName" class="inputTypeText" maxlength="10" title="이름" value="" />
             <input type="text" id="inputDirectNumber" maxlength="20" class="inputTypeText" title="폰번호" value="" />
+
             <button class="btn_append" id="btnDirectAdd" title="받는사람에 추가">추가</button>
             <button class="pop_recent" title="최근입력 번호목록">최근입력번호</button>
 		</div>
@@ -188,6 +189,8 @@
 
     <div id="layer_messages" class="layer draggable border-radius8"></div><!-- 발신번호관리 레이어 -->
 	<div id="layer_merge" class="layer draggable border-radius8"></div><!-- 머지기능관리 레이어 -->
+	
+
 
 	<div class="right_button">
         <div class="add_info"><span id="projectedType">SMS</span> <span id="projectedCount">0</span>건, 소요비용 <span id="projectedCost">0</span>원</div>
@@ -223,6 +226,9 @@
 	</div><!-- 오른쪽 버튼 끝 -->
 </div>
 <div id="smsMessage_bottom" class="pngFix"></div>
+
+<button id="full_address_button" >전체보기</button>
+<div id="full_address"></div> <!-- 전체보기 컨텐츠 -->
 
 <!--@if($act!='procWidgetGenerateCodeInPage')-->
 <script type="text/javascript">

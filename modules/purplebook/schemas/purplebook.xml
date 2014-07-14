@@ -6,6 +6,9 @@
 	<column name="node_name" type="varchar" size="80" notnull="notnull" index="idx_node_name" />
 	<column name="node_type" type="char" size="1" notnull="notnull" />
 	<column name="phone_num" type="varchar" size="40" notnull="notnull" index="idx_phone_num" />
+	<column name="memo1" type="varchar" size="250" index="idx_memo1" />
+	<column name="memo2" type="varchar" size="250" index="idx_memo2" />
+	<column name="memo3" type="varchar" size="250" index="idx_memo3" />
     <column name="subfolder" type="number" size="11" notnull="notnull" default="0" />
     <column name="subnode" type="number" size="11" notnull="notnull" default="0" />
     <column name="shared" type="number" size="11" notnull="notnull" default="0" />

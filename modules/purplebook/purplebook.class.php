@@ -35,7 +35,12 @@ class purplebook extends ModuleObject
     {
         $oDB = &DB::getInstance();
         $oModuleModel = &getModel('module');
-        $oModuleController = &getController('module');
+		$oModuleController = &getController('module');
+
+		if (!$oDB->isColumnExists('purplebook','memo1')) return true;
+		if (!$oDB->isColumnExists('purplebook','memo2')) return true;
+		if (!$oDB->isColumnExists('purplebook','memo3')) return true;
+
         return false;
     }
 
@@ -46,7 +51,20 @@ class purplebook extends ModuleObject
     {
         $oDB = &DB::getInstance();
         $oModuleModel = &getModel('module');
-        $oModuleController = &getController('module');
+		$oModuleController = &getController('module');
+
+		if (!$oDB->isColumnExists('purplebook','memo1')) 
+		{
+			$oDB->addColumn('purplebook','memo1', 'varchar','250');
+		}
+		if (!$oDB->isColumnExists('purplebook','memo2')) 
+		{
+			$oDB->addColumn('purplebook','memo2', 'varchar','250');
+		}
+		if (!$oDB->isColumnExists('purplebook','memo3')) 
+		{
+			$oDB->addColumn('purplebook','memo3', 'varchar','250');
+		}
     }
 
     /**
