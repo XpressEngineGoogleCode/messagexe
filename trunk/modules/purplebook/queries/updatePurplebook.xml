@@ -7,6 +7,9 @@
 		<column name="node_name" var="node_name" />
 		<column name="node_type" var="node_type" />
 		<column name="phone_num" var="phone_num" />
+		<column name="memo1" var="memo1" />
+		<column name="memo2" var="memo2" />
+		<column name="memo3" var="memo3" />
 	</columns>
 	<conditions>
 		<condition operation="equal" column="node_id" var="node_id" notnull="notnull" />

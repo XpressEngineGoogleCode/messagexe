@@ -1695,15 +1695,26 @@ function updatePurplebookListCount(total_count)
 {
      var total = jQuery('li', '#smsPurplebookList').size();
 
-     if (total_count)
-        jQuery('#smsPurplebookListCount').text(' (' + total + ' 명 / 총 ' + total_count + ' 명)');
-     else
-        jQuery('#smsPurplebookListCount').text(' (' + total + ' 명)');
+     if (total_count) jQuery('#smsPurplebookListCount').text(' (' + total + ' 명 / 총 ' + total_count + ' 명)');
+     else jQuery('#smsPurplebookListCount').text(' (' + total + ' 명)');
+}
+
+function updatePurplebookListCountFull(total_count)
+{
+     var total = jQuery('#full_address_list tr').length;
+
+     if (total_count) jQuery('#smsPurplebookListCountFull').text(' (' + total + ' 명 / 총 ' + total_count + ' 명)');
+     else jQuery('#smsPurplebookListCountFull').text(' (' + total + ' 명)');
 }
 
 function add_to_list(node_id, node_name, phone_num)
 {
         jQuery('#smsPurplebookList').append('<li node_id="' + node_id + '" class="jstree-draggable"><span class="checkbox"></span><span class="nodeName" title="' + node_name + '">' + node_name + '</span><span class="nodePhone">' + getSimpleDashTel(phone_num) + '</span></li>');
+}
+
+function add_to_list_full(node_id, node_name, phone_num, memo1, memo2, memo3)
+{
+	jQuery('#full_address_list').append('<tr><td node_id="' + node_id + '" class="jstree-draggable"><span class="checkbox"></span></td><td><span class="nodeName" title="' + node_name + '">' + node_name + '</span></td><td><span class="nodePhone">' + getSimpleDashTel(phone_num) + '</span></td><td><span>'+ memo1 +'</span></td><td><span>'+ memo2 +'</span></td><td><span>'+ memo3 +'</span></td></tr>');
 }
 
 function completePurplebookSearch(ret_obj, response_tags) {
@@ -1829,6 +1840,7 @@ function pb_load_list(node) {
                 updatePurplebookListCount(data.total_count);
             else
                 updatePurplebookListCount();
+
             p_hide_waiting_message();
         }
         , error : function (xhttp, textStatus, errorThrown) { 
@@ -1837,6 +1849,63 @@ function pb_load_list(node) {
         }
     });
 }
+
+function pb_load_list_full(node) {
+    if (typeof(node)=='undefined') {
+        var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
+        if (selected_folders.length > 0) {
+            node = jQuery(selected_folders[0]);
+        }
+    }
+
+    var req_node_id = '';
+    if (typeof(node)=='string') {
+        req_node_id = node;
+        node = jQuery('#'+req_node_id);
+    } else {
+        req_node_id = node.attr('node_id');
+    }
+
+    jQuery.ajax({
+        type : "POST"
+        , contentType: "application/json; charset=utf-8"
+        , url : "./"
+        , data : { 
+                    module : "purplebook"
+                    , act : "getPurplebookList"
+                    , node_id : req_node_id
+                    , node_type : '2'
+                 }
+        , dataType : "json"
+        , success : function (data) {
+            if (data.error == -1)
+            {
+               alert(data.message);
+               return -1;
+            }
+            jQuery('#full_address_list').html('');
+            for (i = 0; i < data.data.length; i++)
+            {
+                node_id = data.data[i].attr.node_id;
+                node_name = data.data[i].attr.node_name;
+                phone_num = data.data[i].attr.phone_num;
+				memo1 = data.data[i].attr.memo1;
+				memo2 = data.data[i].attr.memo2;
+				memo3 = data.data[i].attr.memo3;
+                add_to_list_full(node_id, node_name, phone_num, memo1, memo2, memo3);
+            }
+
+            //jQuery('#btnPurplebookExcelDownload').attr('href', data.base_url + '?module=purplebook&act=dispPurplebookPurplebookDownload&node_type=2&node_id=' + req_node_id);
+
+            if (data.total_page > 1) updatePurplebookListCountFull(data.total_count);
+            else updatePurplebookListCountFull();
+        }
+        , error : function (xhttp, textStatus, errorThrown) { 
+            alert(errorThrown + " " + textStatus); 
+        }
+    });
+}
+
 
 function purplebook_move_node(node_id, dest_id) {
     jQuery.ajax({
@@ -2663,66 +2732,102 @@ function submit_messages() {
         }, 500);
     }
 
-    function append_address()
+    function append_address(full_address)
     {
-            var selected_folders = $('#smsPurplebookTree').jstree('get_selected');
-            var node_name = $('#inputPurplebookName').val();
-            var phone_num = $('#inputPurplebookPhone').val();
+		var selected_folders = $('#smsPurplebookTree').jstree('get_selected');
+		var node_name = $('#inputPurplebookName').val();
+		var phone_num = $('#inputPurplebookPhone').val();
+		var memo1 = $('#inputPurplebookMemo1').val();
+		var memo2 = $('#inputPurplebookMemo2').val();
+		var memo3 = $('#inputPurplebookMemo3').val();
 
-            if (selected_folders.length != 1) {
-                alert('선택된 폴더가 없습니다.');
-                return;
-            }
+		// 전체보기 페이지에서 추가할시 이름,번호,메모1,메모2,메모3을 전체보기 div에서 가져온다
+		if(typeof(full_address) != 'undefined')
+		{
+			var node_name = $('#inputFullAddressName').val();
+			var phone_num = $('#inputFullAddressNumber').val();
+			var memo1 = $('#inputFullAddressMemo1').val();
+			var memo2 = $('#inputFullAddressMemo2').val();
+			var memo3 = $('#inputFullAddressMemo3').val();
+		}
 
-            var node = $(selected_folders[0]);
+		if (selected_folders.length != 1) {
+			alert('선택된 폴더가 없습니다.');
+			return;
+		}
 
-            if (node_name.length == 0) {
-                alert('이름을 입력하세요.');
-                $('#inputPurplebookName').focus();
-                return;
-            }
-            if (phone_num.length == 0) {
-                alert('폰번호를 입력하세요.');
-                $('#inputPurplebookPhone').focus();
-                return;
-            }
+		var node = $(selected_folders[0]);
 
-            if(!checkPhoneFormat(phone_num)) {
-                if (!confirm("유효하지 않은 전화번호입니다 (" + phone_num + ")\n계속 진행하시겠습니까?"))
-			    return false;
-		    }
+		if (node_name.length == 0) {
+			alert('이름을 입력하세요.');
+			$('#inputPurplebookName').focus();
+			return;
+		}
+		if (phone_num.length == 0) {
+			alert('폰번호를 입력하세요.');
+			$('#inputPurplebookPhone').focus();
+			return;
+		}
 
-            $.ajax({
-                type : "POST"
-                , contentType: "application/json; charset=utf-8"
-                , url : "./"
-                , data : { 
-                            module : "purplebook"
-                            , act : "procPurplebookAddNode"
-                            , parent_node : node.attr('node_id')
-                            , parent_route : node.attr('node_route')
-                            , node_name : node_name
-                            , node_type : '2'
-                            , phone_num : phone_num
-                         }
-                , dataType : "json"
-                , success : function (data) {
-                    if (data.error == -1)
-                    {
-                        alert(data.message);
-                        return;
-                    }
-                    add_to_list(data.node_id, node_name, phone_num);
+		if(!checkPhoneFormat(phone_num)) {
+			if (!confirm("유효하지 않은 전화번호입니다 (" + phone_num + ")\n계속 진행하시겠습니까?"))
+			return false;
+		}
 
-                    $('#inputPurplebookPhone').val('');
-                    $('#inputPurplebookName').val('');
-                    $('#inputPurplebookName').focus();
-                    updatePurplebookListCount();
-                }
-                , error : function (xhttp, textStatus, errorThrown) { 
-                    alert(errorThrown + " " + textStatus); 
-                }
-            });
+		$.ajax({
+			type : "POST"
+			, contentType: "application/json; charset=utf-8"
+			, url : "./"
+			, data : { 
+						module : "purplebook"
+						, act : "procPurplebookAddNode"
+						, parent_node : node.attr('node_id')
+						, parent_route : node.attr('node_route')
+						, node_name : node_name
+						, node_type : '2'
+						, phone_num : phone_num
+						, memo1 : memo1
+						, memo2 : memo2
+						, memo3 : memo3
+					 }
+			, dataType : "json"
+			, success : function (data) {
+				if (data.error == -1)
+				{
+					alert(data.message);
+					return;
+				}
+				add_to_list(data.node_id, node_name, phone_num);
+
+				// 전체보기페이지에서 처리시
+				if(full_address != null) 
+				{
+					add_to_list_full(data.node_id, node_name, phone_num, memo1, memo2, memo3);
+
+					$('#inputFullAddressPhone').val('');
+					$('#inputFullAddressName').val('');
+					$('#inputFullAddressMemo1').val('');
+					$('#inputFullAddressMemo2').val('');
+					$('#inputFullAddressMemo3').val('');
+					$('#inputFullAddressName').focus();
+
+					updatePurplebookListCountFull();
+				}
+				else
+				{
+					$('#inputPurplebookNumber').val('');
+					$('#inputPurplebookName').val('');
+					$('#inputPurplebookMemo1').val('');
+					$('#inputPurplebookMemo2').val('');
+					$('#inputPurplebookMemo3').val('');
+					$('#inputPurplebookName').focus();
+				}
+				updatePurplebookListCount();
+			}
+			, error : function (xhttp, textStatus, errorThrown) { 
+				alert(errorThrown + " " + textStatus); 
+			}
+		});
     }
 
 
@@ -2739,10 +2844,59 @@ function submit_messages() {
 
         $('.phonescreen').autoResize({extraSpace:10, animate:false});
 
+		// layer_append.html에서 주소록에 명단 추가
         $('#btnAddAddress').live('click',function() {
             append_address();
             return false;
         });
+
+		// full_address.html에서 주소록에 명단 추가
+		$('#btnAddFullAddress').live('click',function() {
+            append_address('full_address');
+            return false;
+        });
+
+		// full_address.html에서 엑셀로 주소록에 명단 추가
+		$('#btnAddFullAddressExcel').live('click',function (){
+			var selected_folders = $('#smsPurplebookTree').jstree('get_selected');
+            if (selected_folders.length != 1) {
+                alert('선택된 폴더가 없습니다.');
+                return;
+            }
+
+			var node = $(selected_folders[0]);
+
+			// set data
+			$("#excel_parent_node").val(node.attr('node_id'));
+			$("#excel_node_id").val(node.attr('node_route'));
+			$("#excel_node_name").val(node.attr('node_name'));
+			$("#excel_node_type").val('2');
+
+			$("#add_address_excel_form").ajaxSubmit({
+				dataType : 'json',
+				success : function(data) {
+					// procPurplebookExcelLoad error 발생시
+					if(data.error == -1) 
+					{
+						alert(data.message);
+						return;
+					}
+
+					// 화면에 업데이트된 리스트 추가
+					for (i = 0; i < data.list.length; i++)
+					{
+						add_to_list_full(data.list[i].node_id, data.list[i].node_name, data.list[i].phone_num, data.list[i].memo1, data.list[i].memo2, data.list[i].memo3);
+						add_to_list(data.list[i].node_id, data.list[i].node_name, data.list[i].phone_num);
+					}
+				},
+				error:function(request,status,error){
+					// ajaxSubmit 실패시 
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error+"\n"+"status:"+status);
+				}
+			});
+			return false;
+		});
+
 
         $('#btnPurplebookMemberAdd').click(function() {
             var selected_folders = $('#smsPurplebookTree').jstree("get_selected");
@@ -3050,6 +3204,20 @@ function submit_messages() {
                 $('.checkbox', 'ul#smsPurplebookList li').removeClass("on");
             }
         );
+
+		$('#smsPurplebookToggleListFull').live('click', function() {
+			if($(this).hasClass('on'))
+			{
+				$(this).removeClass("on");
+				$('.checkbox', '#full_address_list td').removeClass("on");
+			}
+			else
+			{
+				$(this).addClass("on");
+				$('.checkbox', '#full_address_list td').addClass("on");
+				return false;
+			}
+        });
 
         // refresh folder tree
         $('#smsPurplebookRefreshTree').click(function() {
@@ -3446,6 +3614,76 @@ function submit_messages() {
             show_and_hide($layer);
         });
 
+		// 창 리사이즈할때 마다 갱신
+		$(window).resize(function () {
+			if(jQuery('#full_address').css('display') == 'block') fullAddressSize();
+		});
+		 
+		// 스크롤할때마다 위치 갱신
+		$(window).scroll(function () {
+			if(jQuery('#full_address').css('display') == 'block') fullAddressSize(true);
+		});
+
+		// 폴더주소록 창 사이즈 구하기 
+		function fullAddressSize(size_change){
+			var dialHeight = $(document).height();
+			var dialWidth = $(window).width();
+
+			if(typeof(size_change) == 'undefined') $('#full_address').css('width',dialWidth);
+			else $('#full_address').css({'width':dialWidth,'height':dialHeight}); 
+
+			$('#full_address').css('top', '0');
+			$('#full_address').css('left', '0');
+			$('#full_address').css('position', 'absolute');
+		}
+
+		// 폴더주소록 보여주기&숨기기
+		function full_address_show()
+		{
+			$obj = jQuery("#full_address");
+			if($obj.css('display') == 'block') jQuery($obj.html(''));
+
+			if ($obj.css('display') == 'none') 
+			{
+				//$obj.css('display','block');
+				$obj.fadeIn(400);
+			}
+			else 
+			{
+				$obj.css('display','none');
+			}
+
+			$('body,html').animate({scrollTop: 0}, 300);
+		}
+
+		// 폴더주소록 전체보기
+		$('#full_address_button').live('click',function() {
+			fullAddressSize(); // fulle_address 창 사이즈구하기
+
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'full_address';
+
+			layer_id = '#full_address';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+
+					var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
+
+					if (selected_folders.length > 0) {
+						var node = jQuery(selected_folders[0]);
+						pb_load_list_full(node);
+					}
+					full_address_show();
+				}
+			}, response_tags);
+        });
+
 		// 머지기능
         $('.pop_merge','#smsPurplebookContentInput').live('click',function() {
 			var params = new Array();
@@ -3469,6 +3707,36 @@ function submit_messages() {
 			
             return false;
         });
+
+		/*
+		 * content에 text추가
+		 */
+		$('#merge1').live('click',function() {
+			insert_merge('{name}');
+        });
+		$('#merge2').live('click',function() {
+            insert_merge('{memo1}');
+        });
+		$('#merge3').live('click',function() {
+            insert_merge('{memo2}');
+        });
+		$('#merge4').live('click',function() {
+            insert_merge('{memo3}');
+        });
+
+		function insert_merge(merge)
+		{
+			$current = get_active_textarea();
+			text = $current.val();
+            $current.val(text + merge);
+			display_type_switch();
+			display_cost();
+			display_bytes();
+		}
+		/*
+		 * END
+		 */
+
 
         // 발신번호관리창
         $('.btn_show_layer','#smsMessage .right_button').click(function() {
@@ -3805,10 +4073,18 @@ function submit_messages() {
     });
 }) (jQuery);
 
+// popLayer 닫기
 function closeLayer(id)
 {
 	jQuery(id).html('');
 	$obj = jQuery(id);
 	show_and_hide($obj);
+	return false;
+}
+
+// 전체화면 닫기
+function closeFullAddress()
+{
+	jQuery('#full_address').css('display','none');
 	return false;
 }

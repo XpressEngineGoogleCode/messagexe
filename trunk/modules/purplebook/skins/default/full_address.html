@@ -1,0 +1,53 @@
+<script src="{getUrl()}modules/purplebook/skins/default/js/full_address.js"></script>
+<script src="{getUrl()}modules/purplebook/skins/default/js/jquery.form.js"></script>
+<link rel="stylesheet" href="{getUrl()}modules/purplebook/skins/default/css/full_address.css" />
+
+<div class="full_header">
+	<span class="btn_closex" onClick="closeFullAddress()"><a href="#"><img class="pngFix" src="img/pop_btn_close.gif" alt="close" /></a></span>
+	<div id="tab_add_address">
+		<ul>
+			<li><a href="#tab_add_address_direct">개별추가</a></li>
+			<li><a href="#tab_add_address_excel">엑셀로추가</a></li>
+		</ul>
+		<div class="full_address_tab_content">
+			<div id="tab_add_address_direct">
+				<input type="text" title="이름" id="inputFullAddressName" maxlength="10" value="" />
+				<input type="text" title="폰번호" id="inputFullAddressNumber" maxlength="20" value="" />
+				<input type="text" title="메모1" id="inputFullAddressMemo1" value="" />
+				<input type="text" title="메모2" id="inputFullAddressMemo2" value="" />
+				<input type="text" title="메모3" id="inputFullAddressMemo3" value="" />
+				<button id="btnAddFullAddress">추가</button>
+			</div>
+			<div id="tab_add_address_excel">
+				<form id="add_address_excel_form" enctype="multipart/form-data" method="POST" action="./">
+					<input name="module" type="hidden" value="{$module}" />
+					<input name="act" type="hidden" value="procPurplebookExcelLoad" />
+					<input type="file" id="inputFullAddressExcel" name="excel_file" />
+					<input type="hidden" id="excel_parent_node" name="parent_node" value="" />
+					<input type="hidden" id="excel_node_id" name="node_id" value="" />
+					<input type="hidden" id="excel_node_name" name="node_name" value="" />
+					<input type="hidden" id="excel_node_type" name="node_type" value="" />
+					<input type="submit" id="btnAddFullAddressExcel" value="등록" />
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="bodyArea">
+	받는사람수 : <span class="total" id="smsPurplebookListCountFull">(총 0/명)</span>
+	<table class="p_full_address_table">
+		<thead>
+			<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
+			<th>이름</th>
+			<th>전화번호</th>
+			<th>메모1</th>
+			<th>메모2</th>
+			<th>메모3</th>
+		</thead>
+		<tbody id="full_address_list">
+		</tbody>
+	</table>
+</div>
+
+

@@ -56,5 +56,7 @@
 		<action name="procPurplebookSaveMessage" type="controller" standalone="true" />
 		<action name="procPurplebookDeleteMessage" type="controller" standalone="true" />
 		<action name="procPurplebookPurplebookDownload" type="controller" standalone="true" method="GET|POST" />
+
+		<action name="procPurplebookExcelLoad" type="controller" stradalone="true" />
 	</actions>
 </module>

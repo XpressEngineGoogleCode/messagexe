@@ -13,5 +13,8 @@
 		<column name="subfolder" var="subfolder" default="0" />
 		<column name="subnode" var="subnode" default="0" />
 		<column name="regdate" var="regdate" default="curdate()" />
+		<column name="memo1" var="memo1" default="" />
+		<column name="memo2" var="memo2" default="" />
+		<column name="memo3" var="memo3" default="" />
 	</columns>
 </query>

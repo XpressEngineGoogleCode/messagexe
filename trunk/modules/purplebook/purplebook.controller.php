@@ -71,7 +71,11 @@ class purplebookController extends purplebook
 			$args->type = $row->msgtype;
 
 			// 문자창을 여러개를 동시에 보낼때 첫번째 문자 내용만 args->content에 저장한다.
-			if(!$args->content) $args->content = $row->text;
+			if(!$args->content)
+			{
+				$replace_text = str_replace('{name}', 'HEY!!', $row->text);
+				$args->content = $replace_text;
+			}
 
 			if($before_num != $row->recipient){
 				if($args_to) $args_to = $args_to . ', ' . $row->recipient;
@@ -110,16 +114,15 @@ class purplebookController extends purplebook
 		{
 			foreach($args_text as $key => $value){
 				$delay = $delay + 2;
+				$replace_text = str_replace('{name}', 'HEY!!', $value);
+
 				$args->extension[$key]->to = $args_to;
-				$args->extension[$key]->text = $value;
+				$args->extension[$key]->text = $replace_text;
 				$args->extension[$key]->delay = $delay;
 			}
 		}
-
 		$args->extension = json_encode($args->extension);
 
-		debugPrint("WHAT_!");
-		debugPrint($args);
 		// minus point
 		if($module_info->use_point=='Y')
 		{
@@ -647,6 +650,92 @@ class purplebookController extends purplebook
 		$this->add('node_name', $args->node_name);
 		if($args->node_type=='1') $this->add('rel','folder');
 	}
+
+
+
+	/**
+	 * @brief 전체보기창 Excel로 주소록에 추가
+	 **/
+	function procPurplebookExcelLoad()
+	{
+		$logged_info = Context::get('logged_info');
+		if(!$logged_info) return new Object(-1, 'msg_login_required');
+
+		// 강제적으로 요청을 JSON으로 한다.
+		Context::setRequestMethod("JSON");
+
+		require_once 'excel_reader2.php';
+
+		$vars = Context::getRequestVars();
+
+		$data = new Spreadsheet_Excel_Reader();
+		//$data->setOutputEncoding('CP949');
+		$data->read($vars->excel_file["tmp_name"]);
+
+		// numRows가 가로 numCols가 세로
+		for ($i = 1; $i <= $data->sheets[0]['numCols']; $i++) {
+			for ($j = 1; $j < $data->sheets[0]['numRows']; $j++) {
+				// 로드된 excel파일을 순서에 맞춰서 array로 정렬
+				$array_test[$data->sheets[0]['cells'][1][$i]][] = $data->sheets[0]['cells'][$j+1][$i];
+			}
+		}
+
+		// 타이틀이 하나라도 들어있지 않다면 리턴 false
+		if(!array_key_exists('name',$array_test)) return new Object(-1, "title 'name' is not found");
+		if(!array_key_exists('number',$array_test)) return new Object(-1, "title 'number' is not found");
+		if(!array_key_exists('memo1',$array_test)) return new Object(-1, "title 'memo1' is not found");
+		if(!array_key_exists('memo2',$array_test)) return new Object(-1, "title 'memo2' is not found");
+		if(!array_key_exists('memo3',$array_test)) return new Object(-1, "title 'memo3' is not found");
+
+		$parent_node = Context::get('parent_node');
+
+		// get node_route
+		if(in_array($parent_node, array('f.','t.','s.')))
+		{
+			$node_route = $parent_node;
+		}
+		else
+		{
+			// get parent node
+			$args->node_id = $parent_node;
+			$output = executeQuery('purplebook.getNodeInfoByNodeId', $args);
+			if(!$output->toBool()) return $output;
+			if(!$output->data) return new Object(-1, 'msg_invalid_request');
+
+			// check for permission
+			if($output->data->member_srl != $logged_info->member_srl) return new Object(-1,'msg_no_permission');
+
+			$node_route = $output->data->node_route . $parent_node . '.';
+		}
+
+		$list = array();
+		for($i = 0; $i < count($array_test['name']); $i++)
+		{
+			$args = new StdClass();
+			$args->member_srl = $logged_info->member_srl;
+			$args->user_id = $logged_info->user_id;
+			$args->parent_node = $vars->parent_node;
+			$args->node_route = $node_route;
+			$args->node_name = $array_test['name'][$i];
+			$args->node_type = '2';
+			$args->phone_num = str_replace('-', '', $array_test['number'][$i]);
+			$args->memo1 = $array_test['memo1'][$i];
+			$args->memo2 = $array_test['memo2'][$i];
+			$args->memo3 = $array_test['memo3'][$i];
+
+			$list[] = $args;
+		}
+
+		// purplebook table에 업로드
+		$this->insertPurplebook($args);
+		if(!in_array($parent_node, array('f.','t.','s.')))
+		{
+			$this->updateSubnode($logged_info->member_srl, $parent_node);
+		}
+
+		$this->add('list',$list);
+	}
+
 
 	/**
 	 * @brief 주소록 Node 추가
