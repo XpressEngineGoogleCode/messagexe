@@ -2800,8 +2800,9 @@ function submit_messages() {
 				add_to_list(data.node_id, node_name, phone_num);
 
 				// 전체보기페이지에서 처리시
-				if(full_address != null) 
+				if(typeof(full_address) != 'undefined') 
 				{
+					// 전체보기 페이지에 리스트 추가
 					add_to_list_full(data.node_id, node_name, phone_num, memo1, memo2, memo3);
 
 					$('#inputFullAddressPhone').val('');
@@ -3679,7 +3680,7 @@ function submit_messages() {
 						var node = jQuery(selected_folders[0]);
 						pb_load_list_full(node);
 					}
-					full_address_show();
+					full_address_show(); // 전체보기 div 보여주기
 				}
 			}, response_tags);
         });
