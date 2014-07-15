@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* common */
-span.checkbox { margin:0; padding:0; width:13px; height:13px; display:inline; float:left; background:url('../img/bg_checkbox.gif') no-repeat; overflow:hidden; cursor:pointer; } 
+span.checkbox { margin-top:2px; padding:0; width:13px; height:13px; display:inline; float:left; background:url('../img/bg_checkbox.gif') no-repeat; overflow:hidden; cursor:pointer; } 
 span.checkbox.on { background-position:0px -13px; } 
 .border-radius { -moz-border-radius: 15px; -webkit-border-radius: 15px; border-radius: 15px; }
 .border-radius8 { -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }
@@ -13,119 +13,126 @@ span.checkbox.on { background-position:0px -13px; }
 #hearder_title .quick_menu ul { list-style:none; padding:0; margin:0;}
 #hearder_title .quick_menu li { float:left; padding:0; margin:0 10px; }
 
-#smsPurplebook { clear:both; height:380px; padding:10px 30px 0 30px; background:url(../img/round_bg_line.gif) repeat-y; z-index:0; }
+#smsPurplebook { clear:both; height:380px; background:#fff; z-index:0; }
 #smsPurplebook_top { position:relative; height:21px; background:url(../img/round_bg_top.gif) no-repeat;}
-#smsPurplebook_bottom { height:28px; background:url(../img/round_bg_bottom.png) no-repeat;}
 
-.purplebook_left { position:relative; float:left; width:534px; height:365px; padding:0; font:8pt dotum; color:#666; border:1px solid #aaa; background:url(../img/purplebook_left_bg.gif) repeat-y; }
-
-.purplebook_left .purplebook_left_title { position:relative; float:left; height:35px; background:url(../img/purplebook_left_title_bg.gif) repeat-x; border:1px solid #fff; border-radius: 15px 15px 0 0;  -webkit-border-radius:15px 15px 0 0; -moz-border-radius: 15px 15px 0 0; border-bottom:1px solid #aaa; border-top:none;}
-.purplebook_left .purplebook_left_title .title01 { float:left; padding:10px 0px 5px 20px; width:246px; }
-.purplebook_left .purplebook_left_title .title01 img { vertical-align:middle;}
+.purplebook_left { position:relative; float:left; width:490px; height:365px; padding:0; color:#666; }
+.purplebook_left .purplebook_left_title { position:relative; float:left; border-bottom:1px solid #eee; }
+.purplebook_left .title01 { float:left; padding:10px 0px 10px 20px; width:225px; color:#666; font-size:14px; font-weight:bold; }
 .purplebook_left .purplebook_left_title .title02 { float:left; padding:10px 0px 5px; width:266px; }
 .purplebook_left .purplebook_left_title .title02 img { vertical-align:middle;}
-
-.purplebook_left .purplebook_left_title .search { position:absolute; right:40px; top:8px;  display:block; padding:0; width:100px; height:18px;} 
-.purplebook_left .purplebook_left_title .search .inputTypeText { padding:2px 5px 2px 2px; width:80px; height:14px; background:none; border:none; background:#fff; border:1px solid #999;}
-.purplebook_left .purplebook_left_title .search a {position:absolute; right:-20px; top:0;  *top:1px; width:18px; height:18px; border:1px solid #71aee6;}
+.purplebook_left .purplebook_left_title .search { position:absolute; right:8px; top:8px;  display:block; padding:0; width:100px; height:18px;} 
+.purplebook_left .purplebook_left_title .search .inputTypeText { padding:2px 5px 2px 2px; width:80px; height:16px; background:none; border:none; background:#f7f7f7; }
+.purplebook_left .purplebook_left_title .search a {position:absolute; top:0;  *top:1px; width:18px; height:18px; border:1px solid #71aee6;}
 
 /* stage 1 left folder list area */
-.purplebook_left .left_list { float:left; width:240px; margin:0 10px 15px 15px; _margin:0 5px 15px 8px; padding:0; font:8pt dotum; color:#666;}
+.purplebook_left .left_list { float:left; width:235px; margin:0 5px 15px 10px; padding:0; font:8pt dotum; color:#666;}
 .purplebook_left .left_list .title { margin-bottom:5px;}
 .purplebook_left .left_list .title p{ display:inline; margin:0; vertical-align:middle;}
 .purplebook_left .left_list .title img { vertical-align:middle;}
-.purplebook_left .left_list .title .total { margin-bottom:3px; vertical-align:middle;}
-.purplebook_left .left_list .title_info { display:block; padding:5px 0 3px 10px; margin:0; line-height:1.6; border-bottom:none;}
-.purplebook_left .left_list .bodyArea { padding:10px; border:1px solid #adadad; height:240px; background:#fff url(../img/body_area_bg.gif) repeat-x left top; overflow:auto; }
-.purplebook_left .left_list .bottomArea { padding-top:5px;}
-.purplebook_left .left_list .bottomArea a { float:left; display:block;}
-.purplebook_left .left_list .bottomArea #btn_empty_trash { margin:0;}
+
+.purplebook_left .left_list .title_info { display:block; padding:5px 0 3px 10px; margin:0; line-height:2em; border-bottom:none;}
+.purplebook_left .left_list .bodyArea { padding:10px; background:#fbf9f6; height:240px; overflow:auto; }
+
+.bottomArea #btn_empty_trash { margin:0;}
 .purplebook_left .left_list .bottomArea .btn_menual img {}
 
 /* stage 2 left folder selection area */
-.purplebook_left .left_select { float:right; width:240px; margin:0 15px 15px 10px; _margin:0 5px 15px; padding:0; font:8pt dotum; color:#666;}
+.purplebook_left .left_select { float:right; width:235px; margin:0 0 15px 5px; padding:0; font:8pt dotum; color:#666;}
 .purplebook_left .left_select .title { margin-bottom:5px; }
 .purplebook_left .left_select .title p{ display:inline; margin:0; vertical-align:middle;}
 .purplebook_left .left_select .title img { vertical-align:middle;}
 .purplebook_left .left_select .title .search { right:13px; position:absolute; margin:0;padding:0; }
 .purplebook_left .left_select .title .search #search_word { width:80px; height:12px;}
 .purplebook_left .left_select .title .search #btn_search { margin-left:2px; }
-.purplebook_left .left_select .title_info { display:block; padding:5px 0 3px 10px; margin:0; line-height:1.6; border-bottom:none;}
-.purplebook_left .left_select .title_info .name { margin-left:18px;}
-.purplebook_left .left_select .title_info .h_number { margin-left:52px;}
-.purplebook_left .left_select .bodyArea { padding:10px; border:1px solid #adadad; height:240px; background:#fff url(../img/body_area_bg.gif) repeat-x left top; }
+.purplebook_left .left_select .title_info { display:block; padding:5px 0 3px 10px; margin:0; line-height:2em; border-bottom:none;}
+.purplebook_left .left_select .title_info .name { margin-left:15px;}
+.purplebook_left .left_select .title_info .h_number { margin-left:35px; }
+.purplebook_left .left_select .title_info a.all_view { border-radius:3px; margin-left:48px; text-decoration:none; color:#555; background:#f5f5f5; border:1px solid #ccc; padding: 3px 5px;}
+.purplebook_left .left_select .bodyArea { padding:10px; background:#fbf9f6; height:240px; }
 .purplebook_left .left_select .bodyArea ul#smsPurplebookList { height:100%; margin:0; overflow:auto; padding:0; } 
 .purplebook_left .left_select .bodyArea ul#smsPurplebookList li { height:21px; font-size:12px; color:#676767; list-style-type:none; margin:0; padding:0; display:block; }
 .purplebook_left .left_select .bodyArea ul#smsPurplebookList li:hover { background-color:#eeeeee; }
 .purplebook_left .left_select .bodyArea ul#smsPurplebookList li span.checkbox { margin-right:12px; }
-.purplebook_left .left_select .bodyArea ul#smsPurplebookList li span.nodeName { margin: -1px 0px 0px 0px; padding:2px 2px 2px 0; width: 65px; text-overflow: ellipsis; display:inline; font-family:tahoma; white-space:nowrap; float:left; overflow:hidden; font-weight:normal; cursor:pointer;}
+.purplebook_left .left_select .bodyArea ul#smsPurplebookList li span.nodeName { margin: -1px 0px 0px 0px; padding:2px 2px 2px 0; width: 58px; text-overflow: ellipsis; display:inline; font-family:tahoma; white-space:nowrap; float:left; overflow:hidden; font-weight:normal; cursor:pointer;}
 .purplebook_left .left_select .bodyArea ul#smsPurplebookList li span.nodePhone { margin: -1px 0px 0px 0px; padding:2px 2px 2px 0; width: 90px; text-overflow: ellipsis; display: inline; font-family: tahoma; white-space: nowrap; float: left; overflow: hidden; font-weight: normal; cursor:pointer; }
 .purplebook_left .left_select .bodyArea ul#smsPurplebookList li .modifyName { width:80px; font:9pt dotum; }
 .purplebook_left .left_select .bodyArea ul#smsPurplebookList li .modifyPhone {width:120px; font:9pt Arial; letter-spacing:3px; }
-.purplebook_left .left_select .bottomArea {_width:244px; padding-top:5px; }
-.purplebook_left .left_select .bottomArea a { float:left; display:block;}
 
 /* centeral arrow area */
-.purplebook_arrow { float:left; width:50px; padding-top:150px; text-align:center; overflow:hidden; vertical-align:middle; }
+.purplebook_arrow { float:left; width:50px; padding-top:180px; text-align:center; overflow:hidden; vertical-align:middle; }
 .purplebook_arrow .bth_arrow_right { cursor:pointer; display:inline-block; margin:auto; width:43px; height:53px; background:url('../img/bth_arrow_right.gif') no-repeat; text-indent:-1000em; }
 .purplebook_arrow .bth_arrow_left { cursor:pointer; display:inline-block; margin-top:4px; width:43px; height:53px; background:url('../img/bth_arrow_left.gif') no-repeat; text-indent:-1000em; }
 
 /* stage 3 right target list area */
-.purplebook_right { position:relative; float:left; width:330px; height:365px; padding:0; font:8pt dotum; color:#666; border:1px solid #aaa; background:url(../img/purplebook_left_bg.gif) repeat-y;}
-
-.purplebook_right .purplebook_right_title {float:left; height:35px; background:url(../img/purplebook_left_title_bg.gif) repeat-x; border:1px solid #fff; -moz-border-radius: 15px 15px 0 0; -webkit-border-radius:15px 15px 0 0; border-radius: 15px 15px 0 0; border-bottom:1px solid #aaa; border-top:none;} 
+.purplebook_right { position:relative; float:left; width:280px; height:365px; padding:0; color:#666; }
+.purplebook_right .purplebook_right_title { font-size:14px; font-weight:bold; padding:10px 0; border-bottom:1px solid #eee;} 
 .purplebook_right .purplebook_right_title .title { float:left; margin:0; padding:10px 15px; width:298px;}
 
 .purplebook_right .title { }
 .purplebook_right .title p{ display:inline; margin:0; vertical-align:middle;}
 .purplebook_right .title img { vertical-align:middle;}
 
-.purplebook_right .add_list { float:left; margin:15px 15px 0; _margin-left:8px; padding:6px 12px; *padding:6px 6px 6px 0px; background:url(../img/add_list_bg.gif) repeat-x 0 0; border:1px solid #b3b3b3;}
-.purplebook_right .add_list label { display:inline; float:left; margin:0 4px 0 0; padding:0; letter-spacing:-1px; vertical-align:middle;} 
-.purplebook_right .add_list #inputDirectName { display:inline; float:left; width:65px; height:15px; padding:2px 0 0 3px; border:1px solid #acacac; vertical-align:middle;  margin:0 4px 0 0; background:#fff; } 
-.purplebook_right .add_list #inputDirectNumber { display:inline; float:left; margin:0 4px 0 0; width: 92px; height:15px; padding:2px 0 0 3px; border:1px solid #acacac; vertical-align:middle;  background:#fff; }
-.purplebook_right .add_list button.btn_append { position:relative; float:left; margin:0 4px 0 0; width:44px; height:17px; vertical-align:middle; background:url('../img/btn_add.gif') no-repeat; border:0 none; text-indent:-1000em; *margin-left:3px; overflow:hidden; cursor:pointer;} 
-.purplebook_right .add_list button.pop_recent { position:relative; float:left; margin:0 4px 0 0; width:44px; height:17px; vertical-align:middle; background:url('../img/btn_list.gif') no-repeat; border:0 none; text-indent:-1000em; *margin-left:1px; overflow:hidden; cursor:pointer;} 
+.purplebook_right .add_list { float:left; margin:15px 0 0; _margin-left:8px; }
+.purplebook_right .add_list label { display:inline; float:left; margin:0 1px 0 0; padding:0; letter-spacing:-1px; vertical-align:middle;} 
+.purplebook_right .add_list #inputDirectName { display:inline; float:left; width:60px; height:15px; padding:5px; vertical-align:middle;  margin:0 3px 0 0; background:#f7f7f7; border:0; } 
+.purplebook_right .add_list #inputDirectNumber { display:inline; float:left; margin:0 3px 0 0; width: 92px; height:15px; padding:5px; border:0; vertical-align:middle;  background:#f7f7f7; }
+.purplebook_right .add_list button.btn_append { font-size:11px; background:#ededed; color:#555; border:0; padding:4px 5px 4px; margin:0; cursor:pointer; } 
+.purplebook_right .add_list button.pop_recent { font-size:11px; background:#ededed; color:#555; border:0; padding:4px 5px 4px; cursor:pointer; } 
 
-.purplebook_right .title_info {float:left; display:block; width:278px; margin:0 15px; _margin:0 5px; padding:5px 3px 3px 17px; line-height:1.6; }
-.purplebook_right .title_info .name { margin-left:10px;}
-.purplebook_right .title_info .h_number { margin-left:42px;}
-.purplebook_right .title_info .h_delete { margin-left:48px;}
+.purplebook_right .title_info {float:left; display:block; width:254px; margin:10px; padding-left:6px; }
+.purplebook_right .title_info .name { margin-left:20px;}
+.purplebook_right .title_info .h_number { margin-left:60px;}
+.purplebook_right .title_info .h_delete { margin-left:80px;}
 .purplebook_right .title_info .status { margin-left:20px;}
-.purplebook_right .bodyArea {clear:both; margin:0 15px; padding:10px; border:1px solid #adadad; height:190px; background:#fff url(../img/body_area_bg.gif) repeat-x left top; overflow:auto; color:#333; }
+.purplebook_right .bodyArea { clear:both; padding:10px; height:190px; background:#fbf9f6; overflow:auto; color:#333; }
 .purplebook_right .bodyArea #smsPurplebookTargetList { height:auto; overflow:hidden; margin-top: 8px; margin:0; margin-left:7px; padding:0; padding-top:8px; } 
 .purplebook_right .bodyArea #smsPurplebookTargetList li { list-style-type:none; margin:0; padding:0; height: 21px; font-size: 12px; color:#676767; }
-.purplebook_right .bodyArea #smsPurplebookTargetList li span.name { margin: 1px 0px 0px 6px; width:58px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; font-weight: normal; cursor:pointer; }
+.purplebook_right .bodyArea #smsPurplebookTargetList li span.name { margin: 1px 0px 0px 15px; width:58px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; font-weight: normal; cursor:pointer; }
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.number { margin: -1px 0px 0px 6px; width:82px; text-overflow: ellipsis; display: inline-block; font-family: tahoma; white-space: nowrap; overflow: hidden; font-weight: normal; cursor:pointer; }
-.purplebook_right .bodyArea #smsPurplebookTargetList li span.delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin:0 0 0 10px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
+.purplebook_right .bodyArea #smsPurplebookTargetList li span.delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin:0 0 0 55px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.statusBox { display:inline-block; margin-left:8px; text-align:center; width:60px; }
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.statusBox span.status { display:inline-block; margin:0; background:url(../img/stat_try.gif) no-repeat; width:16px; height:16px; } 
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.statusBox span.status.try { background:url(../img/stat_try.gif) no-repeat; } 
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.statusBox span.status.error { background:url(../img/stat_error.gif) no-repeat; } 
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.statusBox span.status.complete { background:url(../img/stat_complete.gif) no-repeat; } 
 
+/* 버튼통합클래스로 변경(기존스타일)
 .purplebook_right .bottomArea { position:relative; margin:7px 15px; padding-left:20px; height:20px; }
 .purplebook_right .bottomArea a { float:left;}
 .purplebook_right .bottomArea a.pop_overlap { position:absolute; left:188px; top:0px; display:inline-block; font:8pt dotum; color:#4483d9; background:url(../img/btn_dupli_bg.gif) no-repeat; }
 .purplebook_right .bottomArea a.pop_overlap span.number { position:absolute; right:14px; padding:6px 2px; }
+*/
 
 /* layer popup style */
 #smsPurplebook .layer,
-#smsMessage .layer { position:absolute; display:none; padding:15px 5px 5px; border:1px solid #536b94; background:#446191 url(../img/pop_bg_top.gif) repeat-x;}
+#smsMessage .layer { position:absolute; display:none; padding:15px 5px 5px; border:1px solid #536b94; background:#55849f;}
 #smsPurplebook .layer .title,
 #smsMessage .layer .title { position:relative; margin-bottom:5px; height:22px;}
 #smsPurplebook .layer .title p,
 #smsMessage .layer .title p {display:inline; margin-left:10px; vertical-align:middle; color:#fff;}
 #smsPurplebook .layer .title .btn_closex,
-#smsMessage .layer .title .btn_closex { position:absolute; top:-7px; right:0;}
+#smsMessage .layer .title .btn_closex { position:absolute; right:0;}
 #smsPurplebook .layer .title .total,
 #smsMessage .layer .title .total { margin-left:10px;}
 #smsPurplebook .layer .title_info,
-#smsMessage .layer .title_info { display:block; padding:5px 0 3px 17px; margin:0; width:247px; line-height:1.6; border:1px solid #ddd; border-bottom:none;}
+#smsMessage .layer .title_info { display:block; padding:5px 0 3px 17px; margin:0; line-height:1.6; border:1px solid #ddd; border-bottom:none;}
 #smsPurplebook .layer .bodyArea,
-#smsMessage .layer .bodyArea { padding:10px; background:#fff url(../img/body_area_bg.gif) repeat-x left top; border:1px solid #adadad; overflow:auto;}
-#smsPurplebook .layer .bottomArea,
-#smsMessage .layer .bottomArea { padding-top:5px; }
+#smsMessage .layer .bodyArea { padding:10px; background:#fff url(../img/body_area_bg.gif) repeat-x left top; border:0; overflow:auto;}
+
+/* layre button */
+a.close_btn { background:#222 !important; color:#fff !important; text-decoration:none; margin-top:5px; padding:5px 10px; }
+a.add_btn { background:#222; color:#fff; text-decoration:none; padding:4px 10px; display:inline-block; }
+a.pink_btn { background:#fb7979; color:#fff; font-size:13px; height:50px; width:60px; line-height:50px; display:block; text-align:center; text-decoration:none; }
+div.bodyArea input { border:1px solid #ddd; padding:2px; color:#676; vertical-align:middle; }
+ul.bottom_btn { display:table; height:42px; width:100%; margin:0; padding:0; }
+ul.bottom_btn li { list-style:none; display:table-cell; white-space:nowrap; white-space:nowrap; border-right:1px solid #55849f; }
+ul.bottom_btn li a:after { bottom:-4px; content:""; height:1px; left:0; overflow:hidden; position:absolute; width:100%; }
+ul.bottom_btn a { background:#2f627f; color:#fff; font-weight:bold; text-decoration:none; text-align:center; height:39px; line-height:39px; display:block; position:relative; }
+
+/* layer popup title */
+span.pop_total { color:#fff; font-size:11px !important; }
+p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 
 /* layer popup (properties) */
 .purplebook_left #layer_properties { top:0px; left:200px; width:200px; height:200px; }
@@ -150,7 +157,7 @@ span.checkbox.on { background-position:0px -13px; }
 .purplebook_left #layer_manual .bodyArea { height:180px;}
 
 /* layer popup (add address) */
-.purplebook_left #layer_append { bottom:40px; right:15px; width:236px; height:100px; }
+.purplebook_left #layer_append { bottom:40px; right:15px; width:236px; }
 .purplebook_left #layer_append .bodyArea #inputPurplebookName { width:60px; }
 .purplebook_left #layer_append .bodyArea #inputPurplebookPhone { width:90px; margin-left:2px; }
 .purplebook_left #layer_append .bodyArea a#btnAddAddress img { position:relative; top:5px; left:2px;}
@@ -158,7 +165,7 @@ span.checkbox.on { background-position:0px -13px; }
 /* layer popup (copy) */
 .purplebook_left #layer_copy { bottom:40px; right:-285px; width:266px; height:226px; }
 .purplebook_left #layer_copy .bodyArea { height:140px; }
-.purplebook_left #layer_copy .bottomArea { padding-top:5px; }
+.purplebook_left #layer_copy .bottomArea { padding-top:0; }
 .purplebook_left #layer_copy .bottomArea a{ float:left;}
 .purplebook_left #layer_copy .bottomArea .btn_copy { }
 
@@ -216,12 +223,11 @@ span.checkbox.on { background-position:0px -13px; }
 .purplebook_right #layer_recent .bodyArea ul#recent_list li .delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 20px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
 
 /* guide and sending message window on the bottom */
-#smsMessage_top { height:21px; margin-top:20px; background:url(../img/smsMassage_bg_top.gif) no-repeat;}
-#smsMessage_bottom { height:28px; background:url(../img/smsMassage_bg_bottom.png) no-repeat;}
-#smsMessage { position:relative; width:980px; height:230px; padding:0; margin:0; background:url(../img/smsMassage_bg_line.gif) repeat-y; z-index:1;}
+#smsMessage { position:relative; padding:20px 10px; margin-top:20px; background:#fff; z-index:1;}
 
-#smsMessage .left_button { float:left; margin-left:20px; margin-top:50px; width:82px; _margin-left:10px;}
-#smsMessage .left_button a {margin-bottom:5px; }
+#smsMessage .left_button { clear:both; overflow:hidden; padding-top:30px; }
+#smsMessage .left_button a.left_btn {margin-bottom:5px; float:left; text-decoration:none; color:#555; background:#ededed; padding:7px 15px; border-right:1px solid #fff; }
+#smsMessage .left_button button { color:#555; background:#ededed; padding:6px 15px; border:0; font-size:11px; font-family:'NanumGothic'; cursor:pointer; }
 #smsMessage .left_button #btn_detach_pic { display:none; }
 
 /* layer popup (special characters) */
@@ -236,26 +242,27 @@ span.checkbox.on { background-position:0px -13px; }
 #smsMessage .left_button #layer_upload { top:-135px; *left:30px; width:400px; height:165px; }
 #smsMessage .left_button #layer_upload .bodyArea { height:115px; }
 
-#smsMessage .msgtype_switch { position:absolute; display:none; top:-70px; left:120px; border:solid #ff6e00 4px; font:8pt dotum; padding:12px; background:#ffffff;}
+#smsMessage .msgtype_switch { position:absolute; display:none; top:-70px; left:120px; font:12px dotum; line-height:1.5em; padding:15px; background:#222; color:#fff; }
 
 /* lcd display */
 #smsMessage .center_display { list-style-type:none; float:left; padding:0; margin:0;}
-#smsMessage .center_display li { list-style-type:none; float:left; margin-left:15px; width:187px; height:220px; background: url(../img/display_bg.png) no-repeat; _margin-left:10px; }
-#smsMessage .center_display .top_btn { display:block; height:37px; margin-top:5px; }
-#smsMessage .center_display .top_btn button.btn_record {  float:left; display:block; margin-left:7px; _margin-left:3px; width:83px; height:37px; background:url(../img/btn_record.png) no-repeat; border: 0 none; text-indent:-1000em; cursor:pointer;}
-#smsMessage .center_display .top_btn button.pop_messages { float:left; display:block; margin-left:3px; width:83px; height:37px; background:url(../img/folderopen.png) no-repeat; border: 0 none; text-indent:-1000em; cursor:pointer;}
-#smsMessage .center_display .text_area { margin:20px 0 0 33px; width:125px; height:96px; background:none; overflow:hidden; }
+#smsMessage .center_display li { list-style-type:none; float:left; margin-left:15px; padding-bottom:10px; background:#fff; border:1px solid #5c9dc3; }
+#smsMessage .center_display li:first-child { margin-left:0; }
+#smsMessage .center_display .top_btn { display:block; height:37px; }
+#smsMessage .center_display .top_btn button.btn_record {  float:left; display:block; width:83px; height:37px; border:0; border-right:1px solid #8dc9e5; background:#5c9dc3; cursor:pointer; color:#fff; }
+#smsMessage .center_display .top_btn button.pop_messages { float:left; display:block; width:83px; height:37px; background:#5c9dc3; border: 0 none; cursor:pointer; color:#fff; }
+#smsMessage .center_display .text_area { margin:15px 22px 15px 10px; height:96px; background:none; overflow:hidden; }
 #smsMessage .center_display .text_area .photo { display:block; }
-#smsMessage .center_display .text_area textarea { display:block; width:119px; height:96px; margin:0px; padding:0 0px 0 2px; line-height:1.4em; background-color:transparent; font-family:dotumche; font-size:12px; word-break:break-all; letter-spacing:0; border:0; *margin-left:-35px; overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll; }
+#smsMessage .center_display .text_area textarea { display:block; width:112px; height:96px; margin:0px; padding:0 0px 0 2px; line-height:1.4em; background-color:transparent; font-family:dotumche; font-size:12px; word-break:break-all; letter-spacing:0; border:0; *margin-left:-35px; overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll; }
 #smsMessage .center_display .text_area textarea.on { }
-#smsMessage .center_display .text_area textarea#main_screen { width:107px; }
+#smsMessage .center_display .text_area textarea#main_screen {  }
 
-#smsMessage .center_display .text_btn { position:relative; margin:19px 0 0 6px; padding:0; height:27px;}
-#smsMessage .center_display .text_btn a { font:8pt dotum; color:#fff;}
-#smsMessage .center_display .text_btn a.btn_bytes { float:left; text-align:center; padding:5px 0; width:84px; height:17px; background:url(../img/btn_bytes.gif) no-repeat;}
-#smsMessage .center_display .text_btn a.btn_clear { float:left; text-align:center; padding:5px 0; margin-left:2px; width:84px; height:17px; background:url(../img/btn_clear.gif) no-repeat;}
-#smsMessage .center_display .text_btn a.close { position:absolute; top:0; right:-17px; display:block; width:10px; height:22px; background:url(../img/btn_close.gif) no-repeat; text-indent:-1000em; overflow:hidden; margin-right:12px; } 
-#smsMessage .center_display .text_btn button.btn_addwindow { position:absolute; top:-82px; left:154px; display:block; width:16px; height:16px; background:url(../img/right_arrow.gif) no-repeat; border: 0 none; text-indent:-1000em; cursor:pointer;}
+#smsMessage .center_display .text_btn { position:relative; padding:0; }
+#smsMessage .center_display .text_btn a { text-decoration:none; }
+#smsMessage .center_display .text_btn a.btn_bytes { text-align:center; color:#555; position:absolute; right:10px; }
+#smsMessage .center_display .text_btn a.btn_clear { margin-left:10px;text-align:center; padding:3px 5px; background:#5c9dc3; border-radius:3px; color:#fff; }
+#smsMessage .center_display .text_btn a.close { position:absolute; top:25px; background:#5c9dc3; color:#fff; padding:3px 10px; right:-13px; display:block; overflow:hidden; margin-right:12px; } 
+#smsMessage .center_display .text_btn button.btn_addwindow { position:absolute; top:-73px; right:3px; display:block; width:16px; height:16px; background:url(../img/plus.png) no-repeat; border: 0 none; text-indent:-1000em; cursor:pointer;}
 
 /* layer popup (saved messages) */
 #smsMessage #layer_messages { top:-250px; width:226px; height:210px; }
@@ -266,20 +273,27 @@ span.checkbox.on { background-position:0px -13px; }
 #smsMessage #layer_messages .bodyArea ul#message_list li { list-style-type:none; margin:0; padding:0; line-height:16px; vertical-align:middle;}
 #smsMessage #layer_messages .bodyArea ul#message_list li:hover { background-color:#eeeeee; cursor:pointer; }
 #smsMessage #layer_messages .bodyArea ul#message_list li .content { width:160px; text-overflow:ellipsis; display:inline-block; white-space: nowrap; overflow: hidden; }
-#smsMessage #layer_messages .bodyArea ul#message_list li .delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 10px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat;  vertical-align:middle; height:9px; overflow: hidden; } 
+#smsMessage #layer_messages .bodyArea ul#message_list li .delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 10px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat;  vertical-align:top; height:9px; overflow: hidden; } 
 
-#smsMessage .right_button { float:left; margin-left:15px; width:240px; height:196px; font:8pt dotum; color:#666;}
-#smsMessage .right_button .add_info { padding:5px 10px; margin-bottom:5px;}
-#smsMessage .right_button .add_area { height:19px; padding:6px 15px; margin-bottom:20px; background:url(../img/add_area_bg.gif) no-repeat;}
+#smsMessage .right_button { float:left; margin-left:20px; height:196px; }
+#smsMessage .right_button .add_info { color:#6c6b65; font-size:12px; padding:5px 10px; margin-bottom:3px; background:#fffef6; }
+#smsMessage .right_button .time_interval { color:#345a70; line-height:2em; border-bottom:1px solid #f1f1f1; font-size:12px; padding-bottom:10px; margin-top:10px; margin-bottom:10px; }
+#smsMessage .right_button .time_interval p { margin:0; }
+#smsMessage .right_button .time_interval label { cursor:pointer; }
+#smsMessage .right_button .time_interval input { vertical-align:middle; margin:0; }
+#smsMessage .right_button .time_interval input.input_text { width:40px; border:1px solid #c5c5c5; background:#f0f0f0; padding:3px; margin-right:2px; }
+#smsMessage .right_button .time_interval input.minput { width:20px; border:1px solid #c5c5c5; background:#f0f0f0; padding:3px; margin-right:2px; }
+#smsMessage .right_button .add_area { margin-bottom:5px; background:#fff; }
 #smsMessage .right_button label { display:inline; margin:0 6px 0 0; padding:0; letter-spacing:-1px; vertical-align:middle;} 
-#smsMessage .right_button #smsPurplebookCallback { display:inline; width:100px; height:15px; padding:2px 0 0 3px; border:1px solid #999; font: 12px tahoma; vertical-align:middle; color: #676767; }
-#smsMessage .right_button button{ position:relative; width:13px; height:17px; vertical-align:middle; background:url('../img/btn_nlist.gif') no-repeat; border:0 none; text-indent:-1000em; *margin-left:5px; overflow:hidden; cursor:pointer;} 
+#smsMessage .right_button #smsPurplebookCallback { display:inline; height:28px; border:1px solid #5c9dc3; width:118px; vertical-align:middle; color: #676767; }
+#smsMessage .right_button button{ position:relative; vertical-align:middle; height:32px; font-size:11px; margin-left:-3px; background:#5c9dc3; color:#fff; border:0 none; overflow:hidden; cursor:pointer;} 
 
 #smsMessage .right_button .submit_btn { margin-bottom:5px;}
-#smsMessage .right_button .submit_btn a.btn_forward { margin-left:5px;}
-#smsMessage .right_button .submit_btn a.btn_booking { margin-left:5px;}
-#smsMessage .right_button .help { padding:5px 10px; z-index:500;}
-#smsMessage .right_button .help img { vertical-align:middle; margin-right:10px; }
+#smsMessage .right_button .submit_btn a { color:#fff; font-size:14px; font-weight:bold; width:106px; height:33px; display:block; text-decoration:none; line-height:2.3em; text-align:center; float:left; }
+#smsMessage .right_button .submit_btn a.btn_forward { background:#f17d4f; margin-right:2px; }
+#smsMessage .right_button .submit_btn a.btn_booking { background:#636363; }
+#smsMessage .right_button .help { padding:5px 0; margin-top:10px; clear:both; color:#555; z-index:500;}
+#smsMessage .right_button .help img { vertical-align:middle; margin-right:5px; }
 
 /* layer popup (sendid) */
 #smsMessage #layer_sendid { top:-210px; width:226px; height:206px; color:#fff;}
@@ -293,20 +307,20 @@ span.checkbox.on { background-position:0px -13px; }
 #smsMessage #layer_sendid ul#smsPurplebookCallbackList li span.default.on { background:url('../img/ico_check_on.gif') no-repeat; } 
 #smsMessage #layer_sendid ul#smsPurplebookCallbackList li span.phonenum { margin: -1px 0px 0px 30px; width:96px; text-overflow: ellipsis; display:inline-block; font-family: tahoma; white-space: nowrap; overflow: hidden; font-weight: normal; cursor:pointer; }
 #smsMessage #layer_sendid ul#smsPurplebookCallbackList li span.deleteCallback { cursor:pointer; text-indent:-1000em; padding:0; border:0 none; margin: 2px 0px 0px 20px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
-#smsMessage #layer_sendid .bottomArea { padding-top:5px; }
-#smsMessage #layer_sendid .bottomArea #smsPurplebookInputCallback { display:inline; width:100px; height:15px; padding:2px 0 0 3px; border:1px solid #ddd; font: 12px tahoma; vertical-align:middle; color: #676767; }
-#smsMessage #layer_sendid .bottomArea button{ position:relative; width:49px; height:20px; vertical-align:middle; background:url('../img/pop_btn_add.png') no-repeat; border:0 none; text-indent:-1000em; margin-left:5px; overflow:hidden; cursor:pointer;} 
+#smsMessage #layer_sendid .bottomArea { padding-top:6px; }
+#smsMessage #layer_sendid .bottomArea #smsPurplebookInputCallback { display:inline; width:100px; height:15px; padding:3px; border:1px solid #ddd; font: 12px tahoma; vertical-align:middle; color: #676767; }
+#smsMessage #layer_sendid .bottomArea button{ position:relative; width:49px; height:23px; vertical-align:middle; border:0 none; background:#000; margin-left:0; overflow:hidden; cursor:pointer;} 
 
 /* layer popup (reserv) */
-#smsMessage #layer_reserv { position:absolute; top:70px; display:none; width:200px; height:100px; padding:15px 5px 5px; color:#fff; border:1px solid #536b94; background:#446191 url(../img/pop_bg_top.gif) repeat-x;}
+#smsMessage #layer_reserv { position:absolute; top:70px; display:none; width:200px; height:100px; padding:15px 5px 5px; color:#fff; border:0; }
 #smsMessage #layer_reserv .title_info .default { margin-left:10px;}
 #smsMessage #layer_reserv .title_info .h_number { margin-left:22px;}
 #smsMessage #layer_reserv .title_info .delete { margin-left:86px;}
-#smsMessage #layer_reserv .bodyArea { height:60px; padding:0; }
+#smsMessage #layer_reserv .bodyArea { height:70px; padding:0; }
 #smsMessage #layer_reserv .bodyArea .datepickup { float:left; }
 #smsMessage #layer_reserv .bodyArea .reservtime { float:left; margin:10px 0 0 10px; display:inline; }
-#smsMessage #layer_reserv .bodyArea .reservtime #inputReservationDate { width:110px; margin-bottom:3px;}
-#smsMessage #layer_reserv .bodyArea .reservtime select { font:8pt dotum; }
+#smsMessage #layer_reserv .bodyArea .reservtime #inputReservationDate { width:110px; padding:3px 2px; margin-bottom:3px;}
+#smsMessage #layer_reserv .bodyArea .reservtime select { font:8pt dotum; padding:3px 2px; }
 #smsMessage #layer_reserv .bodyArea .buts { float:right; margin:10px 10px 0 0; }
 
 /* layer popup (sending status) */
@@ -315,7 +329,27 @@ span.checkbox.on { background-position:0px -13px; }
 #smsMessage #layer_status .error_code { color:red; }
 
 
-#smsMessage .center_display .top_btn button.pop_merge { float:left; display:block; margin-left:3px; width:83px; height:37px; background:url(../img/folderopen.png) no-repeat; border: 0 none; text-indent:-1000em; cursor:pointer;}
+/* tip */
+div.tip_box { background:#fff; padding:15px; margin:0 0 20px 0; position:relative; }
+div.btn_wrap { position:absolute; right:0; top:15px; }
+a.use_btn { background:#555; color:#fff; padding:15px 20px; text-decoration:none; }
+
+
+/* font */
+span.total { margin-bottom:3px; font-size:11px; color:#999; vertical-align:middle;}
+
+
+/* bottomButton */
+.bottomArea { display:table; height:42px; width:100%; margin:0; padding:0; }
+.bottomArea li { list-style:none; display:table-cell; white-space:nowrap; white-space:nowrap; border-right:1px solid #fff; background:#ededed; }
+.bottomArea a:after { bottom:-4px; content:""; height:1px; left:0; overflow:hidden; position:absolute; width:100%; }
+.bottomArea a { background-color:#ededed; color:#555; text-decoration:none; text-align:center; height:39px; line-height:39px; display:block; position:relative; }
+.bottomArea a.etc { background:url(../img/etc.gif) no-repeat 9px 10px; height:38px; color:transparent; width:24px; }
+
+/* merge style */
+#smsMessage .center_display .top_btn button.pop_merge { float:left; display:block; margin-left:3px; width:83px; height:37px; cursor:pointer;}
+#smsMessage button { background:#e1e1e1; color:#333; border:0; padding:5px 10px; }
+#smsMessage button.pink_btn { background:#ff8686; color:#fff; }
 
 #smsMessage #layer_merge { top:-100px; }
 
