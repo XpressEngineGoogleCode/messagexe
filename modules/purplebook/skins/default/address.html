@@ -23,14 +23,16 @@
 <p class="page_title">웹에서 보내기</p>
 </div>
 
-<p>- 전송결과는 coolsms 전송결과 페이지에서 확인할수 있습니다. <a href="http://www.coolsms.co.kr/report" target="_blank"> 바로가기</a></p>
+<div class="tip_box">
+	전송결과는 coolsms 전송결과 페이지에서 확인할수 있습니다. <a href="http://www.coolsms.co.kr/report" target="_blank"> 바로가기</a>
+	<div class="btn_wrap"><a class="use_btn" id="btn_pop_manual" class="pop_menual btn_menual" href="#" onfocus="this.blur()" title="자세한 설명">사용방법</a></div>
+</div>
 
-<div id="smsPurplebook_top"></div>
 <div id="smsPurplebook">
 	<div class="purplebook_left">	
 		<div class="purplebook_left_title">
-            <div class="title01"><img src="img/help.png" alt="HELP" class="help pngFix" title="<span style='font:11px dotum;color:#333;'>마우스 우클릭을 활용하세요<br />자세한 내용은 사용법을 클릭</span>" /><img src="img/leftlist_title.gif" alt="주소록" /><span class="total"></span></div>
-            <div class="title02"><img src="img/leftselect_title.gif" alt="선택목록" /><span class="total" id="smsPurplebookListCount">(총 0/명)</span>
+            <div class="title01">주소 목록</div>
+            <div class="title01">선택 목록<span class="total" id="smsPurplebookListCount">(총 0/명)</span>
 				<span class="search">
 					<input type="text" id="search_word" class="inputTypeText" value="" title="검색할 이름 혹은 전화번호를 입력" />
 					<a href="#" id="btn_search"><img src="img/btn_search.gif" alt="검색" /></a>
@@ -38,24 +40,32 @@
 			</div>
 		</div>
 		<div class="left_list">
-			
 			<div class="title_info">폴더 목록</div>
 			<div class="bodyArea"><div id="smsPurplebookTree"></div></div>
-			<div class="bottomArea">
-				<a id="smsPurplebookRefreshTree" href="#" title="폴더목록 새로고침"><img src="img/btn_refresh.gif" width="79" height="23" alt="새로고침" /></a>
-				<a id="btn_empty_trash" href="#" title="휴지통 비우기"><img src="img/empty.png" width="80" height="23" alt="휴지통 비우기" /></a>
-				<a id="btn_pop_manual" class="pop_menual btn_menual" href="#" onfocus="this.blur()" title="자세한 설명"><img src="img/btn_menual.gif" width="79" height="23" alt="사용법" /></a>
-			</div>
+			<ul class="bottomArea">
+				<li>
+					<a id="smsPurplebookRefreshTree" href="#" title="폴더목록 새로고침">새로고침</a>
+				</li>
+				<li>
+					<a id="btn_empty_trash" href="#" title="휴지통 비우기">엑셀 다운로드</a>
+				</li>
+				<li>
+					<a id="btn_pop_manual" class="pop_menual btn_menual" href="#" onfocus="this.blur()" title="자세한 설명">폴더생성</a>
+				</li>
+				<li>
+				<a id="btn_pop_manual" class="pop_menual btn_menual etc" href="#" onfocus="this.blur()" title="기타메뉴">기타메뉴</a>
+				</li>
+			</ul>
 		</div><!-- 1번 주소 폴더 목록 끝 -->
 
 		<!-- 레이어 팝업 영역 -->
-		<div id="layer_properties" class="layer draggable border-radius8">
+		<div id="layer_properties" class="layer draggable">
 			<div class="title"><p>속성보기</p><span class="btn_closex"><a href="#"><img class="pngFix" src="img/pop_btn_close.gif" alt="close" /></a></span></div>
             <div class="bodyArea"><ul id="properties_list"></ul></div>
 			<div class="bottomArea"></div>
 		</div><!-- 속성보기 -->
 
-		<div id="layer_share" class="layer draggable border-radius8">
+		<div id="layer_share" class="layer draggable">
 			<div class="title"><p>폴더 공유</p><span class="btn_closex"><a href="#"><img class="pngFix" src="img/pop_btn_close.gif" alt="close" /></a></span></div>
             <div class="bodyArea"><ul id="share_list"></ul></div>
 			<div class="bottomArea">
@@ -63,103 +73,117 @@
 			</div>
 		</div><!-- 폴더 공유 -->
 
-		<div id="layer_manual" class="layer draggable border-radius8"></div><!-- 사용법 레이어 -->
+		<div id="layer_manual" class="layer draggable"></div><!-- 사용법 레이어 -->
 		
 
 		<div class="left_select">
-            <div class="title_info"><span class="checkbox" id="smsPurplebookToggleList" title="선택전환"></span><span class="name">이름</span><span class="h_number">핸드폰 번호</span></div>
+			<div class="title_info"><span class="checkbox" id="smsPurplebookToggleList" title="선택전환"></span><span class="name">이름</span><span class="h_number">연락처</span><a href="#" class="all_view">전체보기</a></div>
 			<div class="bodyArea"><ul id="smsPurplebookList"></ul></div>
-			<div class="bottomArea">
-				<a class="pop_append" href="#" title="선택목록에 명단 추가"><img src="img/btn_append.gif" width="60" height="23" alt="추가" /></a>
-				<a class="btn_delete" href="#" title="체크 명단 휴지통으로 이동"><img src="img/btn_remove.gif" width="60" height="23" alt="삭제" /></a>
-				<a class="pop_copy" href="#" title="체크 명단 특정폴더로 복사"><img src="img/btn_copy.gif" width="60" height="23" alt="복사" /></a>
-				<a class="pop_move" href="#" title="체크 명단 특정폴더로 이동"><img src="img/btn_move.gif" width="60" height="23" alt="이동" /></a>
-			</div>
+			<ul class="bottomArea">
+				<li>
+					<a class="pop_append" href="#" title="선택목록에 명단 추가">추가</a>
+				</li>
+				<li>
+					<a class="btn_delete" href="#" title="체크 명단 휴지통으로 이동">삭제</a>
+				</li>
+				<li>
+					<a class="pop_copy" href="#" title="체크 명단 특정폴더로 복사">복사</a>
+				</li>
+				<li>
+					<a class="pop_move" href="#" title="체크 명단 특정폴더로 이동">이동</a>
+				</li>
+			</ul>
 		</div><!-- 2번 주소 폴더 선택 끝 -->
 
-		<div id="layer_append" class="layer draggable border-radius8"></div><!-- 추가 레이어 -->
+		<div id="layer_append" class="layer draggable"></div><!-- 추가 레이어 -->
 		
 
-		<div id="layer_copy" class="layer draggable border-radius8">
-			<div class="title"><p>복사할 폴더를 선택하세요</p><span class="btn_closex"><a href="#" class="pngFix"><img class="pngFix" src="img/pop_btn_close.gif" alt="close" /></a></span></div>
+		<div id="layer_copy" class="layer draggable">
+			<div class="title"><p>복사할 폴더를 선택하세요</p><span class="btn_closex"><a href="#" class="close_btn">Close</a></span></div>
 			<div class="bodyArea"><div id="smsPurplebookTargetTreeCopy"></div></div>
-			<div class="bottomArea">
-				<a class="btn_refresh" href=""><img src="img/pop_btn_refresh.png" alt="새로고침"></a>
-				<a class="btn_blank" href=""><img src="img/pop_btn_blank.png" alt=""></a>
-				<a class="btn_copy" id="smsPurplebookDoCopy" href=""><img src="img/pop_btn_copy.png" alt="복사"></a>
-			</div>
+			<ul class="bottom_btn">
+				<li>
+					<a class="btn_refresh" href="">새로고침</a>
+				</li>
+				<li>
+					<a class="btn_copy" id="smsPurplebookDoCopy" href="">복사</a>
+				</li>
+			</ul>
 		</div><!-- 복사 레이어 -->
 
-		<div id="layer_move" class="layer draggable border-radius8">
-			<div class="title"><p>이동할 폴더를 선택하세요</p><span class="btn_closex"><a href="#"><img src="img/pop_btn_close.gif" alt="close" /></a></span></div>
+		<div id="layer_move" class="layer draggable">
+			<div class="title"><p>이동할 폴더를 선택하세요</p><span class="btn_closex"><a href="#" class="close_btn">Close</a></span></div>
 			<div class="bodyArea"><div id="smsPurplebookTargetTreeMove"></div></div>
-			<div class="bottomArea">
-				<a class="btn_refresh" href=""><img src="img/pop_btn_refresh.png" alt="새로고침"></a>
-				<a class="btn_blank" href=""><img src="img/pop_btn_blank.png" alt=""></a>
-				<a class="btn_move" id="smsPurplebookDoMove" href=""><img src="img/pop_btn_move.png" alt="이동"></a>
-			</div>
+			<ul class="bottom_btn">
+				<li>
+					<a class="btn_refresh" href="">새로고침</a>
+				</li>
+				<li>
+					<a class="btn_move" id="smsPurplebookDoMove" href="">이동</a>
+				</li>
+			</ul>
 		</div><!-- 이동 레이어 -->
 
 
 	</div><!-- 1, 2번 왼쪽 주소록 영역 끝 -->
 
 	<div class="purplebook_arrow">
-		<span class="btn_arrow_right"><a id="addRecipients" href="#" title="폴더 혹은 명단을 발송대상에 추가"><img src="img/btn_arrow_right.gif" alt="" /></a></span>
-		<br /><br /><br />
-		<span class="btn_arrow_left"><a id="minusRecipients" href="#" title="선택된 명단을 발송대상에서 제거"><img src="img/btn_arrow_left.gif" alt="" /></a></span>
+		<span class="btn_arrow_right"><a id="addRecipients" href="#" title="폴더 혹은 명단을 발송대상에 추가"><img src="img/right_arrow.png" alt="" /></a></span>
 	</div><!-- 가운데 화살표 영역 끝 -->
 
 	<div class="purplebook_right">
 		<div class="purplebook_right_title">		
-			<div class="title"><p><img src="img/rightchoice_title.gif" alt="받는사람" /></p><span class="total" id="smsPurplebookTargetListCount">(총 0/명)</span></div>
+			<div class="right_title">받는사람<span class="total" id="smsPurplebookTargetListCount">(총 0/명)</span></div>
 		</div>
 		<div class="add_list">
 			<input type="text" id="inputDirectName" class="inputTypeText" maxlength="10" title="이름" value="" />
             <input type="text" id="inputDirectNumber" maxlength="20" class="inputTypeText" title="폰번호" value="" />
 
             <button class="btn_append" id="btnDirectAdd" title="받는사람에 추가">추가</button>
-            <button class="pop_recent" title="최근입력 번호목록">최근입력번호</button>
+            <button class="pop_recent" title="최근입력 번호목록">최근목록</button>
 		</div>
         <div class="title_info"><span class="checkbox" id="smsPurplebookToggleTarget" title="선택전환"></span><span class="name">이름</span><span class="h_number">핸드폰</span><span class="h_delete">삭제</span></div>
 		<div class="bodyArea"><ul id="smsPurplebookTargetList"></ul></div>
-		<div class="bottomArea">
-            <a class="pop_addrbook" href="#" title="체크 목록 주소록에 복사"><img src="img/btn_goaddress.gif" alt="주소록으로" /></a>
-			<a class="pop_mass" id="smsPurplebookAddBulk" href="#" title="메모한 목록을 붙여넣기"><img src="img/btn_mass.gif" alt="대량추가" /></a>
-            <a class="pop_overlap" href="#" title="중복번호 목록"><img src="img/btn_dupli_bg.gif" alt="중복번호" /><span class="number"></span></a>
-		</div>
+		<ul class="bottomArea">
+			<li>
+				<a class="pop_addrbook" href="#" title="체크 목록 주소록에 복사">주소록이동</a>
+			</li>
+			<li>
+				<a class="pop_mass" id="smsPurplebookAddBulk" href="#" title="메모한 목록을 붙여넣기">대량추가</a>
+			</li>
+			<li>
+				<a class="pop_overlap" href="#" title="중복번호 목록">중복번호</a>
+			</li>
+			<li>
+				<a class="pop_overlap" href="#" title="선택삭제">선택삭제</a>
+			</li>
+		</ul>
 
 		<!-- 레이어 팝업 영역 -->
-		<div id="layer_addrbook" class="layer draggable border-radius8">
-			<div class="title"><p>주소록으로 복사할 폴더를 선택하세요</p><span class="btn_closex"><a href="#"><img class="pngFix" src="img/pop_btn_close.gif" alt="close" /></a></span></div>
+		<div id="layer_addrbook" class="layer draggable">
+			<div class="title"><p>주소록으로 복사할 폴더를 선택하세요</p><span class="btn_closex"><a href="#" class="close_btn">Close</a></span></div>
 			<div class="bodyArea"><div id="smsPurplebookTargetTreeAddrbook"></div></div>
-			<div class="bottomArea">
-				<a class="btn_refresh" href=""><img src="img/pop_btn_refresh.png" alt="새로고침"></a>
-				<a class="btn_blank" href=""><img src="img/pop_btn_blank.png" alt=""></a>
-				<a class="btn_copy" href=""><img src="img/pop_btn_copy.png" alt="복사"></a>
-			</div>
+			<ul class="bottom_btn">
+				<li>
+					<a class="btn_refresh" href="">새로고침</a>
+				</li>
+				<li>
+					<a class="btn_copy" href="">복사</a>
+				</li>
+			</ul>
 		</div><!-- 이동 레이어 -->
 
-		<div id="layer_overlap" class="layer draggable border-radius8"></div><!-- 중복번호 레이어 -->
-		<div id="layer_mass" class="layer draggable border-radius8"></div><!-- 대량추가 레이어 -->
-		<div id="layer_recent" class="layer draggable border-radius8"></div><!-- 최근입력번호 레이어 -->
+		<div id="layer_overlap" class="layer draggable"></div><!-- 중복번호 레이어 -->
+		<div id="layer_mass" class="layer draggable"></div><!-- 대량추가 레이어 -->
+		<div id="layer_recent" class="layer draggable"></div><!-- 최근입력번호 레이어 -->
 	</div><!-- 오른쪽 전송 영역 끝 -->
 </div>
 <div id="smsPurplebook_bottom" class="pngFix"></div>
 
-<div id="smsMessage_top"></div>
 <div id="smsMessage">
-	<div class="left_button">
-		<a id="btn_pop_chars" href="#"><img src="img/btn_spacialtext.png" alt="특수문자" /></a>
-		<a id="btn_attach_pic" href="#"><img src="img/btn_photoadd.png" alt="사진추가" /></a>
-        <a id="btn_detach_pic" href="#"><img src="img/btn_photodel.png" alt="사진삭제" /></a>
-        <input type="hidden" name="file_srl" value="" />
-        <input type="hidden" name="cancel_file_srl" value="" />
+	
 
-        <div id="layer_chars" class="layer draggable border-radius8"></div><!-- 특수문자 레이어 -->
-        <div id="layer_upload" class="layer draggable border-radius8"></div><!-- 사진추가 레이어 -->
-	</div><!-- 왼쪽 버튼 끝 -->
-
-    <div class="msgtype_switch border-radius8">
+    <div class="msgtype_switch">
         90바이트가 초과되었습니다. 발송방법을 선택해 주세요.
         <div>
             <input type="radio" name="msgtype" id="mmsSend" value="SMS" checked="checked" /><label for="mmsSend">MMS 장문</label>
@@ -170,46 +194,53 @@
 	<ul class="center_display" id="smsPurplebookContentInput">
         <li>
             <div class="top_btn">
-                <button class="btn_record" href="#">내용저장</button>
+                <button class="btn_record" href="#">문자저장</button>
                 <button class="pop_messages" href="#">불러오기</button>
-				<button class="pop_merge" href="#">머지기능</button>
             </div>
             <div class="text_area" style="overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll;">
                 <div id="filepicker_preview_file_srl" class="photo" style="display:none;float:left;width:110px;margin-bottom:4px;"></div>
                 <textarea id="main_screen" class="phonescreen" style="overflow:hidden;">90bytes초과시 MMS로 전환됩니다.</textarea>
             </div>
             <div class="text_btn">
-                <a class="btn_bytes" href="#" title="90바이트 제한"><span>0bytes</span></a>
                 <a class="btn_clear" href="#" title="내용지우기"><span>Clear</span></a>
+                <a class="btn_bytes" href="#" title="90바이트 제한"><span>0bytes</span></a>
                 <a class="close" href="#" style="visibility:hidden;"><span>close</span></a>
                 <button class="btn_addwindow" href="#" title="입력창 추가">창추가</button>
             </div>
         </li>
 	</ul><!-- 가운데 액정 끝 -->
 
-    <div id="layer_messages" class="layer draggable border-radius8"></div><!-- 발신번호관리 레이어 -->
-	<div id="layer_merge" class="layer draggable border-radius8"></div><!-- 머지기능관리 레이어 -->
+    <div id="layer_messages" class="layer draggable"></div><!-- 발신번호관리 레이어 -->
+	<div id="layer_merge" class="layer draggable"></div><!-- 머지기능관리 레이어 -->
 	
 
 
 	<div class="right_button">
-        <div class="add_info"><span id="projectedType">SMS</span> <span id="projectedCount">0</span>건, 소요비용 <span id="projectedCost">0</span>원</div>
+		<div class="add_info">
+			<span id="projectedType">SMS</span> <span id="projectedCount">0</span>건, 소요비용 <span id="projectedCost">0</span>원<br />
+			<span>현재잔액:243,200원</span>	
+		</div>
+		<div class="time_interval">
+			<input type="checkbox" id="interval">
+			<label for="interval">발송간격설정</label>
+			<p><input type="text" maxlength="4" value="2400" class="input_text" />개 번호를 <input type="text" value="1" class="input_text minput" />분 마다 전송</p>
+		</div>
 		<div class="add_area">
-            <label>보내는 사람</label><input type="text" id="smsPurplebookCallback" maxlength="20" value="{$callback}" title="발신번호 입력" />
+            <input type="text" id="smsPurplebookCallback" maxlength="20" value="{$callback}" title="발신번호 입력" />
             <button class="btn_show_layer" title="발신번호 관리">발신번호관리</button>
 		</div>
 		<div class="submit_btn">
-            <a class="btn_forward" id="btnSimplePhoneSend" href="#"><img src="img/btn_forward.png" alt="보내기" /></a>
-			<a class="btn_booking" id="btnSimplePhoneReserv" href="#"><img src="img/btn_booking.png" alt="예약전송" /></a>
+            <a class="btn_forward" id="btnSimplePhoneSend" href="#">보내기</a>
+			<a class="btn_booking" id="btnSimplePhoneReserv" href="#">예약전송</a>
             <input type="hidden" value="0" id="smsPurplebookReservFlag" />
 		</div>
-		<div class="help" title="맞춤법에 어긋나는 글자는 깨져서 전송될 수 있으니 대량전송의 경우 반드시 본인폰으로 테스트 후 발송하세요"><img class="pngFix" src="img/info_mark.png"  alt="발송전 테스트" />유의하실 사항</div>
+		<div class="help" title="맞춤법에 어긋나는 글자는 깨져서 전송될 수 있으니 대량전송의 경우 반드시 본인폰으로 테스트 후 발송하세요"><img class="pngFix" src="img/question.png"  alt="발송전 테스트" />유의하실 사항</div>
 
 
-		<div id="layer_sendid" class="layer draggable border-radius8"></div><!-- 발신번호관리 레이어 -->
-		<div id="layer_reserv" class="layer border-radius8"></div><!-- 예약발송 레이어 -->
-        <div id="layer_status" class="layer draggable border-radius8">
-			<div class="title"><p>전송상태</p><span class="btn_closex"><a href="#"><img src="img/pop_btn_close.gif" alt="close" /></a></span></div>
+		<div id="layer_sendid" class="layer draggable"></div><!-- 발신번호관리 레이어 -->
+		<div id="layer_reserv" class="layer"></div><!-- 예약발송 레이어 -->
+        <div id="layer_status" class="layer draggable">
+			<div class="title"><p>전송상태</p><span class="btn_closex"><a href="#" class="close_btn">Close</a></span></div>
             <div class="bodyArea">
                 <div class="text">전송중입니다...</div>
                 <span class="progressBar"></span>
@@ -222,14 +253,22 @@
 				<a id="btn_stop" href=""><img src="img/btn_stop.png" alt="일시중지"></a><a id="btn_continue" href=""><img src="img/btn_continue.png" alt="전송재개"></a>
             </div>
         </div>
-
 	</div><!-- 오른쪽 버튼 끝 -->
+	<div class="left_button">
+		<a id="btn_pop_chars" class="left_btn" href="#">특수문자</a>
+		<a id="btn_attach_pic" class="left_btn" href="#">사진추가</a>
+		<a id="btn_detach_pic" class="left_btn" href="#">사진삭제</a>
+		<button class="pop_merge" href="#">머지기능</button>
+		<input type="hidden" name="file_srl" value="" />
+		<input type="hidden" name="cancel_file_srl" value="" />
+
+		<div id="layer_chars" class="layer draggable"></div><!-- 특수문자 레이어 -->
+		<div id="layer_upload" class="layer draggable"></div><!-- 사진추가 레이어 -->
+	</div><!-- 왼쪽 버튼 끝 -->
 </div>
-<div id="smsMessage_bottom" class="pngFix"></div>
 
 <button id="full_address_button" >전체보기</button>
 <div id="full_address"></div> <!-- 전체보기 컨텐츠 -->
-
 
 <!--@if($act!='procWidgetGenerateCodeInPage')-->
 <script type="text/javascript">
