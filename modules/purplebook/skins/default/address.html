@@ -136,8 +136,8 @@
 			<div class="right_title">받는사람<span class="total" id="smsPurplebookTargetListCount">(총 0/명)</span></div>
 		</div>
 		<div class="add_list">
-			<input type="text" id="inputDirectName" class="inputTypeText" maxlength="10" title="이름" value="" />
-            <input type="text" id="inputDirectNumber" maxlength="20" class="inputTypeText" title="폰번호" value="" />
+			<input type="text" id="inputDirectName" class="inputTypeText" maxlength="10" placeholder="이름" title="이름" value="" />
+            <input type="text" id="inputDirectNumber" maxlength="20" class="inputTypeText" placeholder="폰번호" title="폰번호" value="" />
 
             <button class="btn_append" id="btnDirectAdd" title="받는사람에 추가">추가</button>
             <button class="pop_recent" title="최근입력 번호목록">최근목록</button>
@@ -146,6 +146,9 @@
 		<div class="bodyArea"><ul id="smsPurplebookTargetList"></ul></div>
 		<ul class="bottomArea">
 			<li>
+				<a class="pop_overlap" href="#" title="선택삭제">선택삭제</a>
+			</li>
+			<li>
 				<a class="pop_addrbook" href="#" title="체크 목록 주소록에 복사">주소록이동</a>
 			</li>
 			<li>
@@ -153,9 +156,6 @@
 			</li>
 			<li>
 				<a class="pop_overlap" href="#" title="중복번호 목록">중복번호</a>
-			</li>
-			<li>
-				<a class="pop_overlap" href="#" title="선택삭제">선택삭제</a>
 			</li>
 		</ul>
 
