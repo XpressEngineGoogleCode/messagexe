@@ -318,6 +318,17 @@ class purplebookModel extends purplebook
 		}
 		$output = executeQueryArray($query_id, $args);
 		 */
+
+
+		if(Context::get('search_keyword'))
+		{
+			$args->search_node_name = Context::get('search_keyword');
+			$args->search_phone_num = Context::get('search_keyword');
+			$args->search_memo1 = Context::get('search_keyword');
+			$args->search_memo2 = Context::get('search_keyword');
+			$args->search_memo3 = Context::get('search_keyword');
+		}
+
 		$output = $this->getAddressList($args);
 
 		if((!is_array($output->data) || !count($output->data)) && $args->node_type == '1' && $args->node_route == '.')

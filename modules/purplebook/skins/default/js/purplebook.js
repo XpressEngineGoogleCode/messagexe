@@ -1850,7 +1850,8 @@ function pb_load_list(node) {
     });
 }
 
-function pb_load_list_full(node) {
+// 전체보기 리스트 불러오기
+function pb_load_list_full(node, search_keyword) {
     if (typeof(node)=='undefined') {
         var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
         if (selected_folders.length > 0) {
@@ -1866,6 +1867,11 @@ function pb_load_list_full(node) {
         req_node_id = node.attr('node_id');
     }
 
+	// 검색어 설정  
+	if (typeof(search_keyword)=='undefined') {
+		search_keyword = null;
+	}
+
     jQuery.ajax({
         type : "POST"
         , contentType: "application/json; charset=utf-8"
@@ -1875,6 +1881,7 @@ function pb_load_list_full(node) {
                     , act : "getPurplebookList"
                     , node_id : req_node_id
                     , node_type : '2'
+					, search_keyword : search_keyword
                  }
         , dataType : "json"
         , success : function (data) {
@@ -1883,6 +1890,7 @@ function pb_load_list_full(node) {
                alert(data.message);
                return -1;
             }
+
             jQuery('#full_address_list').html('');
             for (i = 0; i < data.data.length; i++)
             {
@@ -2805,7 +2813,7 @@ function submit_messages() {
 					// 전체보기 페이지에 리스트 추가
 					add_to_list_full(data.node_id, node_name, phone_num, memo1, memo2, memo3);
 
-					$('#inputFullAddressPhone').val('');
+					$('#inputFullAddressNumber').val('');
 					$('#inputFullAddressName').val('');
 					$('#inputFullAddressMemo1').val('');
 					$('#inputFullAddressMemo2').val('');
@@ -2813,6 +2821,15 @@ function submit_messages() {
 					$('#inputFullAddressName').focus();
 
 					updatePurplebookListCountFull();
+
+					var now = new Date();
+					var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
+
+					$("#full_address_status").html('추가되었습니다. ' + nowTime);
+
+					if($('ul#full_address_history li').length == 0) $("#full_address_history").html('<li> 추가되었습니다. ' + nowTime + '</li>');
+					else $("#full_address_history").append('<li> 추가되었습니다. ' + nowTime + '</li>');
+					
 				}
 				else
 				{
@@ -4071,6 +4088,22 @@ function submit_messages() {
                 }
             }
         });
+
+
+		// 전체보기 검색기능
+		$('#btn_full_search_keyword').live('click',function() {
+			search_keyword = $("#full_search_keyword").val();
+
+			var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
+
+			if (selected_folders.length > 0) {
+				jQuery('#full_address_list').html('');
+
+				var node = jQuery(selected_folders[0]);
+				pb_load_list_full(node, search_keyword);
+			}		
+		
+		});
     });
 }) (jQuery);
 
