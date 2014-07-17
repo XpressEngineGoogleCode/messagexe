@@ -5,12 +5,24 @@
 <div class="full_header">
 	<span class="btn_closex" onClick="closeFullAddress()"><a href="#"><img class="pngFix" src="img/pop_btn_close.gif" alt="close" /></a></span>
 	<div id="tab_add_address">
-		<ul>
-			<li><a href="#tab_add_address_direct">개별추가</a></li>
-			<li><a href="#tab_add_address_excel">엑셀로추가</a></li>
-		</ul>
+		<!-- 주소록에 회원 추가 -->
+		<button onClick="showFullAddressMenu('#full_add_address_direct')">개별추가</button> <!-- 개별추가 버튼 -->
+		<button onClick="showFullAddressMenu('#full_add_address_excel')">엑셀추가</button> <!-- 엑셀추가 버튼 -->
+
+		<span id="full_address_status" style="color:red; font-size:15px;"></span> <!-- 현재 상태창 -->
+
+		<button onClick="showFullAddressMenu('#full_history')">HISTORY</button> <!-- 히스토리 버튼 -->
+
+		<!-- 검색 -->
+		<input type="text" id="full_search_keyword" value="" />
+		<button id="btn_full_search_keyword">검색</button>
+		<!-- END -->
+
+		<!-- 숨겨진 메뉴들 -->
 		<div class="full_address_tab_content">
-			<div id="tab_add_address_direct">
+			<!-- 개별추가 -->
+			<div id="full_add_address_direct" class="full_address_hide_menu">
+				<span class="btn_closex" onClick="closeFullMenu('#full_add_address_direct')"><a href="#" class="close_btn">Close</a></span>
 				<input type="text" title="이름" id="inputFullAddressName" maxlength="10" value="" />
 				<input type="text" title="폰번호" id="inputFullAddressNumber" maxlength="20" value="" />
 				<input type="text" title="메모1" id="inputFullAddressMemo1" value="" />
@@ -18,7 +30,9 @@
 				<input type="text" title="메모3" id="inputFullAddressMemo3" value="" />
 				<button id="btnAddFullAddress">추가</button>
 			</div>
-			<div id="tab_add_address_excel">
+			<!-- 엑셀추가 -->
+			<div id="full_add_address_excel" class="full_address_hide_menu">
+				<span class="btn_closex" onClick="closeFullMenu('#full_add_address_excel')"><a href="#" class="close_btn">Close</a></span>
 				<form id="add_address_excel_form" enctype="multipart/form-data" method="POST" action="./">
 					<input name="module" type="hidden" value="{$module}" />
 					<input name="act" type="hidden" value="procPurplebookExcelLoad" />
@@ -30,9 +44,21 @@
 					<input type="submit" id="btnAddFullAddressExcel" value="등록" />
 				</form>
 			</div>
+			<!-- 히스토리 -->
+			<div id="full_history" class="full_address_hide_menu"><!-- content -->
+				<span class="btn_closex" onClick="closeFullMenu('#full_history')"><a href="#" class="close_btn">Close</a></span>
+				<ul id="full_address_history">
+					변경된사항이 없습니다.
+				</ul>
+			</div>
 		</div>
+		<!-- END -->
 	</div>
 </div>
+
+<form action="./">
+	<input type="submit" value="전송"  />
+</form>
 
 <div class="bodyArea">
 	받는사람수 : <span class="total" id="smsPurplebookListCountFull">(총 0/명)</span>

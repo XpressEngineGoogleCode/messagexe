@@ -651,8 +651,6 @@ class purplebookController extends purplebook
 		if($args->node_type=='1') $this->add('rel','folder');
 	}
 
-
-
 	/**
 	 * @brief 전체보기창 Excel로 주소록에 추가
 	 **/
@@ -664,7 +662,7 @@ class purplebookController extends purplebook
 		// 강제적으로 요청을 JSON으로 한다.
 		Context::setRequestMethod("JSON");
 
-		require_once 'excel_reader2.php';
+		require_once('excel_reader2.php');
 
 		$vars = Context::getRequestVars();
 
@@ -681,11 +679,8 @@ class purplebookController extends purplebook
 		}
 
 		// 타이틀이 하나라도 들어있지 않다면 리턴 false
-		if(!array_key_exists('name',$array_test)) return new Object(-1, "title 'name' is not found");
-		if(!array_key_exists('number',$array_test)) return new Object(-1, "title 'number' is not found");
-		if(!array_key_exists('memo1',$array_test)) return new Object(-1, "title 'memo1' is not found");
-		if(!array_key_exists('memo2',$array_test)) return new Object(-1, "title 'memo2' is not found");
-		if(!array_key_exists('memo3',$array_test)) return new Object(-1, "title 'memo3' is not found");
+		if(!array_key_exists('name',$array_test)) return new Object(-1, "msg_excel_name_empty");
+		if(!array_key_exists('number',$array_test)) return new Object(-1, "msg_excel_number_empty");
 
 		$parent_node = Context::get('parent_node');
 
