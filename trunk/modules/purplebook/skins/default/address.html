@@ -46,13 +46,13 @@
 				<li>
 					<a id="smsPurplebookRefreshTree" href="#" title="폴더목록 새로고침">새로고침</a>
 				</li>
-				<li>
+				<li class="excel_down_btn">
 					<a id="btn_empty_trash" href="#" title="휴지통 비우기">엑셀 다운로드</a>
 				</li>
 				<li>
 					<a id="btn_pop_manual" class="pop_menual btn_menual" href="#" onfocus="this.blur()" title="자세한 설명">폴더생성</a>
 				</li>
-				<li>
+				<li class="etc_btn">
 				<a id="btn_pop_manual" class="pop_menual btn_menual etc" href="#" onfocus="this.blur()" title="기타메뉴">기타메뉴</a>
 				</li>
 			</ul>
@@ -77,7 +77,7 @@
 		
 
 		<div class="left_select">
-			<div class="title_info"><span class="checkbox" id="smsPurplebookToggleList" title="선택전환"></span><span class="name">이름</span><span class="h_number">연락처</span><a href="#" id="full_address_button" class="all_view">전체보기</a></div>
+			<div class="title_info"><span class="checkbox" id="smsPurplebookToggleList" title="선택전환"></span><span class="name">이름</span><span class="h_number">연락처</span><a href="#" class="all_view">전체보기</a></div>
 			<div class="bodyArea"><ul id="smsPurplebookList"></ul></div>
 			<ul class="bottomArea">
 				<li>
@@ -128,7 +128,7 @@
 	</div><!-- 1, 2번 왼쪽 주소록 영역 끝 -->
 
 	<div class="purplebook_arrow">
-		<span class="btn_arrow_right"><a id="addRecipients" href="#" title="폴더 혹은 명단을 발송대상에 추가"><img src="img/right_arrow.png" alt="" /></a></span>
+		<span class="btn_arrow_right"><a id="addRecipients" href="#" title="폴더 혹은 명단을 발송대상에 추가"><img class="pngFix" src="img/right_arrow.png" alt="" /></a></span>
 	</div><!-- 가운데 화살표 영역 끝 -->
 
 	<div class="purplebook_right">
@@ -267,6 +267,7 @@
 	</div><!-- 왼쪽 버튼 끝 -->
 </div>
 
+<button id="full_address_button" >전체보기</button>
 <div id="full_address"></div> <!-- 전체보기 컨텐츠 -->
 
 <!--@if($act!='procWidgetGenerateCodeInPage')-->

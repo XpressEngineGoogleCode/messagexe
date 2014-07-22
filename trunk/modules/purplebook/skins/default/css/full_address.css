@@ -1,3 +1,2 @@
-.p_full_address_table { margin:auto; width:50%; border:1px solid blue; }
 
-.full_address_hide_menu { display:none; }
+.full_address_hide_menu { display:none; padding:10px; overflow:hidden; position:relative; border:1px solid #ddd; border-top:0; border-radius: 0 0 10px 10px; }
