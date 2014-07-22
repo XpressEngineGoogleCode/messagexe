@@ -626,7 +626,6 @@ class purplebookController extends purplebook
 			$node_route = $output->data->node_route . $parent_node . '.';
 		}
 
-
 		unset($args);
 		$args->member_srl = $logged_info->member_srl;
 		$args->user_id = $logged_info->user_id;
@@ -635,6 +634,9 @@ class purplebookController extends purplebook
 		$args->node_name = Context::get('node_name');
 		$args->node_type = Context::get('node_type');
 		$args->phone_num = str_replace('-', '', Context::get('phone_num'));
+		$args->memo1 = Context::get('memo1');
+		$args->memo2 = Context::get('memo2');
+		$args->memo3 = Context::get('memo3');
 
 		$this->insertPurplebook($args);
 
@@ -662,13 +664,19 @@ class purplebookController extends purplebook
 		// 강제적으로 요청을 JSON으로 한다.
 		Context::setRequestMethod("JSON");
 
+		// excel 파일을 읽기위한 php파일 가져오기 
 		require_once('excel_reader2.php');
 
 		$vars = Context::getRequestVars();
 
+		$ext = substr(strrchr($vars->excel_file["name"],"."),1); //확장자앞 .을 제거하기 위하여 substr()함수를 이용
+		$ext = strtolower($ext); //확장자를 소문자로 변환
+
+		if($ext != 'xls') return new Object(-1, "msg_excel_check_extension");  //확장자 검사
+
 		$data = new Spreadsheet_Excel_Reader();
 		//$data->setOutputEncoding('CP949');
-		$data->read($vars->excel_file["tmp_name"]);
+		$data->read($vars->excel_file["tmp_name"]); // 엑셀파일 읽기
 
 		// numRows가 가로 numCols가 세로
 		for ($i = 1; $i <= $data->sheets[0]['numCols']; $i++) {

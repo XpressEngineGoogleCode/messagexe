@@ -319,7 +319,7 @@ class purplebookModel extends purplebook
 		$output = executeQueryArray($query_id, $args);
 		 */
 
-
+		// 검색어가 있을시
 		if(Context::get('search_keyword'))
 		{
 			$args->search_node_name = Context::get('search_keyword');
@@ -329,12 +329,23 @@ class purplebookModel extends purplebook
 			$args->search_memo3 = Context::get('search_keyword');
 		}
 
+		if(Context::get("page")) $args->page = Context::get("page");
+		else $args->page = 1;
+
 		$output = $this->getAddressList($args);
 
-		if((!is_array($output->data) || !count($output->data)) && $args->node_type == '1' && $args->node_route == '.')
-		{
-			return;
-		}
+		// 페이지 설정
+		$this->add('page_navigation', $output->page_navigation);
+		Context::set('total_count', $output->total_count);
+		Context::set('total_page', $output->total_page);
+		Context::set('page', $output->page);
+		Context::set('page_navigation', $output->page_navigation);
+
+		// 리스트 시작 Number 
+		$start_num = ($args->page - 1) * 10 + 1;
+		Context::set('start_num', $start_num);
+
+		if((!is_array($output->data) || !count($output->data)) && $args->node_type == '1' && $args->node_route == '.') return;
 
 		if(is_array($output->data))
 		{
@@ -368,6 +379,23 @@ class purplebookModel extends purplebook
 		$this->add('data', $data);
 		$config = $this->getModuleConfig();
 		$this->add('base_url', $config->callback_url);
+
+		if(Context::get('full_address_view')){
+			Context::set('list', $data); // 주소록 리스트 설정 
+
+			if(Context::get('full_fix_mode')) Context::set('full_fix_mode', Context::get('full_fix_mode')); // 수정모드일때 
+
+			$oModuleModel = &getModel("module");
+			$oTemplate = &TemplateHandler::getInstance();
+
+			$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
+
+			$path = $this->module_path."skins/".$module_info->skin;
+			$file_name = "full_address_list.html";
+			$data = $oTemplate->compile($path, $file_name);
+
+			$this->add('list_templete', $data); // 템플릿파일 설정
+		}
 	}
 
 	function getPurplebookCallbackNumbers() 

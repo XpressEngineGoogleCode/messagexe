@@ -8,6 +8,10 @@
 		<!-- 주소록에 회원 추가 -->
 		<button onClick="showFullAddressMenu('#full_add_address_direct')">개별추가</button> <!-- 개별추가 버튼 -->
 		<button onClick="showFullAddressMenu('#full_add_address_excel')">엑셀추가</button> <!-- 엑셀추가 버튼 -->
+		<!-- END -->
+
+		<button onClick="load_full_address_list(null, true)" id="full_fix_mode_open">전체수정모드</button> <!-- 전체수정 모드 버튼 -->
+		<button onClick="load_full_address_list(null, false)" id="full_fix_mode_close" style="display:none;">전체수정모드 종료</button> <!-- 전체수정 모드 종료 버튼 -->
 
 		<span id="full_address_status" style="color:red; font-size:15px;"></span> <!-- 현재 상태창 -->
 
@@ -56,24 +60,7 @@
 	</div>
 </div>
 
-<form action="./">
-	<input type="submit" value="전송"  />
-</form>
-
-<div class="bodyArea">
-	받는사람수 : <span class="total" id="smsPurplebookListCountFull">(총 0/명)</span>
-	<table class="p_full_address_table">
-		<thead>
-			<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
-			<th>이름</th>
-			<th>전화번호</th>
-			<th>메모1</th>
-			<th>메모2</th>
-			<th>메모3</th>
-		</thead>
-		<tbody id="full_address_list">
-		</tbody>
-	</table>
+<div class="bodyArea" id="full_address_list">
 </div>
 
 
