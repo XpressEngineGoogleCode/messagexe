@@ -1,19 +1,28 @@
-<span class="total">(총 {$page_navigation->total_count}명)</span>
+받는사람수 : <span class="total" id="smsPurplebookListCountFull">(총 {$page_navigation->total_count}명)</span>
+<div class="select_box">
+	<select id="time_01">
+		<option value="01" selected="selected">100명씩 보기</option>
+		<option value="02">1000명씩 보기</option>
+		<option value="03">10000명씩 보기</option>
+	</select>
+</div>
 
 <!-- 기본 -->
 <table class="p_full_address_table" cond="!$full_fix_mode">
 	<thead>
-		<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
-		<th>번호</th>
-		<th>이름</th>
-		<th>전화번호</th>
-		<th>메모1</th>
-		<th>메모2</th>
-		<th>메모3</th>
+		<tr>
+			<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
+			<th>번호</th>
+			<th>이름</th>
+			<th>전화번호</th>
+			<th>메모1</th>
+			<th>메모2</th>
+			<th>메모3</th>
+		</tr>
 	</thead>
 	<tbody id="full_address_list">
 		<tr loop="$list => $no,$val">
-			<td><span class="checkbox"></span></td>
+			<td class="jstree-draggable"><span class="checkbox"></span></td>
 			<td>{$start_num++}</td>
 			<td>{$val->attr->node_name}</td>
 			<td>{$val->attr->phone_num}</td>
@@ -27,17 +36,19 @@
 <!-- 수정모드 -->
 <table class="p_full_address_table" cond="$full_fix_mode == true">
 	<thead>
-		<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
-		<th>번호</th>
-		<th>이름</th>
-		<th>전화번호</th>
-		<th>메모1</th>
-		<th>메모2</th>
-		<th>메모3</th>
+		<tr>
+			<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
+			<th>번호</th>
+			<th>이름</th>
+			<th>전화번호</th>
+			<th>메모1</th>
+			<th>메모2</th>
+			<th>메모3</th>
+		</tr>
 	</thead>
 	<tbody id="full_address_list">
 		<tr loop="$list => $no,$val">
-			<td><span class="checkbox"></span></td>
+			<td class="jstree-draggable"><span class="checkbox"></span></td>
 			<td>{$start_num++}</td>
 			<td><input type="text" value="{$val->attr->node_name}" name="node_name_{$no+1}" /></td>
 			<td><input type="text" value="{$val->attr->phone_num}" name="phone_num_{$no+1}" /></td>

@@ -209,7 +209,7 @@ jQuery('#btnAddFullAddressExcel').live('click',function (){
 			load_full_address_list(null, false);
 
 			// 전체보기 Status와 History에 글올리기
-			set_full_address_status("추가되었습니다. "); 
+			set_full_address_status("엑셀파일로 추가되었습니다. "); 
 		},
 		error:function(request,status,error){
 			// ajaxSubmit 실패시 
@@ -297,7 +297,7 @@ function append_address_full()
 			updatePurplebookListCountFull();
 
 			// 전체보기 Status와 History에 글올리기
-			set_full_address_status("추가되었습니다. "); 
+			set_full_address_status("개별추가가 완료되었습니다. "); 
 		}
 		, error : function (xhttp, textStatus, errorThrown) { 
 			alert(errorThrown + " " + textStatus); 
@@ -313,13 +313,13 @@ function set_full_address_status(message)
 	var now = new Date();
 	var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
 
-	jQuery("#full_address_status").html(message + nowTime);
+	jQuery("#full_address_status").html(message);
 
-	if(jQuery("ul#full_address_history li").length == 0) jQuery("#full_address_history").html('<li>' + message + nowTime + '</li>');
+	if(jQuery("ul#full_address_history li").length == 0) jQuery("#full_address_history").html('<li>' + message + '<span class="full_address_date">' + nowTime + '</span>' + '</li>');
 	else 
 	{
 		if(jQuery("ul#full_address_history li").length > 10) jQuery("ul#full_address_history li").last().remove(); // 10개이상 쌓이면 마지막 요소는 제거
-		jQuery("#full_address_history").prepend('<li>' + message + nowTime + '</li>');
+		jQuery("#full_address_history").prepend('<li>' + message + '<span class="full_address_date">' + nowTime + '</span>' + '</li>');
 	}
 }
 
