@@ -38,12 +38,16 @@
 	</item>
 	<item name="msg_excel_name_empty">
 		<value xml:lang="ko"><![CDATA['name' 타이틀이 없습니다.]]></value>
-		<value xml:lang="ko"><![CDATA[title 'name' is not found]]></value>
+		<value xml:lang="en"><![CDATA[title 'name' is not found]]></value>
 	</item>
 	<item name="msg_excel_number_empty">
 		<value xml:lang="ko"><![CDATA['number' 타이틀이 없습니다.]]></value>
-		<value xml:lang="ko"><![CDATA[title 'name' is not found]]></value>
-    </item>
+		<value xml:lang="en"><![CDATA[title 'name' is not found]]></value>
+	</item>
+	<item name="msg_excel_check_extension">
+		<value xml:lang="ko"><![CDATA['xls'파일만 지원됩니다.]]></value>
+		<value xml:lang="en"><![CDATA['"xls" files only supported.']]></value>
+	</item>
     <item name="reservation_datetime">
         <value xml:lang="ko"><![CDATA[예약일시]]></value>
     </item>

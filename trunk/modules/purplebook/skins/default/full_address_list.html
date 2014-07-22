@@ -1,0 +1,63 @@
+<span class="total">(총 {$page_navigation->total_count}명)</span>
+
+<!-- 기본 -->
+<table class="p_full_address_table" cond="!$full_fix_mode">
+	<thead>
+		<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
+		<th>번호</th>
+		<th>이름</th>
+		<th>전화번호</th>
+		<th>메모1</th>
+		<th>메모2</th>
+		<th>메모3</th>
+	</thead>
+	<tbody id="full_address_list">
+		<tr loop="$list => $no,$val">
+			<td><span class="checkbox"></span></td>
+			<td>{$start_num++}</td>
+			<td>{$val->attr->node_name}</td>
+			<td>{$val->attr->phone_num}</td>
+			<td>{$val->attr->memo1}</td>
+			<td>{$val->attr->memo2}</td>
+			<td>{$val->attr->memo3}</td>
+		</tr>
+	</tbody>
+</table>
+
+<!-- 수정모드 -->
+<table class="p_full_address_table" cond="$full_fix_mode == true">
+	<thead>
+		<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
+		<th>번호</th>
+		<th>이름</th>
+		<th>전화번호</th>
+		<th>메모1</th>
+		<th>메모2</th>
+		<th>메모3</th>
+	</thead>
+	<tbody id="full_address_list">
+		<tr loop="$list => $no,$val">
+			<td><span class="checkbox"></span></td>
+			<td>{$start_num++}</td>
+			<td><input type="text" value="{$val->attr->node_name}" name="node_name_{$no+1}" /></td>
+			<td><input type="text" value="{$val->attr->phone_num}" name="phone_num_{$no+1}" /></td>
+			<td><input type="text" value="{$val->attr->memo1}" name="memo1_{$no+1}" /></td>
+			<td><input type="text" value="{$val->attr->memo2}" name="memo2_{$no+1}" /></td>
+			<td><input type="text" value="{$val->attr->memo3}" name="memo3_{$no+1}" /></td>
+		</tr>
+	</tbody>
+</table>
+
+
+<!-- 페이징 -->
+<div class="list_footer">
+	<div class="pagination">
+		<input type="hidden" value="{page}" id="full_address_page" />
+		<span><a href="#" onClick="load_full_address_list('1')" class="first">{$lang->first_page}</a></span>
+		<block loop="$page_no=$page_navigation->getNextPage()">
+			<strong cond="$page==$page_no">{$page_no}</strong> 
+			<a cond="$page!=$page_no" href="#" onClick="load_full_address_list({$page_no})">{$page_no}</a>
+		</block>
+		<span><a href="#" onClick="load_full_address_list({$page_navigation->total_page})" class="last">{$lang->last_page}</a></span>
+	</div>
+</div>
