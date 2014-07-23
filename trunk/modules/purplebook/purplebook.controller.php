@@ -1287,11 +1287,44 @@ class purplebookController extends purplebook
 		$this->setTemplateFile('purplebook_download');
 	}
 
-	function getDelimiter(){
+	function getDelimiter()
+	{
 		for ($i = 0; $i < 5; $i++) {
 			$result = $result . "@" . mt_rand(1, 9);
 		}
 		return $result;
+	}
+
+	// 주소록 업데이트
+	function procPurplebookUpdateList()
+	{
+		// 강제적으로 요청을 JSON으로 한다.
+		Context::setRequestMethod("JSON");
+
+		$logged_info = Context::get('logged_info');
+		if(!$logged_info) return new Object(-1, 'msg_invalid_request');
+
+		$vars = Context::getRequestVars();
+
+		for($i=1; $i <= $vars->list_count; $i++)
+		{
+			$node_id = "node_id_" . $i;
+			$node_name = "node_name_" . $i;
+			$phone_num = "phone_num_" . $i;
+			$memo1 = "memo1_" . $i;
+			$memo2 = "memo2_" . $i;
+			$memo3 = "memo3_" . $i;
+
+			$args->node_id = $vars->{$node_id};
+			$args->node_name = $vars->{$node_name};
+			$args->phone_num = $vars->{$phone_num};
+			$args->memo1 = $vars->{$memo1} . "";
+			$args->memo2 = $vars->{$memo2} . "";
+			$args->memo3 = $vars->{$memo3} . "";
+
+			$output = executeQuery('purplebook.updatePurplebook', $args);
+			if(!$output->toBool()) return $output;
+		}
 	}
 
 

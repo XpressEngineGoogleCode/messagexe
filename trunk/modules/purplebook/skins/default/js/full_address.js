@@ -1,17 +1,60 @@
 jQuery(document).ready(function(){
-	jQuery('input, a, img, button','.full_header').filter(function(index) { return !jQuery(this).hasClass('help'); }).tipsy(); // tipsy 다시호출
+	// tipsy 다시호출
+	jQuery('input, a, img, button','.full_header').filter(function(index) { return !jQuery(this).hasClass('help'); }).tipsy(); 
 
-	fullAddressSize(); // fulle_address 창 사이즈구하기
+	// fulle_address 창 사이즈구하기
+	fullAddressSize(); 
 
-	load_full_address_list("1", false); // 전체보기 리스트 불러오기
+	// 전체보기 리스트 불러오기
+	load_full_address_list("1", false); 
 
-	full_address_show();  // 전체보기창 보여주기
+	// 전체보기창 보여주기
+	full_address_show();  
 });
 
-// html에 리스트 append
-function add_to_list_full(node_id, node_name, phone_num, memo1, memo2, memo3)
-{
-	jQuery('#full_address_list').append('<tr><td node_id="' + node_id + '" class="jstree-draggable"><span class="checkbox"></span></td><td><span class="nodeName" title="' + node_name + '">' + node_name + '</span></td><td><span class="nodePhone">' + getSimpleDashTel(phone_num) + '</span></td><td><span>'+ memo1 +'</span></td><td><span>'+ memo2 +'</span></td><td><span>'+ memo3 +'</span></td></tr>');
+// 작업모드중 페이지 떠날시 물음
+jQuery(window).bind('beforeunload', function(){
+	if(jQuery("#use_full_work_mode").val() == "on") return 'Are you sure you want to navigate away from this page?';
+});
+
+// 수정모드에서 인풋박스에 변경사항 있을시 작업모드로 On
+function full_change_value(){
+	jQuery("#use_full_work_mode").val("on");
+}
+
+
+// 수정모드에서 저장
+function save_full_address_fix(){
+	jQuery("#full_fix_mode_form").ajaxSubmit({
+		dataType : 'json',
+		success : function(data) {
+			// procPurplebookUpdateList error 발생시
+			if(data.error == -1) 
+			{
+				alert(data.message);
+				return;
+			}
+
+			// 작업모드 off
+			jQuery("#use_full_work_mode").val("off");
+
+			// 화면에 업데이트된 리스트 새로고침 
+			load_full_address_list(null, true);
+
+			// 전체보기 Status와 History에 글올리기
+			set_full_address_status("수정이 완료되었습니다. "); 
+		},
+		error:function(request,status,error){
+			// ajaxSubmit 실패시 
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error+"\n"+"status:"+status);
+
+			// 전체보기 Status와 History에 글올리기
+			set_full_address_status("수정 실패."); 
+		}
+	});
+
+	return false;
+
 }
 
 // 카운터 업데이트
@@ -57,6 +100,14 @@ function fullAddressSize(size_change){
 // 전체화면 닫기
 function closeFullAddress()
 {
+	// 작업모드일때 페이지 이동시 물어봄
+	if(jQuery("#use_full_work_mode").val() == "on"){
+		if(confirm("작업중입니다. 페이지를 떠나시겠습니까?")){
+		}else{
+			return;
+		}
+	}
+
 	jQuery('#full_address').css('display','none');
 	return false;
 }
@@ -124,6 +175,14 @@ jQuery(window).scroll(function () {
 // 전체보기 리스트 불러오기
 function load_full_address_list(page, full_fix_mode)
 {
+	// 작업모드일때 페이지 이동시 물어봄
+	if(jQuery("#use_full_work_mode").val() == "on"){
+		if(confirm("작업중입니다. 페이지를 떠나시겠습니까?")){
+		}else{
+			return;
+		}
+	}
+
 	// 컨텐츠 SET
 	var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
 
@@ -134,6 +193,10 @@ function load_full_address_list(page, full_fix_mode)
 
 	// page
 	if(typeof(page)=='undefined' || !page) page = jQuery('#full_address_page').val();
+
+	console.log("hey");
+	console.log(jQuery("#use_full_fix_mode").val());
+	console.log(typeof(jQuery("#use_full_fix_mode").val()));
 
     var req_node_id = '';
     if (typeof(node)=='string') {
@@ -158,12 +221,20 @@ function load_full_address_list(page, full_fix_mode)
 		params['full_fix_mode'] = full_fix_mode; 
 		jQuery("#full_fix_mode_open").css('display','none');
 		jQuery("#full_fix_mode_close").css('display','');
+		jQuery("#full_fix_mode_save").css('display','');
+
+		jQuery("#use_full_fix_mode").val("true");
 	}
-	else
+	else if(full_fix_mode == false)
 	{
 		jQuery("#full_fix_mode_open").css('display','');
 		jQuery("#full_fix_mode_close").css('display','none');
+		jQuery("#full_fix_mode_save").css('display','none');
+
+		jQuery("#use_full_fix_mode").val("");
 	}
+
+	if(jQuery("#use_full_fix_mode").val()) params['full_fix_mode'] = true;  // 수정모드사용중일때는 해제하지 않는이상 계속 수정모드로 된다.
 
 	search_keyword = jQuery("#full_search_keyword").val();
 	if(search_keyword) params['search_keyword'] = search_keyword; // 검색어 설정  
