@@ -367,8 +367,8 @@ class purplebookModel extends purplebook
 				$obj->attr->subnode = $row->subnode;
 				$obj->attr->shared = $row->shared;
 				$obj->attr->memo1 = $row->memo1;
-				$obj->attr->memo2 = $row->memo1;
-				$obj->attr->memo3 = $row->memo1;
+				$obj->attr->memo2 = $row->memo2;
+				$obj->attr->memo3 = $row->memo3;
 
 				$obj->data = $row->node_name;
 				if ($row->subfolder > 0) $obj->state = "closed";

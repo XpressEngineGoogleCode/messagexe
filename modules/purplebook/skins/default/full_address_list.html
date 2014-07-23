@@ -34,31 +34,36 @@
 </table>
 
 <!-- 수정모드 -->
-<table class="p_full_address_table" cond="$full_fix_mode == true">
-	<thead>
-		<tr>
-			<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
-			<th>번호</th>
-			<th>이름</th>
-			<th>전화번호</th>
-			<th>메모1</th>
-			<th>메모2</th>
-			<th>메모3</th>
-		</tr>
-	</thead>
-	<tbody id="full_address_list">
-		<tr loop="$list => $no,$val">
-			<td class="jstree-draggable"><span class="checkbox"></span></td>
-			<td>{$start_num++}</td>
-			<td><input type="text" value="{$val->attr->node_name}" name="node_name_{$no+1}" /></td>
-			<td><input type="text" value="{$val->attr->phone_num}" name="phone_num_{$no+1}" /></td>
-			<td><input type="text" value="{$val->attr->memo1}" name="memo1_{$no+1}" /></td>
-			<td><input type="text" value="{$val->attr->memo2}" name="memo2_{$no+1}" /></td>
-			<td><input type="text" value="{$val->attr->memo3}" name="memo3_{$no+1}" /></td>
-		</tr>
-	</tbody>
-</table>
+<form id="full_fix_mode_form" cond="$full_fix_mode == true" method="POST">
+	<input name="module" type="hidden" value="{$module}" />
+	<input name="act" type="hidden" value="procPurplebookUpdateList" />
+	<input name="list_count" type="hidden" value="{count($list)}" />
 
+	<table class="p_full_address_table">
+		<thead>
+			<tr>
+				<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
+				<th>번호</th>
+				<th>이름</th>
+				<th>전화번호</th>
+				<th>메모1</th>
+				<th>메모2</th>
+				<th>메모3</th>
+			</tr>
+		</thead>
+		<tbody id="full_address_list">
+			<tr loop="$list => $no,$val">
+				<td class="jstree-draggable"><span class="checkbox"><input type="hidden" value="{$val->attr->node_id}" name="node_id_{$no+1}" /></span></td>
+				<td>{$start_num++}</td>
+				<td><input type="text" onChange="full_change_value()" value="{$val->attr->node_name}" name="node_name_{$no+1}" /></td>
+				<td><input type="text" onChange="full_change_value()" value="{$val->attr->phone_num}" name="phone_num_{$no+1}" /></td>
+				<td><input type="text" onChange="full_change_value()" value="{$val->attr->memo1}" name="memo1_{$no+1}" /></td>
+				<td><input type="text" onChange="full_change_value()" value="{$val->attr->memo2}" name="memo2_{$no+1}" /></td>
+				<td><input type="text" onChange="full_change_value()" value="{$val->attr->memo3}" name="memo3_{$no+1}" /></td>
+			</tr>
+		</tbody>
+	</table>
+</form>
 
 <!-- 페이징 -->
 <div class="list_footer">
