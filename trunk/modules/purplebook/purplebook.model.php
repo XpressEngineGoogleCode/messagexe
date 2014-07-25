@@ -329,8 +329,16 @@ class purplebookModel extends purplebook
 			$args->search_memo3 = Context::get('search_keyword');
 		}
 
+		// 페이지
 		if(Context::get("page")) $args->page = Context::get("page");
 		else $args->page = 1;
+
+		// 리스트 카운트
+		if(Context::get("list_count"))
+		{
+			Context::set("full_list_count", Context::get("list_count"));
+			$args->list_count = Context::get("list_count");
+		}
 
 		$output = $this->getAddressList($args);
 

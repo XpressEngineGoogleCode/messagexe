@@ -22,6 +22,64 @@ function full_change_value(){
 	jQuery("#use_full_work_mode").val("on");
 }
 
+// 체크박스 설정 
+jQuery('#full_address_list .checkbox').live('click', function() {
+	jQuery(jQuery(this)).toggleClass("on");
+});
+
+// 리스트 카운트 
+jQuery("#full_list_count").live("change", function(){
+	list_count = jQuery('#full_list_count option:selected').val();
+	load_full_address_list(null, null, list_count);
+});
+
+// 체크된 목록 삭제
+jQuery("#full_address_delete").live('click', function() {
+	var list = new Array();
+
+	jQuery('span.checkbox.on', '#full_address_list').each(function() {
+		list.push(jQuery(this).attr('node_id'));
+	});
+
+	console.log("RRRTTT");
+	console.log(JSON.stringify(list));
+	if (list.length == 0)
+	{
+		alert('삭제할 명단을 체크하세요.');
+		return false;
+	}
+
+	jQuery.ajax({
+		type : "POST"
+		, contentType: "application/json; charset=utf-8"
+		, url : "./"
+		, data : { 
+					module : "purplebook"
+					, act : "procPurplebookDelete"
+					, node_ids : JSON.stringify(list)
+				 }
+		, dataType : "json"
+		, success : function (data) {
+			if (data.error == -1) {
+				alert(data.message);
+			}
+
+			// 화면에 업데이트된 리스트 새로고침 
+			load_full_address_list(null);
+
+			// 전체보기 Status와 History에 글올리기
+			set_full_address_status("삭제가 완료되었습니다. ");
+
+		}
+		, error : function (xhttp, textStatus, errorThrown) { 
+			alert(errorThrown + " " + textStatus); 
+
+			// 전체보기 Status와 History에 글올리기
+			set_full_address_status("삭제 실패.");
+		}
+	});
+	
+});
 
 // 수정모드에서 저장
 function save_full_address_fix(){
@@ -173,7 +231,7 @@ jQuery(window).scroll(function () {
 });
 
 // 전체보기 리스트 불러오기
-function load_full_address_list(page, full_fix_mode)
+function load_full_address_list(page, full_fix_mode, list_count)
 {
 	// 작업모드일때 페이지 이동시 물어봄
 	if(jQuery("#use_full_work_mode").val() == "on"){
@@ -238,6 +296,8 @@ function load_full_address_list(page, full_fix_mode)
 
 	search_keyword = jQuery("#full_search_keyword").val();
 	if(search_keyword) params['search_keyword'] = search_keyword; // 검색어 설정  
+
+	if(list_count) params['list_count'] = list_count; // 리스트 카운트
 
 	exec_xml('purplebook', 'getPurplebookList', params, function(ret_obj) {
 		jQuery('#full_address_list').html(ret_obj["list_templete"]);

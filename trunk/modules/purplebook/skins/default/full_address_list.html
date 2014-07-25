@@ -1,9 +1,11 @@
 받는사람수 : <span class="total" id="smsPurplebookListCountFull">(총 {$page_navigation->total_count}명)</span>
+
+<!-- 리스트 카운트 -->
 <div class="select_box">
-	<select id="time_01">
-		<option value="01" selected="selected">100명씩 보기</option>
-		<option value="02">1000명씩 보기</option>
-		<option value="03">10000명씩 보기</option>
+	<select id="full_list_count">
+		<option value="10" selected="selected"|cond="$full_list_count == '10' || !$full_list_count">10명씩 보기</option>
+		<option value="100" selected="selected"|cond="$full_list_count == '100'">100명씩 보기</option>
+		<option value="1000" selected="selected"|cond="$full_list_count == '1000'">1000명씩 보기</option>
 	</select>
 </div>
 
@@ -22,10 +24,10 @@
 	</thead>
 	<tbody id="full_address_list">
 		<tr loop="$list => $no,$val">
-			<td class="jstree-draggable"><span class="checkbox"></span></td>
+			<td class="jstree-draggable"><span class="checkbox" node_id="{$val->attr->node_id}"></span></td>
 			<td>{$start_num++}</td>
 			<td>{$val->attr->node_name}</td>
-			<td>{$val->attr->phone_num}</td>
+			<td>{$val->attr->phone_num}<span class="cover_ok">수정 삭제</span></td>
 			<td>{$val->attr->memo1}</td>
 			<td>{$val->attr->memo2}</td>
 			<td>{$val->attr->memo3}</td>
@@ -53,7 +55,7 @@
 		</thead>
 		<tbody id="full_address_list">
 			<tr loop="$list => $no,$val">
-				<td class="jstree-draggable"><span class="checkbox"><input type="hidden" value="{$val->attr->node_id}" name="node_id_{$no+1}" /></span></td>
+				<td class="jstree-draggable"><span class="checkbox" node_id="{$val->attr->node_id}"><input type="hidden" value="{$val->attr->node_id}" name="node_id_{$no+1}" /></span></td>
 				<td>{$start_num++}</td>
 				<td><input type="text" onChange="full_change_value()" value="{$val->attr->node_name}" name="node_name_{$no+1}" /></td>
 				<td><input type="text" onChange="full_change_value()" value="{$val->attr->phone_num}" name="phone_num_{$no+1}" /></td>
@@ -76,4 +78,8 @@
 		</block>
 		<span><a href="#" onClick="load_full_address_list({$page_navigation->total_page})" class="last">{$lang->last_page}</a></span>
 	</div>
+</div>
+
+<div>
+	선택한 목록을 <button id="full_address_delete">삭제</button>
 </div>

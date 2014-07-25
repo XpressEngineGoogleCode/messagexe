@@ -401,6 +401,7 @@ button.gray_btn:hover { background: #ffffff; /* Old browsers */ background: -moz
 #full_address table.p_full_address_table tr { line-height:3.3em; text-align:center; }
 #full_address table.p_full_address_table tr:hover td { background-color:#fff; }
 #full_address table.p_full_address_table tr:hover {  border:2px solid #66b9ff; }
+#full_address table.p_full_address_table tr:hover .cover_ok {  display:block; }
 #full_address table.p_full_address_table tr:nth-child(odd) { background:#fff; }
 #full_address table.p_full_address_table tr:nth-child(even) { background:#fdfdfd; }
 #full_address table.p_full_address_table td.jstree-draggable { padding-left:25px; }
@@ -408,3 +409,5 @@ button.gray_btn:hover { background: #ffffff; /* Old browsers */ background: -moz
 
 #full_address_history { line-height:1.8em; font-size:12px; color:#333; padding-right:40px; overflow:hidden; }
 .full_address_date { font-size:11px; color:#888; float:right; }
+
+.cover_ok {background:red; z-index:550; display:none;}

@@ -72,15 +72,15 @@ class purplebook extends ModuleObject
 
 		if (!$oDB->isIndexExists("purplebook","idx_memo1"))
 		{
-			$oDB->addIndex("memo1","idx_memo1", array("memo1"));
+			$oDB->addIndex("purplebook","idx_memo1", array("memo1"));
 		}
 		if (!$oDB->isIndexExists("purplebook","idx_memo2"))
 		{
-			$oDB->addIndex("memo2","idx_memo2", array("memo2"));
+			$oDB->addIndex("purplebook","idx_memo2", array("memo2"));
 		}
 		if (!$oDB->isIndexExists("purplebook","idx_memo3")) 
 		{
-			$oDB->addIndex("memo3","idx_memo3", array("memo3"));
+			$oDB->addIndex("purplebook","idx_memo3", array("memo3"));
 		}
     }
 
