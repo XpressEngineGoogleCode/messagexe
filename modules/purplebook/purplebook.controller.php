@@ -1327,6 +1327,21 @@ class purplebookController extends purplebook
 		}
 	}
 
+	// node_ids 로 개별 삭제
+	function procPurplebookDelete()
+	{
+		$vars = Context::getRequestVars();
+		$node_ids = $this->getJSON('node_ids');
+
+		foreach($node_ids as $val)
+		{
+			Context::set('node_id', $val);
+
+			$this->procPurplebookDeleteNode();
+
+			Context::set('node_id', null);
+		}
+	}
 
 }
 /* End of file purplebook.controller.php */
