@@ -66,60 +66,53 @@ class purplebookController extends purplebook
 		$args->extension = array();
 		$delimiter = $this->getDelimiter();
 
+		$logged_info = Context::get('logged_info');
+		if(!$logged_info)
+		{
+			Context::set('message', Context::getLang('msg_login_required'));
+			return;
+		}
+
 		foreach($decoded as $key => $row)
 		{
-			$args->type = $row->msgtype;
-
-			// 문자창을 여러개를 동시에 보낼때 첫번째 문자 내용만 args->content에 저장한다.
-			if(!$args->content)
+			// 머지기능
+			if($row->node_id)
 			{
-				$replace_text = str_replace('{name}', 'HEY!!', $row->text);
-				$args->content = $replace_text;
+				// 창이 여러개일때 체크 
+				if($first_num != $row->recipient)
+				{
+					$vars->member_srl = $logged_info->member_srl;
+					$vars->node_id = $row->node_id;
+					$output=executeQuery('purplebook.getPurplebook', $vars);
+					if(!$output->toBool()) return $output;
+
+					$merge_name = $row->refname;
+					$merge_memo1 = $output->data->memo1;
+					$merge_memo2 = $output->data->memo2;
+					$merge_memo3 = $output->data->memo3;
+				}
+
+				$merge = array('{name}', '{memo1}', '{memo2}', '{memo3}');
+				$change_string = array($merge_name, $merge_memo1, $merge_memo2, $merge_memo3);
+
+				$row->text = str_replace($merge, $change_string, $row->text);
 			}
 
-			if($before_num != $row->recipient){
-				if($args_to) $args_to = $args_to . ', ' . $row->recipient;
-				else $args_to = $row->recipient;
-
-				if($args->recipient_no) $args->recipient_no = $args->recipient_no . ', ' . $row->recipient;
-				else $args->recipient_no = $row->recipient;
-			}
-
-			if($first_num == $row->recipient && !$args_text){
-				$args_text = $row->text;
-			}
-			else if($first_num == $row->recipient && $args_text){
-				 $args_text = $args_text . $delimiter . $row->text; 
-			}
-
-
+			// set arggument
+			$args->type = $row->msgtype;
 			$args->sender_no = $row->callback;
 			$args->subject = $row->subject;
 			$args->country_code = $row->country;
 			$args->reservdate = $row->reservdate;
 			$args->attachment = $row->file_srl;
-			$args->group_id = $group_id;
-			
+			$args->extension[$key]->to = $row->recipient;
+			$args->extension[$key]->text = $row->text;
+
 			if($args->type == 'sms') $calc_point += $module_info->sms_point;
 			if($args->type == 'lms') $calc_point += $module_info->lms_point;
 			if($args->type == 'mms') $calc_point += $module_info->mms_point;
 
-			$before_num = $row->recipient;
 			if(!$first_num) $first_num = $row->recipient;
-		}
-		if($args_text) $args_text = explode($delimiter, $args_text);
-
-		$delay = 0;
-		if(count($args_text) > 0)
-		{
-			foreach($args_text as $key => $value){
-				$delay = $delay + 2;
-				$replace_text = str_replace('{name}', 'HEY!!', $value);
-
-				$args->extension[$key]->to = $args_to;
-				$args->extension[$key]->text = $replace_text;
-				$args->extension[$key]->delay = $delay;
-			}
 		}
 		$args->extension = json_encode($args->extension);
 
@@ -1326,6 +1319,29 @@ class purplebookController extends purplebook
 			if(!$output->toBool()) return $output;
 		}
 	}
+	
+	// 주소록 개별 업데이트
+	function procPurplebookUpdate()
+	{
+		$logged_info = Context::get('logged_info');
+		if(!$logged_info) return new Object(-1, 'msg_invalid_request');
+
+		$vars = Context::getRequestVars();
+
+		debugPrint("update_!");
+		debugPrint($vars);
+
+		$args->node_id = $vars->node_id;
+		$args->node_name = $vars->n_name;
+		$args->phone_num = $vars->phone_num;
+		$args->memo1 = $vars->memo1;
+		$args->memo2 = $vars->memo2;
+		$args->memo3 = $vars->memo3;
+
+		$output = executeQuery('purplebook.updatePurplebook', $args);
+		if(!$output->toBool()) return new Object(-1, 'query error : updatePurplebook, line 1339');
+	}
+
 
 	// node_ids 로 개별 삭제
 	function procPurplebookDelete()

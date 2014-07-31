@@ -1,7 +1,7 @@
 받는사람수 : <span class="total" id="smsPurplebookListCountFull">(총 {$page_navigation->total_count}명)</span>
 
 <!-- 리스트 카운트 -->
-<div class="select_box">
+<div class="full_select_box">
 	<select id="full_list_count">
 		<option value="10" selected="selected"|cond="$full_list_count == '10' || !$full_list_count">10명씩 보기</option>
 		<option value="100" selected="selected"|cond="$full_list_count == '100'">100명씩 보기</option>
@@ -9,14 +9,19 @@
 	</select>
 </div>
 
-<!-- 기본 -->
+<!-- 주소록 리스트 -->
 <table class="p_full_address_table" cond="!$full_fix_mode">
+	<div id="full_top_bottom">
+		<a href="#" id="full_move_top">TOP</a>
+		<a href="#" id="full_move_bottom">BOTTOM</a>
+	</div>
+
 	<thead>
 		<tr>
 			<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
 			<th>번호</th>
 			<th>이름</th>
-			<th>전화번호</th>
+			<th colspan="2">전화번호</th>
 			<th>메모1</th>
 			<th>메모2</th>
 			<th>메모3</th>
@@ -27,10 +32,18 @@
 			<td class="jstree-draggable"><span class="checkbox" node_id="{$val->attr->node_id}"></span></td>
 			<td>{$start_num++}</td>
 			<td>{$val->attr->node_name}</td>
-			<td>{$val->attr->phone_num}<span class="cover_ok">수정 삭제</span></td>
-			<td>{$val->attr->memo1}</td>
-			<td>{$val->attr->memo2}</td>
-			<td>{$val->attr->memo3}</td>
+			<td>{$val->attr->phone_num}</td>
+			<td class="full_hover_btn">
+				<span class="full_btn_cover_update">
+					<button id="full_btn_fix" onClick="showFullUpdateForm('{$val->attr->node_id}')" class="gray_btn add_button">수정</button>
+				</span>
+				<span class="full_btn_cover_delete">
+					<button id="full_btn_delete" class="gray_btn add_button" node_id="{$val->attr->node_id}">삭제</button>
+				</span>
+			</td>
+			<td>{htmlspecialchars($val->attr->memo1)}</td>
+			<td>{htmlspecialchars($val->attr->memo2)}</td>
+			<td>{htmlspecialchars($val->attr->memo3)}</td>
 		</tr>
 	</tbody>
 </table>
@@ -83,3 +96,6 @@
 <div>
 	선택한 목록을 <button id="full_address_delete">삭제</button>
 </div>
+
+<!-- 수정 폼 -->
+<div id="update_address_modal"></div>

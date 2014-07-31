@@ -1046,6 +1046,9 @@ function sendMessageData() {
         if ($li.attr('userid')) ref_userid = $li.attr('userid');
         var file_srl = jQuery('input[name=file_srl]', '#smsMessage').val();
 
+		if($li.attr('node_id')) node_id = $li.attr('node_id');
+		else node_id = '';
+
         $content_input = jQuery('#smsPurplebookContentInput');
         var size = jQuery('li', $content_input).size();
         for (var j = 0; j < size; j++) {
@@ -1063,6 +1066,7 @@ function sendMessageData() {
                     , "refid": ref_userid
                     , "reservdate": texting_pickup_reservdate()
                     , "delay_count": j*2
+					, "node_id": node_id
                 }
             }
             else
@@ -1076,6 +1080,7 @@ function sendMessageData() {
                     , "refname": ref_username
                     , "refid": ref_userid
                     , "delay_count": j*2
+					, "node_id": node_id
                 }
             }
             if (file_srl) content["file_srl"] = file_srl;
@@ -2465,7 +2470,7 @@ function submit_messages() {
      * 0: ok
      * 1: already exist number
      **/
- 	function addNum(newNum, rName) {
+ 	function addNum(newNum, rName, node_id) {
         newNum = newNum.replace(/-/g,'');
         $except_list = jQuery('#smsPurplebookExceptList');
 
@@ -2483,8 +2488,10 @@ function submit_messages() {
             return 1;
 		}
 
+		if(!node_id) node_id = '';
+
 		// 이상이 없을 경우 추가 (개별선택, 삭제 이벤트 포함)
-        $('#smsPurplebookTargetList').append('<li id="tel' + newNum + '"><span class="checkbox"></span><span class="name">' + rName + '</span><span class="number" phonenum="' + newNum + '">'+ newNum +'</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
+        $('#smsPurplebookTargetList').append('<li id="tel' + newNum + '" ' + 'node_id=' + node_id + '><span class="checkbox"></span><span class="name">' + rName + '</span><span class="number" phonenum="' + newNum + '">'+ newNum +'</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
    
 		return 0;
 	}
@@ -2631,6 +2638,23 @@ function submit_messages() {
     {
         p_show_waiting_message();
 
+
+		// 컨텐츠 SET
+		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
+
+		if (selected_folders.length > 0) {
+			var node = jQuery(selected_folders[0]);
+		}
+
+		/*
+		if(node.attr('node_id')) node_route = node.attr('node_route') + node.attr('node_id') + '.';
+		else node_route = node.attr('node_route') + node.attr('node_id') + '.';
+		*/
+
+		
+
+
+
         setTimeout(function() {
             var succ_count=0;
             var list = new Array();
@@ -2649,9 +2673,11 @@ function submit_messages() {
                 var obj = list[i];
                 var phonenum = $('.nodePhone', $(obj).parent()).text();
                 var name = $('.nodeName', $(obj).parent()).text();
+				node_id = $(obj).parent().attr('node_id');
+
                 if (phonenum.length <= 0)
                     continue;
-                if (!addNum(phonenum, name)) succ_count++;
+                if (!addNum(phonenum, name, node_id)) succ_count++;
             }
             updateExceptListCount();
             scrollBottomTargetList();
@@ -3476,7 +3502,7 @@ function submit_messages() {
         });
 
 		// 머지기능
-        $('.pop_merge','#smsPurplebookContentInput').live('click',function() {
+        $('#btn_pop_merge').live('click',function() {
 			var params = new Array();
 			var response_tags = new Array('error','message','data');
 

@@ -395,13 +395,15 @@ button.gray_btn:hover { background: #ffffff; /* Old browsers */ background: -moz
 
 /* Full Address Table */
 #full_address .bodyArea { width:822px; margin:40px auto; }
-#full_address .select_box { float:right; } 
-#full_address table.p_full_address_table { border:1px solid #ccc; border-collapse:collapse; color:#666; font-family:'NanumGothic'; font-size:12px; margin:20px 0; text-shadow:1px 1px 0 #fff; width:100%; }
+#full_address .full_select_box { float:right; } 
+#full_address table.p_full_address_table { border:1px solid #ccc; border-collapse:collapse; color:#666; font-family:'NanumGothic'; font-size:12px; margin:20px 0;  width:100%; }
 #full_address table.p_full_address_table th { padding:7px 25px 8px; background:#f6f6f6; }
 #full_address table.p_full_address_table tr { line-height:3.3em; text-align:center; }
-#full_address table.p_full_address_table tr:hover td { background-color:#fff; }
-#full_address table.p_full_address_table tr:hover {  border:2px solid #66b9ff; }
-#full_address table.p_full_address_table tr:hover .cover_ok {  display:block; }
+#full_address table.p_full_address_table tr:hover td { background-color:#fff; opacity:0.2; }
+#full_address table.p_full_address_table tr:hover td.full_hover_btn { z-index:99999; opacity:1; color:#fff; }
+#full_address table.p_full_address_table tr:hover {  border:2px solid #66b9ff; position:relative; }
+#full_address table.p_full_address_table tr:hover .full_btn_cover_update { display:block; position:absolute; top:0; left:45%; }
+#full_address table.p_full_address_table tr:hover .full_btn_cover_delete { display:block; position:absolute; top:0; left:50%; }
 #full_address table.p_full_address_table tr:nth-child(odd) { background:#fff; }
 #full_address table.p_full_address_table tr:nth-child(even) { background:#fdfdfd; }
 #full_address table.p_full_address_table td.jstree-draggable { padding-left:25px; }
@@ -410,4 +412,19 @@ button.gray_btn:hover { background: #ffffff; /* Old browsers */ background: -moz
 #full_address_history { line-height:1.8em; font-size:12px; color:#333; padding-right:40px; overflow:hidden; }
 .full_address_date { font-size:11px; color:#888; float:right; }
 
-.cover_ok {background:red; z-index:550; display:none;}
+/* 개별 수정/삭제 */
+.full_btn_cover_update { background:red;  display:none; }
+.full_btn_cover_delete { background:red;  display:none; }
+
+/* 전체보기 수정 폼 */
+.ui-dialog { z-index:700; } 
+
+/* 스크롤 탑/바텀 */
+#full_address_list { position:relative; }
+#full_top_bottom { position:fixed; width:100px; margin-left:830px; z-index:800; }  
+
+/* 탑 메뉴 따라다니기 */
+.full_header { position:fixed; width:100%; z-index:800;}
+
+/*#tab_add_address { background:red; } */
+
