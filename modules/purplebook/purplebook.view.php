@@ -195,7 +195,6 @@ class purplebookView extends purplebook
 		$this->setLayoutFile('default_layout');
 		$this->setTemplateFile('filepicker');
 	}
-
 }
 /* End of file purplebook.view.php */
 /* Location: ./modules/purplebook/purplebook.view.php */

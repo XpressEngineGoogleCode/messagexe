@@ -33,6 +33,7 @@
 		<action name="getPurplebookCallbackNumbers" type="model" />
 		<action name="getPurplebookLatestNumbers" type="model" />
 		<action name="getPurplebookSavedMessages" type="model" />
+		<action name="getPurplebookUpdateAddress" type="model" />
 		<action name="getPopupLayer" type="model" />
 
 		<action name="procPurplebookSendMsg" type="controller" standalone="true" />
@@ -59,5 +60,6 @@
 		<action name="procPurplebookExcelLoad" type="controller" stradalone="true" />
 		<action name="procPurplebookUpdateList" type="controller" stradalone="true" />
 		<action name="procPurplebookDelete" type="controller" stradalone="true" />
+		<action name="procPurplebookUpdate" type="controller" stradalone="true" />
 	</actions>
 </module>
