@@ -177,7 +177,7 @@ function pb_modify_phone(obj) {
     phonenum.name = "phone_num";
     phonenum.className = "modifyPhone";
     phonenum.value = $nodePhone.text();
-    phonenum.value = phonenum.value.replace(/[^0-9]/g,'');
+    phonenum.value = phonenum.value.replace(/[^0-9+]/g,'');
     jQuery(phonenum).css( {position:'absolute', 'left':pos.left+'px', 'top':pos.top+'px' } );
     jQuery(phonenum).keyup(function(event) {
         //jQuery(this).val(getDashTel(jQuery(this).val()));
@@ -195,7 +195,29 @@ function pb_modify_phone(obj) {
         params['node_id'] = node_id;
         params['phone_num'] = $this.val();
         if ($this.val() != $nodePhone.text()) {
-            exec_xml('purplebook', 'procPurplebookUpdatePhone', params, function() { $nodePhone.text(getDashTel(params['phone_num'])); $this.remove(); });
+            exec_xml('purplebook', 'procPurplebookUpdatePhone', params, function() { 
+				$nodePhone.text(getDashTel(params['phone_num'])); $this.remove(); 
+
+				// 국가코드 체크 
+				if (params['phone_num'].charAt(0) == '+' || params['phone_num'].substring(0, 2) == '00') {
+					countryCheck = true;
+					startPos = 1;
+					if (params['phone_num'].substring(0, 2) == '00') startPos = 2;
+
+					for(var i = 6; i > 0; i--){
+						if ((idx = jQuery.inArray(params['phone_num'].substring(startPos, i), country_codes)) > -1) {
+							countryCheck = false;
+							break;
+						}
+					}
+
+					if(countryCheck == true)
+					{
+						$li.css('color','');
+						$li.attr("original-title", "수정되었습니다.");
+					}
+				}
+			});
         } else {
             $this.remove();
         }
@@ -1706,7 +1728,30 @@ function updatePurplebookListCount(total_count)
 
 function add_to_list(node_id, node_name, phone_num)
 {
-        jQuery('#smsPurplebookList').append('<li node_id="' + node_id + '" class="jstree-draggable"><span class="checkbox"></span><span class="nodeName" title="' + node_name + '">' + node_name + '</span><span class="nodePhone">' + getSimpleDashTel(phone_num) + '</span></li>');
+	// 국가코드 체크 
+	countryCheck = true;
+	if (phone_num.charAt(0) == '+' || phone_num.substring(0, 2) == '00') {
+		startPos = 1;
+		if (phone_num.substring(0, 2) == '00') startPos = 2;
+
+		for(var i = 6; i > 0; i--){
+			countryCode = null;
+			if ((idx = jQuery.inArray(phone_num.substring(startPos, i), country_codes)) > -1) {
+				countryCode = country_codes[idx];
+				break;
+			}
+		}
+		if(!countryCode) countryCheck = false;
+	}
+
+	if(countryCheck == false){
+		jQuery('#smsPurplebookList').append('<li node_id="' + node_id + '" class="jstree-draggable" style="color:red;" original-title="잘못된 국가번호입니다."><span class="checkbox"></span><span class="nodeName" title="' + node_name + '">' + node_name + '</span><span class="nodePhone">' + getSimpleDashTel(phone_num) + '</span></li>');
+
+		jQuery('li','#smsPurplebookList').filter(function(index) { return !jQuery(this).hasClass('help'); }).tipsy();
+
+	}else {
+		jQuery('#smsPurplebookList').append('<li node_id="' + node_id + '" class="jstree-draggable"><span class="checkbox"></span><span class="nodeName" title="' + node_name + '">' + node_name + '</span><span class="nodePhone">' + getSimpleDashTel(phone_num) + '</span></li>');
+	}
 }
 
 function completePurplebookSearch(ret_obj, response_tags) {
@@ -1818,6 +1863,7 @@ function pb_load_list(node) {
                return -1;
             }
             jQuery('#smsPurplebookList').html('');
+
             for (i = 0; i < data.data.length; i++)
             {
                 node_id = data.data[i].attr.node_id;
@@ -2474,16 +2520,23 @@ function submit_messages() {
         newNum = newNum.replace(/-/g,'');
         $except_list = jQuery('#smsPurplebookExceptList');
 
+
+		// 국가코드 +로 시작할 경우 아이디를 찾지 못하기때문에  idNum을 따로 만들어준다
+		idNum = newNum;
+		if(newNum.charAt(0) == '+'){
+			idNum = newNum.substring(1, newNum.length)
+		}
+
 		// 이미 존재하는 번호인지 검사
-        if ($('#tel'+newNum).length > 0)
+        if ($('#tel'+idNum).length > 0)
 		{
-            if ($('#dup'+newNum).length > 0) {
-                var $count = $('.count', $('#dup'+newNum).parent());
+            if ($('#dup'+idNum).length > 0) {
+                var $count = $('.count', $('#dup'+idNum).parent());
                 var countVal = $count.text();
                 countVal = parseInt(countVal) + 1;
                 $count.text(countVal);
             } else {
-                $except_list.append('<li><span class="name">' + rName + '</span><span id="dup' + newNum + '" class="number">' + newNum + '</span><span class="count">1</span></li>');
+                $except_list.append('<li><span class="name">' + rName + '</span><span id="dup' + idNum + '" class="number">' + newNum + '</span><span class="count">1</span></li>');
             }
             return 1;
 		}
@@ -2491,7 +2544,7 @@ function submit_messages() {
 		if(!node_id) node_id = '';
 
 		// 이상이 없을 경우 추가 (개별선택, 삭제 이벤트 포함)
-        $('#smsPurplebookTargetList').append('<li id="tel' + newNum + '" ' + 'node_id=' + node_id + '><span class="checkbox"></span><span class="name">' + rName + '</span><span class="number" phonenum="' + newNum + '">'+ newNum +'</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
+        $('#smsPurplebookTargetList').append('<li id="tel' + idNum + '" ' + 'node_id=' + node_id + '><span class="checkbox"></span><span class="name">' + rName + '</span><span class="number" phonenum="' + newNum + '">'+ newNum +'</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
    
 		return 0;
 	}
@@ -2638,7 +2691,6 @@ function submit_messages() {
     {
         p_show_waiting_message();
 
-
 		// 컨텐츠 SET
 		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
 
@@ -2650,10 +2702,6 @@ function submit_messages() {
 		if(node.attr('node_id')) node_route = node.attr('node_route') + node.attr('node_id') + '.';
 		else node_route = node.attr('node_route') + node.attr('node_id') + '.';
 		*/
-
-		
-
-
 
         setTimeout(function() {
             var succ_count=0;
