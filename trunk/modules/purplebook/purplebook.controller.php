@@ -75,6 +75,29 @@ class purplebookController extends purplebook
 
 		foreach($decoded as $key => $row)
 		{
+			// 국가코드 체크
+			if(substr($row->recipient, 0, 1) == '+' || substr($row->recipient, 0, 1) == '00')
+			{
+				require_once('purplebook.utility.php');
+				$csutil = new CSUtility();
+
+				// 시작위치 설정
+				$startPos = 1;
+				if (substr($row->recipient, 0, 2) == '00') $startPos = 2;
+
+				// 뒷자리부터 국가코드 체크
+				for($i = 6; $i > 0; $i--)
+				{
+					$country_code = $csutil->checkCountryCode(substr($row->recipient, $startPos, $i));
+					if($country_code > 0) 
+					{
+						$args->extension[$key]->country = $country_code;
+						$row->recipient = '0' . substr($row->recipient, $startPos + $i);
+						break;
+					}
+				}
+			}
+
 			// 머지기능
 			if($row->node_id)
 			{
@@ -105,8 +128,8 @@ class purplebookController extends purplebook
 			$args->country_code = $row->country;
 			$args->reservdate = $row->reservdate;
 			$args->attachment = $row->file_srl;
-			$args->extension[$key]->to = $row->recipient;
 			$args->extension[$key]->text = $row->text;
+			$args->extension[$key]->to = $row->recipient;
 
 			if($args->type == 'sms') $calc_point += $module_info->sms_point;
 			if($args->type == 'lms') $calc_point += $module_info->lms_point;
@@ -114,6 +137,7 @@ class purplebookController extends purplebook
 
 			if(!$first_num) $first_num = $row->recipient;
 		}
+
 		$args->extension = json_encode($args->extension);
 
 		// minus point
@@ -433,10 +457,6 @@ class purplebookController extends purplebook
             Context::set('message', Context::getLang('msg_error_occured'));
             return;
         }
-		
-		debugPrint("HEY-1");
-		debugPrint($save_filename);
-		debugPrint($file_srl);
 
 		$output = $this->insertFile($save_filename, $file_srl);
 		if(!$output->toBool())
@@ -1327,9 +1347,6 @@ class purplebookController extends purplebook
 		if(!$logged_info) return new Object(-1, 'msg_invalid_request');
 
 		$vars = Context::getRequestVars();
-
-		debugPrint("update_!");
-		debugPrint($vars);
 
 		$args->node_id = $vars->node_id;
 		$args->node_name = $vars->n_name;
