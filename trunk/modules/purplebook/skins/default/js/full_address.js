@@ -1,12 +1,16 @@
 // check that already loaded
 if(!full_already_loaded) var full_already_loaded = false;
 
+var use_full_work_mode = "off"; // 작업모드 on/off
+var use_full_fix_mode = false; // 수정모드 유지
+var use_list_count = null; // list_view_count 유지
+var update_dialog = null; // 개별수정창
 
 // 개별수정폼 보여주기
 function showFullUpdateForm(node_id){
 	if(!node_id) return false;
 
-	var $dialog = jQuery('#update_address_modal').dialog({title:'주소록 관리', width:600, height:400, modal:true, buttons:false, resizable:false});
+	update_dialog = jQuery('#update_address_modal').dialog({title:'수정', width:250, height:300, modal:true, buttons:false, resizable:false});
 	
 	var params = new Array();
 	var response_tags = new Array('error','message','list_templete');
@@ -15,7 +19,7 @@ function showFullUpdateForm(node_id){
 	params['node_id'] = node_id;
 
 	exec_xml('purplebook', 'getPurplebookUpdateAddress', params, function(ret_obj) {
-		$dialog.html(ret_obj["list_templete"]);
+		update_dialog.html(ret_obj["list_templete"]);
 	}, response_tags);
 
 	jQuery("#update_address_modal").attr("tabindex", -1).focus();
@@ -47,12 +51,12 @@ function full_update_list(){
 
 // 작업모드중 페이지 떠날시 물음
 jQuery(window).bind('beforeunload', function(){
-	if(jQuery("#use_full_work_mode").val() == "on") return 'Are you sure you want to navigate away from this page?';
+	if(use_full_work_mode == "on") return 'Are you sure you want to navigate away from this page?';
 });
 
 // 수정모드에서 인풋박스에 변경사항 있을시 작업모드로 On
 function full_change_value(){
-	jQuery("#use_full_work_mode").val("on");
+	use_full_work_mode = "on";
 }
 
 // 수정모드에서 저장
@@ -61,14 +65,13 @@ function save_full_address_fix(){
 		dataType : 'json',
 		success : function(data) {
 			// procPurplebookUpdateList error 발생시
-			if(data.error == -1) 
-			{
+			if(data.error == -1){
 				alert(data.message);
 				return;
 			}
 
 			// 작업모드 off
-			jQuery("#use_full_work_mode").val("off");
+			use_full_work_mode = "off";
 
 			// 화면에 업데이트된 리스트 새로고침 
 			load_full_address_list(null, true);
@@ -90,8 +93,7 @@ function save_full_address_fix(){
 }
 
 // 카운터 업데이트
-function updatePurplebookListCountFull(total_count)
-{
+function updatePurplebookListCountFull(total_count){
      var total = jQuery('#full_address_list tr').length;
 
      if (total_count) jQuery('#smsPurplebookListCountFull').text(' (' + total + ' 명 / 총 ' + total_count + ' 명)');
@@ -99,18 +101,15 @@ function updatePurplebookListCountFull(total_count)
 }
 
 // 폴더주소록 보여주기&숨기기
-function full_address_show()
-{
+function full_address_show(){
 	$obj = jQuery("#full_address");
 	if($obj.css('display') == 'block') jQuery($obj.html(''));
 
-	if ($obj.css('display') == 'none') 
-	{
+	if ($obj.css('display') == 'none'){
 		//$obj.css('display','block');
 		$obj.fadeIn(400);
 	}
-	else 
-	{
+	else{ 
 		$obj.css('display','none');
 	}
 	jQuery('body,html').animate({scrollTop: 0}, 300);
@@ -130,15 +129,16 @@ function fullAddressSize(size_change){
 }
 
 // 전체화면 닫기
-function closeFullAddress()
-{
+function closeFullAddress(){
 	// 작업모드일때 페이지 이동시 물어봄
-	if(jQuery("#use_full_work_mode").val() == "on"){
+	if(use_full_work_mode == "on"){
 		if(confirm("작업중입니다. 페이지를 떠나시겠습니까?")){
-		}else{
+		}
+		else{
 			return;
 		}
 	}
+	update_dialog.dialog('close'); // 개별수정창 닫기
 
 	jQuery('#full_address').css('display','none'); // 전체보기 감추기
 
@@ -146,37 +146,28 @@ function closeFullAddress()
 }
 
 
-/*
- * 전체보기 추가 폼, 히스토리 감추기/보이기
- */ 
+//전체보기 추가 폼, 히스토리 감추기/보이기
 var full_overlap_menu = '';
-function showFullAddressMenu(id)
-{
+function showFullAddressMenu(id){
 	jQuery("#full_add_address_excel").css('display','none');
 	jQuery("#full_add_address_direct").css('display','none');
 	jQuery("#full_history").css('display','none');
 
 	//jQuery(id).css('display','block');
 	
-	if(full_overlap_menu == id)
-	{
+	if(full_overlap_menu == id){
 		jQuery(id).css('display','none');;
 		full_overlap_menu = '';
 	}
-	else 
-	{
+	else{
 		jQuery(id).slideDown("slow");
 		full_overlap_menu = id;
 	}
 }
-/*
- * END
- */
 
 
 // 숨겨진 메뉴들 닫기(개별추가,엑셀추가 등)
-function closeFullMenu(id)
-{
+function closeFullMenu(id){
 	jQuery(id).css('display','none');
 	full_overlap_menu = '';
 }
@@ -192,12 +183,12 @@ jQuery(window).scroll(function () {
 });
 
 // 전체보기 리스트 불러오기
-function load_full_address_list(page, full_fix_mode, list_count)
-{
+function load_full_address_list(page, full_fix_mode, list_count){
 	// 작업모드일때 페이지 이동시 물어봄
-	if(jQuery("#use_full_work_mode").val() == "on"){
+	if(use_full_work_mode == "on"){
 		if(confirm("작업중입니다. 페이지를 떠나시겠습니까?")){
-		}else{
+		}
+		else{
 			return;
 		}
 	}
@@ -205,7 +196,7 @@ function load_full_address_list(page, full_fix_mode, list_count)
 	// 컨텐츠 SET
 	var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
 
-	if (selected_folders.length > 0) {
+	if(selected_folders.length > 0){
 		var node = jQuery(selected_folders[0]);
 	}
 	else return;
@@ -214,10 +205,11 @@ function load_full_address_list(page, full_fix_mode, list_count)
 	if(typeof(page)=='undefined' || !page) page = jQuery('#full_address_page').val();
 
     var req_node_id = '';
-    if (typeof(node)=='string') {
+    if(typeof(node)=='string'){
         req_node_id = node;
         node = jQuery('#'+req_node_id);
-    } else {
+    } 
+	else {
         req_node_id = node.attr('node_id');
     }
 
@@ -231,36 +223,33 @@ function load_full_address_list(page, full_fix_mode, list_count)
 	params['node_type'] = '2';
 
 	// 수정모드	
-	if(full_fix_mode == true)
-	{
+	if(full_fix_mode == true){
 		params['full_fix_mode'] = full_fix_mode; 
 		jQuery("#full_fix_mode_open").css('display','none');
 		jQuery("#full_fix_mode_close").css('display','');
 		jQuery("#full_fix_mode_save").css('display','');
 
-		jQuery("#use_full_fix_mode").val("true");
+		use_full_fix_mode = true;
 	}
-	else if(full_fix_mode == false)
-	{
+	else if(full_fix_mode == false){
 		jQuery("#full_fix_mode_open").css('display','');
 		jQuery("#full_fix_mode_close").css('display','none');
 		jQuery("#full_fix_mode_save").css('display','none');
 
-		jQuery("#use_full_fix_mode").val("");
+		use_full_fix_mode = false;
 	}
 
-	if(jQuery("#use_full_fix_mode").val()) params['full_fix_mode'] = true;  // 수정모드사용중일때는 해제하지 않는이상 계속 수정모드로 된다.
+	if(use_full_fix_mode == true) params['full_fix_mode'] = true;  // 수정모드사용중일때는 해제하지 않는이상 계속 수정모드로 된다.
 
 	search_keyword = jQuery("#full_search_keyword").val();
 	if(search_keyword) params['search_keyword'] = search_keyword; // 검색어 설정  
 
-	if(list_count)
-	{
+	if(list_count){
 		params['list_count'] = list_count; // 리스트 카운트
-		jQuery("#use_list_count").val(list_count);
+		use_list_count = list_count;
 	}
 
-	if(jQuery("#use_list_count").val()) params['list_count'] = jQuery("#use_list_count").val();
+	if(use_list_count) params['list_count'] = use_list_count;
 
 	exec_xml('purplebook', 'getPurplebookList', params, function(ret_obj) {
 		jQuery('#full_address_list').html(ret_obj["list_templete"]);
@@ -268,8 +257,7 @@ function load_full_address_list(page, full_fix_mode, list_count)
 }
 
 // 주소록에 명단 추가
-function append_address_full()
-{
+function append_address_full(){
 	var node_name = jQuery('#inputFullAddressName').val();
 	var phone_num = jQuery('#inputFullAddressNumber').val();
 	var memo1 = jQuery('#inputFullAddressMemo1').val();
@@ -277,25 +265,25 @@ function append_address_full()
 	var memo3 = jQuery('#inputFullAddressMemo3').val();
 
 	var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
-	if (selected_folders.length != 1) {
+	if (selected_folders.length != 1){
 		alert('선택된 폴더가 없습니다.');
 		return;
 	}
 
 	var node = jQuery(selected_folders[0]);
 
-	if (node_name.length == 0) {
+	if (node_name.length == 0){
 		alert('이름을 입력하세요.');
 		jQuery('#inputFullAddressName').focus();
 		return;
 	}
-	if (phone_num.length == 0) {
+	if (phone_num.length == 0){
 		alert('폰번호를 입력하세요.');
 		jQuery('#inputFullAddressNumber').focus();
 		return;
 	}
 
-	if(!checkPhoneFormat(phone_num)) {
+	if(!checkPhoneFormat(phone_num)){
 		if (!confirm("유효하지 않은 전화번호입니다 (" + phone_num + ")\n계속 진행하시겠습니까?"))
 		return false;
 	}
@@ -317,9 +305,8 @@ function append_address_full()
 					, memo3 : memo3
 				 }
 		, dataType : "json"
-		, success : function (data) {
-			if (data.error == -1)
-			{
+		, success : function (data){
+			if (data.error == -1){
 				alert(data.message);
 				return;
 			}
@@ -348,8 +335,7 @@ function append_address_full()
 }
 
 // 전체보기 Status와 History에 글올리기
-function set_full_address_status(message)
-{
+function set_full_address_status(message){
 	if(!message) return;
 
 	var now = new Date();
@@ -358,9 +344,10 @@ function set_full_address_status(message)
 	//jQuery("#full_address_status").html(message);
 	alert(message);
 
-	if(jQuery("ul#full_address_history li").length == 0) jQuery("#full_address_history").html('<li>' + message + '<span class="full_address_date">' + nowTime + '</span>' + '</li>');
-	else 
-	{
+	if(jQuery("ul#full_address_history li").length == 0){
+	   	jQuery("#full_address_history").html('<li>' + message + '<span class="full_address_date">' + nowTime + '</span>' + '</li>');
+	}
+	else {
 		if(jQuery("ul#full_address_history li").length > 10) jQuery("ul#full_address_history li").last().remove(); // 10개이상 쌓이면 마지막 요소는 제거
 		jQuery("#full_address_history").prepend('<li>' + message + '<span class="full_address_date">' + nowTime + '</span>' + '</li>');
 	}
@@ -368,11 +355,8 @@ function set_full_address_status(message)
 
 jQuery(document).ready(function($){
 
-	
-
-
 	// tipsy 다시호출
-	jQuery('input, a, img, button','.full_header').filter(function(index) { return !jQuery(this).hasClass('help'); }).tipsy(); 
+	jQuery('input, a, img, button','.full_header').filter(function(index){ return !jQuery(this).hasClass('help'); }).tipsy(); 
 
 	// fulle_address 창 사이즈구하기
 	fullAddressSize(); 
@@ -388,12 +372,12 @@ jQuery(document).ready(function($){
 	full_already_loaded = true;
 
 	// 스크롤 탑
-	jQuery("#full_move_top").live("click", function() {
+	jQuery("#full_move_top").live("click", function(){
 		jQuery('body, html').animate({scrollTop:0}, 100);
 	});
 
 	// 스크롤 바텀
-	jQuery("#full_move_bottom").live("click", function() {
+	jQuery("#full_move_bottom").live("click", function(){
 		jQuery("html, body").animate({ scrollTop: jQuery(document).height() }, 100);
 	});
 
@@ -407,7 +391,7 @@ jQuery(document).ready(function($){
 
 		params['node_id'] = node_id;
 
-		exec_xml('purplebook', 'procPurplebookDeleteNode', params, function(ret_obj) {
+		exec_xml('purplebook', 'procPurplebookDeleteNode', params, function(ret_obj){
 			// 화면에 업데이트된 리스트 새로고침 
 			load_full_address_list(null);
 
@@ -417,7 +401,7 @@ jQuery(document).ready(function($){
 	});
 
 	// 체크박스 설정 
-	jQuery('#full_address_list .checkbox').live('click', function() {
+	jQuery('#full_address_list .checkbox').live('click', function(){
 		jQuery(jQuery(this)).toggleClass("on");
 	});
 
@@ -428,15 +412,14 @@ jQuery(document).ready(function($){
 	});
 
 	// 체크된 목록 삭제
-	jQuery("#full_address_delete").live('click', function() {
+	jQuery("#full_address_delete").live('click', function(){
 		var list = new Array();
 
-		jQuery('span.checkbox.on', '#full_address_list').each(function() {
+		jQuery('span.checkbox.on', '#full_address_list').each(function(){
 			list.push(jQuery(this).attr('node_id'));
 		});
 
-		if (list.length == 0)
-		{
+		if (list.length == 0){
 			alert('삭제할 명단을 체크하세요.');
 			return false;
 		}
@@ -451,8 +434,8 @@ jQuery(document).ready(function($){
 						, node_ids : JSON.stringify(list)
 					 }
 			, dataType : "json"
-			, success : function (data) {
-				if (data.error == -1) {
+			, success : function (data){
+				if(data.error == -1){
 					alert(data.message);
 				}
 
@@ -463,7 +446,7 @@ jQuery(document).ready(function($){
 				set_full_address_status("삭제가 완료되었습니다. ");
 
 			}
-			, error : function (xhttp, textStatus, errorThrown) { 
+			, error : function (xhttp, textStatus, errorThrown){ 
 				alert(errorThrown + " " + textStatus); 
 
 				// 전체보기 Status와 History에 글올리기
@@ -473,10 +456,10 @@ jQuery(document).ready(function($){
 	});
 
 	// 전체보기 검색기능
-	jQuery('#btn_full_search_keyword').live('click',function() {
+	jQuery('#btn_full_search_keyword').live('click',function(){
 		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
 
-		if (selected_folders.length > 0) {
+		if (selected_folders.length > 0){
 			jQuery('#full_address_list').html('');
 
 			var node = jQuery(selected_folders[0]);
@@ -488,7 +471,7 @@ jQuery(document).ready(function($){
 	// full_address.html에서 엑셀로 주소록에 명단 추가
 	jQuery('#btnAddFullAddressExcel').live('click',function (){
 		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
-		if (selected_folders.length != 1) {
+		if (selected_folders.length != 1){
 			alert('선택된 폴더가 없습니다.');
 			return;
 		}
@@ -503,10 +486,9 @@ jQuery(document).ready(function($){
 
 		jQuery("#add_address_excel_form").ajaxSubmit({
 			dataType : 'json',
-			success : function(data) {
+			success : function(data){
 				// procPurplebookExcelLoad error 발생시
-				if(data.error == -1) 
-				{
+				if(data.error == -1){
 					alert(data.message);
 					return;
 				}
@@ -526,20 +508,18 @@ jQuery(document).ready(function($){
 	});
 
 	// 개별등록 
-	jQuery('#btnAddFullAddress').live('click',function() {
+	jQuery('#btnAddFullAddress').live('click',function(){
 		append_address_full();
 		return false;
 	});
 
 	// 체크박스 전체선택/해제
-	jQuery('#smsPurplebookToggleListFull').live('click', function() {
-		if(jQuery(this).hasClass('on'))
-		{
+	jQuery('#smsPurplebookToggleListFull').live('click', function(){
+		if(jQuery(this).hasClass('on')){
 			jQuery(this).removeClass("on");
 			jQuery('.checkbox', '#full_address_list td').removeClass("on");
 		}
-		else
-		{
+		else{
 			jQuery(this).addClass("on");
 			jQuery('.checkbox', '#full_address_list td').addClass("on");
 			return false;
