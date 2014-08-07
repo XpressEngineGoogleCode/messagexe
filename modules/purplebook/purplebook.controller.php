@@ -685,6 +685,7 @@ class purplebookController extends purplebook
 		$ext = substr(strrchr($vars->excel_file["name"],"."),1); //확장자앞 .을 제거하기 위하여 substr()함수를 이용
 		$ext = strtolower($ext); //확장자를 소문자로 변환
 
+		if($ext == null) return new Object(-1, 'msg_not_found_file'); // 파일 존재 여부 검사
 		if($ext != 'xls') return new Object(-1, "msg_excel_check_extension");  //확장자 검사
 
 		$data = new Spreadsheet_Excel_Reader();
@@ -739,11 +740,12 @@ class purplebookController extends purplebook
 			$args->memo2 = $array_test['memo2'][$i];
 			$args->memo3 = $array_test['memo3'][$i];
 
+			// purplebook table에 업로드
+			$this->insertPurplebook($args);
+
 			$list[] = $args;
 		}
 
-		// purplebook table에 업로드
-		$this->insertPurplebook($args);
 		if(!in_array($parent_node, array('f.','t.','s.')))
 		{
 			$this->updateSubnode($logged_info->member_srl, $parent_node);
