@@ -222,9 +222,9 @@
 			<span>현재잔액:243,200원</span>	
 		</div>
 		<div class="time_interval">
-			<input type="checkbox" id="interval">
+			<input type="checkbox" id="message_interval_check">
 			<label for="interval">발송간격설정</label>
-			<p><input type="text" maxlength="4" value="2400" class="input_text" />개 번호를 <input type="text" value="1" class="input_text minput" />분 마다 전송</p>
+			<p><input type="text" maxlength="4" value="2400" class="input_text" id="message_send_limit" readonly />개 번호를 <input type="text" maxlength="3" value="1" class="input_text minput" id="message_send_interval" readonly />분 마다 전송</p>
 		</div>
 		<div class="add_area">
             <input type="text" id="smsPurplebookCallback" maxlength="20" value="{$callback}" title="발신번호 입력" />
@@ -241,7 +241,7 @@
 		<div id="layer_sendid" class="layer draggable"></div><!-- 발신번호관리 레이어 -->
 		<div id="layer_reserv" class="layer"></div><!-- 예약발송 레이어 -->
         <div id="layer_status" class="layer draggable">
-			<div class="title"><p>전송상태</p><span class="btn_closex"><a href="#" class="close_btn">Close</a></span></div>
+			<div class="title"><p>전송상태</p><span class="btn_closex"><a href="#" id="layer_status_close" class="close_btn">취소</a></span></div>
             <div class="bodyArea">
                 <div class="text">전송중입니다...</div>
                 <span class="progressBar"></span>
@@ -251,7 +251,9 @@
 				<span class="error_code"></span>
             </div>
             <div class="bottomArea">
-				<a id="btn_stop" href=""><img src="img/btn_stop.png" alt="일시중지"></a><a id="btn_continue" href=""><img src="img/btn_continue.png" alt="전송재개"></a>
+				<a id="btn_stop" href=""><img src="img/btn_stop.png" alt="일시중지"></a>
+				<a id="btn_continue" href=""><img src="img/btn_continue.png" alt="전송재개"></a>
+				<a id="btn_send_result" href="" style="display:none;">전송결과</a>
             </div>
         </div>
 	</div><!-- 오른쪽 버튼 끝 -->
@@ -285,6 +287,7 @@
     var g_is_logged = <!--@if($is_logged)-->true<!--@else-->false<!--@end-->;
     var g_lang = {};
     var g_send_speed = 1000;
+	var g_send_interval = 3000;
     var g_update_speed = 50;
 	var g_tpl_path = '{$tpl_path}';
 	var g_module_srl = '{$module_info->module_srl}';

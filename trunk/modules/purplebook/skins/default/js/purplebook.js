@@ -1037,6 +1037,13 @@ function pb_display_progress() {
 
 function sendMessageData() {
     var speed = g_send_speed;
+
+	// 발송간격설정이 체크되있으면 설정된 만큼 메시지를 잘라서 보낸다
+	if(jQuery("#message_interval_check").is(':checked')){
+	   	var speed = jQuery("#message_send_limit").val();
+	}
+		
+
     if (typeof(sendMessageData.index)=='undefined') sendMessageData.index=0;
 
     $list = jQuery('li','#smsPurplebookTargetList');
@@ -1047,6 +1054,9 @@ function sendMessageData() {
         clearInterval(sendMessageData.send_timer);
         sendMessageData.send_timer=false;
         jQuery('.text','#smsMessage #layer_status').text('접수가 완료되었습니다.');
+		jQuery('#layer_status_close','#smsMessage #layer_status').text('닫기');
+		jQuery('#btn_send_result','#smsMessage #layer_status').css('display','');
+
         /*
         setTimeout(function() {
             alert('접수하였습니다.\n성공: ' + send_json.success_count + ', 실패: ' + send_json.failure_count + '\n전송결과는 전송내역에서 확인하세요.');
@@ -1172,7 +1182,12 @@ function sendMessage() {
     $layer = jQuery('#layer_status','#smsMessage');
     show_and_hide($layer,null,{force_show:true});
 
-    sendMessageData.send_timer = setInterval(function() {sendMessageData();  }, 3000);
+	// 발송간격설정이 체크되있으면 전송간격 시간을 가져온다
+	if(jQuery("#message_interval_check").is(':checked')){
+	   	g_send_interval = jQuery("#message_send_interval").val() * 1000 * 60;
+	}
+
+    sendMessageData.send_timer = setInterval(function() {sendMessageData();  }, g_send_interval);
 }
 
 function get_switch_value() {
@@ -3796,7 +3811,13 @@ function submit_messages() {
                 alert('전송이 완료되었습니다');
                 return false;
             }
-            sendMessageData.send_timer = setInterval(function() {sendMessageData();}, 3000);
+
+			// 발송간격설정이 체크되있으면 전송간격 시간을 가져온다
+			if(jQuery("#message_interval_check").is(':checked')){
+				g_send_interval = jQuery("#message_send_interval").val() * 1000 * 60;
+			}
+
+            sendMessageData.send_timer = setInterval(function() {sendMessageData();}, g_send_interval);
             $('.text','#smsMessage #layer_status').text('전송을 재개하였습니다.');
             return false;
         });
@@ -3959,6 +3980,26 @@ function submit_messages() {
             return false;
 		}
 */
+
+		// 발송간격설정
+		$("#message_interval_check").change( function(){
+			if($(this).is(':checked'))
+			{
+				$("#message_send_limit").attr('readonly', false);
+				$("#message_send_interval").attr('readonly', false);
+
+				$("#message_send_limit").css('background', 'white');
+				$("#message_send_interval").css('background', 'white');
+			}
+			else 
+			{
+				$("#message_send_limit").attr('readonly', true);
+				$("#message_send_interval").attr('readonly', true);
+
+				$("#message_send_limit").css('background', '#f0f0f0');
+				$("#message_send_interval").css('background', '#f0f0f0');
+			}
+		});
     });
 }) (jQuery);
 
