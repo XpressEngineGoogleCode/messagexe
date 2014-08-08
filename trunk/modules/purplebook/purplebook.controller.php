@@ -76,7 +76,7 @@ class purplebookController extends purplebook
 		foreach($decoded as $key => $row)
 		{
 			// 국가코드 체크
-			if(substr($row->recipient, 0, 1) == '+' || substr($row->recipient, 0, 1) == '00')
+			if(substr($row->recipient, 0, 1) == '+' || substr($row->recipient, 0, 2) == '00')
 			{
 				require_once('purplebook.utility.php');
 				$csutil = new CSUtility();

@@ -1,6 +1,5 @@
 .full_address_hide_menu { display:none; padding:10px; overflow:hidden; position:relative; border:1px solid #ddd; border-top:0; border-radius: 0 0 10px 10px; }
 /* Full Address */
-#full_address {width:100%; height:100%; z-index:450; display:none; background:#fff;}
 #full_address .full_address_count { font-size:12px; }
 #full_address .gray_bg { background:#f9f9f9; border-bottom:1px solid #ddd; padding:7px 0 10px; }
 #full_address .view_toolbar{ clear:both; margin:0 auto; max-width:1100px; min-width:820px; padding:6px 10px 0; outline:0 none; }

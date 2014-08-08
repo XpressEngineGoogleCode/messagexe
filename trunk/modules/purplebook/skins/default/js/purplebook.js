@@ -177,7 +177,15 @@ function pb_modify_phone(obj) {
     phonenum.name = "phone_num";
     phonenum.className = "modifyPhone";
     phonenum.value = $nodePhone.text();
-    phonenum.value = phonenum.value.replace(/[^0-9+]/g,'');
+
+	// 전화번호의 첫글자가 +나 숫자가면 제거
+	start_num = phonenum.value.substring(0, 1);
+	start_num = start_num.replace(/[^+]/,'');
+
+	// 전화번호가 숫자가 아니면 제거
+    phonenum.value = phonenum.value.replace(/[^0-9]/g,'');
+	phonenum.value = start_num + phonenum.value;
+
     jQuery(phonenum).css( {position:'absolute', 'left':pos.left+'px', 'top':pos.top+'px' } );
     jQuery(phonenum).keyup(function(event) {
         //jQuery(this).val(getDashTel(jQuery(this).val()));
@@ -200,21 +208,24 @@ function pb_modify_phone(obj) {
 
 				// 국가코드 체크 
 				if (params['phone_num'].charAt(0) == '+' || params['phone_num'].substring(0, 2) == '00') {
-					countryCheck = true;
+					countryCheck = false;
 					startPos = 1;
 					if (params['phone_num'].substring(0, 2) == '00') startPos = 2;
 
 					for(var i = 6; i > 0; i--){
 						if ((idx = jQuery.inArray(params['phone_num'].substring(startPos, i), country_codes)) > -1) {
-							countryCheck = false;
+							countryCheck = true;
 							break;
 						}
 					}
 
-					if(countryCheck == true)
-					{
+					if(countryCheck == true){
 						$li.css('color','');
 						$li.attr("original-title", "수정되었습니다.");
+					}
+					else{
+						$li.css('color','red');
+						$li.attr("original-title", "잘못된 국가번호입니다.");
 					}
 				}
 			});
