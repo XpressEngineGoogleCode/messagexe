@@ -34,6 +34,7 @@
 		<action name="getPurplebookLatestNumbers" type="model" />
 		<action name="getPurplebookSavedMessages" type="model" />
 		<action name="getPurplebookUpdateAddress" type="model" />
+		<action name="getPurplebookSendResult" type="model" />
 		<action name="getPopupLayer" type="model" />
 
 		<action name="procPurplebookSendMsg" type="controller" standalone="true" />

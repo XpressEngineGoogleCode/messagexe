@@ -4000,6 +4000,31 @@ function submit_messages() {
 				$("#message_send_interval").css('background', '#f0f0f0');
 			}
 		});
+
+
+		// 미리보기 버튼
+		$("#btn_send_result").click( function(){
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'layer_send_result';
+
+			layer_id = '#layer_sned_result';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					$obj = jQuery(layer_id);
+
+					show_and_hide($obj);
+				}
+			}, response_tags);
+			
+			return false;
+		});
     });
 }) (jQuery);
 
