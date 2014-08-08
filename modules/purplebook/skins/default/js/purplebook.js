@@ -1193,6 +1193,13 @@ function sendMessage() {
     $layer = jQuery('#layer_status','#smsMessage');
     show_and_hide($layer,null,{force_show:true});
 
+	// reset 전송간격 시간
+	g_send_interval = 3000;
+
+	// reset 전송완료후 버튼
+	jQuery('#layer_status_close','#smsMessage #layer_status').text('취소');
+	jQuery('#btn_send_result','#smsMessage #layer_status').css('display','none');
+
 	// 발송간격설정이 체크되있으면 전송간격 시간을 가져온다
 	if(jQuery("#message_interval_check").is(':checked')){
 	   	g_send_interval = jQuery("#message_send_interval").val() * 1000 * 60;
