@@ -253,10 +253,11 @@
             <div class="bottomArea">
 				<a id="btn_stop" href=""><img src="img/btn_stop.png" alt="일시중지"></a>
 				<a id="btn_continue" href=""><img src="img/btn_continue.png" alt="전송재개"></a>
-				<a id="btn_send_result" href="" style="display:none;">전송결과</a>
             </div>
         </div>
 	</div><!-- 오른쪽 버튼 끝 -->
+
+	<a id="btn_send_result" href="" >전송결과</a>
 	<div class="left_button">
 		<a id="btn_pop_chars" class="left_btn" href="#">특수문자</a>
 		<a id="btn_attach_pic" class="left_btn" href="#">사진추가</a>
@@ -271,6 +272,7 @@
 </div>
 
 <div id="full_address"></div> <!-- 전체보기 컨텐츠 -->
+<div id="layer_send_result" class="layer draggable"></div><!-- 전송결과 레이어 -->
 
 <!--@if($act!='procWidgetGenerateCodeInPage')-->
 <script type="text/javascript">

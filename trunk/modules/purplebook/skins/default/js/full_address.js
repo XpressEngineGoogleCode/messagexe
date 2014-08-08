@@ -138,7 +138,7 @@ function closeFullAddress(){
 			return;
 		}
 	}
-	update_dialog.dialog('close'); // 개별수정창 닫기
+	if(update_dialog) update_dialog.dialog('close'); // 개별수정창 닫기
 
 	jQuery('#full_address').css('display','none'); // 전체보기 감추기
 

@@ -682,7 +682,33 @@ class purplebookModel extends purplebook
 		$this->add('data', $data);
 	}
 
+	// 전체보기 개별수정폼 템플릿 가져오기
 	function getPurplebookUpdateAddress()
+	{
+		$logged_info = Context::get('logged_info');
+		if(!$logged_info) return new Object(-1, 'msg_not_logged');
+
+		$oModuleModel = &getModel("module");
+		$oTemplate = &TemplateHandler::getInstance();
+
+		$args->member_srl = $logged_info->member_srl;
+		$args->node_id = Context::get('node_id');
+		$output = executeQuery('purplebook.getPurplebook', $args);
+		if(!$output->toBool()) return $output;
+
+		Context::set('address_info', $output->data);
+
+		$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
+
+		$path = $this->module_path."skins/".$module_info->skin;
+		$file_name = "full_address_update.html";
+		$data = $oTemplate->compile($path, $file_name);
+
+		$this->add('list_templete', $data); // 템플릿파일 설정
+	}
+
+	// 전송결과 템플릿 가져오기
+	function getPurplebookSendResult()
 	{
 		$logged_info = Context::get('logged_info');
 		if(!$logged_info) return new Object(-1, 'msg_not_logged');
