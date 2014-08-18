@@ -48,7 +48,7 @@ class purplebookexModel extends purplebookModel
 
 	function getPurplebookCashInfo($args=false)
 	{
-
+		if(!Context::get('logged_info')) return new Object(-1,'msg_login_required');
 		/*
 		$sms = &$oTextmessageModel->getCoolSMS($args);
 		// connect
