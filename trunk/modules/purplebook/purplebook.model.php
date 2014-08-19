@@ -333,6 +333,7 @@ class purplebookModel extends purplebook
 		if(Context::get("page")) $args->page = Context::get("page");
 		else $args->page = 1;
 
+		$args->list_count = 10;
 		// 리스트 카운트
 		if(Context::get("list_count"))
 		{
@@ -350,7 +351,7 @@ class purplebookModel extends purplebook
 		Context::set('page_navigation', $output->page_navigation);
 
 		// 리스트 시작 Number 
-		$start_num = ($args->page - 1) * 10 + 1;
+		$start_num = ($args->page - 1) * $args->list_count + 1;
 		Context::set('start_num', $start_num);
 
 		if((!is_array($output->data) || !count($output->data)) && $args->node_type == '1' && $args->node_route == '.') return;
@@ -720,7 +721,6 @@ class purplebookModel extends purplebook
 
 		//$args->s_start = date("Ymd",strtotime ("-1 days")) . "000000";
 		$args->count = 10;
-		Context::set("full_send_result_count", "10");
 
 		// 리스트 카운트
 		if(Context::get("list_count")) 
@@ -765,6 +765,9 @@ class purplebookModel extends purplebook
 
 			Context::set("full_send_result_status", $vars->status);
 		}
+
+		//검색어 설정
+		if($vars->search_keyword) $args->s_rcpt = trim($vars->search_keyword);
 
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS();
@@ -819,7 +822,7 @@ class purplebookModel extends purplebook
 		}
 
 		// 시작번호
-		$start_num = ($page - 1) * 10 + 1;
+		$start_num = ($page - 1) * $args->count + 1;
 		Context::set('start_num', $start_num);
 
 		$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
