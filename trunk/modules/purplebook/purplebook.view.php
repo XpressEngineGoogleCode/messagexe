@@ -40,7 +40,8 @@ class purplebookView extends purplebook
 		$this->setTemplateFile('address');
 	}
 
-	function dispPurplebookExcelDownload() {
+	function dispPurplebookExcelDownload() 
+	{
 		$download_fields = Context::get('download_fields');
 		if (!$download_fields) $download_fields = "user_id,user_name,cellphone";
 		$download_fields_arr = explode(',', $download_fields);

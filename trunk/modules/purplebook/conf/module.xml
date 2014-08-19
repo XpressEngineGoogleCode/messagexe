@@ -62,5 +62,6 @@
 		<action name="procPurplebookUpdateList" type="controller" stradalone="true" />
 		<action name="procPurplebookDelete" type="controller" stradalone="true" />
 		<action name="procPurplebookUpdate" type="controller" stradalone="true" />
+		<action name="procPurplebookCancelMessages" type="controller" stradalone="true" />
 	</actions>
 </module>

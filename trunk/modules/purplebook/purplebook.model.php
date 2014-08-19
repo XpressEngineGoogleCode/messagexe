@@ -716,17 +716,116 @@ class purplebookModel extends purplebook
 		$oModuleModel = &getModel("module");
 		$oTemplate = &TemplateHandler::getInstance();
 
-		$args->member_srl = $logged_info->member_srl;
-		$args->node_id = Context::get('node_id');
-		$output = executeQuery('purplebook.getPurplebook', $args);
-		if(!$output->toBool()) return $output;
+		$vars = Context::getRequestVars();
 
-		Context::set('address_info', $output->data);
+		//$args->s_start = date("Ymd",strtotime ("-1 days")) . "000000";
+		$args->count = 10;
+		Context::set("full_send_result_count", "10");
+
+		// 리스트 카운트
+		if(Context::get("list_count")) 
+		{
+			$args->count = Context::get("list_count");
+			Context::set("full_send_result_count", Context::get("list_count"));
+		}
+
+		// 검색날짜가 있으면
+		if($vars->s_start)
+		{
+			$args->s_start = $vars->s_start;
+			Context::set('send_result_start_date', $vars->s_start);
+		}
+		if($vars->s_end)
+		{
+			$args->s_end = $vars->s_end;
+			Context::set('send_result_end_date', $vars->s_end);
+		}
+
+		// 페이지 설정
+		if($vars->page) $args->page = $vars->page;
+
+		// status 설정
+		if($vars->status)
+		{
+			// 대기, 취소
+			$args->s_resultcode = $vars->status;
+
+			// 성공
+			if($vars->status == "00")
+			{
+				$args->s_status = "2";
+				$args->s_resultcode =  "00";
+			}
+			else if($vars->status == "fail") 
+			{
+				//실패
+				$args->s_resultcode = null;
+				$args->notin_resultcode = "00,99,60";
+			}
+
+			Context::set("full_send_result_status", $vars->status);
+		}
+
+		$oTextmessageModel = &getModel('textmessage');
+		$sms = &$oTextmessageModel->getCoolSMS();
+		$output = $sms->sent($args);
+
+		debugPRint('o-1');
+		debugPrint($output);
+		debugPrint($vars);
+		debugPrint($args);
+
+		// 리스트 있을때
+		if($output->data)
+		{
+			// Status를 Stirng 으로 변환
+			foreach($output->data as $k => $v)
+			{
+				switch($v->status)
+				{
+					case "0":
+						$v->status_t = "대기";
+						break;
+					case "1":
+						$v->status_t = "전송중";
+						break;
+					case "2":
+						$v->status_t = "완료";
+						break;
+					case "3":
+						$v->status_t = "완료";
+						break;
+					default:
+						$v->status_t = "오류";
+						break;
+				}
+
+				if($v->result_code != '00' && $v->result_code != '99' && $v->result_code != '60') $v->result = 'fail';
+			}
+
+			$page = $output->page;
+			// Set Contents
+			Context::set('page', $page);
+			Context::set('total_count', $output->total_count);
+			Context::set('total_page', ceil($output->total_count/$output->list_count));
+			Context::set('send_result_list', $output->data);
+		}
+		else // 리스트가 없을떄
+		{
+			$page = 1;
+			Context::set('page', page);
+			Context::set('total_count', 0);
+			Context::set('total_page', 1);
+		}
+
+		// 시작번호
+		$start_num = ($page - 1) * 10 + 1;
+		Context::set('start_num', $start_num);
 
 		$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
 
 		$path = $this->module_path."skins/".$module_info->skin;
-		$file_name = "full_address_update.html";
+		$file_name = "full_send_result_list.html";
 		$data = $oTemplate->compile($path, $file_name);
 
 		$this->add('list_templete', $data); // 템플릿파일 설정
