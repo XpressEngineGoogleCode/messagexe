@@ -1,10 +1,9 @@
 // check that already loaded
 if(!send_result_loaded) var send_result_loaded = false;
 
-var use_list_count = null;
 
 // 리스트 불러오기
-function load_full_result_list(page, list_count){
+function load_full_result_list(page){
 	var params = new Array();
 	var response_tags = new Array('error','message','data','list_templete');
 
@@ -15,10 +14,7 @@ function load_full_result_list(page, list_count){
 	if(typeof(page)=='undefined' || !page) page = jQuery('#full_send_result_page').val(); 
 
 	// 리스트 카운트
-	if(use_list_count){
-	   	params['list_count'] = use_list_count; 
-	}
-	if(list_count) params['list_count'] = list_count; 
+	if(jQuery("#full_send_result_count").val()) params['list_count'] = jQuery("#full_send_result_count").val();
 
 	// 날짜
 	if(jQuery("#send_result_start_date").val()) params['s_start'] = jQuery("#send_result_start_date").val();
@@ -78,7 +74,10 @@ function closeFullSendResult(){
 	jQuery('#full_send_result').css('display','none'); // 전체보기 감추기
 }
 
-
+function send_result_reload(){
+	load_full_result_list();
+	alert('새로고침했습니다.');
+}
 
 jQuery(document).ready(function($){
 
@@ -127,7 +126,7 @@ jQuery(document).ready(function($){
 				}
 
 				// 화면에 업데이트된 리스트 새로고침 
-				load_full_result_list(null);
+				load_full_result_list();
 
 				alert("취소가 완료되었습니다. ");
 			}
@@ -142,7 +141,7 @@ jQuery(document).ready(function($){
 	// 리스트 카운트 
 	jQuery("#full_send_result_count").live("change", function(){
 		list_count = jQuery('#full_send_result_count option:selected').val();
-		load_full_result_list(null, list_count);
+		load_full_result_list();
 	});
 
 	// 상태

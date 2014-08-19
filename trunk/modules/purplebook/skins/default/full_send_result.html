@@ -8,7 +8,7 @@
 				<span class="btn_closex" onClick="closeFullSendResult()"><a href="#" class="view_close_btn">전송결과 나가기</a></span>
 
 				<div class="view_btn_set">
-					<button onClick="load_full_result_list()">새로고침</button>
+					<button onClick="send_result_reload()">새로고침</button>
 					<div class="view_search">
 						<!-- 검색 -->
 						<span>날짜 : </span>
@@ -16,9 +16,7 @@
 						<input type="text" class="inputDate inputTypeText" value="{zdate($send_result_start_date,'Y-m-d')}" readonly="readonly" /> ~
 						<input type="hidden" name="enddate" id="send_result_end_date" value="{$send_result_end_date}" />
 						<input type="text" class="inputDate inputTypeText" value="{zdate($send_result_end_date,'Y-m-d')}" readonly="readonly" /> 
-						<span>ex)20141010</span>
-
-						<span>검색어 : </span>
+						<span>받는사람번호 검색 : </span>
 						<input type="text" id="send_result_search" value="" class="search_box" />
 						<button onClick="load_full_result_list()" class="search">검색</button>
 						<!-- END -->
