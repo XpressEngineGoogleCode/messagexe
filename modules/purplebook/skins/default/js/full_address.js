@@ -115,6 +115,16 @@ function full_address_show(){
 	jQuery('body,html').animate({scrollTop: 0}, 300);
 }
 
+// 창 리사이즈할때 마다 갱신
+jQuery(window).resize(function () {
+	if(jQuery('#full_address').css('display') == 'block') fullAddressSize();
+});
+ 
+// 스크롤할때마다 위치 갱신
+jQuery(window).scroll(function () {
+	if(jQuery('#full_address').css('display') == 'block') fullAddressSize();
+});
+
 // 폴더주소록 창 사이즈 구하기 
 function fullAddressSize(size_change){
 	var dialHeight = jQuery(document).height();
@@ -171,16 +181,6 @@ function closeFullMenu(id){
 	jQuery(id).css('display','none');
 	full_overlap_menu = '';
 }
-
-// 창 리사이즈할때 마다 갱신
-jQuery(window).resize(function () {
-	if(jQuery('#full_address').css('display') == 'block') fullAddressSize();
-});
- 
-// 스크롤할때마다 위치 갱신
-jQuery(window).scroll(function () {
-	if(jQuery('#full_address').css('display') == 'block') fullAddressSize();
-});
 
 // 전체보기 리스트 불러오기
 function load_full_address_list(page, full_fix_mode, list_count){
@@ -370,16 +370,6 @@ jQuery(document).ready(function($){
 	// check that already loaded
 	if(full_already_loaded) return;
 	full_already_loaded = true;
-
-	// 스크롤 탑
-	jQuery("#full_move_top").live("click", function(){
-		jQuery('body, html').animate({scrollTop:0}, 100);
-	});
-
-	// 스크롤 바텀
-	jQuery("#full_move_bottom").live("click", function(){
-		jQuery("html, body").animate({ scrollTop: jQuery(document).height() }, 100);
-	});
 
 	// 개별 삭제
 	jQuery("#full_btn_delete").live('click', function(){

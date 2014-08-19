@@ -1361,7 +1361,6 @@ class purplebookController extends purplebook
 		if(!$output->toBool()) return new Object(-1, 'query error : updatePurplebook, line 1339');
 	}
 
-
 	// node_ids 로 개별 삭제
 	function procPurplebookDelete()
 	{
@@ -1378,6 +1377,18 @@ class purplebookController extends purplebook
 		}
 	}
 
+	// 예약취소
+	function procPurplebookCancelMessages()
+	{
+		$oTextMessageController = &getController('textmessage');
+
+		$message_ids = $this->getJSON('message_ids');
+
+		foreach($message_ids as $val)
+		{
+			$output = $oTextMessageController->cancelMessage($val);
+		}
+	}
 }
 /* End of file purplebook.controller.php */
 /* Location: ./modules/purplebook/purplebook.controller.php */

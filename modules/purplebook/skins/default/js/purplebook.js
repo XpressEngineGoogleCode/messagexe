@@ -4019,29 +4019,33 @@ function submit_messages() {
 			}
 		});
 
-
-		// 미리보기 버튼
+		// 전송결과 버튼
 		$("#btn_send_result").click( function(){
 			var params = new Array();
 			var response_tags = new Array('error','message','data');
 
 			params['g_mid'] = g_mid;
-			params['layer_name'] = 'layer_send_result';
+			params['layer_name'] = 'full_send_result';
 
-			layer_id = '#layer_sned_result';
+			layer_id = '#full_send_result';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
 				if(ret_obj["data"])
 				{
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
-					$obj = jQuery(layer_id);
-
-					show_and_hide($obj);
 				}
 			}, response_tags);
-			
 			return false;
+		});
+
+		// 스크롤 탑
+		$("#full_move_top").live("click", function(){
+			$('body, html').animate({scrollTop:0}, 100);
+		});
+
+		// 스크롤 바텀
+		$("#full_move_bottom").live("click", function(){
+			$("html, body").animate({ scrollTop: $(document).height() }, 100);
 		});
     });
 }) (jQuery);
