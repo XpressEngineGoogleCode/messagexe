@@ -1751,12 +1751,38 @@ function request_default_number(phonenum) {
 }
 
 
+/**
+ * 폴더 선택 목록 카운트 업데이트
+ */
 function updatePurplebookListCount(total_count)
 {
-     var total = jQuery('li', '#smsPurplebookList').size();
+     var list_count = jQuery('li', '#smsPurplebookList').size();
+     if (total_count) jQuery('#smsPurplebookListCount').text(list_count + ' / ' + total_count);
+     else jQuery('#smsPurplebookListCount').text(list_count);
+	 if(list_count < total_count) {
+		jQuery('<li id="pb_show_more" style="text-align:center; cursor:pointer;">100개 더보기</li>').appendTo('#smsPurplebookList').click(function() {
+			pb_load_list.page++;
+			pb_load_list();
+			jQuery(this).remove();
+		});
+	 }
+}
 
-     if (total_count) jQuery('#smsPurplebookListCount').text(' (' + total + ' 명 / 총 ' + total_count + ' 명)');
-     else jQuery('#smsPurplebookListCount').text(' (' + total + ' 명)');
+/**
+ * 전체 검색 목록 카운트 업데이트
+ */
+function pb_update_search_count(total_count)
+{
+     var list_count = jQuery('li', '#smsPurplebookList').size();
+     if (total_count) jQuery('#smsPurplebookListCount').text(list_count + ' / ' + total_count);
+     else jQuery('#smsPurplebookListCount').text(list_count);
+	 if(list_count < total_count) {
+		jQuery('<li id="pb_show_more" style="text-align:center; cursor:pointer;">100개 더보기</li>').appendTo('#smsPurplebookList').click(function() {
+			pb_search_list.page++;
+			pb_search_list();
+			jQuery(this).remove();
+		});
+	 }
 }
 
 function add_to_list(node_id, node_name, phone_num)
@@ -1787,8 +1813,11 @@ function add_to_list(node_id, node_name, phone_num)
 	}
 }
 
+/**
+ * @brief 검색 결과
+ */
 function completePurplebookSearch(ret_obj, response_tags) {
-    $list = jQuery('#smsPurplebookList','#smsPurplebook').empty();
+    $list = jQuery('#smsPurplebookList','#smsPurplebook');
     if (ret_obj['data']) {
         var data = ret_obj['data']['item'];
         if (!jQuery.isArray(data)) {
@@ -1797,7 +1826,7 @@ function completePurplebookSearch(ret_obj, response_tags) {
         for (var i = 0; i < data.length; i++) {
             $list.append('<li node_id="' + data[i].node_id + '" class="jstree-draggable"><span class="checkbox"></span><span class="nodeName" title="' + data[i].node_name + '">' + data[i].node_name + '</span><span class="nodePhone">' + getSimpleDashTel(data[i].phone_num) + '</span></li>');
         }
-        updatePurplebookListCount();
+        pb_update_search_count(ret_obj['total_count']);
     }
 }
 
@@ -1809,12 +1838,19 @@ function pb_keep_message_content(content) {
 }
 
 
+/**
+ * @brief 전체 검색
+ */
 function pb_search_list(search_word) {
-    if (!search_word.length) return;
+	if (typeof(search_word)!='undefined') {
+		pb_search_list.search_word = search_word;
+		jQuery('#smsPurplebookList','#smsPurplebook').empty();
+	}
+	if (typeof(pb_search_list.page)=='undefined') pb_search_list.page = 1;
     var params = new Array();
-    params['search_word'] = search_word;
-    var response_tags = new Array('error','message','data');
-
+    params['search_word'] = pb_search_list.search_word;
+	params['page'] = pb_search_list.page;
+    var response_tags = new Array('error','message','data','total_count','total_page','page');
     exec_xml('purplebook','getPurplebookSearch', params, completePurplebookSearch, response_tags);
 }
 
@@ -1859,24 +1895,49 @@ function pb_load_recent_numbers() {
     exec_xml('purplebook','getPurplebookLatestNumbers', params, completeLoadRecentNumbers, response_tags);
 }
 
+function pb_scrolled(e) {
+	var list = jQuery('#smsPurplebookList');
+	var context = list[0];
+	if (list.scrollTop() + list.innerHeight() >= context.scrollHeight) {
+		pb_load_list.page++;
+		pb_load_list();
+	}
+}
+
+/**
+ * @brief 선택된 폴더의 연락처 목록을 가져와서 선택 목록 영역에 출력한다.
+ * @param node : jQuery Object(node) 혹은 string 타입의 node_id
+ */
 function pb_load_list(node) {
+	// node를 넘겨받지 않았다면 선택된 폴더(jquery obj)를 사용한다.
     if (typeof(node)=='undefined') {
         var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
         if (selected_folders.length > 0) {
             node = jQuery(selected_folders[0]);
         }
-    }
+    } else {
+		pb_load_list.page = 1;
+		jQuery('#smsPurplebookList').html('');
+	}
 
+	if (typeof(pb_load_list.page)=='undefined') {
+		pb_load_list.page = 1
+	}
+
+	// 서버로부터 데이터를 전송받고 있습니다... 요런 메시지 출력인거 같은데 정상적으로 작동 안하는 듯??
     p_show_waiting_message();
 
+	// node_id 구하기
     var req_node_id = '';
-    if (typeof(node)=='string') {
+    if (typeof(node)=='string') { // node가 string
         req_node_id = node;
         node = jQuery('#'+req_node_id);
-    } else {
+    } else { // node가 jquery object
         req_node_id = node.attr('node_id');
     }
-    jQuery('#smsPurplebookSelectedFolderName').text(node.attr('node_name'));
+
+	// 선택된 폴더이름을 표시... 하지만 html 에 없는 걸?? ----> 제거해야 할 듯
+	jQuery('#smsPurplebookSelectedFolderName').text(node.attr('node_name'));
 
     jQuery.ajax({
         type : "POST"
@@ -1887,6 +1948,8 @@ function pb_load_list(node) {
                     , act : "getPurplebookList"
                     , node_id : req_node_id
                     , node_type : '2'
+					, page : pb_load_list.page
+					, list_count : 100
                  }
         , dataType : "json"
         , success : function (data) {
@@ -1895,7 +1958,7 @@ function pb_load_list(node) {
                alert(data.message);
                return -1;
             }
-            jQuery('#smsPurplebookList').html('');
+            //jQuery('#smsPurplebookList').html('');
 
             for (i = 0; i < data.data.length; i++)
             {
@@ -1907,12 +1970,8 @@ function pb_load_list(node) {
 
             jQuery('#btnPurplebookExcelDownload').attr('href', data.base_url + '?module=purplebook&act=dispPurplebookPurplebookDownload&node_type=2&node_id=' + req_node_id);
 
-            if (data.total_page > 1)
-                updatePurplebookListCount(data.total_count);
-            else
-                updatePurplebookListCount();
-
-            p_hide_waiting_message();
+			updatePurplebookListCount(data.total_count);
+			p_hide_waiting_message();
         }
         , error : function (xhttp, textStatus, errorThrown) { 
             p_hide_waiting_message();
@@ -2096,6 +2155,50 @@ function init_target_tree(element_id, img_base)
 
 }
 
+function display_status(node_id)
+{
+    jQuery.ajax({
+        type : "POST"
+        , contentType: "application/json; charset=utf-8"
+        , url : "./"
+        , data : { 
+                    module : "purplebook"
+                    , act : "getPurplebookList"
+                    , node_id : node_id
+                    , node_type : '1'
+					, page : 1
+                 }
+        , dataType : "json"
+        , success : function (data) {
+            if (data.error == -1)
+            {
+               alert(data.message);
+               return -1;
+            }
+            for (i = 0; i < data.data.length; i++)
+            {
+                node_id = data.data[i].attr.node_id;
+                node_name = data.data[i].attr.node_name;
+                phone_num = data.data[i].attr.phone_num;
+				var node = jQuery('#'+node_id);
+				console.log(node);
+				var pos = node.position();
+				var width = node.outerWidth();
+				alert(pos.left);
+				jQuery('<span>' + data.data[i].attr.subnode + '</span>').appendTo('#smsPurplebook .left_list').css({
+					'position':'absolute'
+					, 'top':pos.top + 'px'
+					, 'left':(pos.left + width) + 'px'
+					, 'background-color':'red'
+				});
+            }
+        }
+        , error : function (xhttp, textStatus, errorThrown) { 
+            alert(errorThrown + " " + textStatus); 
+        }
+    });
+}
+   
 function init_purplebook_tree(img_base)
 {
     init_purplebook_tree.img_base = img_base;
@@ -2143,13 +2246,14 @@ function init_purplebook_tree(img_base)
                         return d.data;
                     }
                     */
-                    /*
+					/*
                     for(i = 0; i < d.data.length; i++) {
-                        if (d.data[i].attr.shared > 0) {
-                            d.data[i].data = "[" + d.data[i].attr.shared + "]" + d.data[i].data;
+						console.log(d.data[i]);
+                        if (d.data[i].attr.subnode > 0) {
+                            d.data[i].data = "[" + d.data[i].attr.subnode + "]" + d.data[i].data;
                         }
                     }
-                    */
+					*/
                     return d.data; 
                 }
             }
@@ -3922,6 +4026,7 @@ function submit_messages() {
         init_target_tree('#smsPurplebookTargetTreeAddrbook',g_tpl_path+'img/');
         init_purplebook_tree(g_tpl_path+'img/');
 
+
         var option = {
             yearRange:'-0:+1'
             ,mandatory:true
@@ -3952,6 +4057,8 @@ function submit_messages() {
         ];
 
         $('#smsPurplebookList').delegate('li','mousedown', function() { $(this).contextMenu(menu1,{theme:'vista',offsetX:1,offsetY:1}); });
+
+        //$('#smsPurplebookList').scroll(pb_scrolled);
 
         // progressbar options
         var g_progress_options = {boxImage:g_tpl_path+'img/progress/progressbar.gif',barImage:{0:g_tpl_path+'img/progress/progressbg_red.gif',50:g_tpl_path+'img/progress/progressbg_orange.gif',90:g_tpl_path+'img/progress/progressbg_yellow.gif',95:g_tpl_path+'img/progress/progressbg_green.gif'}};
@@ -4047,6 +4154,7 @@ function submit_messages() {
 		$("#full_move_bottom").live("click", function(){
 			$("html, body").animate({ scrollTop: $(document).height() }, 100);
 		});
+
     });
 }) (jQuery);
 

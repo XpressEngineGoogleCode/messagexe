@@ -97,28 +97,23 @@ class purplebookModel extends purplebook
 		return executeQueryArray($query_id, $args);
 	}
 
+	/**
+	 * @brief 전체 검색
+	 */
 	function getPurplebookSearch()
 	{
-		//$searchkey = Context::get('searchkey');
 		$logged_info = Context::get('logged_info');
 		if (!$logged_info) return new Object(-1, 'msg_invalid_request');
-
 		$search_word = Context::get('search_word');
-
-		/*
-		switch ($searchkey) {
-			case "name":
-				$args->node_name = $searchword;
-				break;
-			case "phone":
-				$args->phone_num = $searchword;
-				break;
-		}
-		 */
 		$args->user_id = $logged_info->user_id;
 		$args->search_word = $search_word;
+		$args->page = Context::get('page');
+		$args->list_count = 100;
 		$output = executeQueryArray('purplebook.getPurplebookSearch', $args);
 		if (!$output->toBool()) return $output;
+		$this->add('total_count', $output->total_count);
+		$this->add('total_page', $output->total_page);
+		$this->add('page', $output->page);
 		$this->add('data', $output->data);
 	}
 
@@ -333,7 +328,7 @@ class purplebookModel extends purplebook
 		if(Context::get("page")) $args->page = Context::get("page");
 		else $args->page = 1;
 
-		$args->list_count = 10;
+		$args->list_count = 20;
 		// 리스트 카운트
 		if(Context::get("list_count"))
 		{
@@ -385,6 +380,7 @@ class purplebookModel extends purplebook
 			}
 		}
 		$this->add('total_count', $output->total_count);
+		$this->add('total_page', $output->total_page);
 		$this->add('data', $data);
 		$config = $this->getModuleConfig();
 		$this->add('base_url', $config->callback_url);

@@ -33,7 +33,7 @@
 	<div class="purplebook_left">	
 		<div class="purplebook_left_title">
             <div class="title01">주소 목록</div>
-            <div class="title01">선택 목록<span class="total" id="smsPurplebookListCount">(총 0/명)</span>
+            <div class="title01">
 				<span class="search">
 					<input type="text" id="search_word" class="inputTypeText" value="" title="검색할 이름 혹은 전화번호를 입력" />
 					<a href="#" id="btn_search"><img src="img/btn_search.gif" alt="검색" /></a>
@@ -77,7 +77,7 @@
 		<div id="layer_manual" class="layer draggable"></div><!-- 사용법 레이어 -->
 
 		<div class="left_select">
-			<div class="title_info"><span class="checkbox" id="smsPurplebookToggleList" title="선택전환"></span><span class="name">이름</span><span class="h_number">연락처</span><a href="#" class="all_view" id="full_address_button">전체보기</a></div>
+			<div class="title_info"><span cond="0" class="checkbox" id="smsPurplebookToggleList" title="선택전환"></span><span class="list_count" id="smsPurplebookListCount">0</span><a href="#" class="all_view" id="full_address_button">전체보기</a></div>
 			<div class="bodyArea"><ul id="smsPurplebookList"></ul></div>
 			<ul class="bottomArea">
 				<li>
@@ -125,7 +125,8 @@
 	</div><!-- 1, 2번 왼쪽 주소록 영역 끝 -->
 
 	<div class="purplebook_arrow">
-		<span class="btn_arrow_right"><a id="addRecipients" href="#" title="폴더 혹은 명단을 발송대상에 추가"><img class="pngFix" src="img/right_arrow.png" alt="" /></a></span>
+		<span class="btn_arrow_right"><a id="addRecipients" href="#" title="명단을 발송대상에 추가"><img class="pngFix" src="img/right_arrow.png" alt="" /></a></span>
+		<span class="btn_arrow_right"><a id="addFolder" href="#" title="폴더를 발송대상에 추가"><img class="pngFix" src="img/right_arrow.png" alt="" /></a></span>
 	</div><!-- 가운데 화살표 영역 끝 -->
 
 	<div class="purplebook_right">
