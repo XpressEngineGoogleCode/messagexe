@@ -2767,7 +2767,9 @@ function submit_messages() {
         return countList;
     }
 
-
+	/**
+	 * @brief 폴더의 node_id로 명단을 가져와서 받는사람 목록에 추가한다.
+	 */
     function add_folder_to_recipient()
     {
         var t = $('#smsPurplebookTree').jstree("get_selected");
@@ -2830,52 +2832,46 @@ function submit_messages() {
 
     }
 
-    function add_addrs_to_recipient()
-    {
+	/**
+	 * @brief 주소목록에 선택된 명단을 받는사람 목록으로 추가한다.
+	 */
+    function add_addrs_to_recipient() {
         p_show_waiting_message();
 
 		// 컨텐츠 SET
 		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
-
 		if (selected_folders.length > 0) {
 			var node = jQuery(selected_folders[0]);
 		}
 
-		/*
-		if(node.attr('node_id')) node_route = node.attr('node_route') + node.attr('node_id') + '.';
-		else node_route = node.attr('node_route') + node.attr('node_id') + '.';
-		*/
-
+		// 0.5초 뒤 실행, 이거 왜 이렇게 하는걸까? -_-
         setTimeout(function() {
             var succ_count=0;
             var list = new Array();
             $('span.checkbox.on', '#smsPurplebookList li').each(function() {
                 list.push($(this));
             });
-            if (list.length == 0)
-            {
-                add_folder_to_recipient();
-                //alert('체크된 주소록이 없습니다.\n왼쪽 주소록목록에서 선택해주세요.');
+            if (list.length == 0) { // 선택 항목이 없다면
+                alert('체크된 항목이 없습니다.\n왼쪽 목록에서 선택하세요.');
                 p_hide_waiting_message();
                 return;
             }
-            for (var i = 0; i < list.length; i++)
-            {
+            for (var i = 0; i < list.length; i++) {
                 var obj = list[i];
-                var phonenum = $('.nodePhone', $(obj).parent()).text();
-                var name = $('.nodeName', $(obj).parent()).text();
-				node_id = $(obj).parent().attr('node_id');
-
-                if (phonenum.length <= 0)
-                    continue;
-                if (!addNum(phonenum, name, node_id)) succ_count++;
+                var phonenum = $('.nodePhone', $(obj).parent()).text(); // 폰번호
+                var name = $('.nodeName', $(obj).parent()).text(); // 이름
+				var node_id = $(obj).parent().attr('node_id'); // node_id
+                if (phonenum.length <= 0) continue;
+                if (!addNum(phonenum, name, node_id)) succ_count++; // 실컷 카운팅하지만 뒤에서 안써먹는다-_-
             }
+
+			// 중복번호, 스크롤내리고, 카운트 출력갱신하고, 소요비용 재계산해서 다시 출력하는 함수들을 호출하고 있는데 복잡하다. 개선이 필요한 듯.
             updateExceptListCount();
             scrollBottomTargetList();
             updateTargetListCount();
             display_cost();
+
             p_hide_waiting_message();
-            //alert(succ_count + ' 명을 추가했습니다.');
         }, 500);
     }
 
