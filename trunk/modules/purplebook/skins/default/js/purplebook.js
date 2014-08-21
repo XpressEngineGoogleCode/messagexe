@@ -1715,13 +1715,19 @@ function update_screen() {
     display_addwindow();
 }
 
+/**
+ * @brief 선택된 받는 사람 명단을 삭제
+ */
 function removeSelectedRecipients() {
     p_show_waiting_message();
-
     var $chkLi = jQuery('span.checkbox.on', '#smsPurplebookTargetList li').parent();
+	if(!$chkLi.size()) {
+		alert('삭제할 대상을 선택하세요');
+		return false;
+	}
     $chkLi.remove();
     updateTargetListCount();
-    
+	alert($chkLi.size() + ' 건을 삭제하였습니다');
     p_hide_waiting_message();
 }
 
