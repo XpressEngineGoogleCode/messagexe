@@ -769,11 +769,6 @@ class purplebookModel extends purplebook
 		$sms = &$oTextmessageModel->getCoolSMS();
 		$output = $sms->sent($args);
 
-		debugPRint('o-1');
-		debugPrint($output);
-		debugPrint($vars);
-		debugPrint($args);
-
 		// 리스트 있을때
 		if($output->data)
 		{
@@ -829,6 +824,84 @@ class purplebookModel extends purplebook
 
 		$this->add('list_templete', $data); // 템플릿파일 설정
 	}
+
+	// 미리보기 템플릿 가져오기
+	function getPurplebookMsgPreview()
+	{
+		$logged_info = Context::get('logged_info');
+		if(!$logged_info) return new Object(-1, 'msg_not_logged');
+
+		$oModuleModel = &getModel("module");
+		$oTemplate = &TemplateHandler::getInstance();
+
+		// json decode
+		$vars = Context::getRequestVars();
+		$vars->rcp_list = json_decode($vars->rcp_list);
+		$vars->text = json_decode($vars->text);
+		$vars->node_ids = json_decode($vars->node_ids);
+
+		// args set
+		$args->member_srl = $logged_info->member_srl;
+		$args->node_ids = $vars->node_ids;
+
+		// node_id들로 주소록 정보 구해오기
+		$output = executeQueryArray('purplebook.getPurplebookByNodeIds', $args);
+		if(!$output->toBool()) return $output;
+
+		$node_data = $output->data;
+		$node_list = array();
+
+		// node_data를 node_id 로 재정렬
+		foreach($node_data as $v)
+		{
+			$node_list[$v->node_id] = $v;
+		}
+
+		$merge = array('{name}', '{memo1}', '{memo2}', '{memo3}'); // merge 검색단어
+		$msg_preview_list = array(); 
+
+		$key = 0;
+		// 창 갯수로 foreach
+		foreach($vars->text as $val)
+		{
+			// 받는사람수로 foreach
+			foreach($vars->rcp_list as $v)
+			{
+				// 주소록에서 추가된 것들이면
+				if($v->node_id)
+				{
+					$change_string = array($node_list[$v->node_id]->node_name, $node_list[$v->node_id]->memo1, $node_list[$v->node_id]->memo2, $node_list[$v->node_id]->memo3);
+
+					$msg_preview_list[$key]->text = str_replace($merge, $change_string, $val);
+					$msg_preview_list[$key]->node_id = $v->node_id;
+					$msg_preview_list[$key]->name = $v->name;
+					$msg_preview_list[$key]->number = $v->number;
+				}
+				else
+				{
+					// 직접추가된것들
+					$msg_preview_list[$key]->text = $val;
+					$msg_preview_list[$key]->name = $v->name;
+					$msg_preview_list[$key]->number = $v->number;
+				}
+				$key++;
+			}
+		}
+
+		$this->add('error', 'whatthe');
+
+		// data set
+		Context::set('msg_preview_list', $msg_preview_list);
+
+		$module_info = $oModuleModel->getModuleInfoByMid($vars->g_mid);
+		
+		$path = $this->module_path."skins/".$module_info->skin;
+		$file_name = "full_msg_preview_list.html";
+		$data = $oTemplate->compile($path, $file_name);
+
+		$this->add('list_templete', $data); // 템플릿파일 설정
+	}
+
 
 	// 레이어 템플릿 가져오기
 	function getPopupLayer()

@@ -1,0 +1,26 @@
+<span class="full_address_count">Total : <span class="total" id="smsPurplebookListCountFull">(총 {count($msg_preview_list)})</span></span>
+
+<!-- 리스트 -->
+<table class="full_msg_preview_table">
+	<div id="full_top_bottom">
+		<a href="#" id="full_move_top"><span class="top_icon"></span>TOP</a>
+		<a href="#" id="full_move_bottom">DOWN<span class="down_icon"></span></a>
+	</div>
+
+	<thead>
+		<tr>
+			<th>번호</th>
+			<th>받는사람</th>
+			<th>받는번호</th>
+			<th>메시지내용</th>
+		</tr>
+	</thead>
+	<tbody id="full_msg_preview_list">
+		<tr loop="$msg_preview_list => $no,$val" class="warning_preview"|cond="!$val->node_id">
+			<td>{$no++}</td>
+			<td>{$val->name}</td>
+			<td>{$val->number}</td>
+			<td>{htmlspecialchars($val->text)}</td>
+		</tr>
+	</tbody>
+</table>
