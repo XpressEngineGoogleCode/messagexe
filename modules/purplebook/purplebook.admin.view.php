@@ -79,6 +79,7 @@ class purplebookAdminView extends purplebook
 		// get the grant infotmation from admin module
 		$oModuleAdminModel = &getAdminModel('module');
 		$grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
+
 		Context::set('grant_content', $grant_content);
 
 		$this->setTemplateFile('grant_list');

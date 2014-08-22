@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     <grants>
-        <grant name="send" default="guest">
+        <grant name="send" default="user">
             <title xml:lang="ko">발송 권한</title>
             <title xml:lang="en">Sending messages</title>
         </grant>
@@ -35,6 +35,7 @@
 		<action name="getPurplebookSavedMessages" type="model" />
 		<action name="getPurplebookUpdateAddress" type="model" />
 		<action name="getPurplebookSendResult" type="model" />
+		<action name="getPurplebookMsgPreview" type="model" />
 		<action name="getPopupLayer" type="model" />
 
 		<action name="procPurplebookSendMsg" type="controller" standalone="true" />

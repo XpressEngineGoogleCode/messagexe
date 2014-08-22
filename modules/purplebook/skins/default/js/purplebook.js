@@ -3670,7 +3670,7 @@ function submit_messages() {
             show_and_hide($layer);
         });
 
-		// 폴더주소록 전체보기
+		// 전체보기 버튼
 		$('#full_address_button').live('click',function() {
 			var params = new Array();
 			var response_tags = new Array('error','message','data');
@@ -3687,6 +3687,44 @@ function submit_messages() {
 				}
 			}, response_tags);
         });
+
+		// 전송결과 버튼
+		$("#btn_send_result").click( function(){
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'full_send_result';
+
+			layer_id = '#full_send_result';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+				}
+			}, response_tags);
+			return false;
+		});
+
+		// 미리보기 버튼
+		$("#btn_msg_preview").click( function(){
+			var params = new Array();
+			var response_tags = new Array('error','message','data');
+
+			params['g_mid'] = g_mid;
+			params['layer_name'] = 'full_msg_preview';
+
+			layer_id = '#full_msg_preview';
+
+			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+				if(ret_obj["data"])
+				{
+					jQuery(layer_id).html(ret_obj["data"]);
+				}
+			}, response_tags);
+			return false;
+		});
 
 		// 머지기능
         $('#btn_pop_merge').live('click',function() {
@@ -4126,25 +4164,6 @@ function submit_messages() {
 				$("#message_send_limit").css('background', '#f0f0f0');
 				$("#message_send_interval").css('background', '#f0f0f0');
 			}
-		});
-
-		// 전송결과 버튼
-		$("#btn_send_result").click( function(){
-			var params = new Array();
-			var response_tags = new Array('error','message','data');
-
-			params['g_mid'] = g_mid;
-			params['layer_name'] = 'full_send_result';
-
-			layer_id = '#full_send_result';
-
-			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
-					jQuery(layer_id).html(ret_obj["data"]);
-				}
-			}, response_tags);
-			return false;
 		});
 
 		// 스크롤 탑

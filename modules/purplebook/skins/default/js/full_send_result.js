@@ -41,7 +41,7 @@ jQuery(window).scroll(function () {
 	if(jQuery('#full_send_result').css('display') == 'block') fullSendResultSize();
 });
 
-// 폴더주소록 창 사이즈 구하기 
+//  창 사이즈 구하기 
 function fullSendResultSize(size_change){
 	var dialHeight = jQuery(document).height();
 	var dialWidth = jQuery(window).width();
@@ -54,7 +54,7 @@ function fullSendResultSize(size_change){
 	jQuery('#full_send_result').css('position', 'absolute');
 }
 
-// 폴더주소록 보여주기&숨기기
+// 전송결과 보여주기&숨기기
 function fullSendResultShow(){
 	$obj = jQuery("#full_send_result");
 	if($obj.css('display') == 'block') jQuery($obj.html(''));
@@ -69,9 +69,9 @@ function fullSendResultShow(){
 	jQuery('body,html').animate({scrollTop: 0}, 300);
 }
 
-// 전체화면 닫기
+// 전송결과 닫기
 function closeFullSendResult(){
-	jQuery('#full_send_result').css('display','none'); // 전체보기 감추기
+	jQuery('#full_send_result').css('display','none'); // 전송결과 감추기
 }
 
 function send_result_reload(){
