@@ -60,9 +60,8 @@ span.checkbox.on { background-position:0px -13px; }
 .purplebook_left .left_select .bodyArea ul#smsPurplebookList li .modifyPhone {width:120px; font:9pt Arial; letter-spacing:3px; }
 
 /* centeral arrow area */
-.purplebook_arrow { float:left; width:50px; padding-top:180px; text-align:center; overflow:hidden; vertical-align:middle; }
-.purplebook_arrow .bth_arrow_right { cursor:pointer; display:inline-block; margin:auto; width:43px; height:53px; background:url('../img/bth_arrow_right.gif') no-repeat; text-indent:-1000em; }
-.purplebook_arrow .bth_arrow_left { cursor:pointer; display:inline-block; margin-top:4px; width:43px; height:53px; background:url('../img/bth_arrow_left.gif') no-repeat; text-indent:-1000em; }
+.purplebook_arrow { float:left; width:50px; padding-top:160px; text-align:center; overflow:hidden; vertical-align:middle; }
+.purplebook_arrow .btn_arrow_right a { display:block; margin-bottom:30px; }
 
 /* stage 3 right target list area */
 .purplebook_right { position:relative; float:left; width:280px; height:365px; padding:0; color:#666; }
