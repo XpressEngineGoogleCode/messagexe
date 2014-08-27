@@ -2,7 +2,7 @@
 /**
  * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookModel
- * @author diver(diver@coolsms.co.kr)
+ * @author NURIGO(contact@nurigo.net)
  * @brief  purplebookModel
  */
 class purplebookModel extends purplebook
@@ -846,7 +846,11 @@ class purplebookModel extends purplebook
 
 		// node_id들로 주소록 정보 구해오기
 		$output = executeQueryArray('purplebook.getPurplebookByNodeIds', $args);
-		if(!$output->toBool()) return $output;
+		if(!$output->toBool())
+		{
+			$this->setError(-1); 
+			$this->setMessage("ERROR : 주소록 가져오기 에러 ( purplebook.getPurplebookByNodeIds model.php line 852 )");
+		}
 
 		$node_data = $output->data;
 		$node_list = array();
@@ -864,31 +868,47 @@ class purplebookModel extends purplebook
 		// 창 갯수로 foreach
 		foreach($vars->text as $val)
 		{
+			debugPrint('ht-1');
+			debugPrint($vars->text);
+			debugPrint(strstr($val,'{name}'));
+			debugPrint(strstr($val,'WHWI'));
+
 			// 받는사람수로 foreach
 			foreach($vars->rcp_list as $v)
 			{
-				// 주소록에서 추가된 것들이면
-				if($v->node_id)
+				// 직접추가된것들이면
+				if(!$v->node_id)
 				{
-					$change_string = array($node_list[$v->node_id]->node_name, $node_list[$v->node_id]->memo1, $node_list[$v->node_id]->memo2, $node_list[$v->node_id]->memo3);
-
-					$msg_preview_list[$key]->text = str_replace($merge, $change_string, $val);
-					$msg_preview_list[$key]->node_id = $v->node_id;
-					$msg_preview_list[$key]->name = $v->name;
-					$msg_preview_list[$key]->number = $v->number;
-				}
-				else
-				{
-					// 직접추가된것들
 					$msg_preview_list[$key]->text = $val;
 					$msg_preview_list[$key]->name = $v->name;
 					$msg_preview_list[$key]->number = $v->number;
 				}
+
+				// merge 기능을 사용한다면 
+				if(strpos($val,'{name}') || strpos($val,'{memo1}') || strpos($val,'{memo2}') || strpos($val,'{memo3}')) 
+				{
+					// 주소록에서 추가된 것들이면
+					if($v->node_id)
+					{
+						// 경고 메세지들 설정
+						if(strpos($val,'{name}') && !$node_list[$v->node_id]->node_name) $msg_preview_list[$key]->warning = true;
+						if(strpos($val,'{memo1}') && !$node_list[$v->node_id]->memo1) $msg_preview_list[$key]->warning = true;
+						if(strpos($val,'{memo2}') && !$node_list[$v->node_id]->memo2) $msg_preview_list[$key]->warning = true;
+						if(strpos($val,'{memo3}') && !$node_list[$v->node_id]->memo3) $msg_preview_list[$key]->warning = true;
+
+						$change_string = array($node_list[$v->node_id]->node_name, $node_list[$v->node_id]->memo1, $node_list[$v->node_id]->memo2, $node_list[$v->node_id]->memo3);
+
+						$msg_preview_list[$key]->text = str_replace($merge, $change_string, $val);
+						$msg_preview_list[$key]->node_id = $v->node_id;
+						$msg_preview_list[$key]->name = $v->name;
+						$msg_preview_list[$key]->number = $v->number;
+					}
+				}
 				$key++;
 			}
 		}
-
-		$this->add('error', 'whatthe');
+		debugPrint('w-1');
+		debugPrint($msg_preview_list);
 
 		// data set
 		Context::set('msg_preview_list', $msg_preview_list);
@@ -898,7 +918,7 @@ class purplebookModel extends purplebook
 		$path = $this->module_path."skins/".$module_info->skin;
 		$file_name = "full_msg_preview_list.html";
 		$data = $oTemplate->compile($path, $file_name);
-
+		
 		$this->add('list_templete', $data); // 템플릿파일 설정
 	}
 

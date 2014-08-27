@@ -2,7 +2,7 @@
 /**
  * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebook
- * @author wiley(wiley@nurigo.net)
+ * @author NURIGO(contact@nurigo.net)
  * @brief  purplebook
  */
 class purplebook extends ModuleObject

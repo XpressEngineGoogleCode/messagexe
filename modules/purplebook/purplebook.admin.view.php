@@ -2,7 +2,7 @@
 /**
  * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookAdminView
- * @author wiley(wiley@nurigo.net)
+ * @author NURIGO(contact@nurigo.net)
  * @brief  purplebookAdminView
  */ 
 class purplebookAdminView extends purplebook
