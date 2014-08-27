@@ -2433,7 +2433,7 @@ function init_purplebook_tree(img_base)
                     "separator_before"	: false,
                     "icon"				: false,
                     "separator_after"	: false,
-                    "label"				: "속성",
+                    "label"				: "정보보기",
                     "action"			: function (obj) { this.properties(obj); }
                 },
                 "xldownload" : {
@@ -4089,7 +4089,7 @@ function submit_messages() {
                 }
             }
             ,$.contextMenu.separator
-            ,{'속성':{
+            ,{'정보보기':{
                     onclick:function(menuItem,menu) { pb_view_properties(this); jQuery('.context-menu').remove(); jQuery('.context-menu-shadow').remove();} 
                     ,icon:g_tpl_path+'img/icon-attribute.gif'
                 }
