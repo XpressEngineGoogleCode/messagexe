@@ -2,7 +2,7 @@
 /**
  * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookController
- * @author wiley@nurigo.net
+ * @author NURIGO(contact@nurigo.net)
  * @brief  purplebookController
  */
 class purplebookController extends purplebook 
@@ -41,13 +41,11 @@ class purplebookController extends purplebook
 	{
 		$all_args = Context::getRequestVars();
 
-		if(!$this->grant->send) 
-			return new Object(-1, 'msg_not_permitted');
+		if(!$this->grant->send) return new Object(-1, 'msg_not_permitted');
 		$module_srl = Context::get('module_srl');
 		$oPurplebookModel = &getModel('purplebook');
 		$module_info = $oPurplebookModel->getModuleInstConfig($module_srl);
-		if($module_info->module != 'purplebook') 
-			return new Object(-1,'msg_invalid_request');
+		if($module_info->module != 'purplebook') return new Object(-1,'msg_invalid_request');
 
 		if($args && $args->basecamp) $basecamp = $args->basecamp;
 

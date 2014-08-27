@@ -2,7 +2,7 @@
     /**
      * vi:set sw=4 ts=4 expandtab enc=utf8:
      * @class  CSUtility
-     * @author diver(diver@coolsms.co.kr)
+     * @author NURIGO(contact@nurigo.net)
      * @brief  CSUtility
      */
     class CSUtility {
