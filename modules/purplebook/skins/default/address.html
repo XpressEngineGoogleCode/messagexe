@@ -15,6 +15,7 @@
 <!--%import("js/jquery.curvycorners.source.js")-->
 <!--%import("js/jquery.qtip-1.0.0-rc3.js")-->
 <!--%import("js/global.js")-->
+<load target="js/contacts.js" />
 
 <!--%load_js_plugin("ui")-->
 <!--%load_js_plugin("ui.datepicker")-->
@@ -54,10 +55,17 @@
 					<a id="btn_pop_manual" class="pop_menual btn_menual" href="#" onfocus="this.blur()" title="자세한 설명">폴더생성</a>
 				</li>
 				<li class="etc_btn">
-				<a id="btn_pop_manual" class="pop_menual btn_menual etc" href="#" onfocus="this.blur()" title="기타메뉴">기타메뉴</a>
+				<a id="btn_advanced_menu" class="etc" href="#" title="기타메뉴">기타메뉴</a>
 				</li>
 			</ul>
 		</div><!-- 1번 주소 폴더 목록 끝 -->
+		<ul class="advanced_menu">
+			<li><a id="btn_rename" href="#" title="이름변경">이름변경</a></li>
+			<li><a id="btn_delete" href="#" title="삭제">삭제</a></li>
+			<li><a id="btn_share" href="#" title="공유">공유</a></li>
+			<li><a id="btn_property" href="#" title="속성">속성</a></li>
+			<li><a id="btn_cleanup" href="#" title="">휴지통 비우기</a></li>
+		</ul><!-- advanced menu -->
 
 		<!-- 레이어 팝업 영역 -->
 		<div id="layer_properties" class="layer draggable">

@@ -37,6 +37,11 @@ span.checkbox.on { background-position:0px -13px; }
 .bottomArea #btn_empty_trash { margin:0;}
 .purplebook_left .left_list .bottomArea .btn_menual img {}
 
+/* advanced menus */
+.purplebook_left .advanced_menu { margin:0 0 0 8px; padding:0; list-style:none; position:absolute; z-index:9999; width:235px; background-color:#fff; display:none; }
+.purplebook_left .advanced_menu li { display:block; padding:1px; line-height:24px; }
+.purplebook_left .advanced_menu li a { display:block; background-color:#ededed; }
+
 /* stage 2 left folder selection area */
 .purplebook_left .left_select { float:right; width:235px; margin:0 0 15px 5px; padding:0; font:8pt dotum; color:#666;}
 .purplebook_left .left_select .title { margin-bottom:5px; }
