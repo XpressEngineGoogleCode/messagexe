@@ -26,9 +26,12 @@ span.checkbox.on { background-position:0px -13px; }
 .purplebook_left .purplebook_left_title .search a {position:absolute; top:0;  *top:1px; width:18px; height:18px; border:1px solid #71aee6;}
 
 /* advanced menus */
-.purplebook_left .advanced_menu { margin:0 0 0 8px; padding:0; list-style:none; position:absolute; z-index:9999; width:235px; background-color:#fff; display:none; }
-.purplebook_left .advanced_menu li { display:block; padding:1px; line-height:24px; }
-.purplebook_left .advanced_menu li a { display:block; background-color:#ededed; }
+.purplebook_left .advanced_menu { margin:0; padding:5px 0; list-style:none; position:absolute; z-index:9999; width:130px; background-color:#333; display:none; right:105px; top:327px; }
+.purplebook_left .advanced_menu:after { top:10%; left:-15px; border:solid transparent; border-color:transparent; border-width:10px; border-right-color:#333; position:absolute; width:0; height:0; content:"";  }
+.purplebook_left .advanced_menu li { padding:1px; line-height:18px; }
+.purplebook_left .advanced_menu li.arrow { background:url(../img/icon_gspecial7.gif); width:10px; height:10px; position:absolute; left:0; top:30px; }
+.purplebook_left .advanced_menu li a { display:block; color:#fff; text-decoration:none; text-indent:10px; padding:3px 0; }
+.purplebook_left .advanced_menu li a:hover { text-decoration:underline; }
 
 /* stage 1 left folder list area */
 .purplebook_left .left_list { float:left; width:235px; margin:0 5px 15px 10px; padding:0; font:8pt dotum; color:#666;}

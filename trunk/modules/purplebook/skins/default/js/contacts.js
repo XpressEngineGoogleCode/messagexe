@@ -19,10 +19,12 @@ function get_selected_folder() {
  * initialize advanced menus
  */
 function pb_initialize_advanced_menu() {
+	/*
 	var pos = jQuery('.left_list').position();
 	var height = jQuery('.left_list').height();
 	var top_str = ''+(pos.top+height)+'px';
 	jQuery('.advanced_menu').css({top:top_str});
+	*/
 	jQuery('#btn_advanced_menu').toggle(function() {
 		jQuery('.advanced_menu').show();
 	}, function() {
