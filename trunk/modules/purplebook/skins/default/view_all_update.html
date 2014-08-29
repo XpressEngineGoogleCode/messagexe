@@ -1,0 +1,9 @@
+<form method="POST" id="pb_update_address_form">
+	<input type="hidden" name="node_id" value="{$address_info->node_id}" />
+	이름 <input type="text" name="node_name" value="{$address_info->node_name}" /> <br />
+	전화번호 <input type="text" name="phone_num" value="{$address_info->phone_num}" /> <br />
+	메모1 <input type="text" name="memo1" value="{$address_info->memo1}" /> <br />
+	메모2 <input type="text" name="memo2" value="{$address_info->memo2}" /> <br />
+	메모3 <input type="text" name="memo3" value="{$address_info->memo3}" /> <br />
+</form>
+<button onClick="pb_update_address()">수정완료</button>
