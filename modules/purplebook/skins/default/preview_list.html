@@ -1,0 +1,30 @@
+<span class="pb_address_count">
+	Total : 
+	<span class="total" id="smsPurplebookListCountFull" cond="$preview_list">({count($preview_list)})</span>
+	<span class="total" id="smsPurplebookListCountFull" cond="!$preview_list">(0개)</span>
+</span>
+
+<!-- 리스트 -->
+<table class="pb_preview_table">
+	<div id="pb_top_bottom">
+		<a href="#" id="pb_move_top"><span class="top_icon"></span>TOP</a>
+		<a href="#" id="pb_move_bottom">DOWN<span class="down_icon"></span></a>
+	</div>
+
+	<thead>
+		<tr>
+			<th>번호</th>
+			<th>받는사람</th>
+			<th>받는번호</th>
+			<th>메시지내용</th>
+		</tr>
+	</thead>
+	<tbody id="pb_preview_list">
+		<tr loop="$preview_list => $no,$val" class="warning_preview"|cond="$val->warning">
+			<td>{$no++}</td>
+			<td>{$val->name}</td>
+			<td>{$val->number}</td>
+			<td>{htmlspecialchars($val->text)}</td>
+		</tr>
+	</tbody>
+</table>

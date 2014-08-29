@@ -332,7 +332,7 @@ class purplebookModel extends purplebook
 		// 리스트 카운트
 		if(Context::get("list_count"))
 		{
-			Context::set("full_list_count", Context::get("list_count"));
+			Context::set("pb_list_count", Context::get("list_count"));
 			$args->list_count = Context::get("list_count");
 		}
 
@@ -385,10 +385,10 @@ class purplebookModel extends purplebook
 		$config = $this->getModuleConfig();
 		$this->add('base_url', $config->callback_url);
 
-		if(Context::get('full_address_view')){
+		if(Context::get('view_all')){
 			Context::set('list', $data); // 주소록 리스트 설정 
 
-			if(Context::get('full_fix_mode')) Context::set('full_fix_mode', Context::get('full_fix_mode')); // 수정모드일때 
+			if(Context::get('fix_mode')) Context::set('fix_mode', Context::get('fix_mode')); // 수정모드일때 
 
 			$oModuleModel = &getModel("module");
 			$oTemplate = &TemplateHandler::getInstance();
@@ -396,7 +396,7 @@ class purplebookModel extends purplebook
 			$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
 
 			$path = $this->module_path."skins/".$module_info->skin;
-			$file_name = "full_address_list.html";
+			$file_name = "view_all_list.html";
 			$data = $oTemplate->compile($path, $file_name);
 
 			$this->add('list_templete', $data); // 템플릿파일 설정
@@ -698,14 +698,14 @@ class purplebookModel extends purplebook
 		$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
 
 		$path = $this->module_path."skins/".$module_info->skin;
-		$file_name = "full_address_update.html";
+		$file_name = "view_all_update.html";
 		$data = $oTemplate->compile($path, $file_name);
 
 		$this->add('list_templete', $data); // 템플릿파일 설정
 	}
 
 	// 전송결과 템플릿 가져오기
-	function getPurplebookSendResult()
+	function getPurplebookResult()
 	{
 		$logged_info = Context::get('logged_info');
 		if(!$logged_info) return new Object(-1, 'msg_not_logged');
@@ -722,19 +722,19 @@ class purplebookModel extends purplebook
 		if(Context::get("list_count")) 
 		{
 			$args->count = Context::get("list_count");
-			Context::set("full_send_result_count", Context::get("list_count"));
+			Context::set("pb_result_count", Context::get("list_count"));
 		}
 
 		// 검색날짜가 있으면
 		if($vars->s_start)
 		{
 			$args->s_start = $vars->s_start;
-			Context::set('send_result_start_date', $vars->s_start);
+			Context::set('pb_result_start_date', $vars->s_start);
 		}
 		if($vars->s_end)
 		{
 			$args->s_end = $vars->s_end;
-			Context::set('send_result_end_date', $vars->s_end);
+			Context::set('pb_result_end_date', $vars->s_end);
 		}
 
 		// 페이지 설정
@@ -759,7 +759,7 @@ class purplebookModel extends purplebook
 				$args->notin_resultcode = "00,99,60";
 			}
 
-			Context::set("full_send_result_status", $vars->status);
+			Context::set("pb_result_status", $vars->status);
 		}
 
 		//검색어 설정
@@ -802,7 +802,7 @@ class purplebookModel extends purplebook
 			Context::set('page', $page);
 			Context::set('total_count', $output->total_count);
 			Context::set('total_page', ceil($output->total_count/$output->list_count));
-			Context::set('send_result_list', $output->data);
+			Context::set('result_list', $output->data);
 		}
 		else // 리스트가 없을떄
 		{
@@ -819,14 +819,14 @@ class purplebookModel extends purplebook
 		$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
 
 		$path = $this->module_path."skins/".$module_info->skin;
-		$file_name = "full_send_result_list.html";
+		$file_name = "result_list.html";
 		$data = $oTemplate->compile($path, $file_name);
 
 		$this->add('list_templete', $data); // 템플릿파일 설정
 	}
 
 	// 미리보기 템플릿 가져오기
-	function getPurplebookMsgPreview()
+	function getPurplebookPreview()
 	{
 		$logged_info = Context::get('logged_info');
 		if(!$logged_info) return new Object(-1, 'msg_not_logged');
@@ -862,61 +862,57 @@ class purplebookModel extends purplebook
 		}
 
 		$merge = array('{name}', '{memo1}', '{memo2}', '{memo3}'); // merge 검색단어
-		$msg_preview_list = array(); 
+		$preview_list = array(); 
 
 		$key = 0;
 		// 창 갯수로 foreach
 		foreach($vars->text as $val)
 		{
-			debugPrint('ht-1');
-			debugPrint($vars->text);
-			debugPrint(strstr($val,'{name}'));
-			debugPrint(strstr($val,'WHWI'));
-
 			// 받는사람수로 foreach
 			foreach($vars->rcp_list as $v)
 			{
-				// 직접추가된것들이면
-				if(!$v->node_id)
+				// 주소록에서 추가된 것들이면
+				if($v->node_id)
 				{
-					$msg_preview_list[$key]->text = $val;
-					$msg_preview_list[$key]->name = $v->name;
-					$msg_preview_list[$key]->number = $v->number;
-				}
+					$preview_list[$key]->text = $val;
 
-				// merge 기능을 사용한다면 
-				if(strpos($val,'{name}') || strpos($val,'{memo1}') || strpos($val,'{memo2}') || strpos($val,'{memo3}')) 
-				{
-					// 주소록에서 추가된 것들이면
-					if($v->node_id)
+					// merge 기능을 사용한다면 
+					if(strpos($val,'{name}') || strpos($val,'{memo1}') || strpos($val,'{memo2}') || strpos($val,'{memo3}')) 
 					{
 						// 경고 메세지들 설정
-						if(strpos($val,'{name}') && !$node_list[$v->node_id]->node_name) $msg_preview_list[$key]->warning = true;
-						if(strpos($val,'{memo1}') && !$node_list[$v->node_id]->memo1) $msg_preview_list[$key]->warning = true;
-						if(strpos($val,'{memo2}') && !$node_list[$v->node_id]->memo2) $msg_preview_list[$key]->warning = true;
-						if(strpos($val,'{memo3}') && !$node_list[$v->node_id]->memo3) $msg_preview_list[$key]->warning = true;
+						if(strpos($val,'{name}') && !$node_list[$v->node_id]->node_name) $preview_list[$key]->warning = true;
+						if(strpos($val,'{memo1}') && !$node_list[$v->node_id]->memo1) $preview_list[$key]->warning = true;
+						if(strpos($val,'{memo2}') && !$node_list[$v->node_id]->memo2) $preview_list[$key]->warning = true;
+						if(strpos($val,'{memo3}') && !$node_list[$v->node_id]->memo3) $preview_list[$key]->warning = true;
 
-						$change_string = array($node_list[$v->node_id]->node_name, $node_list[$v->node_id]->memo1, $node_list[$v->node_id]->memo2, $node_list[$v->node_id]->memo3);
-
-						$msg_preview_list[$key]->text = str_replace($merge, $change_string, $val);
-						$msg_preview_list[$key]->node_id = $v->node_id;
-						$msg_preview_list[$key]->name = $v->name;
-						$msg_preview_list[$key]->number = $v->number;
+						$change_string = array($node_list[$v->node_id]->node_name, $node_list[$v->node_id]->memo1, $node_list[$v->node_id]->memo2, $node_list[$v->node_id]->memo3);	
+						$preview_list[$key]->text = str_replace($merge, $change_string, $val);
 					}
+					
+					$preview_list[$key]->node_id = $v->node_id;
+					$preview_list[$key]->name = $v->name;
+					$preview_list[$key]->number = $v->number;
 				}
+				else
+				{
+					// 직접추가된것들이면
+					$preview_list[$key]->text = $val;
+					$preview_list[$key]->name = $v->name;
+					$preview_list[$key]->number = $v->number;
+				}
+
+				
 				$key++;
 			}
 		}
-		debugPrint('w-1');
-		debugPrint($msg_preview_list);
 
 		// data set
-		Context::set('msg_preview_list', $msg_preview_list);
+		Context::set('preview_list', $preview_list);
 
 		$module_info = $oModuleModel->getModuleInfoByMid($vars->g_mid);
 		
 		$path = $this->module_path."skins/".$module_info->skin;
-		$file_name = "full_msg_preview_list.html";
+		$file_name = "preview_list.html";
 		$data = $oTemplate->compile($path, $file_name);
 		
 		$this->add('list_templete', $data); // 템플릿파일 설정

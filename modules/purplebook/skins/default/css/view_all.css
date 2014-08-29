@@ -1,0 +1,75 @@
+.pb_address_hide_menu { display:none; padding:10px; overflow:hidden; position:relative; border:1px solid #ddd; border-top:0; border-radius: 0 0 10px 10px; }
+/* Full Address */
+#view_all .pb_address_count { font-size:12px; }
+#view_all .gray_bg { background:#f9f9f9; border-bottom:1px solid #ddd; padding:7px 0 10px; }
+#view_all .view_toolbar{ clear:both; margin:0 auto; max-width:1100px; min-width:820px; padding:6px 10px 0; outline:0 none; }
+#view_all .view_btn_set { margin:auto; padding:0; width:822px; }
+#view_all .view_form { margin:0 auto; width:822px; background:#f9f9f9; margin-top:-1px; }
+#view_all .view_search { float:right; }
+
+/* Full Address Button */
+#view_all a.view_close_btn { color:#397fb5; padding-top:5px; font-size:13px; float:left; }
+#view_all button { text-shadow:1px 1px 1px #fff; border-radius:5px; border:1px solid #d9d9d9; cursor:pointer; color:#555; font-family:'NanumGothic'; font-size:11px; padding:3px 7px; }
+#view_all button.excel_add { border-radius:0 5px 5px 0; margin-left:-3px; border-left:0; }
+#view_all button.individual_add { border-radius:5px 0 0 5px; }
+button.gray_btn { background: #ffffff; /* Old browsers */ background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */ background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */ background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */ }
+button.gray_btn:hover { background: #ffffff; /* Old browsers */ background: -moz-linear-gradient(top,  #e5e5e5 0%, #fff 100%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e5e5e5), color-stop(100%,#fff)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top,  #e5e5e5 0%,#fff 100%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top,  #e5e5e5 0%,#fff 100%); /* Opera 11.10+ */ background: -ms-linear-gradient(top,  #e5e5e5 0%,#fff 100%); /* IE10+ */ background: linear-gradient(to bottom,  #e5e5e5 0%,#fff 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#fff',GradientType=0 ); /* IE6-9 */ }
+#view_all .add_button { margin:0; }
+#view_all .close_button { background:url(../img/close.png) no-repeat; text-indent:-999999em; position:absolute; height:18px; right:5px; bottom:5px; width:18px; color:transparent; }
+#view_all #pb_address_delete { background:#333; color:#fff; text-shadow:none; border:0; }
+
+/* search */
+#view_all .view_search input.search_box { padding:4px; border:1px solid #ddd; color:#555; vertical-align:top; }
+#view_all button.search { margin-left:-3px; border-radius:0; background:#777; color:#fff; border:0; text-shadow:none; line-height:1.6em; }
+
+/* add_form */
+#view_all input.InputBox { border:1px solid #ddd; padding:5px; width:130px; }
+
+/* add_excel */
+#view_all input.excel_submit { background:#555; font-size:12px; color:#fff; border:0; cursor:pointer; padding:3px 8px; margin-right:10px; } 
+#view_all form { float:left; }
+
+/* Full Address Table */
+#view_all .bodyArea { width:822px; margin:80px auto 40px; }
+#view_all .pb_select_box { float:right; } 
+#view_all table.pb_address_table { border:1px solid #ccc; border-spacing:0; color:#666; font-family:'NanumGothic'; font-size:12px; margin:20px 0;  width:100%; }
+#view_all table.pb_address_table th { padding:7px 25px 8px; background:#f6f6f6; }
+#view_all table.pb_address_table tr { line-height:3.3em; text-align:center; }
+#view_all table.pb_address_table tr:hover td { background-color:#fff; opacity:0.1; }
+#view_all table.pb_address_table tr:hover td.pb_hover_btn { z-index:99999; opacity:1; color:#fff; }
+#view_all table.pb_address_table tr:hover { position:relative; }
+#view_all table.pb_address_table tr:hover .pb_btn_cover_update { display:block; position:absolute; top:0; left:45%; }
+#view_all table.pb_address_table tr:hover .pb_btn_cover_delete { display:block; position:absolute; top:0; left:50%; }
+#view_all table.pb_address_table tr:nth-child(odd) { background:#fff; }
+#view_all table.pb_address_table tr:nth-child(even) { background:#fdfdfd; }
+#view_all table.pb_address_table td.jstree-draggable { padding-left:25px; }
+#view_all table.pb_address_table td { border-top:1px solid #eee; }
+
+#pb_address_history { line-height:1.8em; font-size:12px; color:#333; padding-right:40px; overflow:hidden; }
+//.view_all_date { font-size:11px; color:#888; float:right; }
+
+/* 개별 수정/삭제 */
+.pb_btn_cover_update { font-size:15px; display:none; }
+.pb_btn_cover_delete { font-size:15px; display:none; }
+
+/* 전체보기 수정 폼 */
+.ui-dialog { z-index:700; } 
+
+/* 스크롤 탑/바텀 */
+#pb_address_content { position:relative; }
+#pb_top_bottom { position:fixed; width:40px; margin-left:830px; z-index:800; border:1px solid #ddd; text-align:center; }  
+#pb_top_bottom a { display:block; font-size:9px; text-decoration:none; color:#333; }
+#pb_top_bottom a#pb_move_top { border-bottom:1px solid #ddd; }
+#pb_top_bottom a#pb_move_top span.top_icon { background:url(../img/top.png) no-repeat; width:7px; height:5px; display:block; margin:5px auto 0; text-align:center; }
+#pb_top_bottom a#pb_move_bottom span.down_icon { background:url(../img/down.png) no-repeat; width:7px; height:5px; display:block; margin:0 auto 5px; text-align:center; }
+
+/* 탑 메뉴 따라다니기 */
+.pb_address_header { position:fixed; width:100%; z-index:800;}
+
+/* pagination */
+.pb_address_pagination { text-align:center; }
+.pb_address_pagination a { font-size:13px; color:#555; text-decoration:none; border-radius:5px; }
+.pb_address_pagination strong { background:#666; color:#fff; border-radius:15px; padding:5px 8px; }
+
+/* delete */
+#pb_address_address div.delete_wrap { font-size:14px; color:#333; }

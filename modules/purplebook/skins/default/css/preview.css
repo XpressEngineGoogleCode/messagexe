@@ -1,0 +1,9 @@
+#pb_preview .gray_bg { background:#f9f9f9; border-bottom:1px solid #ddd; padding:7px 0 10px; }
+
+#pb_preview table.pb_preview_table { border:1px solid #ccc; border-spacing:0; color:#666; font-family:'NanumGothic'; font-size:12px; margin:20px 0;  width:100%; }
+#pb_preview table.pb_preview_table th { padding:7px 25px 8px; background:#f6f6f6; }
+#pb_preview table.pb_preview_table tr { line-height:3.3em; text-align:center; }
+#pb_preview table.pb_preview_table td.jstree-draggable { padding-left:25px; }
+#pb_preview table.pb_preview_table td { border-top:1px solid #eee; }
+
+.warning_preview { color:red; }

@@ -1066,7 +1066,7 @@ function sendMessageData() {
         sendMessageData.send_timer=false;
         jQuery('.text','#smsMessage #layer_status').text('접수가 완료되었습니다.');
 		jQuery('#layer_status_close','#smsMessage #layer_status').text('닫기');
-		jQuery('#btn_send_result','#smsMessage #layer_status').css('display','');
+		jQuery('#btn_result','#smsMessage #layer_status').css('display','');
 
         /*
         setTimeout(function() {
@@ -1198,7 +1198,7 @@ function sendMessage() {
 
 	// reset 전송완료후 버튼
 	jQuery('#layer_status_close','#smsMessage #layer_status').text('취소');
-	jQuery('#btn_send_result','#smsMessage #layer_status').css('display','none');
+	jQuery('#btn_result','#smsMessage #layer_status').css('display','none');
 
 	// 발송간격설정이 체크되있으면 전송간격 시간을 가져온다
 	if(jQuery("#message_interval_check").is(':checked')){
@@ -2779,8 +2779,19 @@ function submit_messages() {
             return;
         }
 
+		console.log('ww');
+		console.log(t);
+
         p_show_waiting_message();
 
+		addNum('#'+t.attr('node_id'), t.attr('node_name'), t.attr('node_id'))
+		scrollBottomTargetList();
+		updateTargetListCount();
+		display_cost();
+		p_hide_waiting_message();
+
+
+		/*
         var list = new Array();
         var succ_count=0;
         var progress_count=0;
@@ -2813,6 +2824,7 @@ function submit_messages() {
                         {
                             obj = list[i];
                             if (!addNum(obj.phone_num, obj.node_name)) succ_count++;
+							
                         }
 
                         scrollBottomTargetList();
@@ -2828,7 +2840,7 @@ function submit_messages() {
                     alert(errorThrown + " " + textStatus); 
                 }
             });
-        }
+        }		*/
 
     }
 
@@ -2874,6 +2886,51 @@ function submit_messages() {
             p_hide_waiting_message();
         }, 500);
     }
+
+	/**
+	 * @brief 주소목록에 선택된 폴더를 받는사람 목록으로 추가한다.
+	 */
+
+	/*
+    function add_folder_to_recipient() {
+        p_show_waiting_message();
+
+		// 컨텐츠 SET
+		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
+		if (selected_folders.length > 0) {
+			var node = jQuery(selected_folders[0]);
+		}
+
+		// 0.5초 뒤 실행, 이거 왜 이렇게 하는걸까? -_-
+        setTimeout(function() {
+            var succ_count=0;
+            var list = new Array();
+            $('span.checkbox.on', '#smsPurplebookList li').each(function() {
+                list.push($(this));
+            });
+            if (list.length == 0) { // 선택 항목이 없다면
+                alert('체크된 항목이 없습니다.\n왼쪽 목록에서 선택하세요.');
+                p_hide_waiting_message();
+                return;
+            }
+            for (var i = 0; i < list.length; i++) {
+                var obj = list[i];
+                var phonenum = $('.nodePhone', $(obj).parent()).text(); // 폰번호
+                var name = $('.nodeName', $(obj).parent()).text(); // 이름
+				var node_id = $(obj).parent().attr('node_id'); // node_id
+                if (phonenum.length <= 0) continue;
+                if (!addNum(phonenum, name, node_id)) succ_count++; // 실컷 카운팅하지만 뒤에서 안써먹는다-_-
+            }
+
+			// 중복번호, 스크롤내리고, 카운트 출력갱신하고, 소요비용 재계산해서 다시 출력하는 함수들을 호출하고 있는데 복잡하다. 개선이 필요한 듯.
+            updateExceptListCount();
+            scrollBottomTargetList();
+            updateTargetListCount();
+            display_cost();
+
+            p_hide_waiting_message();
+        }, 500);
+    }*/
 
     function append_address()
     {
@@ -3359,6 +3416,11 @@ function submit_messages() {
             return false; // bacause of a(anchor) tag
         });
 
+		$('#addFolder').click(function() {
+            add_folder_to_recipient();
+            return false; // bacause of a(anchor) tag
+        });
+
 
         // 수신목록 선택전환
         $('#smsPurplebookToggleTarget').toggle(
@@ -3671,14 +3733,14 @@ function submit_messages() {
         });
 
 		// 전체보기 버튼
-		$('#full_address_button').live('click',function() {
+		$('#pb_view_all_button').live('click',function() {
 			var params = new Array();
 			var response_tags = new Array('error','message','data');
 
 			params['g_mid'] = g_mid;
-			params['layer_name'] = 'full_address';
+			params['layer_name'] = 'view_all';
 
-			layer_id = '#full_address';
+			layer_id = '#pb_view_all';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
 				if(ret_obj["data"])
@@ -3689,14 +3751,14 @@ function submit_messages() {
         });
 
 		// 전송결과 버튼
-		$("#btn_send_result").click( function(){
+		$("#pb_result_button").click( function(){
 			var params = new Array();
 			var response_tags = new Array('error','message','data');
 
 			params['g_mid'] = g_mid;
-			params['layer_name'] = 'full_send_result';
+			params['layer_name'] = 'result';
 
-			layer_id = '#full_send_result';
+			layer_id = '#pb_result';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
 				if(ret_obj["data"])
@@ -3708,14 +3770,14 @@ function submit_messages() {
 		});
 
 		// 미리보기 버튼
-		$("#btn_msg_preview").click( function(){
+		$("#pb_preview_button").click( function(){
 			var params = new Array();
 			var response_tags = new Array('error','message','data');
 
 			params['g_mid'] = g_mid;
-			params['layer_name'] = 'full_msg_preview';
+			params['layer_name'] = 'preview';
 
-			layer_id = '#full_msg_preview';
+			layer_id = '#pb_preview';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
 				if(ret_obj["data"])
@@ -4167,12 +4229,12 @@ function submit_messages() {
 		});
 
 		// 스크롤 탑
-		$("#full_move_top").live("click", function(){
+		$("#pb_move_top").live("click", function(){
 			$('body, html').animate({scrollTop:0}, 100);
 		});
 
 		// 스크롤 바텀
-		$("#full_move_bottom").live("click", function(){
+		$("#pb_move_bottom").live("click", function(){
 			$("html, body").animate({ scrollTop: $(document).height() }, 100);
 		});
 
