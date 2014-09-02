@@ -2187,7 +2187,6 @@ function display_status(node_id)
                 node_name = data.data[i].attr.node_name;
                 phone_num = data.data[i].attr.phone_num;
 				var node = jQuery('#'+node_id);
-				console.log(node);
 				var pos = node.position();
 				var width = node.outerWidth();
 				alert(pos.left);
@@ -2768,6 +2767,36 @@ function submit_messages() {
     }
 
 	/**
+	 * @brief 주소목록에 선택된 폴더를 받는사람 목록으로 추가한다.
+	 */
+ 	function add_folder(node_route, node_id, f_name) {
+        $except_list = jQuery('#smsPurplebookExceptList');
+
+		/*
+		// 이미 존재하는 번호인지 검사
+        if ($('#folder_' + node_id).length > 0)
+		{
+			$except_list.append('<li><span class="name">' + f_name + '</span><span id="dup_"' + node_id + '></span></li>');
+            return 1;
+		}
+		*/
+
+		var params = new Array();
+		var response_tags = new Array('error','message','data');
+
+		params['node_route'] = node_route + node_id + ".";
+
+		exec_xml('purplebook', 'getPurplebookListCount', params, function(ret_obj) {
+
+			// 이상이 없을 경우 추가 (개별선택, 삭제 이벤트 포함)
+			$('#smsPurplebookTargetList').append('<li id="folder_' + node_id + '" ' + 'node_id=' + node_id + '><span class="checkbox"></span><span class="name">' + f_name + '</span><span class="number">(' + ret_obj["data"] + '명)' + '</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
+			
+		}, response_tags);
+   
+		return 0;
+	}
+
+	/**
 	 * @brief 폴더의 node_id로 명단을 가져와서 받는사람 목록에 추가한다.
 	 */
     function add_folder_to_recipient()
@@ -2779,69 +2808,13 @@ function submit_messages() {
             return;
         }
 
-		console.log('ww');
-		console.log(t);
-
         p_show_waiting_message();
 
-		addNum('#'+t.attr('node_id'), t.attr('node_name'), t.attr('node_id'))
+		add_folder(t.attr('node_route'), t.attr('node_id'), t.attr('node_name'))
 		scrollBottomTargetList();
 		updateTargetListCount();
 		display_cost();
 		p_hide_waiting_message();
-
-
-		/*
-        var list = new Array();
-        var succ_count=0;
-        var progress_count=0;
-        for (i = 0; i < t.length; i++)
-        {
-            var node_id = $(t[i]).attr('node_id');
-            $.ajax({
-                type : "POST"
-                , contentType: "application/json; charset=utf-8"
-                , url : "./"
-                , data : { 
-                            module : "purplebook"
-                            , act : "getPurplebookList"
-                            , node_id : node_id
-                            , node_type : '2'
-                         }
-                , dataType : "json"
-                , success : function (data) {
-                    for (i = 0; i < data.data.length; i++)
-                    {
-                        node_name = data.data[i].attr.node_name;
-                        phone_num = data.data[i].attr.phone_num;
-
-                        list.push({node_name:node_name, phone_num:phone_num});
-                    }
-
-                    progress_count++;
-                    if (progress_count == t.length) {
-                        for (i = 0; i < list.length; i++)
-                        {
-                            obj = list[i];
-                            if (!addNum(obj.phone_num, obj.node_name)) succ_count++;
-							
-                        }
-
-                        scrollBottomTargetList();
-                        updateTargetListCount();
-                        display_cost();
-                        p_hide_waiting_message();
-                        //alert(succ_count + ' 명을 추가했습니다.');
-                    }
-                }
-                , error : function (xhttp, textStatus, errorThrown) { 
-                    updateTargetListCount();
-                    p_hide_waiting_message();
-                    alert(errorThrown + " " + textStatus); 
-                }
-            });
-        }		*/
-
     }
 
 	/**
@@ -2886,51 +2859,6 @@ function submit_messages() {
             p_hide_waiting_message();
         }, 500);
     }
-
-	/**
-	 * @brief 주소목록에 선택된 폴더를 받는사람 목록으로 추가한다.
-	 */
-
-	/*
-    function add_folder_to_recipient() {
-        p_show_waiting_message();
-
-		// 컨텐츠 SET
-		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
-		if (selected_folders.length > 0) {
-			var node = jQuery(selected_folders[0]);
-		}
-
-		// 0.5초 뒤 실행, 이거 왜 이렇게 하는걸까? -_-
-        setTimeout(function() {
-            var succ_count=0;
-            var list = new Array();
-            $('span.checkbox.on', '#smsPurplebookList li').each(function() {
-                list.push($(this));
-            });
-            if (list.length == 0) { // 선택 항목이 없다면
-                alert('체크된 항목이 없습니다.\n왼쪽 목록에서 선택하세요.');
-                p_hide_waiting_message();
-                return;
-            }
-            for (var i = 0; i < list.length; i++) {
-                var obj = list[i];
-                var phonenum = $('.nodePhone', $(obj).parent()).text(); // 폰번호
-                var name = $('.nodeName', $(obj).parent()).text(); // 이름
-				var node_id = $(obj).parent().attr('node_id'); // node_id
-                if (phonenum.length <= 0) continue;
-                if (!addNum(phonenum, name, node_id)) succ_count++; // 실컷 카운팅하지만 뒤에서 안써먹는다-_-
-            }
-
-			// 중복번호, 스크롤내리고, 카운트 출력갱신하고, 소요비용 재계산해서 다시 출력하는 함수들을 호출하고 있는데 복잡하다. 개선이 필요한 듯.
-            updateExceptListCount();
-            scrollBottomTargetList();
-            updateTargetListCount();
-            display_cost();
-
-            p_hide_waiting_message();
-        }, 500);
-    }*/
 
     function append_address()
     {
