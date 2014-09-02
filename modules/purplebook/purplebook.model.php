@@ -840,6 +840,32 @@ class purplebookModel extends purplebook
 		$vars->text = json_decode($vars->text);
 		$vars->node_ids = json_decode($vars->node_ids);
 
+		// node_route가 넘어오면 해당 폴더의 주소록 리스트를 보여준다.
+		if($vars->node_route)
+		{
+			$args->member_srl = $logged_info->member_srl;
+			$args->node_route = $vars->node_route;
+			$args->equal_node_route = $vars->node_route;
+			$args->node_type = 2;
+
+			$output = executeQueryArray('purplebook.getPurplebookByNodeRoute', $args);
+			if(!$output->toBool()) 
+			{
+				$this->setError(-1); 
+				$this->setMessage("ERROR : 주소록 가져오기 에러 ( purplebook.model.php getPurplebookByNodeRoute )");
+			}
+
+			foreach($output->data as $k => $v)
+			{
+				$vars->rcp_list[$k]->node_id = $v->node_id;
+				$vars->rcp_list[$k]->name = $v->node_name;
+				$vars->rcp_list[$k]->number = $v->phone_num;
+
+				$vars->node_ids[$k] = $v->node_id;
+			}
+			unset($args);
+		}
+
 		// args set
 		$args->member_srl = $logged_info->member_srl;
 		$args->node_ids = $vars->node_ids;
@@ -849,7 +875,7 @@ class purplebookModel extends purplebook
 		if(!$output->toBool())
 		{
 			$this->setError(-1); 
-			$this->setMessage("ERROR : 주소록 가져오기 에러 ( purplebook.getPurplebookByNodeIds model.php line 852 )");
+			$this->setMessage("ERROR : 주소록 가져오기 에러 ( purplebook.getPurplebookByNodeIds model.php getPurplebookByNodeIds )");
 		}
 
 		$node_data = $output->data;
@@ -892,6 +918,8 @@ class purplebookModel extends purplebook
 					$preview_list[$key]->node_id = $v->node_id;
 					$preview_list[$key]->name = $v->name;
 					$preview_list[$key]->number = $v->number;
+					$preview_list[$key]->node_type = $node_list[$v->node_id]->node_type;
+					$preview_list[$key]->node_route = $node_list[$v->node_id]->node_route;
 				}
 				else
 				{
@@ -900,7 +928,6 @@ class purplebookModel extends purplebook
 					$preview_list[$key]->name = $v->name;
 					$preview_list[$key]->number = $v->number;
 				}
-
 				
 				$key++;
 			}
@@ -917,7 +944,6 @@ class purplebookModel extends purplebook
 		
 		$this->add('list_templete', $data); // 템플릿파일 설정
 	}
-
 
 	// 레이어 템플릿 가져오기
 	function getPopupLayer()
@@ -938,6 +964,23 @@ class purplebookModel extends purplebook
 		$data = $oTemplate->compile($path, $file_name);
 
 		$this->add('data', $data);
+	}
+
+
+	// 해당 node_id에 속해있는 address 카운트 구하기
+	function getPurplebookListCount()
+	{
+		$logged_info = Context::get('logged_info');
+		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'msg_login_required');
+
+		$args->member_srl = $logged_info->member_srl;
+		$args->node_route = Context::get('node_route');
+		$args->node_type = "2";
+
+		$output = executeQuery('purplebook.getPurplebookListCount', $args);
+		if(!$output->toBool()) return $output;
+
+		$this->add('data', $output->data->list_count);
 	}
 }
 /* End of file purplebook.model.php */

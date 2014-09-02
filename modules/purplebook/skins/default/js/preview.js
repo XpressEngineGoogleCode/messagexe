@@ -1,9 +1,8 @@
 // check that already loaded
 if(!pb_preview_loaded) var pb_preview_loaded = false;
 
-
 // 리스트 불러오기
-function pb_load_preview_list(page){
+function pb_load_preview_list(node_id){
 	var params = new Array();
 	var response_tags = new Array('error','message','data','list_templete');
 
@@ -42,9 +41,12 @@ function pb_load_preview_list(page){
 		}
 	}
 
-	console.log('wp-1');
-	console.log(text);
-	console.log(rcp_list);
+	// 직접 건내받은 node_id가있으면 node_route로 만들어 getPurplebookPreview 로 보낸다
+	node_route = null;
+	if (node_id) {
+		node_route = jQuery("#pb_node_id_"+node_id).attr("node_route") + node_id + ".";
+		node_name = jQuery("#pb_node_id_"+node_id).attr("node_name");
+	}
 
 	jQuery.ajax({
 		type : "POST"
@@ -57,6 +59,7 @@ function pb_load_preview_list(page){
                     , text : JSON.stringify(text)
                     , rcp_list : JSON.stringify(rcp_list)
 					, node_ids : JSON.stringify(node_ids)
+					, node_route : node_route
                  }
         , dataType : "json"
 		, success : function (data) {
@@ -66,10 +69,13 @@ function pb_load_preview_list(page){
                 return;
             }
 
-			console.log('w');
-			console.log(data);
-
 			jQuery('#pb_preview_list').html(data.list_templete);
+
+			// 경로보여주기
+			if (node_route) {
+				jQuery("#pb_preview_nav").html('<a href="#" onClick="pb_load_preview_list()">기본</a> > <a href="#" onClick="pb_load_preview_list(' + node_route + ')">' + node_name + '</a>');
+			}
+
         }
 		, error : function (xhttp, textStatus, errorThrown) { 
             send_json.progress_count += content.length;
@@ -130,7 +136,7 @@ jQuery(document).ready(function($){
 	pb_preview_resize(); 
 
 	// 리스트 불러오기
-	pb_load_preview_list("1"); 
+	pb_load_preview_list(); 
 
 	// 전체보기창 보여주기
 	pb_preview_show();  

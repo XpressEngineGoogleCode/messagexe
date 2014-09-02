@@ -4,6 +4,9 @@
 	<span class="total" id="smsPurplebookListCountFull" cond="!$preview_list">(0개)</span>
 </span>
 
+<span id="pb_preview_nav"><a href="#" onClick="pb_load_preview_list()">기본</a></span>
+
+
 <!-- 리스트 -->
 <table class="pb_preview_table">
 	<div id="pb_top_bottom">
@@ -22,7 +25,8 @@
 	<tbody id="pb_preview_list">
 		<tr loop="$preview_list => $no,$val" class="warning_preview"|cond="$val->warning">
 			<td>{$no++}</td>
-			<td>{$val->name}</td>
+			<td cond="$val->node_type == '2'">{$val->name}</td>
+			<td cond="$val->node_type == '1'"><a href="#" id="pb_node_id_{$val->node_id}" node_name="{$val->name}" node_route="{$val->node_route}" onClick='pb_load_preview_list("{$val->node_id}")'>{$val->name}  {$val->node_id}</a></td>
 			<td>{$val->number}</td>
 			<td>{htmlspecialchars($val->text)}</td>
 		</tr>
