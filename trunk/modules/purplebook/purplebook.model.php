@@ -890,6 +890,9 @@ class purplebookModel extends purplebook
 		$merge = array('{name}', '{memo1}', '{memo2}', '{memo3}'); // merge 검색단어
 		$preview_list = array(); 
 
+		debugPrint('ee');
+		debugPrint($vars);
+		debugPrint($node_list);
 		$key = 0;
 		// 창 갯수로 foreach
 		foreach($vars->text as $val)
@@ -898,20 +901,39 @@ class purplebookModel extends purplebook
 			foreach($vars->rcp_list as $v)
 			{
 				// 주소록에서 추가된 것들이면
-				if($v->node_id)
+				if($v->node_id && $node_list[$v->node_id]->node_type == '2')
 				{
 					$preview_list[$key]->text = $val;
+					$preview_list[$key]->warning = null;
 
 					// merge 기능을 사용한다면 
 					if(strpos($val,'{name}') || strpos($val,'{memo1}') || strpos($val,'{memo2}') || strpos($val,'{memo3}')) 
 					{
-						// 경고 메세지들 설정
-						if(strpos($val,'{name}') && !$node_list[$v->node_id]->node_name) $preview_list[$key]->warning = true;
-						if(strpos($val,'{memo1}') && !$node_list[$v->node_id]->memo1) $preview_list[$key]->warning = true;
-						if(strpos($val,'{memo2}') && !$node_list[$v->node_id]->memo2) $preview_list[$key]->warning = true;
-						if(strpos($val,'{memo3}') && !$node_list[$v->node_id]->memo3) $preview_list[$key]->warning = true;
-
 						$change_string = array($node_list[$v->node_id]->node_name, $node_list[$v->node_id]->memo1, $node_list[$v->node_id]->memo2, $node_list[$v->node_id]->memo3);	
+
+
+						// 경고 메세지들 설정 및 머지가 없을경우 텍스트를 받은 그대로 출력
+						if(strpos($val,'{name}' && !$node_list[$v->node_id]->node_name))
+						{
+							$preview_list[$key]->warning .= "'이름'이 설정되있지 않습니다. ";
+							$change_string[0] = "{name}";
+						}
+						if(strpos($val,'{memo1}') && !$node_list[$v->node_id]->memo1)
+						{
+							$preview_list[$key]->warning .= "'메모1'이 설정되있지 않습니다.  ";
+							$change_string[1] = "{memo1}";
+						}
+						if(strpos($val,'{memo2}') && !$node_list[$v->node_id]->memo2)
+						{
+							$preview_list[$key]->warning .= "'메모2'가 설정되있지 않습니다. ";
+							$change_string[2] = "{memo2}";
+						}
+						if(strpos($val,'{memo3}') && !$node_list[$v->node_id]->memo3) 
+						{
+							$preview_list[$key]->warning .= "'메모3'이 설정되있지 않습니다. ";
+							$change_string[3] = "{memo3}";
+						}
+
 						$preview_list[$key]->text = str_replace($merge, $change_string, $val);
 					}
 					
@@ -919,6 +941,16 @@ class purplebookModel extends purplebook
 					$preview_list[$key]->name = $v->name;
 					$preview_list[$key]->number = $v->number;
 					$preview_list[$key]->node_type = $node_list[$v->node_id]->node_type;
+					$preview_list[$key]->node_route = $node_list[$v->node_id]->node_route;
+				}
+				else if($v->node_id == 'f' || $node_list[$v->node_id]->node_type == '1')
+				{
+					// 추가된게 폴더라면
+					$preview_list[$key]->node_id = $v->node_id;
+					$preview_list[$key]->name = $v->name;
+					$preview_list[$key]->number = $v->number;
+					$preview_list[$key]->text = $val;
+					$preview_list[$key]->node_type = '1';
 					$preview_list[$key]->node_route = $node_list[$v->node_id]->node_route;
 				}
 				else
@@ -932,7 +964,8 @@ class purplebookModel extends purplebook
 				$key++;
 			}
 		}
-
+		debugPrint('eee');
+		debugPrint($preview_list);
 		// data set
 		Context::set('preview_list', $preview_list);
 

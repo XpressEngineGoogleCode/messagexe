@@ -41,11 +41,17 @@ function pb_load_preview_list(node_id){
 		}
 	}
 
-	// 직접 건내받은 node_id가있으면 node_route로 만들어 getPurplebookPreview 로 보낸다
+	// 직접 건내받은 node_id가있으면 node_route로 만들어 getPurplebookPreview 로 보낸다.
 	node_route = null;
 	if (node_id) {
 		node_route = jQuery("#pb_node_id_"+node_id).attr("node_route") + node_id + ".";
 		node_name = jQuery("#pb_node_id_"+node_id).attr("node_name");
+
+		// 최상위 폴더일경우 node_id 가 'f'로 넘어오기 때문에 재설정이 필요하다.
+		if (node_id == 'f') {
+			node_route = 'f.';
+			node_name = jQuery("#pb_node_id_"+node_id).attr("node_name");
+		}
 	}
 
 	jQuery.ajax({

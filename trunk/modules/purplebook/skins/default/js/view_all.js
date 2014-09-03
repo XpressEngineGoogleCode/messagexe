@@ -102,7 +102,7 @@ function pb_update_address_count(total_count){
 
 // 폴더주소록 보여주기&숨기기
 function pb_address_show(){
-	$obj = jQuery("#view_all");
+	$obj = jQuery("#pb_view_all");
 	if ($obj.css('display') == 'block') jQuery($obj.html(''));
 
 	if ($obj.css('display') == 'none') {
@@ -116,12 +116,12 @@ function pb_address_show(){
 
 // 창 리사이즈할때 마다 갱신
 jQuery(window).resize(function () {
-	if (jQuery('#view_all').css('display') == 'block') pb_address_resize();
+	if (jQuery('#pb_view_all').css('display') == 'block') pb_address_resize();
 });
  
 // 스크롤할때마다 위치 갱신
 jQuery(window).scroll(function () {
-	if (jQuery('#view_all').css('display') == 'block') pb_address_resize();
+	if (jQuery('#pb_view_all').css('display') == 'block') pb_address_resize();
 });
 
 // 폴더주소록 창 사이즈 구하기 
@@ -130,14 +130,14 @@ function pb_address_resize(size_change){
 	var dialWidth = jQuery(window).width();
 
 	if (typeof(size_change) == 'undefined') {
-		jQuery('#view_all').css('width',dialWidth);
+		jQuery('#pb_view_all').css('width',dialWidth);
 	} else {
-		jQuery('#view_all').css({'width':dialWidth,'height':dialHeight}); 
+		jQuery('#pb_view_all').css({'width':dialWidth,'height':dialHeight}); 
 	}
 
-	jQuery('#view_all').css('top', '0');
-	jQuery('#view_all').css('left', '0');
-	jQuery('#view_all').css('position', 'absolute');
+	jQuery('#pb_view_all').css('top', '0');
+	jQuery('#pb_view_all').css('left', '0');
+	jQuery('#pb_view_all').css('position', 'absolute');
 }
 
 // 전체화면 닫기
@@ -152,7 +152,7 @@ function pb_close_address(){
 	}
 	if (update_dialog) update_dialog.dialog('close'); // 개별수정창 닫기
 
-	jQuery('#view_all').css('display','none'); // 전체보기 감추기
+	jQuery('#pb_view_all').css('display','none'); // 전체보기 감추기
 
 	pb_load_list(); // 주소록 목록 새로고침
 }
@@ -354,7 +354,7 @@ function pb_set_address_status(message){
 jQuery(document).ready(function($){
 
 	// tipsy 다시호출
-	jQuery('input, a, img, button','.pb_address_header').filter(function(index){ return !jQuery(this).hasClass('help'); }).tipsy(); 
+	jQuery('input, a, img, button').filter(function(index){ return !jQuery(this).hasClass('help'); }).tipsy(); 
 
 	// pbe_address 창 사이즈구하기
 	pb_address_resize(); 

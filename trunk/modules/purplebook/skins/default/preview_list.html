@@ -20,15 +20,17 @@
 			<th>받는사람</th>
 			<th>받는번호</th>
 			<th>메시지내용</th>
+			<th>오류내용</th>
 		</tr>
 	</thead>
 	<tbody id="pb_preview_list">
 		<tr loop="$preview_list => $no,$val" class="warning_preview"|cond="$val->warning">
 			<td>{$no++}</td>
 			<td cond="$val->node_type == '2'">{$val->name}</td>
-			<td cond="$val->node_type == '1'"><a href="#" id="pb_node_id_{$val->node_id}" node_name="{$val->name}" node_route="{$val->node_route}" onClick='pb_load_preview_list("{$val->node_id}")'>{$val->name}  {$val->node_id}</a></td>
+			<td cond="$val->node_type == '1'"><a href="#" id="pb_node_id_{$val->node_id}" node_name="{$val->name}" node_route="{$val->node_route}" onClick='pb_load_preview_list("{$val->node_id}")'>{$val->name}</a></td>
 			<td>{$val->number}</td>
 			<td>{htmlspecialchars($val->text)}</td>
+			<td cond="$val->warning">{$val->warning}</td>
 		</tr>
 	</tbody>
 </table>

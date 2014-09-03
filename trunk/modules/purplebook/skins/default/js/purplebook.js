@@ -2766,6 +2766,12 @@ function submit_messages() {
 
 		params['node_route'] = node_route + node_id + ".";
 
+		// 최상위 폴더가 들어오면 node_id에 node_route가 들어오기 때문에 처리를 해줘야한다.
+		if (node_id == 'f.') {
+			params['node_route'] = node_id;
+			node_id = 'f';
+		}
+
 		exec_xml('purplebook', 'getPurplebookListCount', params, function(ret_obj) {
 
 			// 이상이 없을 경우 추가 (개별선택, 삭제 이벤트 포함)
@@ -4100,7 +4106,7 @@ function submit_messages() {
 			
             return false;
 		}
-*/
+		*/
 
 		// 발송간격설정
 		$("#message_interval_check").change( function(){
