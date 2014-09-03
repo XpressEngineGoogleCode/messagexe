@@ -399,7 +399,7 @@ class purplebookModel extends purplebook
 			$file_name = "view_all_list.html";
 			$data = $oTemplate->compile($path, $file_name);
 
-			$this->add('list_templete', $data); // 템플릿파일 설정
+			$this->add('list_template', $data); // 템플릿파일 설정
 		}
 	}
 
@@ -701,7 +701,7 @@ class purplebookModel extends purplebook
 		$file_name = "view_all_update.html";
 		$data = $oTemplate->compile($path, $file_name);
 
-		$this->add('list_templete', $data); // 템플릿파일 설정
+		$this->add('list_template', $data); // 템플릿파일 설정
 	}
 
 	// 전송결과 템플릿 가져오기
@@ -822,7 +822,7 @@ class purplebookModel extends purplebook
 		$file_name = "result_list.html";
 		$data = $oTemplate->compile($path, $file_name);
 
-		$this->add('list_templete', $data); // 템플릿파일 설정
+		$this->add('list_template', $data); // 템플릿파일 설정
 	}
 
 	// 미리보기 템플릿 가져오기
@@ -942,7 +942,7 @@ class purplebookModel extends purplebook
 		$file_name = "preview_list.html";
 		$data = $oTemplate->compile($path, $file_name);
 		
-		$this->add('list_templete', $data); // 템플릿파일 설정
+		$this->add('list_template', $data); // 템플릿파일 설정
 	}
 
 	// 레이어 템플릿 가져오기
