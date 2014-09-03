@@ -5,7 +5,7 @@ if (!pb_result_loaded) var pb_result_loaded = false;
 // 리스트 불러오기
 function pb_load_result_list(page){
 	var params = new Array();
-	var response_tags = new Array('error','message','data','list_templete');
+	var response_tags = new Array('error','message','data','list_template');
 
 	params['g_mid'] = g_mid;
 	params['page'] = page;
@@ -27,7 +27,7 @@ function pb_load_result_list(page){
 	if (jQuery("#pb_result_status").val()) params['status'] = jQuery("#pb_result_status").val();
 	
 	exec_xml('purplebook', 'getPurplebookResult', params, function(ret_obj) {
-		jQuery('#pb_result_list').html(ret_obj["list_templete"]);
+		jQuery('#pb_result_list').html(ret_obj["list_template"]);
 	}, response_tags);
 }
 

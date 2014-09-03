@@ -4,7 +4,7 @@ if (!pb_preview_loaded) var pb_preview_loaded = false;
 // 리스트 불러오기
 function pb_load_preview_list(node_id){
 	var params = new Array();
-	var response_tags = new Array('error','message','data','list_templete');
+	var response_tags = new Array('error','message','data','list_template');
 
 	var rcp_list = new Array(); // 받는 사람 정보
 	var text = new Array(); // 문자내용
@@ -68,7 +68,7 @@ function pb_load_preview_list(node_id){
                 return;
             }
 
-			jQuery('#pb_preview_list').html(data.list_templete);
+			jQuery('#pb_preview_list').html(data.list_template);
 
 			// 경로보여주기
 			if (node_route) {

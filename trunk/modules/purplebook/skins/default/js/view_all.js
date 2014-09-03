@@ -13,13 +13,13 @@ function pb_update_form(node_id){
 	update_dialog = jQuery('#update_address_modal').dialog({title:'수정', width:250, height:300, modal:true, buttons:false, resizable:false});
 	
 	var params = new Array();
-	var response_tags = new Array('error','message','list_templete');
+	var response_tags = new Array('error','message','list_template');
 
 	params['g_mid'] = g_mid;
 	params['node_id'] = node_id;
 
 	exec_xml('purplebook', 'getPurplebookUpdateAddress', params, function(ret_obj) {
-		update_dialog.html(ret_obj["list_templete"]);
+		update_dialog.html(ret_obj["list_template"]);
 	}, response_tags);
 
 	jQuery("#update_address_modal").attr("tabindex", -1).focus();
@@ -214,7 +214,7 @@ function pb_load_address(page, fix_mode, list_count){
     }
 
 	var params = new Array();
-	var response_tags = new Array('error','message','data','list_templete');
+	var response_tags = new Array('error','message','data','list_template');
 
 	params['g_mid'] = g_mid;
 	params['page'] = page;
@@ -251,7 +251,7 @@ function pb_load_address(page, fix_mode, list_count){
 	if (use_list_count) params['list_count'] = use_list_count;
 
 	exec_xml('purplebook', 'getPurplebookList', params, function(ret_obj) {
-		jQuery('#pb_address_content').html(ret_obj["list_templete"]);
+		jQuery('#pb_address_content').html(ret_obj["list_template"]);
 	}, response_tags);
 }
 
