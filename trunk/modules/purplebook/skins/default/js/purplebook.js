@@ -219,11 +219,10 @@ function pb_modify_phone(obj) {
 						}
 					}
 
-					if(countryCheck == true){
+					if (countryCheck == true){
 						$li.css('color','');
 						$li.attr("original-title", "수정되었습니다.");
-					}
-					else{
+					} else{
 						$li.css('color','red');
 						$li.attr("original-title", "잘못된 국가번호입니다.");
 					}
@@ -394,7 +393,7 @@ function filepicker_selected() {
 
 function p_show_waiting_message() {
     var waiting_obj = jQuery('#waitingforserverresponse');
-    if(waiting_obj.length) {
+    if (waiting_obj.length) {
         var d = jQuery(document);
         waiting_obj.html('잠시만 기다려주세요.').css({
             'top'  : (d.scrollTop()+20)+'px',
@@ -423,7 +422,7 @@ function getDashTel(tel)
     {
         if (tel.substring(0, DDD[i].length) == DDD[i] ) 
         {
-            if(tel.length < 9)
+            if (tel.length < 9)
                 return tel.substring(0, DDD[i].length) + "-"+ tel.substring(DDD[i].length, tel.length);
             else
                 return tel.substring(0, DDD[i].length) + "-"+ tel.substring(DDD[i].length, tel.length - 4) + "-" + tel.substring(tel.length - 4, tel.length);
@@ -528,7 +527,7 @@ function getTextBytes(text)
     var idx = 0;
     var bytes = 0;
 
-    if(typeof(text)=='undefined') text = '';
+    if (typeof(text)=='undefined') text = '';
 
     for(var i = 0; i < text.length; i++)
     {
@@ -1004,7 +1003,7 @@ function send_json(content)
 
             send_json.failure_count += data.failure_count;
             send_json.success_count += data.success_count;
-			if(data.error_code) send_json.error_code = data.error_code;
+			if (data.error_code) send_json.error_code = data.error_code;
             //if (data.alert_message.length > 0) alert(data.alert_message);
 			
             pb_display_progress();
@@ -1017,7 +1016,7 @@ function send_json(content)
 }
 
 function clone(obj) {
-    if(obj == null || typeof(obj) != 'object')
+    if (obj == null || typeof(obj) != 'object')
         return obj;
 
     var temp = new obj.constructor(); // changed (twice)
@@ -1043,14 +1042,14 @@ function pb_display_progress() {
     jQuery('.success_count','#smsMessage #layer_status').text(send_json.success_count);
     jQuery('.failure_count','#smsMessage #layer_status').text(send_json.failure_count);
 	jQuery('.error_code','#smsMessage #layer_status').text("");
-	if(send_json.error_code) jQuery('.error_code','#smsMessage #layer_status').text(send_json.error_code);
+	if (send_json.error_code) jQuery('.error_code','#smsMessage #layer_status').text(send_json.error_code);
 }
 
 function sendMessageData() {
     var speed = g_send_speed;
 
 	// 발송간격설정이 체크되있으면 설정된 만큼 메시지를 잘라서 보낸다
-	if(jQuery("#message_interval_check").is(':checked')){
+	if (jQuery("#message_interval_check").is(':checked')) {
 	   	var speed = jQuery("#message_send_limit").val();
 	}
 		
@@ -1089,7 +1088,7 @@ function sendMessageData() {
         if ($li.attr('userid')) ref_userid = $li.attr('userid');
         var file_srl = jQuery('input[name=file_srl]', '#smsMessage').val();
 
-		if($li.attr('node_id')) node_id = $li.attr('node_id');
+		if ($li.attr('node_id')) node_id = $li.attr('node_id');
 		else node_id = '';
 
         $content_input = jQuery('#smsPurplebookContentInput');
@@ -1201,7 +1200,7 @@ function sendMessage() {
 	jQuery('#btn_result','#smsMessage #layer_status').css('display','none');
 
 	// 발송간격설정이 체크되있으면 전송간격 시간을 가져온다
-	if(jQuery("#message_interval_check").is(':checked')){
+	if (jQuery("#message_interval_check").is(':checked')) {
 	   	g_send_interval = jQuery("#message_send_interval").val() * 1000 * 60;
 	}
 
@@ -1232,7 +1231,7 @@ function do_after_get_cashinfo(cashinfo)
     var msg_type = getMsgType();
 
     //받는사람이 없을 경우
-    if(r_num == 0) {
+    if (r_num == 0) {
         alert('받는사람을 입력하세요');
         return false;
     }
@@ -1252,67 +1251,57 @@ function do_after_get_cashinfo(cashinfo)
     var message = '';
 
     message += '['
-    if (msg_type == 'sms')
+    if (msg_type == 'sms') {
         message += getLang('sms') + ' ';
-    else if (msg_type == 'lms')
+	} else if (msg_type == 'lms') {
         message += getLang('lms') + ' ';
-    else if (msg_type == 'mms')
+	} else if (msg_type == 'mms') {
         message += getLang('mms') + ' ';
-    else 
+	} else {
         alert('unknown message type');
+	}
 
-    if (reservflag == '1')
+    if (reservflag == '1') {
         message += getLang('reserv_send');
-    else
+	} else {
         message += getLang('direct_send');
+	}
     message += ']\n';
 
     var count = jQuery('li', '#smsPurplebookTargetList').size();
-    if (msg_type == "sms")
-    {
+    if (msg_type == "sms") {
         npages = get_page_count();
         /*
         bytes = getTextBytes(jQuery('#smsPurplebookTextMessage').val())[0];
         npages = Math.ceil(bytes / 90);
         */
 
-        if ((count * npages) > sms_avail)
-        {
+        if ((count * npages) > sms_avail) {
             message += getLang('msg_not_enough_money') + "\n"
                     + getLang('available_sms_number') + sms_avail  + "\n"
                     + getLang('arranged_sms_number') + (count * npages) + "\n";
 			alert(message);
             return false;
-        }
-        else
-        {
+        } else {
             if (reservflag == '1') message += getLang('reservation_datetime', ': ') + date_format(texting_pickup_reservdate()) + '\n';
             message += getLang('number_to_send') + (count * npages) + '\n';
             message += getLang('msg_will_you_send');
             if (!confirm(message)) return false;
         }
-    }
-    else if (msg_type == "lms")
-    {
-        if (count > lms_avail)
-        {
+    } else if (msg_type == "lms") {
+        if (count > lms_avail) {
             message += getLang('msg_not_enough_money') + "\n"
                     + getLang('available_lms_number') + lms_avail  + "\n"
                     + getLang('arranged_lms_number') + (count) + "\n";
             alert(message);
             return false;
-        }
-        else
-        {
+        } else {
             if (reservflag == '1') message += getLang('reservation_datetime', ': ') + date_format(texting_pickup_reservdate()) + '\n';
             message += getLang('number_to_send') + count + '\n';
             if (!confirm(message)) return false;
         }
-    }
-    else if (msg_type == "mms")
-    {
-        if (count > mms_avail)
-        {
+    } else if (msg_type == "mms") {
+        if (count > mms_avail) {
             message += getLang('msg_not_enough_money') + "\n"
                     + getLang('available_mms_number') + mms_avail  + "\n"
                     + getLang('arranged_mms_number') + (count) + "\n";
@@ -1343,16 +1332,16 @@ function completeGetPointInfo(ret_obj, response_tags) {
     
 
     reservflag = document.getElementById("smsPurplebookReservFlag").value;
-    if (reservflag == "1")
+    if (reservflag == "1") {
         word_send = "예약";
-    else
+	} else {
         word_send = "발송";
+	}
 
     sms_point = parseInt(g_sms_point);
     lms_point = parseInt(g_lms_point);
     mms_point = parseInt(g_mms_point);
-    if (!sms_point || !lms_point || !mms_point)
-	{
+    if (!sms_point || !lms_point || !mms_point) {
         alert('포인트 차감 사용으로 되어 있으나 차감할 포인트가 설정되어있지 않습니다.');
         return false;
     }
@@ -1362,15 +1351,13 @@ function completeGetPointInfo(ret_obj, response_tags) {
     mms_avail = calc_mms(obj, mms_point);
 
     var count = jQuery('li', '#smsPurplebookTargetList').size();
-    if (getMsgType() == "sms")
-    {
+    if (getMsgType() == "sms") {
 
 		var content = get_all_content();
         bytes = getTextBytes(content)[0];
         npages = Math.ceil(bytes / 90);
 
-        if ((count * npages) > sms_avail)
-        {
+        if ((count * npages) > sms_avail) {
             alert(ret_obj['msg_not_enough_point'] + "\n"
                     + "현재 포인트: " + point + "\n"
                     + word_send + "가능 SMS 건수: " + sms_avail  + "\n"
@@ -1378,11 +1365,8 @@ function completeGetPointInfo(ret_obj, response_tags) {
                  );
             return false;
         }
-    }
-    else if(getMsgType() == 'lms')
-    {
-        if (count > lms_avail)
-        {
+    } else if (getMsgType() == 'lms') {
+        if (count > lms_avail) {
             alert(ret_obj['msg_not_enough_point'] + "\n"
                 + "현재 포인트: " + point + "\n"
                 + word_send + "가능 LMS 건수: " + lms_avail  + "\n"
@@ -1390,11 +1374,8 @@ function completeGetPointInfo(ret_obj, response_tags) {
                 );
             return false;
         }
-    }
-	else
-	{
-        if (count > mms_avail)
-        {
+    } else {
+        if (count > mms_avail) {
             alert(ret_obj['msg_not_enough_point'] + "\n"
                 + "현재 포인트: " + point + "\n"
                 + word_send + "가능 MMS 건수: " + mms_avail  + "\n"
@@ -1414,10 +1395,11 @@ function completeGetCallbackList(ret_obj, response_tags) {
             data = new Array(data);
         }
         for (var i = 0; i < data.length; i++) {
-            if (data[i].flag_default == 'Y')
+            if (data[i].flag_default == 'Y') {
                 on = ' on';
-            else
+			} else {
                 on = '';
+			}
             $list.append('<li callback_srl="' + data[i].callback_srl + '"><span class="default' + on + '"></span><span class="phonenum">' + data[i].phonenum + '</span><span class="deleteCallback" title="삭제">삭제</span></li>');
         }
     }
@@ -1431,17 +1413,15 @@ function SliceBytePerLayer(str)
 
     for(var i = 0; i < str.length; i++)
     {
-        if(escape(str.charAt(i)) == "%0D") {
-        }
-        else if(escape(str.charAt(i)).length > 4 || str.charAt(i) == "°" || str.charAt(i) == "¿")
+        if (escape(str.charAt(i)) == "%0D") {
+        } else if (escape(str.charAt(i)).length > 4 || str.charAt(i) == "°" || str.charAt(i) == "¿") {
             length += 2;
-        else if ( str.charAt(i) != '\\r' || str.charAt(i) != '\\n' )
+		} else if ( str.charAt(i) != '\\r' || str.charAt(i) != '\\n' ) {
             length++;
+		}
 
-        if(length >= 90 || i == str.length - 1)
-        {
-            if(length > 90)
-                i--;
+        if (length >= 90 || i == str.length - 1) {
+            if (length > 90) i--;
 
             sliceByte[sliceByte.length] = str.substring(start_idx, i + 1);
     
@@ -1571,7 +1551,7 @@ function display_type_switch() {
     var bytes = getTextBytes(content)[0];
     var npages = get_page_count();
     var file_srl = jQuery('input[name=file_srl]','#smsMessage').val();
-    if(!file_srl && (bytes > 90 || npages > 1)) {
+    if (!file_srl && (bytes > 90 || npages > 1)) {
         show_msgtype_switch();
     } else {
         hide_msgtype_switch();
@@ -1721,7 +1701,7 @@ function update_screen() {
 function removeSelectedRecipients() {
     p_show_waiting_message();
     var $chkLi = jQuery('span.checkbox.on', '#smsPurplebookTargetList li').parent();
-	if(!$chkLi.size()) {
+	if (!$chkLi.size()) {
 		alert('삭제할 대상을 선택하세요');
 		return false;
 	}
@@ -1765,7 +1745,7 @@ function updatePurplebookListCount(total_count)
      var list_count = jQuery('li', '#smsPurplebookList').size();
      if (total_count) jQuery('#smsPurplebookListCount').text(list_count + ' / ' + total_count);
      else jQuery('#smsPurplebookListCount').text(list_count);
-	 if(list_count < total_count) {
+	 if (list_count < total_count) {
 		jQuery('<li id="pb_show_more" style="text-align:center; cursor:pointer;">100개 더보기</li>').appendTo('#smsPurplebookList').click(function() {
 			pb_load_list.page++;
 			pb_load_list();
@@ -1782,7 +1762,7 @@ function pb_update_search_count(total_count)
      var list_count = jQuery('li', '#smsPurplebookList').size();
      if (total_count) jQuery('#smsPurplebookListCount').text(list_count + ' / ' + total_count);
      else jQuery('#smsPurplebookListCount').text(list_count);
-	 if(list_count < total_count) {
+	 if (list_count < total_count) {
 		jQuery('<li id="pb_show_more" style="text-align:center; cursor:pointer;">100개 더보기</li>').appendTo('#smsPurplebookList').click(function() {
 			pb_search_list.page++;
 			pb_search_list();
@@ -1806,10 +1786,10 @@ function add_to_list(node_id, node_name, phone_num)
 				break;
 			}
 		}
-		if(!countryCode) countryCheck = false;
+		if (!countryCode) countryCheck = false;
 	}
 
-	if(countryCheck == false){
+	if (countryCheck == false){
 		jQuery('#smsPurplebookList').append('<li node_id="' + node_id + '" class="jstree-draggable" style="color:red;" original-title="잘못된 국가번호입니다."><span class="checkbox"></span><span class="nodeName" title="' + node_name + '">' + node_name + '</span><span class="nodePhone">' + getSimpleDashTel(phone_num) + '</span></li>');
 
 		jQuery('li','#smsPurplebookList').filter(function(index) { return !jQuery(this).hasClass('help'); }).tipsy();
@@ -2000,7 +1980,7 @@ function purplebook_move_node(node_id, dest_id) {
             , parent_id : dest_id
         },
         success : function (r) {
-            if(r.error==-1) {
+            if (r.error==-1) {
                 alert(r.message);
             } else {
                 var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
@@ -2462,7 +2442,7 @@ function init_purplebook_tree(img_base)
                 , node_name : data.rslt.name
             }, 
             success : function(r) {
-                if(r.error == -1) {
+                if (r.error == -1) {
                     jQuery.jstree.rollback(data.rlbk);
                     alert(r.message);
                 } else {
@@ -2518,7 +2498,7 @@ function init_purplebook_tree(img_base)
                 , node_name : node_name
             }, 
             success : function(r) {
-                if(r.error == -1) {
+                if (r.error == -1) {
                     jQuery.jstree.rollback(data.rlbk);
                     alert(r.message);
                 }
@@ -2544,11 +2524,11 @@ function init_purplebook_tree(img_base)
                     , copy : data.rslt.cy ? 1 : 0
                 },
                 success : function (r) {
-                    if(r.error == -1) {
+                    if (r.error == -1) {
                         jQuery.jstree.rollback(data.rlbk);
                     } else {
                         jQuery(data.rslt.oc).attr("id", "node_" + r.id);
-                        if(data.rslt.cy && jQuery(data.rslt.oc).children("UL").length) {
+                        if (data.rslt.cy && jQuery(data.rslt.oc).children("UL").length) {
                             data.inst.refresh(data.inst._get_parent(data.rslt.oc));
                         }
                     }
@@ -2597,7 +2577,7 @@ function submit_messages() {
     $current = get_active_textarea();
 
     //내용을 입력하였는지 검사
-    if(!$current.val() || $current.val() == initial_content) {
+    if (!$current.val() || $current.val() == initial_content) {
         alert("내용을 입력해 주세요.");
         $current.focus();
         return false;
@@ -2605,7 +2585,7 @@ function submit_messages() {
 
     //발신전화번호 검사
     var sNum = jQuery('#smsPurplebookCallback').val();
-    if(!checkCallbackNumber(sNum))
+    if (!checkCallbackNumber(sNum))
     {
         alert('보내는사람의 전화번호를 정확히 입력하세요\n입력 예) 15881004 , 021231234, 0101231234');
         jQuery('#smsPurplebookCallback').focus().select();
@@ -2617,7 +2597,7 @@ function submit_messages() {
     var r_num = jQuery('li', '#smsPurplebookTargetList').size();
 
     //받는사람이 없을 경우
-    if(r_num == 0)
+    if (r_num == 0)
     {
         alert('받는사람을 입력하세요');
         return false;
@@ -2643,7 +2623,7 @@ function submit_messages() {
 		
 		$listAll.each(function(idx) {
 				var eNum = toOnlyNumber($('.number',this).text(), "-", "");
-				if(pureNum == eNum)
+				if (pureNum == eNum)
 				{
 					exist = true;
 					return;
@@ -2665,7 +2645,7 @@ function submit_messages() {
 
 		// 국가코드 +로 시작할 경우 아이디를 찾지 못하기때문에  idNum을 따로 만들어준다
 		idNum = newNum;
-		if(newNum.charAt(0) == '+'){
+		if (newNum.charAt(0) == '+') {
 			idNum = newNum.substring(1, newNum.length)
 		}
 
@@ -2683,7 +2663,7 @@ function submit_messages() {
             return 1;
 		}
 
-		if(!node_id) node_id = '';
+		if (!node_id) node_id = '';
 
 		// 이상이 없을 경우 추가 (개별선택, 삭제 이벤트 포함)
         $('#smsPurplebookTargetList').append('<li id="tel' + idNum + '" ' + 'node_id=' + node_id + '><span class="checkbox"></span><span class="name">' + rName + '</span><span class="number" phonenum="' + newNum + '">'+ newNum +'</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
@@ -2709,7 +2689,7 @@ function submit_messages() {
 	{ 
         var new_num = $('#inputDirectNumber').val();
         var ref_name = $('#inputDirectName').val();
-        if(new_num == "") { 
+        if (new_num == "") { 
             alert("전화번호를 입력하세요");
             $('#inputDirectNumber').focus();
             return false;
@@ -2887,7 +2867,7 @@ function submit_messages() {
 			return;
 		}
 
-		if(!checkPhoneFormat(phone_num)) {
+		if (!checkPhoneFormat(phone_num)) {
 			if (!confirm("유효하지 않은 전화번호입니다 (" + phone_num + ")\n계속 진행하시겠습니까?"))
 			return false;
 		}
@@ -2992,10 +2972,9 @@ function submit_messages() {
 			layer_id = '#layer_append';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 					$obj = jQuery(layer_id);
 
 					show_and_hide($obj,null,{show_func:function(){$('#inputPurplebookName',$obj).focus();}});
@@ -3015,10 +2994,9 @@ function submit_messages() {
 			layer_id = '#layer_recent';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 					$obj = jQuery(layer_id,'#smsPurplebook');
 					show_and_hide($obj,null,{show_func:pb_load_recent_numbers});
 				}
@@ -3395,10 +3373,9 @@ function submit_messages() {
 			layer_id = '#layer_mass';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 
 					$obj = jQuery(layer_id,'#smsPurplebook');
 					show_and_hide($obj);
@@ -3475,10 +3452,9 @@ function submit_messages() {
 			layer_id = '#layer_reserv';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 
 					$obj = jQuery(layer_id,'#smsMessage');
 					show_and_hide($obj,null,{uppermost:false});
@@ -3545,10 +3521,9 @@ function submit_messages() {
 			layer_id = '#layer_overlap';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 					$obj = jQuery(layer_id,'#smsPurplebook');
 					show_and_hide($obj);
 				}
@@ -3637,10 +3612,9 @@ function submit_messages() {
 			layer_id = '#layer_messages';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 					$obj = jQuery(layer_id,'#smsMessage');
 
 					$obj.css('left', $('#layer_messages').position().left);
@@ -3671,8 +3645,7 @@ function submit_messages() {
 			layer_id = '#pb_view_all';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
 				}
 			}, response_tags);
@@ -3689,8 +3662,7 @@ function submit_messages() {
 			layer_id = '#pb_result';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
 				}
 			}, response_tags);
@@ -3708,8 +3680,7 @@ function submit_messages() {
 			layer_id = '#pb_preview';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
 				}
 			}, response_tags);
@@ -3727,10 +3698,9 @@ function submit_messages() {
 			layer_id = '#layer_merge';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 					$obj = jQuery(layer_id,'#smsMessage');
 
 					show_and_hide($obj, null, {show_func:pb_load_saved_messages});
@@ -3781,10 +3751,9 @@ function submit_messages() {
 			layer_id = '#layer_sendid';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 
 					$obj = jQuery(layer_id,'#smsMessage');
 					
@@ -3806,10 +3775,9 @@ function submit_messages() {
 			layer_id = '#layer_chars';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 					$obj = jQuery(layer_id,'#smsMessage');
 					show_and_hide($obj);
 				}
@@ -3829,15 +3797,14 @@ function submit_messages() {
 			layer_id = '#layer_manual';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 
 					$obj = jQuery(layer_id);
 
 					show_and_hide($obj,null,{show_func:function(){
-						if(!$obj.attr('first_show')) {
+						if (!$obj.attr('first_show')) {
 							$('.bodyArea','#smsPurplebook #layer_manual').html('<iframe src="' + g_manual_url + '" frameborder="0" style="border:0 none; width:100%; height:100%; padding:0; margin:0;"></iframe>');
 							$obj.attr('first_show',true);
 						}
@@ -3885,10 +3852,9 @@ function submit_messages() {
 			layer_id = '#layer_upload';
 
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if(ret_obj["data"])
-				{
+				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
-					if(jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
 
 					$obj = jQuery(layer_id,'#smsMessage');
 
@@ -3965,7 +3931,7 @@ function submit_messages() {
             }
 
 			// 발송간격설정이 체크되있으면 전송간격 시간을 가져온다
-			if(jQuery("#message_interval_check").is(':checked')){
+			if (jQuery("#message_interval_check").is(':checked')) {
 				g_send_interval = jQuery("#message_send_interval").val() * 1000 * 60;
 			}
 
@@ -4138,7 +4104,7 @@ function submit_messages() {
 
 		// 발송간격설정
 		$("#message_interval_check").change( function(){
-			if($(this).is(':checked'))
+			if ($(this).is(':checked'))
 			{
 				$("#message_send_limit").attr('readonly', false);
 				$("#message_send_interval").attr('readonly', false);
@@ -4177,3 +4143,37 @@ function closeLayer(id)
 	show_and_hide($obj);
 	return false;
 }
+
+jQuery(document).ready(function (){
+
+	jQuery('#btn_pop_chars_box')
+		.mouseenter(function() {
+			width = jQuery('#btn_pop_chars_box').width() - 15;
+			jQuery('#btn_pop_chars_box').animate({right: '+='+width}, 200);
+		})
+		.mouseleave(function() {
+			width = jQuery('#btn_pop_chars_box').width() - 15;
+			jQuery('#btn_pop_chars_box').animate({right: '-='+width}, 200);
+		});
+
+	jQuery('#btn_attach_pic_box')
+		.mouseenter(function() {
+			width = jQuery('#btn_attach_pic_box').width() - 15;
+			jQuery('#btn_attach_pic_box').animate({right: '+='+width}, 200);
+		})
+		.mouseleave(function() {
+			width = jQuery('#btn_attach_pic_box').width() - 15;
+			jQuery('#btn_attach_pic_box').animate({right: '-='+width}, 200);
+		});
+
+	jQuery('#btn_pop_merge_box')
+		.mouseenter(function() {
+			width = jQuery('#btn_pop_merge_box').width() - 15;
+			jQuery('#btn_pop_merge_box').animate({right: '+='+width}, 200);
+		})
+		.mouseleave(function() {
+			width = jQuery('#btn_pop_merge_box').width() - 15;
+			jQuery('#btn_pop_merge_box').animate({right: '-='+width}, 200);
+		});
+
+});

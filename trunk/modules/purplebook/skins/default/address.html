@@ -195,27 +195,45 @@
         </div>
     </div>
 
-	<ul class="center_display" id="smsPurplebookContentInput">
-        <li>
-            <div class="top_btn">
-                <button class="btn_record" href="#">문자저장</button>
-                <button class="pop_messages" href="#">불러오기</button>
-            </div>
-            <div class="text_area" style="overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll;">
-                <div id="filepicker_preview_file_srl" class="photo" style="display:none;float:left;width:110px;margin-bottom:4px;"></div>
-                <textarea id="main_screen" class="phonescreen" style="overflow:hidden;">90bytes초과시 MMS로 전환됩니다.</textarea>
-            </div>
-            <div class="text_btn">
-                <a class="btn_clear" href="#" title="내용지우기"><span>Clear</span></a>
-                <a class="btn_bytes" href="#" title="90바이트 제한"><span>0bytes</span></a>
-                <a class="close" href="#" style="visibility:hidden;"><span>close</span></a>
-                <button class="btn_addwindow" href="#" title="입력창 추가">창추가</button>
-            </div>
-        </li>
-	</ul><!-- 가운데 액정 끝 -->
+	<div class="left_button"  id="pb_left_button">
+		<div id="btn_pop_chars_box" style="position:absolute; top:70px;">
+			<button id="btn_pop_chars" class="left_btn" >특수문자</button>
+		</div>
+		<div id="btn_attach_pic_box" style="position:absolute; top:110px;">
+			<button id="btn_attach_pic" class="left_btn">사진추가</button>
+			<button id="btn_detach_pic" class="left_btn">사진삭제</button>
+		</div>
+		<div id="btn_pop_merge_box" style="position:absolute; top:150px;">
+			<button id="btn_pop_merge" class="left_btn">머지기능</button>
+		</div>
 
-    <div id="layer_messages" class="layer draggable"></div><!-- 발신번호관리 레이어 -->
-	<div id="layer_merge" class="layer draggable"></div><!-- 머지기능관리 레이어 -->
+		<div id="layer_messages" class="layer draggable"></div><!-- 발신번호관리 레이어 -->
+		<div id="layer_merge" class="layer draggable"></div><!-- 머지기능관리 레이어 -->
+		<div id="layer_chars" class="layer draggable"></div><!-- 특수문자 레이어 -->
+		<div id="layer_upload" class="layer draggable"></div><!-- 사진추가 레이어 -->
+
+		<input type="hidden" name="file_srl" value="" />
+		<input type="hidden" name="cancel_file_srl" value="" />
+	</div><!-- 왼쪽 버튼 끝 -->
+
+	<ul class="center_display" id="smsPurplebookContentInput" style="margin-left:15px; position:relative;">
+		<li>
+			<div class="top_btn">
+				<button class="btn_record" href="#">문자저장</button>
+				<button class="pop_messages" href="#">불러오기</button>
+			</div>
+			<div class="text_area" style="overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll;">
+				<div id="filepicker_preview_file_srl" class="photo" style="display:none;float:left;width:110px;margin-bottom:4px;"></div>
+				<textarea id="main_screen" class="phonescreen" style="overflow:hidden;">90bytes초과시 MMS로 전환됩니다.</textarea>
+			</div>
+			<div class="text_btn">
+				<a class="btn_clear" href="#" title="내용지우기"><span>Clear</span></a>
+				<a class="btn_bytes" href="#" title="90바이트 제한"><span>0bytes</span></a>
+				<a class="close" href="#" style="visibility:hidden;"><span>close</span></a>
+				<button class="btn_addwindow" href="#" title="입력창 추가">창추가</button>
+			</div>
+		</li>
+	</ul><!-- 가운데 액정 끝 -->
 	
 	<div class="right_button">
 		<div class="add_info">
@@ -260,17 +278,6 @@
 	<a id="pb_result_button" href="" >전송결과</a>
 
 	<a id="pb_preview_button" href="" >미리보기</a>
-	<div class="left_button">
-		<a id="btn_pop_chars" class="left_btn" href="#">특수문자</a>
-		<a id="btn_attach_pic" class="left_btn" href="#">사진추가</a>
-		<a id="btn_detach_pic" class="left_btn" href="#">사진삭제</a>
-		<button id="btn_pop_merge" href="#">머지기능</button>
-		<input type="hidden" name="file_srl" value="" />
-		<input type="hidden" name="cancel_file_srl" value="" />
-
-		<div id="layer_chars" class="layer draggable"></div><!-- 특수문자 레이어 -->
-		<div id="layer_upload" class="layer draggable"></div><!-- 사진추가 레이어 -->
-	</div><!-- 왼쪽 버튼 끝 -->
 </div>
 
 <div id="pb_view_all"></div> <!-- 전체보기 레이어 -->

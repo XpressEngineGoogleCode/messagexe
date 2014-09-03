@@ -1,5 +1,5 @@
 // check that already loaded
-if(!pb_result_loaded) var pb_result_loaded = false;
+if (!pb_result_loaded) var pb_result_loaded = false;
 
 
 // 리스트 불러오기
@@ -11,20 +11,20 @@ function pb_load_result_list(page){
 	params['page'] = page;
 
 	// page
-	if(typeof(page)=='undefined' || !page) page = jQuery('#pb_result_page').val(); 
+	if (typeof(page)=='undefined' || !page) page = jQuery('#pb_result_page').val(); 
 
 	// 리스트 카운트
-	if(jQuery("#pb_result_count").val()) params['list_count'] = jQuery("#pb_result_count").val();
+	if (jQuery("#pb_result_count").val()) params['list_count'] = jQuery("#pb_result_count").val();
 
 	// 날짜
-	if(jQuery("#pb_result_start_date").val()) params['s_start'] = jQuery("#pb_result_start_date").val();
-	if(jQuery("#pb_result_end_date").val()) params['s_end'] = jQuery("#pb_result_end_date").val();
+	if (jQuery("#pb_result_start_date").val()) params['s_start'] = jQuery("#pb_result_start_date").val();
+	if (jQuery("#pb_result_end_date").val()) params['s_end'] = jQuery("#pb_result_end_date").val();
 
 	// 검색어
-	if(jQuery("#pb_result_search").val()) params['search_keyword'] = jQuery("#pb_result_search").val();
+	if (jQuery("#pb_result_search").val()) params['search_keyword'] = jQuery("#pb_result_search").val();
 
 	// Status 검색
-	if(jQuery("#pb_result_status").val()) params['status'] = jQuery("#pb_result_status").val();
+	if (jQuery("#pb_result_status").val()) params['status'] = jQuery("#pb_result_status").val();
 	
 	exec_xml('purplebook', 'getPurplebookResult', params, function(ret_obj) {
 		jQuery('#pb_result_list').html(ret_obj["list_templete"]);
@@ -33,12 +33,12 @@ function pb_load_result_list(page){
 
 // 창 리사이즈할때 마다 갱신
 jQuery(window).resize(function () {
-	if(jQuery('#pb_result').css('display') == 'block') pb_result_resize();
+	if (jQuery('#pb_result').css('display') == 'block') pb_result_resize();
 });
  
 // 스크롤할때마다 위치 갱신
 jQuery(window).scroll(function () {
-	if(jQuery('#pb_result').css('display') == 'block') pb_result_resize();
+	if (jQuery('#pb_result').css('display') == 'block') pb_result_resize();
 });
 
 //  창 사이즈 구하기 
@@ -46,7 +46,7 @@ function pb_result_resize(size_change){
 	var dialHeight = jQuery(document).height();
 	var dialWidth = jQuery(window).width();
 
-	if(typeof(size_change) == 'undefined') jQuery('#pb_result').css('width',dialWidth);
+	if (typeof(size_change) == 'undefined') jQuery('#pb_result').css('width',dialWidth);
 	else jQuery('#pb_result').css({'width':dialWidth,'height':dialHeight}); 
 
 	jQuery('#pb_result').css('top', '0');
@@ -57,13 +57,12 @@ function pb_result_resize(size_change){
 // 전송결과 보여주기&숨기기
 function pb_result_show(){
 	$obj = jQuery("#pb_result");
-	if($obj.css('display') == 'block') jQuery($obj.html(''));
+	if ($obj.css('display') == 'block') jQuery($obj.html(''));
 
-	if ($obj.css('display') == 'none'){
+	if ($obj.css('display') == 'none') {
 		//$obj.css('display','block');
 		$obj.fadeIn(400);
-	}
-	else{ 
+	} else { 
 		$obj.css('display','none');
 	}
 	jQuery('body,html').animate({scrollTop: 0}, 300);
@@ -94,7 +93,7 @@ jQuery(document).ready(function($){
 	pb_result_show();  
 
 	// check that already loaded
-	if(pb_result_loaded) return;
+	if (pb_result_loaded) return;
 	pb_result_loaded = true;
 
 	// 체크된 목록 예약취소 
@@ -105,7 +104,7 @@ jQuery(document).ready(function($){
 			list.push(jQuery(this).attr('message_id'));
 		});
 
-		if (list.length == 0){
+		if (list.length == 0) {
 			alert('취소할 명단을 체크하세요.');
 			return false;
 		}
@@ -121,7 +120,7 @@ jQuery(document).ready(function($){
 					 }
 			, dataType : "json"
 			, success : function (data){
-				if(data.error == -1){
+				if (data.error == -1) {
 					alert(data.message);
 				}
 
@@ -151,11 +150,10 @@ jQuery(document).ready(function($){
 
 	// 체크박스 전체선택/해제
 	jQuery('#toggleSendResultList').live('click', function(){
-		if(jQuery(this).hasClass('on')){
+		if (jQuery(this).hasClass('on')) {
 			jQuery(this).removeClass("on");
 			jQuery('.checkbox', '#pb_result_list td').removeClass("on");
-		}
-		else{
+		} else { 
 			jQuery(this).addClass("on");
 			jQuery('.checkbox', '#pb_result_list td').addClass("on");
 			return false;
