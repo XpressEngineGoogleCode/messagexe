@@ -1,5 +1,5 @@
 // check that already loaded
-if(!pb_preview_loaded) var pb_preview_loaded = false;
+if (!pb_preview_loaded) var pb_preview_loaded = false;
 
 // 리스트 불러오기
 function pb_load_preview_list(node_id){
@@ -16,7 +16,7 @@ function pb_load_preview_list(node_id){
 	// 창별로 문자내용 정렬
 	for(var i = 0; i < p_screen.size(); i++){
 		context = jQuery('.phonescreen','#smsPurplebookContentInput')[i];
-		if(!jQuery(context).val()) return;
+		if (!jQuery(context).val()) return;
 
 		text[i] = jQuery(context).val();
 
@@ -29,11 +29,11 @@ function pb_load_preview_list(node_id){
 			rcp_list[p] = new Object();
 
 			// node_id가 있으면
-			if(li.attr('node_id')){
+			if (li.attr('node_id')) {
 			   	rcp_list[p]['node_id'] = li.attr('node_id');
 
 				// 창이 여러개일때 중복체크
-				if(jQuery.inArray(li.attr('node_id'), node_ids) == -1) node_ids.push(li.attr('node_id'));
+				if (jQuery.inArray(li.attr('node_id'), node_ids) == -1) node_ids.push(li.attr('node_id'));
 			}
 
 			rcp_list[p]['name'] = jQuery(".name", li).text();
@@ -63,8 +63,7 @@ function pb_load_preview_list(node_id){
                  }
         , dataType : "json"
 		, success : function (data) {
-            if (data.error == -1)
-            {
+            if (data.error == -1) {
                 alert(data.message);
                 return;
             }
@@ -86,12 +85,12 @@ function pb_load_preview_list(node_id){
 
 // 창 리사이즈할때 마다 갱신
 jQuery(window).resize(function () {
-	if(jQuery('#pb_preview').css('display') == 'block') pb_preview_resize();
+	if (jQuery('#pb_preview').css('display') == 'block') pb_preview_resize();
 });
  
 // 스크롤할때마다 위치 갱신
 jQuery(window).scroll(function () {
-	if(jQuery('#pb_preview').css('display') == 'block') pb_preview_resize();
+	if (jQuery('#pb_preview').css('display') == 'block') pb_preview_resize();
 });
 
 //  창 사이즈 구하기 
@@ -99,7 +98,7 @@ function pb_preview_resize(size_change){
 	var dialHeight = jQuery(document).height();
 	var dialWidth = jQuery(window).width();
 
-	if(typeof(size_change) == 'undefined') jQuery('#pb_preview').css('width',dialWidth);
+	if (typeof(size_change) == 'undefined') jQuery('#pb_preview').css('width',dialWidth);
 	else jQuery('#pb_preview').css({'width':dialWidth,'height':dialHeight}); 
 
 	jQuery('#pb_preview').css('top', '0');
@@ -110,9 +109,9 @@ function pb_preview_resize(size_change){
 // 미리보기 보여주기&숨기기
 function pb_preview_show(){
 	$obj = jQuery("#pb_preview");
-	if($obj.css('display') == 'block') jQuery($obj.html(''));
+	if ($obj.css('display') == 'block') jQuery($obj.html(''));
 
-	if ($obj.css('display') == 'none'){
+	if ($obj.css('display') == 'none') {
 		//$obj.css('display','block');
 		$obj.fadeIn(400);
 	}
@@ -142,7 +141,7 @@ jQuery(document).ready(function($){
 	pb_preview_show();  
 
 	// check that already loaded
-	if(pb_preview_loaded) return;
+	if (pb_preview_loaded) return;
 	pb_preview_loaded = true;
 
 });

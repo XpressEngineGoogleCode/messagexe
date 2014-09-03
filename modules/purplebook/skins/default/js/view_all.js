@@ -1,5 +1,5 @@
 // check that already loaded
-if(!pb_already_loaded) var pb_already_loaded = false;
+if (!pb_already_loaded) var pb_already_loaded = false;
 
 var use_work_mode = "off"; // 작업모드 on/off
 var use_fix_mode = false; // 수정모드 유지
@@ -8,7 +8,7 @@ var update_dialog = null; // 개별수정창
 
 // 개별수정폼 보여주기
 function pb_update_form(node_id){
-	if(!node_id) return false;
+	if (!node_id) return false;
 
 	update_dialog = jQuery('#update_address_modal').dialog({title:'수정', width:250, height:300, modal:true, buttons:false, resizable:false});
 	
@@ -51,7 +51,7 @@ function pb_update_address(){
 
 // 작업모드중 페이지 떠날시 물음
 jQuery(window).bind('beforeunload', function(){
-	if(use_work_mode == "on") return 'Are you sure you want to navigate away from this page?';
+	if (use_work_mode == "on") return 'Are you sure you want to navigate away from this page?';
 });
 
 // 수정모드에서 인풋박스에 변경사항 있을시 작업모드로 On
@@ -65,7 +65,7 @@ function pb_save_address(){
 		dataType : 'json',
 		success : function(data) {
 			// procPurplebookUpdateList error 발생시
-			if(data.error == -1){
+			if (data.error == -1) {
 				alert(data.message);
 				return;
 			}
@@ -103,13 +103,12 @@ function pb_update_address_count(total_count){
 // 폴더주소록 보여주기&숨기기
 function pb_address_show(){
 	$obj = jQuery("#view_all");
-	if($obj.css('display') == 'block') jQuery($obj.html(''));
+	if ($obj.css('display') == 'block') jQuery($obj.html(''));
 
-	if ($obj.css('display') == 'none'){
+	if ($obj.css('display') == 'none') {
 		//$obj.css('display','block');
 		$obj.fadeIn(400);
-	}
-	else{ 
+	} else { 
 		$obj.css('display','none');
 	}
 	jQuery('body,html').animate({scrollTop: 0}, 300);
@@ -117,12 +116,12 @@ function pb_address_show(){
 
 // 창 리사이즈할때 마다 갱신
 jQuery(window).resize(function () {
-	if(jQuery('#view_all').css('display') == 'block') pb_address_resize();
+	if (jQuery('#view_all').css('display') == 'block') pb_address_resize();
 });
  
 // 스크롤할때마다 위치 갱신
 jQuery(window).scroll(function () {
-	if(jQuery('#view_all').css('display') == 'block') pb_address_resize();
+	if (jQuery('#view_all').css('display') == 'block') pb_address_resize();
 });
 
 // 폴더주소록 창 사이즈 구하기 
@@ -130,8 +129,11 @@ function pb_address_resize(size_change){
 	var dialHeight = jQuery(document).height();
 	var dialWidth = jQuery(window).width();
 
-	if(typeof(size_change) == 'undefined') jQuery('#view_all').css('width',dialWidth);
-	else jQuery('#view_all').css({'width':dialWidth,'height':dialHeight}); 
+	if (typeof(size_change) == 'undefined') {
+		jQuery('#view_all').css('width',dialWidth);
+	} else {
+		jQuery('#view_all').css({'width':dialWidth,'height':dialHeight}); 
+	}
 
 	jQuery('#view_all').css('top', '0');
 	jQuery('#view_all').css('left', '0');
@@ -141,14 +143,14 @@ function pb_address_resize(size_change){
 // 전체화면 닫기
 function pb_close_address(){
 	// 작업모드일때 페이지 이동시 물어봄
-	if(use_work_mode == "on"){
-		if(confirm("작업중입니다. 페이지를 떠나시겠습니까?")){
+	if (use_work_mode == "on") {
+		if (confirm("작업중입니다. 페이지를 떠나시겠습니까?")) {
 		}
-		else{
+		else {
 			return;
 		}
 	}
-	if(update_dialog) update_dialog.dialog('close'); // 개별수정창 닫기
+	if (update_dialog) update_dialog.dialog('close'); // 개별수정창 닫기
 
 	jQuery('#view_all').css('display','none'); // 전체보기 감추기
 
@@ -165,11 +167,10 @@ function pb_address_menu(id){
 
 	//jQuery(id).css('display','block');
 	
-	if(pb_overlap_menu == id){
+	if (pb_overlap_menu == id) {
 		jQuery(id).css('display','none');;
 		pb_overlap_menu = '';
-	}
-	else{
+	} else {
 		jQuery(id).slideDown("slow");
 		pb_overlap_menu = id;
 	}
@@ -185,10 +186,9 @@ function closeFullMenu(id){
 // 전체보기 리스트 불러오기
 function pb_load_address(page, fix_mode, list_count){
 	// 작업모드일때 페이지 이동시 물어봄
-	if(use_work_mode == "on"){
-		if(confirm("작업중입니다. 페이지를 떠나시겠습니까?")){
-		}
-		else{
+	if (use_work_mode == "on") {
+		if (confirm("작업중입니다. 페이지를 떠나시겠습니까?")) {
+		} else {
 			return;
 		}
 	}
@@ -196,20 +196,20 @@ function pb_load_address(page, fix_mode, list_count){
 	// 컨텐츠 SET
 	var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
 
-	if(selected_folders.length > 0){
+	if (selected_folders.length > 0) {
 		var node = jQuery(selected_folders[0]);
+	} else {
+		return;
 	}
-	else return;
 
 	// page
-	if(typeof(page)=='undefined' || !page) page = jQuery('#pb_address_page').val();
+	if (typeof(page)=='undefined' || !page) page = jQuery('#pb_address_page').val();
 
     var req_node_id = '';
-    if(typeof(node)=='string'){
+    if (typeof(node)=='string') {
         req_node_id = node;
         node = jQuery('#'+req_node_id);
-    } 
-	else {
+    } else { 
         req_node_id = node.attr('node_id');
     }
 
@@ -223,15 +223,14 @@ function pb_load_address(page, fix_mode, list_count){
 	params['node_type'] = '2';
 
 	// 수정모드	
-	if(fix_mode == true){
+	if (fix_mode == true) {
 		params['fix_mode'] = fix_mode; 
 		jQuery("#pb_fix_mode_open").css('display','none');
 		jQuery("#pb_fix_mode_close").css('display','');
 		jQuery("#pb_fix_mode_save").css('display','');
 
 		use_fix_mode = true;
-	}
-	else if(fix_mode == false){
+	} else if (fix_mode == false) {
 		jQuery("#pb_fix_mode_open").css('display','');
 		jQuery("#pb_fix_mode_close").css('display','none');
 		jQuery("#pb_fix_mode_save").css('display','none');
@@ -239,17 +238,17 @@ function pb_load_address(page, fix_mode, list_count){
 		use_fix_mode = false;
 	}
 
-	if(use_fix_mode == true) params['fix_mode'] = true;  // 수정모드사용중일때는 해제하지 않는이상 계속 수정모드로 된다.
+	if (use_fix_mode == true) params['fix_mode'] = true;  // 수정모드사용중일때는 해제하지 않는이상 계속 수정모드로 된다.
 
 	search_keyword = jQuery("#pb_search_keyword").val();
-	if(search_keyword) params['search_keyword'] = search_keyword; // 검색어 설정  
+	if (search_keyword) params['search_keyword'] = search_keyword; // 검색어 설정  
 
-	if(list_count){
+	if (list_count) {
 		params['list_count'] = list_count; // 리스트 카운트
 		use_list_count = list_count;
 	}
 
-	if(use_list_count) params['list_count'] = use_list_count;
+	if (use_list_count) params['list_count'] = use_list_count;
 
 	exec_xml('purplebook', 'getPurplebookList', params, function(ret_obj) {
 		jQuery('#pb_address_content').html(ret_obj["list_templete"]);
@@ -265,25 +264,25 @@ function pb_address_append(){
 	var memo3 = jQuery('#inputFullAddressMemo3').val();
 
 	var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
-	if (selected_folders.length != 1){
+	if (selected_folders.length != 1) {
 		alert('선택된 폴더가 없습니다.');
 		return;
 	}
 
 	var node = jQuery(selected_folders[0]);
 
-	if (node_name.length == 0){
+	if (node_name.length == 0) {
 		alert('이름을 입력하세요.');
 		jQuery('#inputFullAddressName').focus();
 		return;
 	}
-	if (phone_num.length == 0){
+	if (phone_num.length == 0) {
 		alert('폰번호를 입력하세요.');
 		jQuery('#inputFullAddressNumber').focus();
 		return;
 	}
 
-	if(!checkPhoneFormat(phone_num)){
+	if (!checkPhoneFormat(phone_num)) {
 		if (!confirm("유효하지 않은 전화번호입니다 (" + phone_num + ")\n계속 진행하시겠습니까?"))
 		return false;
 	}
@@ -306,7 +305,7 @@ function pb_address_append(){
 				 }
 		, dataType : "json"
 		, success : function (data){
-			if (data.error == -1){
+			if (data.error == -1) {
 				alert(data.message);
 				return;
 			}
@@ -336,7 +335,7 @@ function pb_address_append(){
 
 // 전체보기 Status와 History에 글올리기
 function pb_set_address_status(message){
-	if(!message) return;
+	if (!message) return;
 
 	var now = new Date();
 	var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
@@ -344,11 +343,10 @@ function pb_set_address_status(message){
 	//jQuery("#pb_address_status").html(message);
 	alert(message);
 
-	if(jQuery("ul#pb_history_list li").length == 0){
+	if (jQuery("ul#pb_history_list li").length == 0) {
 	   	jQuery("#pb_history_list").html('<li>' + message + '<span class="pb_address_date">' + nowTime + '</span>' + '</li>');
-	}
-	else {
-		if(jQuery("ul#pb_history_list li").length > 10) jQuery("ul#pb_history_list li").last().remove(); // 10개이상 쌓이면 마지막 요소는 제거
+	} else {
+		if (jQuery("ul#pb_history_list li").length > 10) jQuery("ul#pb_history_list li").last().remove(); // 10개이상 쌓이면 마지막 요소는 제거
 		jQuery("#pb_history_list").prepend('<li>' + message + '<span class="pb_address_date">' + nowTime + '</span>' + '</li>');
 	}
 }
@@ -368,13 +366,13 @@ jQuery(document).ready(function($){
 	pb_address_show();  
 
 	// check that already loaded
-	if(pb_already_loaded) return;
+	if (pb_already_loaded) return;
 	pb_already_loaded = true;
 
 	// 개별 삭제
 	jQuery("#pb_btn_address_delete").live('click', function(){
 		node_id = jQuery(this).attr('node_id');
-		if(!node_id) return false;
+		if (!node_id) return false;
 
 		var params = new Array();
 		var response_tags = new Array('error','message');
@@ -409,7 +407,7 @@ jQuery(document).ready(function($){
 			list.push(jQuery(this).attr('node_id'));
 		});
 
-		if (list.length == 0){
+		if (list.length == 0) {
 			alert('삭제할 명단을 체크하세요.');
 			return false;
 		}
@@ -425,7 +423,7 @@ jQuery(document).ready(function($){
 					 }
 			, dataType : "json"
 			, success : function (data){
-				if(data.error == -1){
+				if (data.error == -1) {
 					alert(data.message);
 				}
 
@@ -449,7 +447,7 @@ jQuery(document).ready(function($){
 	jQuery('#btn_pb_search_keyword').live('click',function(){
 		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
 
-		if (selected_folders.length > 0){
+		if (selected_folders.length > 0) {
 			jQuery('#pb_address_content').html('');
 
 			var node = jQuery(selected_folders[0]);
@@ -460,7 +458,7 @@ jQuery(document).ready(function($){
 	// view_all.html에서 엑셀로 주소록에 명단 추가
 	jQuery('#btnAddFullAddressExcel').live('click',function (){
 		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
-		if (selected_folders.length != 1){
+		if (selected_folders.length != 1) {
 			alert('선택된 폴더가 없습니다.');
 			return;
 		}
@@ -477,7 +475,7 @@ jQuery(document).ready(function($){
 			dataType : 'json',
 			success : function(data){
 				// procPurplebookExcelLoad error 발생시
-				if(data.error == -1){
+				if (data.error == -1) {
 					alert(data.message);
 					return;
 				}
@@ -504,11 +502,10 @@ jQuery(document).ready(function($){
 
 	// 체크박스 전체선택/해제
 	jQuery('#smsPurplebookToggleListFull').live('click', function(){
-		if(jQuery(this).hasClass('on')){
+		if (jQuery(this).hasClass('on')) {
 			jQuery(this).removeClass("on");
 			jQuery('.checkbox', '#pb_address_list td').removeClass("on");
-		}
-		else{
+		} else{
 			jQuery(this).addClass("on");
 			jQuery('.checkbox', '#pb_address_list td').addClass("on");
 			return false;
