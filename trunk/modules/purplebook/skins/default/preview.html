@@ -1,13 +1,18 @@
 <script src="{getUrl()}modules/purplebook/skins/default/js/preview.js"></script>
-<link rel="stylesheet" href="{getUrl()}modules/purplebook/skins/default/css/preview.css?{time()}" />
+<link rel="stylesheet" href="{getUrl()}modules/purplebook/skins/default/css/layer_box.css?{time()}" />
 
-<div class="pb_header view_topbar">
+<div class="pb_layer_header view_topbar">
 	<div id="tab_add_address">
 		<div class="gray_bg">
 			<div class="view_toolbar">
 				<span class="btn_closex" onClick="pb_close_preview()"><a href="#" class="view_close_btn">미리보기 나가기</a></span>
 				<div class="view_btn_set">
 					<div class="view_search">
+						<!-- 검색 -->
+						<span>받는사람번호 검색 : </span>
+						<input type="text" id="pb_result_search" value="" class="search_box" />
+						<button onClick="pb_load_result_list()" class="search">검색</button>
+						<!-- END -->
 					</div>
 				</div>
 			</div>

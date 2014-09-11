@@ -164,7 +164,7 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 .purplebook_left #layer_manual .bodyArea { height:180px;}
 
 /* layer popup (add address) */
-.purplebook_left #layer_append { bottom:40px; right:15px; width:300px; }
+.purplebook_left #layer_append { bottom:40px; right:15px; width:300px; height:140px; }
 .purplebook_left #layer_append .bodyArea #inputPurplebookName { width:80px; }
 .purplebook_left #layer_append .bodyArea #inputPurplebookPhone { width:109px; margin-left:2px; }
 .purplebook_left #layer_append .bodyArea a#btnAddAddress img { position:relative; top:5px; left:2px;}
@@ -237,11 +237,12 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 .purplebook_right #layer_recent .bodyArea ul#recent_list li .delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 20px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
 
 /* guide and sending message window on the bottom */
-#smsMessage { position:relative; padding:20px 10px; margin-top:20px; background:#fff; z-index:1; clear:both; .position:none; }
+#smsMessage { position:relative; padding:20px 0 20px 10px; margin-top:20px; background:#fff; z-index:1; clear:both; .position:none; display:inline-block; width:99%; }
 
-#smsMessage .left_button { clear:both; overflow:hidden; padding-top:30px; }
-#smsMessage .left_button .left_btn {padding:0; margin-bottom:5px; text-decoration:none; color:#555; background:#ededed; text-align:left; border-right:1px solid #fff; width:80px; height:30px; }
-#smsMessage .left_button button { color:#555; background:#ededed; border:0; font-size:11px; height:30px; width:80px; font-family:'NanumGothic'; cursor:pointer; }
+#smsMessage .left_button { clear:both; overflow:hidden; }
+#smsMessage .left_button .left_btn { padding-left:8px; margin-bottom:5px; text-decoration:none; color:#fff; background:#4686ab; text-align:left; width:80px; height:30px; }
+#smsMessage .left_button .left_btn:after { border:solid transparent; border-color:transparent; border-width:5px; position:absolute; left:28px; top:10px; border-right-color:#4686ab; width:0; height:0; content:""; }
+#smsMessage .left_button button { color:#555; border:0; font-size:11px; height:30px; width:80px; font-family:'NanumGothic'; cursor:pointer; }
 #smsMessage .left_button #btn_detach_pic { display:none; }
 
 /* layer popup (special characters) */
@@ -259,15 +260,15 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 #smsMessage .msgtype_switch { position:absolute; display:none; top:-70px; left:120px; font:12px dotum; line-height:1.5em; padding:15px; background:#222; color:#fff; }
 
 /* lcd display */
-#smsMessage .center_display { list-style-type:none; float:left; padding:0; margin:0;}
+#smsMessage .center_display { list-style-type:none; float:left; padding:0; margin:0; margin-left:32px; position:relative; }
 #smsMessage .center_display li { list-style-type:none; float:left; margin-left:15px; padding-bottom:10px; background:#fff; border:1px solid #5c9dc3; }
 #smsMessage .center_display li:first-child { margin-left:0; }
 #smsMessage .center_display .top_btn { display:block; height:37px; }
 #smsMessage .center_display .top_btn button.btn_record {  float:left; display:block; width:83px; height:37px; border:0; border-right:1px solid #8dc9e5; background:#5c9dc3; cursor:pointer; color:#fff; }
 #smsMessage .center_display .top_btn button.pop_messages { float:left; display:block; width:83px; height:37px; background:#5c9dc3; border: 0 none; cursor:pointer; color:#fff; }
-#smsMessage .center_display .text_area { margin:15px 22px 15px 10px; height:96px; background:none; overflow:hidden; }
-#smsMessage .center_display .text_area .photo { display:block; }
-#smsMessage .center_display .text_area textarea { display:block; width:112px; *margin-left:-12px !important; height:96px; margin:0px; padding:0 0px 0 2px; line-height:1.4em; background-color:transparent; font-family:dotumche; font-size:12px; word-break:break-all; letter-spacing:0; border:0; *margin-left:-35px; overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll; }
+#smsMessage .center_display .text_area { margin:15px 22px 15px 10px; height:113px; background:none; }
+#smsMessage .center_display .text_area .photo { display:none;float:left;width:110px;margin-bottom:4px; }
+#smsMessage .center_display .text_area textarea { display:block; width:112px; *margin-left:-12px !important; height:96px; margin:0px; padding:0 0px 0 2px; line-height:1.4em; background-color:transparent; font-family:dotumche; font-size:12px; word-break:break-all; letter-spacing:0; border:0; *margin-left:-35px; overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll; outline:0; }
 #smsMessage .center_display .text_area textarea.on { }
 #smsMessage .center_display .text_area textarea#main_screen {  }
 
@@ -275,8 +276,8 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 #smsMessage .center_display .text_btn a { text-decoration:none; }
 #smsMessage .center_display .text_btn a.btn_bytes { text-align:center; color:#555; position:absolute; right:10px; }
 #smsMessage .center_display .text_btn a.btn_clear { margin-left:10px;text-align:center; padding:3px 5px; background:#5c9dc3; border-radius:3px; color:#fff; }
-#smsMessage .center_display .text_btn a.close { position:absolute; top:25px; background:#5c9dc3; color:#fff; padding:3px 10px; right:-13px; display:block; overflow:hidden; margin-right:12px; } 
-#smsMessage .center_display .text_btn button.btn_addwindow { position:absolute; top:-73px; right:3px; display:block; width:16px; height:16px; background:url(../img/plus.png) no-repeat; border: 0 none; text-indent:-1000em; cursor:pointer;}
+#smsMessage .center_display .text_btn a.close { position:absolute; top:24px; background:#5c9dc3; color:#fff; padding:3px 10px; right:-13px; display:block; overflow:hidden; margin-right:12px; } 
+#smsMessage .center_display .text_btn button.btn_addwindow { position:absolute; top:-73px; right:0; display:block; width:16px; height:16px; background:url(../img/plus.png) no-repeat; border: 0 none; text-indent:-1000em; cursor:pointer; outline:0; }
 
 /* layer popup (saved messages) */
 #smsMessage #layer_messages { top:-250px; width:226px; height:210px; }
@@ -289,9 +290,9 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 #smsMessage #layer_messages .bodyArea ul#message_list li .content { width:160px; text-overflow:ellipsis; display:inline-block; white-space: nowrap; overflow: hidden; }
 #smsMessage #layer_messages .bodyArea ul#message_list li .delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 10px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat;  vertical-align:top; height:9px; overflow: hidden; } 
 
-#smsMessage .right_button { float:left; margin-left:20px; height:196px; }
-#smsMessage .right_button .add_info { color:#6c6b65; font-size:12px; padding:5px 10px; margin-bottom:3px; background:#fffef6; }
-#smsMessage .right_button .time_interval { color:#345a70; line-height:2em; border-bottom:1px solid #f1f1f1; font-size:12px; padding-bottom:10px; margin-top:10px; margin-bottom:10px; }
+#smsMessage .right_button { float:left; margin-left:20px; height:196px; width:216px; }
+#smsMessage .right_button .add_info { color:#6c6b65; font-size:12px; padding:5px 10px; background:#fffef6; }
+#smsMessage .right_button .time_interval { color:#345a70; line-height:2em; border-bottom:1px solid #f1f1f1; font-size:12px; padding-bottom:5px; margin-top:5px; margin-bottom:5px; }
 #smsMessage .right_button .time_interval p { margin:0; }
 #smsMessage .right_button .time_interval label { cursor:pointer; }
 #smsMessage .right_button .time_interval input { vertical-align:middle; margin:0; }
@@ -303,9 +304,10 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 #smsMessage .right_button button{ position:relative; vertical-align:middle; height:32px; font-size:11px; margin-left:-3px; background:#5c9dc3; width:92px; color:#fff; border:0 none; overflow:hidden; cursor:pointer;} 
 
 #smsMessage .right_button .submit_btn { margin-bottom:5px;}
-#smsMessage .right_button .submit_btn a { color:#fff; font-size:14px; font-weight:bold; width:106px; height:33px; display:block; text-decoration:none; line-height:2.3em; text-align:center; float:left; }
-#smsMessage .right_button .submit_btn a.btn_forward { background:#f17d4f; margin-right:2px; }
+#smsMessage .right_button .submit_btn a { color:#fff; font-size:14px; font-weight:bold; width:106px; height:30px; display:block; text-decoration:none; line-height:2.3em; text-align:center; float:left; }
+#smsMessage .right_button .submit_btn a.btn_forward { background:#f17d4f; margin-left:2px; }
 #smsMessage .right_button .submit_btn a.btn_booking { background:#636363; }
+#smsMessage .right_button .submit_btn a.btn_gray { background:#e9e9e9; color:#555; margin:2px 2px 0 0; }
 #smsMessage .right_button .help { padding:5px 0; margin-top:10px; clear:both; color:#555; z-index:500;}
 #smsMessage .right_button .help img { vertical-align:middle; margin-right:5px; }
 
@@ -350,7 +352,7 @@ a.use_btn { background:#555; color:#fff; padding:15px 20px; text-decoration:none
 
 
 /* font */
-span.total { margin-bottom:3px; font-size:11px; color:#999; vertical-align:middle;}
+span.total { margin-bottom:3px; color:#999; }
 
 
 /* bottomButton */
@@ -365,7 +367,7 @@ span.total { margin-bottom:3px; font-size:11px; color:#999; vertical-align:middl
 
 /* merge style */
 #smsMessage .center_display .top_btn button.pop_merge { float:left; display:block; margin-left:3px; width:83px; height:37px; cursor:pointer;}
-#smsMessage button { background:#e1e1e1; color:#333; border:0; padding:5px 10px; }
+#smsMessage button { color:#333; border:0; padding:5px 10px; }
 #smsMessage button.pink_btn { background:#ff8686; color:#fff; }
 
 #smsMessage #layer_merge { top:-100px; }
@@ -378,4 +380,12 @@ span.total { margin-bottom:3px; font-size:11px; color:#999; vertical-align:middl
 
 /* Full MsgPreview */
 
-#pb_preview {width:100%; height:100%; z-index:450; display:none; background:#fff;}}
+#pb_preview {width:100%; height:100%; z-index:450; display:none; background:#fff;}
+
+/* left button */
+#pb_left_button #btn_pop_chars_box { position:absolute; top:80px; padding-left:37px; background:url(../img/chars.png) no-repeat; }
+#pb_left_button #btn_attach_pic_box { position:absolute; top:120px; padding-left:37px; background:url(../img/photo_add.png) no-repeat; }
+#pb_left_button #btn_delete_pic_box { position:absolute; top:120px; padding-left:37px; background:url(../img/photo_delete.png) no-repeat; }
+#pb_left_button #btn_delete_pic_box .left_btn { background:#ee7283; }
+#pb_left_button #btn_delete_pic_box .left_btn:after { border-right-color:#ee7283; }
+#pb_left_button #btn_pop_merge_box { position:absolute; top:160px; padding-left:37px; background:url(../img/merge.png) no-repeat; }

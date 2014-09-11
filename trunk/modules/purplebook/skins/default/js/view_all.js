@@ -246,6 +246,9 @@ function pb_load_address(page, fix_mode, list_count){
 	if (list_count) {
 		params['list_count'] = list_count; // 리스트 카운트
 		use_list_count = list_count;
+	} else {
+		params['list_count'] = 10; // 리스트 카운트
+		use_list_count = list_count;
 	}
 
 	if (use_list_count) params['list_count'] = use_list_count;

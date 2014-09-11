@@ -196,14 +196,16 @@
     </div>
 
 	<div class="left_button"  id="pb_left_button">
-		<div id="btn_pop_chars_box" style="position:absolute; top:70px;">
-			<button id="btn_pop_chars" class="left_btn" >특수문자</button>
+		<div id="btn_pop_chars_box">
+			<button id="btn_pop_chars" class="left_btn">특수문자</button>
 		</div>
-		<div id="btn_attach_pic_box" style="position:absolute; top:110px;">
+		<div id="btn_attach_pic_box">
 			<button id="btn_attach_pic" class="left_btn">사진추가</button>
+		</div>
+		<div id="btn_delete_pic_box">
 			<button id="btn_detach_pic" class="left_btn">사진삭제</button>
 		</div>
-		<div id="btn_pop_merge_box" style="position:absolute; top:150px;">
+		<div id="btn_pop_merge_box">
 			<button id="btn_pop_merge" class="left_btn">머지기능</button>
 		</div>
 
@@ -216,14 +218,14 @@
 		<input type="hidden" name="cancel_file_srl" value="" />
 	</div><!-- 왼쪽 버튼 끝 -->
 
-	<ul class="center_display" id="smsPurplebookContentInput" style="margin-left:15px; position:relative;">
+	<ul class="center_display" id="smsPurplebookContentInput">
 		<li>
 			<div class="top_btn">
 				<button class="btn_record" href="#">문자저장</button>
 				<button class="pop_messages" href="#">불러오기</button>
 			</div>
 			<div class="text_area" style="overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll;">
-				<div id="filepicker_preview_file_srl" class="photo" style="display:none;float:left;width:110px;margin-bottom:4px;"></div>
+				<div id="filepicker_preview_file_srl" class="photo"></div>
 				<textarea id="main_screen" class="phonescreen" style="overflow:hidden;">90bytes초과시 MMS로 전환됩니다.</textarea>
 			</div>
 			<div class="text_btn">
@@ -250,11 +252,15 @@
             <button class="btn_show_layer" title="발신번호 관리">발신번호관리</button>
 		</div>
 		<div class="submit_btn">
+			<a id="pb_preview_button" href="" class="btn_booking">미리보기</a>
             <a class="btn_forward" id="btnSimplePhoneSend" href="#">보내기</a>
-			<a class="btn_booking" id="btnSimplePhoneReserv" href="#">예약전송</a>
             <input type="hidden" value="0" id="smsPurplebookReservFlag" />
 		</div>
-		<div class="help" title="맞춤법에 어긋나는 글자는 깨져서 전송될 수 있으니 대량전송의 경우 반드시 본인폰으로 테스트 후 발송하세요"><img class="pngFix" src="img/question.png"  alt="발송전 테스트" />유의하실 사항</div>
+		<div class="submit_btn">
+			<a class="btn_gray" id="btnSimplePhoneReserv" href="#">예약전송</a>
+			<a id="pb_result_button" href="" class="btn_gray">전송결과</a>
+		</div>
+		<div class="help" title="맞춤법에 어긋나는 글자는 깨져서 전송될 수 있으니 대량전송의 경우 반드시 본인폰으로 테스트 후 발송하세요" cond="0"><img class="pngFix" src="img/question.png"  alt="발송전 테스트" />유의하실 사항</div>
 
 		<div id="layer_sendid" class="layer draggable"></div><!-- 발신번호관리 레이어 -->
 		<div id="layer_reserv" class="layer"></div><!-- 예약발송 레이어 -->
@@ -274,15 +280,13 @@
             </div>
         </div>
 	</div><!-- 오른쪽 버튼 끝 -->
-
-	<a id="pb_result_button" href="" >전송결과</a>
-
-	<a id="pb_preview_button" href="" >미리보기</a>
 </div>
 
-<div id="pb_view_all"></div> <!-- 전체보기 레이어 -->
-<div id="pb_result"></div><!-- 전송결과 레이어 -->
-<div id="pb_preview"></div><!-- 미리보기 레이어 -->
+<div id="pb_layer_box">
+	<div id="pb_view_all"></div> <!-- 전체보기 레이어 -->
+	<div id="pb_result"></div><!-- 전송결과 레이어 -->
+	<div id="pb_preview"></div><!-- 미리보기 레이어 -->
+</div>
 
 <!--@if($act!='procWidgetGenerateCodeInPage')-->
 <script type="text/javascript">
