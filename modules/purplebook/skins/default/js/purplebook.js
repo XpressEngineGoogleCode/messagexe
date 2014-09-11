@@ -4172,6 +4172,18 @@ jQuery(document).ready(function (){
 			jQuery('#btn_attach_pic_box').animate({right: '-='+width}, 200);
 		});
 
+		
+	jQuery('#btn_delete_pic_box')
+		.mouseenter(function() {
+			width = jQuery('#btn_delete_pic_box').width() - 15;
+			jQuery('#btn_delete_pic_box').animate({right: '+='+width}, 200);
+		})
+		.mouseleave(function() {
+			width = jQuery('#btn_delete_pic_box').width() - 15;
+			jQuery('#btn_delete_pic_box').animate({right: '-='+width}, 200);
+		});
+
+
 	jQuery('#btn_pop_merge_box')
 		.mouseenter(function() {
 			width = jQuery('#btn_pop_merge_box').width() - 15;

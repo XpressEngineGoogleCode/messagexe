@@ -1,9 +1,11 @@
 <form method="POST" id="pb_update_address_form">
 	<input type="hidden" name="node_id" value="{$address_info->node_id}" />
-	이름 <input type="text" name="node_name" value="{$address_info->node_name}" /> <br />
-	전화번호 <input type="text" name="phone_num" value="{$address_info->phone_num}" /> <br />
-	메모1 <input type="text" name="memo1" value="{$address_info->memo1}" /> <br />
-	메모2 <input type="text" name="memo2" value="{$address_info->memo2}" /> <br />
-	메모3 <input type="text" name="memo3" value="{$address_info->memo3}" /> <br />
+	<label for="name">이름</label><input type="text" name="node_name" value="{$address_info->node_name}" id="name" /> <br />
+	<label for="phone">전화번호</label><input type="text" name="phone_num" value="{$address_info->phone_num}" id="phone" /> <br />
+	<label for="memo1">메모1</label><input type="text" name="memo1" value="{$address_info->memo1}" id="memo1" /> <br />
+	<label for="memo2">메모2</label><input type="text" name="memo2" value="{$address_info->memo2}" id="memo2" /> <br />
+	<label for="memo3">메모3</label><input type="text" name="memo3" value="{$address_info->memo3}" id="memo3" /> <br />
 </form>
-<button onClick="pb_update_address()">수정완료</button>
+<div class="pb_update_center">
+	<button onClick="pb_update_address()" class="pb_update_submit">수정완료</button>
+</div>

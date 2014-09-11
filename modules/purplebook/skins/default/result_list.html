@@ -21,7 +21,7 @@
 </div>
 
 <!-- 리스트 -->
-<table class="pb_result_table">
+<table class="pb_layer_table">
 	<div id="pb_top_bottom">
 		<a href="#" id="pb_move_top"><span class="top_icon"></span>TOP</a>
 		<a href="#" id="pb_move_bottom">DOWN<span class="down_icon"></span></a>
@@ -55,8 +55,8 @@
 
 <!-- 페이징 -->
 <div class="list_footer">
-	<div class="pagination">
-		<input type="hidden" value="{page}" id="pb_result_page" />
+	<div class="pb_layer_pagination">
+		<input type="hidden" value="{page}" id="pb_layer_page" />
 		<span><a href="#" onClick="pb_load_result_list('1')" class="first">{$lang->first_page}</a></span>
 		<block loop="$i=1; $i<=$total_page; $i++">
 			<strong cond="$i==$page">{$i}</strong> 
