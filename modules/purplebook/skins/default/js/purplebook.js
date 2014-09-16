@@ -4182,6 +4182,8 @@ function submit_messages() {
 			$("html, body").animate({ scrollTop: $(document).height() }, 100);
 		});
 
+		// 미리보기, 전체보기, 전송결과 layer set
+		$("body").append('<div id="pb_layer_box" style="z-index:99"><div id="pb_view_all"></div><div id="pb_result"></div><div id="pb_preview"></div></div>');
     });
 }) (jQuery);
 
