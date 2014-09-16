@@ -1015,6 +1015,25 @@ class purplebookModel extends purplebook
 
 		$this->add('data', $output->data->list_count);
 	}
+
+	// NdoeRoute로 purplebook 리스트 가져오기
+	function getPurplebookListByNodeRoute()
+	{
+		$logged_info = Context::get('logged_info');
+		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'msg_login_required');
+
+		$args->member_srl = $logged_info->member_srl;
+		$args->node_route = Context::get('node_route');
+		$args->node_type = "2";
+
+		$output = executeQuery('purplebook.getPurplebookByNodeRoute', $args);
+		if(!$output->toBool()) return $output;
+
+		debugPrint('you-1');
+		debugPrint($output);
+
+		$this->add('data', $output->data);
+	}
 }
 /* End of file purplebook.model.php */
 /* Location: ./modules/purplebook/purplebook.model.php */
