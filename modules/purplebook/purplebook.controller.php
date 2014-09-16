@@ -61,7 +61,7 @@ class purplebookController extends purplebook
 		$calc_point = 0;
 		$msg_arr = array();
 		$args = new StdClass();
-		$args->extension = array();
+		$extension = array();
 		$delimiter = $this->getDelimiter();
 
 		$logged_info = Context::get('logged_info');
@@ -71,8 +71,39 @@ class purplebookController extends purplebook
 			return;
 		}
 
+		// 받는사람목록에 폴더가 들어있을 경우 풀어서 decoded에 집어넣는다
+		foreach($decoded as $k => $v)
+		{
+			if($v->node_route)
+			{
+				$vars->node_route = $v->node_route;
+				$vars->member_srl = $logged_info->member_srl;
+				$vars->equal_node_route = $v->node_route;
+				$output = executeQueryArray("purplebook.getPurplebookByNodeRoute", $vars);
+				if(!$output->toBool()) return $output;
+				if(!$output->data) return;
+
+				foreach($output->data as $k2 => $v2)
+				{
+					$decoded[$v2->node_id]->msgtype = $decoded[$k]->msgtype;
+					$decoded[$v2->node_id]->recipient = $v2->phone_num;
+					$decoded[$v2->node_id]->callback = $decoded[$k]->callback;
+					$decoded[$v2->node_id]->text = $decoded[$k]->text;
+					$decoded[$v2->node_id]->splitlimit = $decoded[$k]->splitlimit;
+					$decoded[$v2->node_id]->refname = $v2->node_name;
+					$decoded[$v2->node_id]->refid = $decoded[$k]->refid;
+					$decoded[$v2->node_id]->delay_count = $decoded[$k]->delay_count;
+					$decoded[$v2->node_id]->node_id = $v2->node_id;
+				}
+				unset($decoded[$k]);
+				unset($vars);
+			}
+		}
+
+		// 문자 세팅
 		foreach($decoded as $key => $row)
 		{
+			$msg_obj = new stdClass();
 			// 국가코드 체크
 			if(substr($row->recipient, 0, 1) == '+' || substr($row->recipient, 0, 2) == '00')
 			{
@@ -89,7 +120,7 @@ class purplebookController extends purplebook
 					$country_code = $csutil->checkCountryCode(substr($row->recipient, $startPos, $i));
 					if($country_code > 0) 
 					{
-						$args->extension[$key]->country = $country_code;
+						$msg_obj->country = $country_code;
 						$row->recipient = '0' . substr($row->recipient, $startPos + $i);
 						break;
 					}
@@ -126,17 +157,17 @@ class purplebookController extends purplebook
 			$args->country_code = $row->country;
 			$args->reservdate = $row->reservdate;
 			$args->attachment = $row->file_srl;
-			$args->extension[$key]->text = $row->text;
-			$args->extension[$key]->to = $row->recipient;
+			$msg_obj->text = $row->text;
+			$msg_obj->to = $row->recipient;
 
 			if($args->type == 'sms') $calc_point += $module_info->sms_point;
 			if($args->type == 'lms') $calc_point += $module_info->lms_point;
 			if($args->type == 'mms') $calc_point += $module_info->mms_point;
 
 			if(!$first_num) $first_num = $row->recipient;
+			$extension[] = $msg_obj;
 		}
-
-		$args->extension = json_encode($args->extension);
+		$args->extension = json_encode($extension);
 
 		// minus point
 		if($module_info->use_point=='Y')
@@ -147,7 +178,7 @@ class purplebookController extends purplebook
 
 		// send messages
 		$oTextmessageController = &getController('textmessage');
-		$output = $oTextmessageController->sendMessage($args, $basecamp);
+		$output = $oTextmessageController->sendMessage($args);
 
 		$this->add('data', $output->get('data'));
 		$this->add('success_count', $output->get('success_count'));

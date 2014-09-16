@@ -916,15 +916,32 @@ function getByteSize(str) {
 }
 */
 
-// 받는사람수 업데이트
-function updateTargetListCount(total_count)
-{
-    var total = jQuery('li', '#smsPurplebookTargetList').size();
+// 폴더를 포함한 받는사람수를 카운팅한다.
+function list_counting() {
+	li_size = jQuery('li', '#smsPurplebookTargetList').size();
 
-     if (total_count)
-        jQuery('#smsPurplebookTargetListCount').text(' (' + total + ' 명 / 총 ' + total_count + ' 명)');
-     else
-        jQuery('#smsPurplebookTargetListCount').text(' (' + total + ' 명)');
+	total = 0;
+	for (i=0; i<li_size; i++) {
+		target_li = jQuery('li', '#smsPurplebookTargetList')[i];
+		folder_id = "folder_" + target_li.getAttribute('node_id');
+
+		if (folder_id == target_li.getAttribute('id')) {
+			total = total + parseInt(target_li.getAttribute('count'));
+		} else {
+			total++;
+		}
+	}
+	return total;
+}
+// 받는사람수 업데이트
+function updateTargetListCount(total_count) {
+    total = list_counting();
+
+    if (total_count) {
+       jQuery('#smsPurplebookTargetListCount').text(' (' + total + ' 명 / 총 ' + total_count + ' 명)');
+	} else {
+       jQuery('#smsPurplebookTargetListCount').text(' (' + total + ' 명)');
+	}
 
     return total;
 }
@@ -992,10 +1009,17 @@ function send_json(content)
                  }
         , dataType : "json"
         , success : function (data) {
-            send_json.progress_count += content.length;
+			//send_json.progress_count += content.length;
+			size = content.length;
+			for (var i = 0; i < size; i++) {
+				if (content[i]["count"]) {
+					send_json.progress_count += parseInt(content[i]["count"]);
+				} else {
+					send_json.progress_count++;
+				}
+			}
 
-            if (data.error == -1)
-            {
+            if (data.error == -1) {
                 p_hide_waiting_message();
                 alert(data.message);
                 return;
@@ -1030,7 +1054,7 @@ function pb_display_progress() {
     // get total count
     $list = jQuery('li','#smsPurplebookTargetList');
     $content_input = jQuery('#smsPurplebookContentInput');
-    var total_count = $list.size() * jQuery('li', $content_input).size();
+    var total_count = list_counting() * jQuery('li', $content_input).size();
     send_json.total_count = total_count;
 
     // calculate percentage
@@ -1082,51 +1106,63 @@ function sendMessageData() {
         if (sendMessageData.index >= $list.size()) break;
 
         $li = $list.eq(sendMessageData.index);
+		target_list = $li;
+
         var callno = jQuery('.number', $li).text();
         var ref_username = jQuery('.name', $li).text();
         var ref_userid = false;
         if ($li.attr('userid')) ref_userid = $li.attr('userid');
         var file_srl = jQuery('input[name=file_srl]', '#smsMessage').val();
 
-		if ($li.attr('node_id')) node_id = $li.attr('node_id');
-		else node_id = '';
+		if ($li.attr('node_id')) {
+			node_id = $li.attr('node_id');
+		} else {
+			node_id = '';
+		}
 
         $content_input = jQuery('#smsPurplebookContentInput');
         var size = jQuery('li', $content_input).size();
         for (var j = 0; j < size; j++) {
             var $li = jQuery('li', $content_input).eq(j);
             var $scr = jQuery('.phonescreen', $li);
-            if (jQuery('#smsPurplebookReservFlag').val() == '1')
-            {
-                var content = {
-                    "msgtype": msgtype
-                    , "recipient": callno
-                    , "callback": jQuery('#smsPurplebookCallback').val()
-                    , "text": $scr.val()
-                    , "splitlimit": "0"
-                    , "refname": ref_username
-                    , "refid": ref_userid
-                    , "reservdate": texting_pickup_reservdate()
-                    , "delay_count": j*2
+
+			if (jQuery('#smsPurplebookReservFlag').val() == '1') {
+				var content = {
+					"msgtype": msgtype
+					, "recipient": callno
+					, "callback": jQuery('#smsPurplebookCallback').val()
+					, "text": $scr.val()
+					, "splitlimit": "0"
+					, "refname": ref_username
+					, "refid": ref_userid
+					, "reservdate": texting_pickup_reservdate()
+					, "delay_count": j*2
 					, "node_id": node_id
-                }
-            }
-            else
-            {
-                var content = {
-                    "msgtype": msgtype
-                    , "recipient": callno
-                    , "callback": jQuery('#smsPurplebookCallback').val()
-                    , "text": $scr.val()
-                    , "splitlimit": "0"
-                    , "refname": ref_username
-                    , "refid": ref_userid
-                    , "delay_count": j*2
+				}
+			} else {
+				var content = {
+					"msgtype": msgtype
+					, "recipient": callno
+					, "callback": jQuery('#smsPurplebookCallback').val()
+					, "text": $scr.val()
+					, "splitlimit": "0"
+					, "refname": ref_username
+					, "refid": ref_userid
+					, "delay_count": j*2
 					, "node_id": node_id
-                }
-            }
-            if (file_srl) content["file_srl"] = file_srl;
-            content_list.push(content);
+				}
+			}
+
+			// folder일 경우 node_route와 count를 추가한다
+			folder_id = "folder_" + target_list.attr('node_id');
+			if (folder_id == target_list.attr('id')) {
+				content["node_route"] = target_list.attr('node_route');
+				content["count"] = target_list.attr('count');
+			}
+
+			// file이 있으면
+			if (file_srl) content["file_srl"] = file_srl;
+			content_list.push(content);
         } // for
 
         sendMessageData.index++;
@@ -1135,6 +1171,7 @@ function sendMessageData() {
     // send to server
     //send_json.progress_count = 0;
     //send_json.total_count = 0;
+	
     send_json(content_list);
 
     return true;
@@ -1161,7 +1198,7 @@ function sendMessage() {
     // clear send_json attributes
     $list = jQuery('li','#smsPurplebookTargetList');
     $content_input = jQuery('#smsPurplebookContentInput');
-    var total_count = $list.size() * jQuery('li', $content_input).size();
+    var total_count = list_counting() * jQuery('li', $content_input).size();
     send_json.progress_count = 0;
     send_json.total_count = total_count;
     send_json.groupid_seed = randomID(GROUPID_SEED_SIZE);
@@ -1226,7 +1263,7 @@ function getMsgType() {
 
 function do_after_get_cashinfo(cashinfo)
 {
-    var r_num = jQuery('li', '#smsPurplebookTargetList').size(); // 받는사람수
+    var r_num = list_counting(); // 받는사람수
     var reservflag = document.getElementById("smsPurplebookReservFlag").value; // 예약여부
     var msg_type = getMsgType();
 
@@ -1268,7 +1305,7 @@ function do_after_get_cashinfo(cashinfo)
 	}
     message += ']\n';
 
-    var count = jQuery('li', '#smsPurplebookTargetList').size();
+    var count = list_counting();
     if (msg_type == "sms") {
         npages = get_page_count();
         /*
@@ -1350,7 +1387,7 @@ function completeGetPointInfo(ret_obj, response_tags) {
     lms_avail = calc_lms(obj, lms_point);
     mms_avail = calc_mms(obj, mms_point);
 
-    var count = jQuery('li', '#smsPurplebookTargetList').size();
+    var count = list_counting();
     if (getMsgType() == "sms") {
 
 		var content = get_all_content();
@@ -1592,7 +1629,7 @@ function show_and_hide($obj, $extra, opt) {
 }
 
 function display_cost() {
-    var nlist = jQuery('li', '#smsPurplebookTargetList').size();
+    var nlist = list_counting();
     var npages = get_page_count();
     var msg_count = nlist * npages;
 
@@ -2594,7 +2631,7 @@ function submit_messages() {
 
 
     //받는사람 번호 구성
-    var r_num = jQuery('li', '#smsPurplebookTargetList').size();
+    var r_num = list_counting();
 
     //받는사람이 없을 경우
     if (r_num == 0)
@@ -2604,10 +2641,11 @@ function submit_messages() {
     }
 
     // 캐쉬정보 확인후 발송루틴 호출
-    if (g_use_point == 'Y')
+    if (g_use_point == 'Y') {
         get_pointinfo();
-    else
+	} else {
         get_cashinfo();
+	}
 
     return false;
 }
@@ -2775,7 +2813,7 @@ function submit_messages() {
 		exec_xml('purplebook', 'getPurplebookListCount', params, function(ret_obj) {
 
 			// 이상이 없을 경우 추가 (개별선택, 삭제 이벤트 포함)
-			$('#smsPurplebookTargetList').append('<li id="folder_' + node_id + '" ' + 'node_id=' + node_id + '><span class="checkbox"></span><span class="name">' + f_name + '</span><span class="number">(' + ret_obj["data"] + '명)' + '</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
+			$('#smsPurplebookTargetList').append('<li id="folder_' + node_id + '" ' + 'node_id=' + node_id + ' count=' + ret_obj["data"] + ' node_route=' + params['node_route'] + '><span class="checkbox"></span><span class="name">' + f_name + '</span><span class="number">(' + ret_obj["data"] + '명)' + '</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
 			
 		}, response_tags);
    
@@ -2796,11 +2834,17 @@ function submit_messages() {
 
         p_show_waiting_message();
 
-		add_folder(t.attr('node_route'), t.attr('node_id'), t.attr('node_name'))
-		scrollBottomTargetList();
-		updateTargetListCount();
-		display_cost();
-		p_hide_waiting_message();
+		// 폴더 추가
+		add_folder(t.attr('node_route'), t.attr('node_id'), t.attr('node_name'));
+
+		// 이렇게 안하면 처음에 카운트를 제대로 세지 못한다.
+		setTimeout(function() {
+			//updateExceptListCount();
+			scrollBottomTargetList();
+			updateTargetListCount();
+			display_cost();
+			p_hide_waiting_message();
+		}, 500);
     }
 
 	/**
@@ -4155,43 +4199,41 @@ jQuery(document).ready(function (){
 	jQuery('#btn_pop_chars_box')
 		.mouseenter(function() {
 			width = jQuery('#btn_pop_chars_box').width() - 15;
-			jQuery('#btn_pop_chars_box').animate({right: '+='+width}, 200);
+			jQuery('#btn_pop_chars_box').animate({left: '-='+width}, 200);
 		})
 		.mouseleave(function() {
 			width = jQuery('#btn_pop_chars_box').width() - 15;
-			jQuery('#btn_pop_chars_box').animate({right: '-='+width}, 200);
+			jQuery('#btn_pop_chars_box').animate({left: '+='+width}, 200);
 		});
 
 	jQuery('#btn_attach_pic_box')
 		.mouseenter(function() {
 			width = jQuery('#btn_attach_pic_box').width() - 15;
-			jQuery('#btn_attach_pic_box').animate({right: '+='+width}, 200);
+			jQuery('#btn_attach_pic_box').animate({left: '-='+width}, 200);
 		})
 		.mouseleave(function() {
 			width = jQuery('#btn_attach_pic_box').width() - 15;
-			jQuery('#btn_attach_pic_box').animate({right: '-='+width}, 200);
+			jQuery('#btn_attach_pic_box').animate({left: '+='+width}, 200);
 		});
-
 		
 	jQuery('#btn_delete_pic_box')
 		.mouseenter(function() {
 			width = jQuery('#btn_delete_pic_box').width() - 15;
-			jQuery('#btn_delete_pic_box').animate({right: '+='+width}, 200);
+			jQuery('#btn_delete_pic_box').animate({left: '-='+width}, 200);
 		})
 		.mouseleave(function() {
 			width = jQuery('#btn_delete_pic_box').width() - 15;
-			jQuery('#btn_delete_pic_box').animate({right: '-='+width}, 200);
+			jQuery('#btn_delete_pic_box').animate({left: '+='+width}, 200);
 		});
-
 
 	jQuery('#btn_pop_merge_box')
 		.mouseenter(function() {
 			width = jQuery('#btn_pop_merge_box').width() - 15;
-			jQuery('#btn_pop_merge_box').animate({right: '+='+width}, 200);
+			jQuery('#btn_pop_merge_box').animate({left: '-='+width}, 200);
 		})
 		.mouseleave(function() {
 			width = jQuery('#btn_pop_merge_box').width() - 15;
-			jQuery('#btn_pop_merge_box').animate({right: '-='+width}, 200);
+			jQuery('#btn_pop_merge_box').animate({left: '+='+width}, 200);
 		});
 
 });

@@ -21,7 +21,7 @@
 			<th><span class="checkbox" id="smsPurplebookToggleListFull" title="선택전환"></span></th>
 			<th>번호</th>
 			<th>이름</th>
-			<th colspan="2">전화번호</th>
+			<th >전화번호</th>
 			<th>메모1</th>
 			<th>메모2</th>
 			<th>메모3</th>
@@ -32,8 +32,8 @@
 			<td class="jstree-draggable"><span class="checkbox" node_id="{$val->attr->node_id}"></span></td>
 			<td>{$start_num++}</td>
 			<td>{$val->attr->node_name}</td>
-			<td>{$val->attr->phone_num}</td>
 			<td class="pb_hover_btn">
+				{$val->attr->phone_num}
 				<span class="pb_btn_cover_update">
 					<button id="pb_btn_fix" onClick="pb_update_form('{$val->attr->node_id}')" class="gray_btn add_button individual_add">수정</button>
 				</span>

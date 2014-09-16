@@ -38,16 +38,15 @@ button.gray_btn:hover { background: #ffffff; /* Old browsers */ background: -moz
 #pb_layer_box table.pb_layer_table th { padding:7px 25px 8px; background:#f6f6f6; }
 #pb_layer_box table.pb_layer_table span.pb_preview_number { width:30px; display:inline-block; }
 #pb_layer_box table.pb_layer_table tr { line-height:3.3em; text-align:center; }
-#pb_layer_box table.pb_layer_table tr:hover .pb_btn_cover_delete { display:block; position:absolute; top:0; left:50%; }
 #pb_layer_box table.pb_layer_table tr:nth-child(odd) { background:#fff; }
 #pb_layer_box table.pb_layer_table tr:nth-child(even) { background:#fdfdfd; }
 #pb_layer_box table.pb_layer_table td.jstree-draggable { padding-left:25px; }
 #pb_layer_box table.pb_layer_table td { border-top:1px solid #eee; }
 /* View hover */
 #pb_layer_box #pb_view_all table.pb_layer_table tr:hover td { background-color:#fff; opacity:0.1; }
-#pb_layer_box #pb_view_all table.pb_layer_table tr:hover td.pb_hover_btn { z-index:99999; opacity:1; color:#fff; }
-#pb_layer_box #pb_view_all table.pb_layer_table tr:hover { position:relative; }
-#pb_layer_box #pb_view_all table.pb_layer_table tr:hover .pb_btn_cover_update { display:block; position:absolute; top:0; left:45%; }
+#pb_layer_box #pb_view_all table.pb_layer_table tr:hover td.pb_hover_btn { z-index:99999; opacity:1; color:#fff; position:relative; }
+#pb_layer_box #pb_view_all table.pb_layer_table tr:hover .pb_btn_cover_update { display:block; }
+#pb_layer_box #pb_view_all table.pb_layer_table tr:hover .pb_btn_cover_delete { display:block; }
 
 #pb_layer_box #pb_view_all #pb_fix_mode_form table.pb_layer_table tr:hover td { background:#fff; opacity:1; }
 #pb_layer_box #pb_view_all #pb_fix_mode_form table.pb_layer_table th { padding:7px 15px; }
@@ -57,8 +56,8 @@ button.gray_btn:hover { background: #ffffff; /* Old browsers */ background: -moz
 //.pb_layer_box_date { font-size:11px; color:#888; float:right; }
 
 /* 개별 수정/삭제 */
-.pb_btn_cover_update { font-size:15px; display:none; }
-.pb_btn_cover_delete { font-size:15px; display:none; }
+.pb_btn_cover_update { font-size:15px; display:none; position:absolute; top:0px; left:42%; }
+.pb_btn_cover_delete { font-size:15px; display:none; position:absolute; top:0px; left:70%; }
 
 /* 전체보기 수정 폼 */
 .ui-dialog { z-index:700; } 
