@@ -97,7 +97,7 @@ span.checkbox.on { background-position:0px -13px; }
 .purplebook_right .bodyArea #smsPurplebookTargetList li { list-style-type:none; margin:0; padding:0; height: 21px; font-size: 12px; color:#676767; }
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.name { margin: 1px 0px 0px 15px; width:58px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; font-weight: normal; cursor:pointer; }
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.number { margin: -1px 0px 0px 6px; width:82px; text-overflow: ellipsis; display: inline-block; font-family: tahoma; white-space: nowrap; overflow: hidden; font-weight: normal; cursor:pointer; }
-.purplebook_right .bodyArea #smsPurplebookTargetList li span.delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin:0 0 0 55px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
+.purplebook_right .bodyArea #smsPurplebookTargetList li span.delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin:0 0 0 40px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.statusBox { display:inline-block; margin-left:8px; text-align:center; width:60px; }
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.statusBox span.status { display:inline-block; margin:0; background:url(../img/stat_try.gif) no-repeat; width:16px; height:16px; } 
 .purplebook_right .bodyArea #smsPurplebookTargetList li span.statusBox span.status.try { background:url(../img/stat_try.gif) no-repeat; } 
@@ -243,7 +243,6 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 #smsMessage .left_button .left_btn { padding-left:8px; margin-bottom:5px; text-decoration:none; color:#fff; background:#4686ab; text-align:left; width:80px; height:30px; }
 #smsMessage .left_button .left_btn:after { border:solid transparent; border-color:transparent; border-width:5px; position:absolute; left:28px; top:10px; border-right-color:#4686ab; width:0; height:0; content:""; }
 #smsMessage .left_button button { color:#555; border:0; font-size:11px; height:30px; width:80px; font-family:'NanumGothic'; cursor:pointer; }
-#smsMessage .left_button #btn_detach_pic { display:none; }
 
 /* layer popup (special characters) */
 #smsMessage .left_button #layer_chars { top:-280px; *left:30px; width:256px; height:264px; }
@@ -268,7 +267,7 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 #smsMessage .center_display .top_btn button.pop_messages { float:left; display:block; width:83px; height:37px; background:#5c9dc3; border: 0 none; cursor:pointer; color:#fff; }
 #smsMessage .center_display .text_area { margin:15px 22px 15px 10px; height:113px; background:none; }
 #smsMessage .center_display .text_area .photo { display:none;float:left;width:110px;margin-bottom:4px; }
-#smsMessage .center_display .text_area textarea { display:block; width:112px; *margin-left:-12px !important; height:96px; margin:0px; padding:0 0px 0 2px; line-height:1.4em; background-color:transparent; font-family:dotumche; font-size:12px; word-break:break-all; letter-spacing:0; border:0; *margin-left:-35px; overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll; outline:0; }
+#smsMessage .center_display .text_area textarea { display:block; width:112px; *margin-left:-12px !important; height:96px; margin:0px; padding:0 0px 0 2px; line-height:1.4em; background-color:transparent; font-family:dotumche; font-size:12px; word-break:break-all; letter-spacing:0; border:0; *margin-left:-35px; overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll; outline:0; resize:none;}
 #smsMessage .center_display .text_area textarea.on { }
 #smsMessage .center_display .text_area textarea#main_screen {  }
 
@@ -383,9 +382,18 @@ span.total { margin-bottom:3px; color:#999; }
 #pb_preview {width:100%; height:100%; z-index:450; display:none; background:#fff;}
 
 /* left button */
-#pb_left_button #btn_pop_chars_box { position:absolute; top:80px; padding-left:37px; left:0px; background:url(../img/chars.png) no-repeat; }
-#pb_left_button #btn_attach_pic_box { position:absolute; top:120px; padding-left:37px; left:0px; background:url(../img/photo_add.png) no-repeat; }
-#pb_left_button #btn_delete_pic_box { position:absolute; top:120px; padding-left:37px; left:0px; background:url(../img/photo_delete.png) no-repeat; }
-#pb_left_button #btn_delete_pic_box .left_btn { background:#ee7283; }
-#pb_left_button #btn_delete_pic_box .left_btn:after { border-right-color:#ee7283; }
-#pb_left_button #btn_pop_merge_box { position:absolute; top:160px; padding-left:37px; left:0px; background:url(../img/merge.png) no-repeat; }
+#pb_left_button #pb_btn_location { position:absolute; top:80px; padding:0px; margin:0px; left:0px; width:0px; overflow:hidden;}
+
+#btn_pop_chars_box { background:url(../img/chars.png) no-repeat; z-index:9999; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0;}
+#btn_attach_pic_box { background:url(../img/photo_add.png) no-repeat; z-index:9999; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0; top:40px;}
+#btn_delete_pic_box { background:url(../img/photo_delete.png) no-repeat; z-index:9999; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; display:none; right:0; top:40px;}
+#btn_pop_merge_box { background:url(../img/merge.png) no-repeat; z-index:9999; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0; top:80px;}
+
+#pb_left_btn_box #btn_delete_pic_box .left_btn { background:#ee7283; }
+#pb_left_btn_box #btn_delete_pic_box .left_btn:after { border-right-color:#ee7283; }
+
+#pb_left_btn_box .left_btn { padding-left:8px; margin-bottom:5px; text-decoration:none; color:#fff; background:#4686ab; text-align:left; width:80px; height:30px; }
+#pb_left_btn_box .left_btn:after { border:solid transparent; border-color:transparent; border-width:5px; position:absolute; left:28px; top:10px; border-right-color:#4686ab; width:0; height:0; content:""; }
+
+
+

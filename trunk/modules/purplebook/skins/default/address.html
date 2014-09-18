@@ -26,7 +26,8 @@
 </div>
 
 <div class="tip_box">
-	전송결과는 coolsms 전송결과 페이지에서 확인할수 있습니다. <a href="http://www.coolsms.co.kr/report" target="_blank"> 바로가기</a>
+	<div class="help" title=""><img class="pngFix" src="img/question.png"  alt="발송전 테스트" />유의사항</div>
+	맞춤법에 어긋나는 글자는 깨져서 전송될 수 있으니 대량전송의 경우 반드시 본인폰으로 테스트 후 발송하세요.
 	<div class="btn_wrap"><a class="use_btn" id="btn_pop_manual" class="pop_menual btn_menual" href="#" onfocus="this.blur()" title="자세한 설명">사용방법</a></div>
 </div>
 
@@ -196,18 +197,7 @@
     </div>
 
 	<div class="left_button"  id="pb_left_button">
-		<div id="btn_pop_chars_box">
-			<button id="btn_pop_chars" class="left_btn">특수문자</button>
-		</div>
-		<div id="btn_attach_pic_box">
-			<button id="btn_attach_pic" class="left_btn">사진추가</button>
-		</div>
-		<div id="btn_delete_pic_box">
-			<button id="btn_detach_pic" class="left_btn">사진삭제</button>
-		</div>
-		<div id="btn_pop_merge_box">
-			<button id="btn_pop_merge" class="left_btn">머지기능</button>
-		</div>
+		<div id="pb_btn_location"></div>
 
 		<div id="layer_messages" class="layer draggable"></div><!-- 발신번호관리 레이어 -->
 		<div id="layer_merge" class="layer draggable"></div><!-- 머지기능관리 레이어 -->
@@ -260,7 +250,6 @@
 			<a class="btn_gray" id="btnSimplePhoneReserv" href="#">예약전송</a>
 			<a id="pb_result_button" href="" class="btn_gray">전송결과</a>
 		</div>
-		<div class="help" title="맞춤법에 어긋나는 글자는 깨져서 전송될 수 있으니 대량전송의 경우 반드시 본인폰으로 테스트 후 발송하세요" cond="0"><img class="pngFix" src="img/question.png"  alt="발송전 테스트" />유의하실 사항</div>
 
 		<div id="layer_sendid" class="layer draggable"></div><!-- 발신번호관리 레이어 -->
 		<div id="layer_reserv" class="layer"></div><!-- 예약발송 레이어 -->

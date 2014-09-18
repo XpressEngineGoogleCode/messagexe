@@ -382,8 +382,8 @@ function insertsmilie(t, smilieface) {
 
 function filepicker_selected() {
     jQuery('.text_area','#smsMessage').scrollTop(60);
-    jQuery('#btn_attach_pic','#smsMessage').hide();
-    jQuery('#btn_detach_pic','#smsMessage').show();
+    jQuery('#btn_attach_pic_box').hide();
+    jQuery('#btn_delete_pic_box').show();
     jQuery('#mmsSend','#smsMessage').attr('checked','checked');
     update_screen();
 
@@ -1530,12 +1530,20 @@ function extend_screen(obj) {
     }
 
     var $current = get_active_textarea();
-    $current.blur();
+    //$current.blur();
     var content = $current.val();
     var sliceByte = SliceBytePerLayer(content);
+
     if (sliceByte.length > 1) {
         $current.val(sliceByte[0]);
-        for (var i = 1; i < sliceByte.length; i++) {
+
+		slice_length = sliceByte.length;
+		if (slice_length > 3) {
+			alert('내용이 너무 길어 문자가 짤렸습니다.');
+			slice_length = 3;
+		}
+
+        for (var i = 1; i < slice_length; i++) {
             jQuery('.phonescreen','#smsPurplebookContentInput li').removeClass('on');
             var $li = jQuery(html);
             jQuery('#smsPurplebookContentInput').append($li);
@@ -1658,8 +1666,8 @@ function display_cost() {
 
 function delete_photo() {
     XE.filepicker.cancel('file_srl');
-    jQuery('#btn_detach_pic','#smsMessage').hide();
-    jQuery('#btn_attach_pic','#smsMessage').show();
+    jQuery('#btn_delete_pic_box').hide();
+    jQuery('#btn_attach_pic_box').show();
 }
 
 function display_preview() {
@@ -1698,7 +1706,7 @@ function display_bytes() {
             var content = $textarea.val();
             var sliceByte = SliceBytePerLayer(content);
             if (sliceByte.length > 1) {
-                $textarea.blur();
+                //$textarea.blur();
                 $textarea.val(sliceByte[0]);
                 bytes_idx = getTextBytes($textarea.val());
                 bytes = bytes_idx[0];
@@ -3468,6 +3476,11 @@ function submit_messages() {
             timeoutHandle = setTimeout(function() { update_screen(); timeoutHandle = null; }, 200);
         });
 
+		// 문자내용의 byte를 세어 출력함 (firefox는 keyup이벤트가 안먹히기 때문에 focusout으로 처리)
+		$('.phonescreen','#smsPurplebookContentInput').focusout( function() { 
+			update_screen();
+        });
+
         $('.phonescreen','#smsPurplebookContentInput').live('click', function(event) { 
             set_active_textarea(this);
         });
@@ -3815,7 +3828,7 @@ function submit_messages() {
         });
 
         // 특수문자창
-        $('#btn_pop_chars','#smsMessage .left_button').click(function() {
+        $('#btn_pop_chars').live("click", function() {
 			var params = new Array();
 			var response_tags = new Array('error','message','data');
 
@@ -3892,7 +3905,7 @@ function submit_messages() {
         */
 
         // 사진추가
-        $('#btn_attach_pic','#smsMessage').click(function() {
+        $('#btn_attach_pic').live("click", function() {
 			var params = new Array();
 			var response_tags = new Array('error','message','data');
 
@@ -3929,10 +3942,12 @@ function submit_messages() {
         });
 
         // 사진삭제
-        $('#btn_detach_pic','#smsMessage').click(function() {
+        $('#btn_detach_pic').live("click", function() {
             XE.filepicker.cancel('file_srl');
-            $(this).hide();            
-            jQuery('#btn_attach_pic','#smsMessage').show();
+            //$(this).hide();            
+            //jQuery('#btn_attach_pic').show();
+			jQuery('#btn_attach_pic_box').show();
+			jQuery('#btn_delete_pic_box').hide();
             update_screen();
             return false;
         });
@@ -4184,58 +4199,76 @@ function submit_messages() {
 
 		// 미리보기, 전체보기, 전송결과 layer set
 		$("body").append('<div id="pb_layer_box" style="z-index:99"><div id="pb_view_all"></div><div id="pb_result"></div><div id="pb_preview"></div></div>');
+
+
+		// 특수문자, 사진추가, 머지기능 버튼 위치설정
+		$("body").append('<div id="pb_left_btn_box"><div id="btn_pop_chars_box"><button id="btn_pop_chars" class="left_btn">특수문자</button></div><div id="btn_attach_pic_box"><button id="btn_attach_pic" class="left_btn">사진추가</button></div><div id="btn_delete_pic_box"><button id="btn_detach_pic" class="left_btn">사진삭제</button></div><div id="btn_pop_merge_box"><button id="btn_pop_merge" class="left_btn">머지기능</button></div></div>');
+
+		var left_button_location = $("#pb_btn_location").offset();
+
+		$("#pb_left_btn_box").css({
+			"position":"absolute",
+			"top":left_button_location.top + 10,
+			"left":left_button_location.left - 67,
+			"width":"100px",
+			"height":"100px"
+		});
+
+		/*
+		$("#btn_pop_chars_box").css({
+			"top":left_button_location.top + 10
+			//"left":left_button_location.left,
+		});
+
+		$("#btn_attach_pic_box").css({
+			"top":left_button_location.top + 50,
+			"left":left_button_location.left,
+		});
+
+		$("#btn_delete_pic_box").css({
+			"top":left_button_location.top + 50,
+			"left":left_button_location.left,
+		});
+
+		$("#btn_pop_merge_box").css({
+			"top":left_button_location.top + 90,
+			"left":left_button_location.left,
+		});
+		*/
+		// END
+
+		
     });
 }) (jQuery);
 
 // popLayer 닫기
-function closeLayer(id)
-{
+function closeLayer(id) {
 	jQuery(id).html('');
 	$obj = jQuery(id);
 	show_and_hide($obj);
 	return false;
 }
 
+function left_button_location(id) {
+	if(!id) return;
+
+	jQuery(id)
+		.mouseenter(function() {
+			var width = (jQuery('button', id).width() + 10) + 'px';
+			jQuery(id).animate({width:width}, 100);
+			
+		})
+		.mouseleave(function() {
+			jQuery(id).animate({width:"0px"}, 200);
+		});
+}
+
 jQuery(document).ready(function (){
 
-	jQuery('#btn_pop_chars_box')
-		.mouseenter(function() {
-			width = jQuery('#btn_pop_chars_box').width() - 15;
-			jQuery('#btn_pop_chars_box').animate({left: '-='+width}, 200);
-		})
-		.mouseleave(function() {
-			width = jQuery('#btn_pop_chars_box').width() - 15;
-			jQuery('#btn_pop_chars_box').animate({left: '+='+width}, 200);
-		});
-
-	jQuery('#btn_attach_pic_box')
-		.mouseenter(function() {
-			width = jQuery('#btn_attach_pic_box').width() - 15;
-			jQuery('#btn_attach_pic_box').animate({left: '-='+width}, 200);
-		})
-		.mouseleave(function() {
-			width = jQuery('#btn_attach_pic_box').width() - 15;
-			jQuery('#btn_attach_pic_box').animate({left: '+='+width}, 200);
-		});
-		
-	jQuery('#btn_delete_pic_box')
-		.mouseenter(function() {
-			width = jQuery('#btn_delete_pic_box').width() - 15;
-			jQuery('#btn_delete_pic_box').animate({left: '-='+width}, 200);
-		})
-		.mouseleave(function() {
-			width = jQuery('#btn_delete_pic_box').width() - 15;
-			jQuery('#btn_delete_pic_box').animate({left: '+='+width}, 200);
-		});
-
-	jQuery('#btn_pop_merge_box')
-		.mouseenter(function() {
-			width = jQuery('#btn_pop_merge_box').width() - 15;
-			jQuery('#btn_pop_merge_box').animate({left: '-='+width}, 200);
-		})
-		.mouseleave(function() {
-			width = jQuery('#btn_pop_merge_box').width() - 15;
-			jQuery('#btn_pop_merge_box').animate({left: '+='+width}, 200);
-		});
+	// 특수문자, 사진추가, 머지기능 버튼 효과
+	left_button_location("#btn_pop_chars_box");
+	left_button_location("#btn_attach_pic_box");
+	left_button_location("#btn_delete_pic_box");
+	left_button_location("#btn_pop_merge_box");
 
 });
