@@ -1061,7 +1061,9 @@ function pb_display_progress() {
     var percent = send_json.progress_count / send_json.total_count * 100;
 
     // display progress
-    jQuery('.progressBar','#smsMessage').progressBar(percent);
+	jQuery('.progressBar','#smsMessage').progressbar({
+		value: percent
+	});
     jQuery('.total_count','#smsMessage #layer_status').text(send_json.total_count);
     jQuery('.success_count','#smsMessage #layer_status').text(send_json.success_count);
     jQuery('.failure_count','#smsMessage #layer_status').text(send_json.failure_count);
@@ -4122,8 +4124,9 @@ function submit_messages() {
         //$('#smsPurplebookList').scroll(pb_scrolled);
 
         // progressbar options
-        var g_progress_options = {boxImage:g_tpl_path+'img/progress/progressbar.gif',barImage:{0:g_tpl_path+'img/progress/progressbg_red.gif',50:g_tpl_path+'img/progress/progressbg_orange.gif',90:g_tpl_path+'img/progress/progressbg_yellow.gif',95:g_tpl_path+'img/progress/progressbg_green.gif'}};
-        jQuery('.progressBar','#smsMessage').progressBar(g_progress_options);
+        jQuery('.progressBar','#smsMessage').progressbar({
+			value: 0
+		}, 2000);
 
         // HELP balloon
         jQuery('.help','#smsPurplebook,#smsMessage').qtip({
