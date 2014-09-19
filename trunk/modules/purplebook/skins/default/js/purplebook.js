@@ -1518,7 +1518,7 @@ function extend_screen(obj) {
         return;
     }
 
-    var html = '<li><div class="top_btn"><button class="btn_record" href="#" title="내용저장">내용저장</button><button class="pop_messages" href="#" title="불러오기">불러오기</button></div><div class="text_area"><textarea class="phonescreen on"></textarea></div><div class="text_btn"><a class="btn_bytes" href="#"><span>0bytes</span></a><a class="btn_clear" href="#"><span>Clear</span></a><a class="close" href="#"><span>close</span></a><button class="btn_addwindow" href="#" title="입력창 추가">창추가</button></div></li>'
+    var html = '<li><div class="top_btn"><button class="btn_record" href="#" title="내용저장">내용저장</button><button class="pop_messages" href="#" title="불러오기">불러오기</button></div><div class="text_area" style="overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll;"><textarea class="phonescreen on" style="overflow:hidden; height:106px"></textarea></div><div class="text_btn"><a class="btn_bytes" href="#"><span>0bytes</span></a><a class="btn_clear" href="#"><span>Clear</span></a><a class="close" href="#"><span>close</span></a><button class="btn_addwindow" href="#" title="입력창 추가">창추가</button></div></li>'
 
     if (typeof(obj)=='object') {
         var $new_li = jQuery(html);
