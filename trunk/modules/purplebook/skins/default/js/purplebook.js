@@ -1891,9 +1891,13 @@ function completeLoadRecentNumbers(ret_obj,response_tags) {
     $list = jQuery('#recent_list','#smsPurplebook').empty();
     if (ret_obj['data']) {
         var data = ret_obj['data']['item'];
+		
         if (!jQuery.isArray(data)) {
             data = new Array(data);
         }
+
+		jQuery("#pb_recent_count").html(data.length);
+
         for (var i = 0; i < data.length; i++) {
             $list.append('<li><span class="name">' + data[i].ref_name + '</span><span class="phonenum">' + data[i].phone_num + '</span><span class="delete" receiver_srl="' + data[i].receiver_srl + '"></span></li>');
         }
@@ -1941,9 +1945,10 @@ function pb_scrolled(e) {
  * @brief 선택된 폴더의 연락처 목록을 가져와서 선택 목록 영역에 출력한다.
  * @param node : jQuery Object(node) 혹은 string 타입의 node_id
  */
-function pb_load_list(node) {
+function pb_load_list(node, refresh) {
+
 	// node를 넘겨받지 않았다면 선택된 폴더(jquery obj)를 사용한다.
-    if (typeof(node)=='undefined') {
+    if (typeof(node)=='undefined' || node == null) {
         var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
         if (selected_folders.length > 0) {
             node = jQuery(selected_folders[0]);
@@ -1972,6 +1977,13 @@ function pb_load_list(node) {
 	// 선택된 폴더이름을 표시... 하지만 html 에 없는 걸?? ----> 제거해야 할 듯
 	jQuery('#smsPurplebookSelectedFolderName').text(node.attr('node_name'));
 
+	// 새로고침하는 경우
+	if (refresh) {
+		pb_load_list.page = 1;
+		jQuery('#smsPurplebookList').html('');
+	}
+
+
     jQuery.ajax({
         type : "POST"
         , contentType: "application/json; charset=utf-8"
@@ -1986,8 +1998,7 @@ function pb_load_list(node) {
                  }
         , dataType : "json"
         , success : function (data) {
-            if (data.error == -1)
-            {
+            if (data.error == -1) {
                alert(data.message);
                return -1;
             }
@@ -2011,6 +2022,24 @@ function pb_load_list(node) {
             alert(errorThrown + " " + textStatus); 
         }
     });
+}
+
+// 중복번호창 불러오기
+function pb_load_overlap() {
+	var params = new Array();
+	var response_tags = new Array('error','message','data');
+
+	params['g_mid'] = g_mid;
+	params['layer_name'] = 'layer_overlap';
+
+	layer_id = '#layer_overlap';
+
+	exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
+		if (ret_obj["data"]) {
+			jQuery(layer_id).html(ret_obj["data"]);
+			if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
+		}
+	}, response_tags);
 }
 
 function purplebook_move_node(node_id, dest_id) {
@@ -2613,11 +2642,31 @@ function get_cashinfo()
     var obj = new Object();
     obj.cash = 0;
     obj.point = 0;
-    
 
     var params = new Array();
     var response_tags = new Array('error','message','cash','point','sms_price','lms_price','mms_price');
     exec_xml('purplebook', 'getPurplebookCashInfo', params, completeGetCashInfo, response_tags);
+}
+
+// 현재잔액 표시
+function set_balance()
+{
+    var params = new Array();
+    var response_tags = new Array('error','message','cash','point','sms_price','lms_price','mms_price');
+    exec_xml('purplebook', 'getPurplebookCashInfo', params, function (ret_obj){
+		cash = parseInt(ret_obj['cash']);
+		point = parseInt(ret_obj['point']);
+
+		cash = add_num_comma(cash);
+		point = add_num_comma(point);
+
+		jQuery("#pb_balance").html("현재잔액 : " + cash + "(캐쉬) " + point + "(포인트)");
+	}, response_tags);
+}
+
+// 1000단위 콤마 붙이는 함수
+function add_num_comma(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 function submit_messages() {
@@ -2703,9 +2752,15 @@ function submit_messages() {
             if ($('#dup'+idNum).length > 0) {
                 var $count = $('.count', $('#dup'+idNum).parent());
                 var countVal = $count.text();
+
                 countVal = parseInt(countVal) + 1;
                 $count.text(countVal);
             } else {
+				overlap_count = $('#pb_overlap_count').text();
+				overlap_val = parseInt(overlap_count) + 1;
+
+				$("#pb_overlap_count").html(overlap_val);
+
                 $except_list.append('<li><span class="name">' + rName + '</span><span id="dup' + idNum + '" class="number">' + newNum + '</span><span class="count">1</span></li>');
             }
             return 1;
@@ -2965,6 +3020,7 @@ function submit_messages() {
 				$('#inputPurplebookName').focus();
 
 				updatePurplebookListCount();
+				pb_load_list(null,true);
 			}
 			, error : function (xhttp, textStatus, errorThrown) { 
 				alert(errorThrown + " " + textStatus); 
@@ -3142,7 +3198,7 @@ function submit_messages() {
                 , dataType : "json"
                 , success : function (data) {
                     p_hide_waiting_message();
-                    pb_load_list();
+                    pb_load_list(null, true);
                     if (data.error == -1)
                         alert(data.message);
                 }
@@ -3247,7 +3303,7 @@ function submit_messages() {
                 , dataType : "json"
                 , success : function (data) {
                     p_hide_waiting_message();
-                    pb_load_list();
+                    pb_load_list(null, true);
                     if (data.error == -1) {
                         alert(data.message);
                     }
@@ -3577,22 +3633,8 @@ function submit_messages() {
 
         // 중복번호 버튼
         $('.pop_overlap','#smsPurplebook').click(function() {
-			var params = new Array();
-			var response_tags = new Array('error','message','data');
-
-			params['g_mid'] = g_mid;
-			params['layer_name'] = 'layer_overlap';
-
-			layer_id = '#layer_overlap';
-
-			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
-				if (ret_obj["data"]) {
-					jQuery(layer_id).html(ret_obj["data"]);
-					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
-					$obj = jQuery(layer_id,'#smsPurplebook');
-					show_and_hide($obj);
-				}
-			}, response_tags);
+			$obj = jQuery('#layer_overlap','#smsPurplebook');
+			show_and_hide($obj);
 			
             return false;
         });
@@ -4214,8 +4256,15 @@ function submit_messages() {
 			"top":left_button_location.top + 10,
 			"left":left_button_location.left - 67,
 			"width":"100px",
-			"height":"100px"
+			"height":"100px",
+			"z-index":"50"
 		});
+
+		// 현재잔액 set
+		set_balance();
+
+		// 중복번호 set
+		pb_load_overlap();
 
 		/*
 		$("#btn_pop_chars_box").css({
