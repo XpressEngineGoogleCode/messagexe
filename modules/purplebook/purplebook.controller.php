@@ -94,6 +94,7 @@ class purplebookController extends purplebook
 					$decoded[$v2->node_id]->refid = $decoded[$k]->refid;
 					$decoded[$v2->node_id]->delay_count = $decoded[$k]->delay_count;
 					$decoded[$v2->node_id]->node_id = $v2->node_id;
+					$decoded[$v2->node_id]->file_srl = $decoded[$k]->file_srl;
 				}
 				unset($decoded[$k]);
 				unset($vars);

@@ -385,10 +385,10 @@ span.total { margin-bottom:3px; color:#999; }
 /* left button */
 #pb_left_button #pb_btn_location { position:absolute; top:80px; padding:0px; margin:0px; left:0px; width:0px; overflow:hidden;}
 
-#btn_pop_chars_box { background:url(../img/chars.png) no-repeat; z-index:9999; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0;}
-#btn_attach_pic_box { background:url(../img/photo_add.png) no-repeat; z-index:9999; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0; top:40px;}
-#btn_delete_pic_box { background:url(../img/photo_delete.png) no-repeat; z-index:9999; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; display:none; right:0; top:40px;}
-#btn_pop_merge_box { background:url(../img/merge.png) no-repeat; z-index:9999; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0; top:80px;}
+#btn_pop_chars_box { background:url(../img/chars.png) no-repeat; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0;}
+#btn_attach_pic_box { background:url(../img/photo_add.png) no-repeat; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0; top:40px;}
+#btn_delete_pic_box { background:url(../img/photo_delete.png) no-repeat; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; display:none; right:0; top:40px;}
+#btn_pop_merge_box { background:url(../img/merge.png) no-repeat; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0; top:80px;}
 
 #pb_left_btn_box #btn_delete_pic_box .left_btn { background:#ee7283; }
 #pb_left_btn_box #btn_delete_pic_box .left_btn:after { border-right-color:#ee7283; }

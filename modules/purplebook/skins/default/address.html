@@ -27,7 +27,7 @@
 
 <div class="tip_box">
 	맞춤법에 어긋나는 글자는 깨져서 전송될 수 있으니 대량전송의 경우 반드시 본인폰으로 테스트 후 발송하세요.
-	<div class="btn_wrap"><a class="use_btn" id="btn_pop_manual" class="pop_menual btn_menual" href="#" onfocus="this.blur()" title="자세한 설명">사용방법</a></div>
+	<div class="btn_wrap"><a class="use_btn" id="btn_pop_manual" class="pop_menual btn_menual" href="http://www.coolsms.co.kr/Man_Sending_On_Web" onfocus="this.blur()" title="자세한 설명" target="_blank">사용방법</a></div>
 </div>
 
 <div id="smsPurplebook">
@@ -229,7 +229,7 @@
 	<div class="right_button">
 		<div class="add_info">
 			<span id="projectedType">SMS</span> <span id="projectedCount">0</span>건, 소요비용 <span id="projectedCost">0</span>원<br />
-			<span>현재잔액:243,200원</span>	
+			<span id="pb_balance" cond="$module_info->balance_display == 'Y'"></span>	
 		</div>
 		<div class="time_interval">
 			<input type="checkbox" id="message_interval_check">

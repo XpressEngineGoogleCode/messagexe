@@ -128,7 +128,6 @@ class purplebookModel extends purplebook
 	function getPurplebookCashInfo($args=false)
 	{
 		$config = $this->getModuleConfig($args);
-
 		$oTextmessageModel = &getModel('textmessage');
 
 		// get cash info
@@ -615,7 +614,9 @@ class purplebookModel extends purplebook
 		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'msg_login_required');
 
 		$args->member_srl = $logged_info->member_srl;
+		$args->list_count = 100;
 		$output = executeQueryArray('purplebook.getRecentReceivers', $args);
+
 		if(!$output->toBool()) return $output;
 		$latest_numbers = array();
 		if($output->data)
@@ -890,9 +891,6 @@ class purplebookModel extends purplebook
 		$merge = array('{name}', '{memo1}', '{memo2}', '{memo3}'); // merge 검색단어
 		$preview_list = array(); 
 
-		debugPrint('ee');
-		debugPrint($vars);
-		debugPrint($node_list);
 		$key = 0;
 		// 창 갯수로 foreach
 		foreach($vars->text as $val)
@@ -964,8 +962,6 @@ class purplebookModel extends purplebook
 				$key++;
 			}
 		}
-		debugPrint('eee');
-		debugPrint($preview_list);
 		// data set
 		Context::set('preview_list', $preview_list);
 
@@ -1028,9 +1024,6 @@ class purplebookModel extends purplebook
 
 		$output = executeQuery('purplebook.getPurplebookByNodeRoute', $args);
 		if(!$output->toBool()) return $output;
-
-		debugPrint('you-1');
-		debugPrint($output);
 
 		$this->add('data', $output->data);
 	}
