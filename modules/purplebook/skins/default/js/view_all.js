@@ -4,6 +4,7 @@ if (!pb_already_loaded) var pb_already_loaded = false;
 var use_work_mode = "off"; // 작업모드 on/off
 var use_fix_mode = false; // 수정모드 유지
 var use_list_count = null; // list_view_count 유지
+var use_page = 1; // 페이지 유지
 var update_dialog = null; // 개별수정창
 
 // 개별수정폼 보여주기
@@ -203,7 +204,12 @@ function pb_load_address(page, fix_mode, list_count){
 	}
 
 	// page
-	if (typeof(page)=='undefined' || !page) page = jQuery('#pb_address_page').val();
+	if (typeof(page)=='undefined' || !page) {
+		page = use_page;
+	} else {
+		use_page = page;
+	}
+	
 
     var req_node_id = '';
     if (typeof(node)=='string') {
@@ -243,15 +249,20 @@ function pb_load_address(page, fix_mode, list_count){
 	search_keyword = jQuery("#pb_search_keyword").val();
 	if (search_keyword) params['search_keyword'] = search_keyword; // 검색어 설정  
 
+	console.log('tt');
+	console.log(list_count);
 	if (list_count) {
 		params['list_count'] = list_count; // 리스트 카운트
 		use_list_count = list_count;
 	} else {
 		params['list_count'] = 10; // 리스트 카운트
-		use_list_count = list_count;
 	}
 
 	if (use_list_count) params['list_count'] = use_list_count;
+
+	console.log('tt-2');
+	console.log(use_list_count);
+	console.log(params['list_count']);
 
 	exec_xml('purplebook', 'getPurplebookList', params, function(ret_obj) {
 		jQuery('#pb_address_content').html(ret_obj["list_template"]);
@@ -341,7 +352,7 @@ function pb_set_address_status(message){
 	if (!message) return;
 
 	var now = new Date();
-	var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
+	var nowTime = now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
 
 	//jQuery("#pb_address_status").html(message);
 	alert(message);

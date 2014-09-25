@@ -394,6 +394,10 @@ class purplebookModel extends purplebook
 
 			$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
 
+			include('purplebook.utility.php');
+			$csutil = new CSUtility();
+			Context::set('csutil', $csutil);
+
 			$path = $this->module_path."skins/".$module_info->skin;
 			$file_name = "view_all_list.html";
 			$data = $oTemplate->compile($path, $file_name);
@@ -639,6 +643,7 @@ class purplebookModel extends purplebook
 		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'msg_login_required');
 
 		$args->member_srl = $logged_info->member_srl;
+		$args->list_count = '100';
 		$output = executeQueryArray('purplebook.getKeepingInfo', $args);
 		if(!$output->toBool()) return $output;
 		$latest_messages = array();
@@ -819,6 +824,10 @@ class purplebookModel extends purplebook
 
 		$module_info = $oModuleModel->getModuleInfoByMid(Context::get('g_mid'));
 
+		include('purplebook.utility.php');
+		$csutil = new CSUtility();
+		Context::set('csutil', $csutil);
+
 		$path = $this->module_path."skins/".$module_info->skin;
 		$file_name = "result_list.html";
 		$data = $oTemplate->compile($path, $file_name);
@@ -964,6 +973,10 @@ class purplebookModel extends purplebook
 		}
 		// data set
 		Context::set('preview_list', $preview_list);
+
+		include('purplebook.utility.php');
+		$csutil = new CSUtility();
+		Context::set('csutil', $csutil);
 
 		$module_info = $oModuleModel->getModuleInfoByMid($vars->g_mid);
 		

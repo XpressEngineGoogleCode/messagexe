@@ -179,7 +179,7 @@ class purplebookController extends purplebook
 
 		// send messages
 		$oTextmessageController = &getController('textmessage');
-		$output = $oTextmessageController->sendMessage($args);
+		$output = $oTextmessageController->sendMessage($args, $basecamp);
 
 		$this->add('data', $output->get('data'));
 		$this->add('success_count', $output->get('success_count'));
@@ -1408,15 +1408,16 @@ class purplebookController extends purplebook
 	}
 
 	// 예약취소
-	function procPurplebookCancelMessages()
+	function procPurplebookCancelMsg()
 	{
 		$oTextMessageController = &getController('textmessage');
 
+		$basecamp = TRUE;
 		$message_ids = $this->getJSON('message_ids');
 
 		foreach($message_ids as $val)
 		{
-			$output = $oTextMessageController->cancelMessage($val);
+			$output = $oTextMessageController->cancelMessage($val, $basecamp);
 		}
 	}
 }
