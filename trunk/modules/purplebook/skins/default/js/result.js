@@ -115,7 +115,7 @@ jQuery(document).ready(function($){
 			, url : "./"
 			, data : { 
 						module : "purplebook"
-						, act : "procPurplebookCancelMessages"
+						, act : "procPurplebookCancelMsg"
 						, message_ids : JSON.stringify(list)
 					 }
 			, dataType : "json"

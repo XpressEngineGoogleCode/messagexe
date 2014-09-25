@@ -1520,7 +1520,7 @@ function extend_screen(obj) {
         return;
     }
 
-    var html = '<li><div class="top_btn"><button class="btn_record" href="#" title="내용저장">내용저장</button><button class="pop_messages" href="#" title="불러오기">불러오기</button></div><div class="text_area" style="overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll;"><textarea class="phonescreen on" style="overflow:hidden; height:106px"></textarea></div><div class="text_btn"><a class="btn_bytes" href="#"><span>0bytes</span></a><a class="btn_clear" href="#"><span>Clear</span></a><a class="close" href="#"><span>close</span></a><button class="btn_addwindow" href="#" title="입력창 추가">창추가</button></div></li>'
+    var html = '<li><div class="top_btn"><button class="btn_record" href="#" title="문자저장">문자저장</button><button class="pop_messages" href="#" title="불러오기">불러오기</button></div><div class="text_area" style="overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll;"><textarea class="phonescreen on" style="overflow:hidden; height:106px"></textarea></div><div class="text_btn"><a class="btn_bytes" href="#"><span>0bytes</span></a><a class="btn_clear" href="#"><span>Clear</span></a><a class="close" href="#"><span>close</span></a><button class="btn_addwindow" href="#" title="입력창 추가">창추가</button></div></li>'
 
     if (typeof(obj)=='object') {
         var $new_li = jQuery(html);
@@ -2739,7 +2739,6 @@ function submit_messages() {
         newNum = newNum.replace(/-/g,'');
         $except_list = jQuery('#smsPurplebookExceptList');
 
-
 		// 국가코드 +로 시작할 경우 아이디를 찾지 못하기때문에  idNum을 따로 만들어준다
 		idNum = newNum;
 		if (newNum.charAt(0) == '+') {
@@ -2763,6 +2762,11 @@ function submit_messages() {
 
                 $except_list.append('<li><span class="name">' + rName + '</span><span id="dup' + idNum + '" class="number">' + newNum + '</span><span class="count">1</span></li>');
             }
+
+
+			// pop_message 호출
+			call_pb_pop_message(".pop_overlap", "중복번호에 추가되었습니다");
+
             return 1;
 		}
 
@@ -2896,6 +2900,30 @@ function submit_messages() {
             alert('체크된 폴더가 없습니다.\n왼쪽 폴더목록에서 체크박스에 체크하세요.');
             return;
         }
+
+		// 이미 존재하는 폴더인지 검사
+        if ($('#folder_'+t.attr('node_id')).length > 0)
+		{
+            if ($('#f_dup_'+t.attr('node_id')).length > 0) {
+                var $count = $('.count', $('#f_dup_'+t.attr('node_id')).parent());
+                var countVal = $count.text();
+
+                countVal = parseInt(countVal) + 1;
+                $count.text(countVal);
+            } else {
+				overlap_count = $('#pb_overlap_count').text();
+				overlap_val = parseInt(overlap_count) + 1;
+
+				$("#pb_overlap_count").html(overlap_val);
+
+                $except_list.append('<li><span class="name">' + t.attr('node_name') + '</span><span id="f_dup_' + t.attr('node_id') + '" class="number">' + t.attr('count') + '</span><span class="count">1</span></li>');
+            }
+
+			// pop_message 호출
+			call_pb_pop_message(".pop_overlap", "중복번호에 추가되었습니다");
+
+            return 1;
+		}
 
         p_show_waiting_message();
 
@@ -3924,10 +3952,27 @@ function submit_messages() {
         });
 
         // 휴지통 비우기
+		/*
         $('#btn_empty_trash','#smsPurplebook').click(function() {
             clearTrash();
             return false;
         });
+		*/
+
+		// 엑셀 다운로드
+		$('#btn_excel_download','#smsPurplebook').click(function() {
+			var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
+			if (selected_folders.length > 0) {
+				node = jQuery(selected_folders[0]);
+			}
+
+			if (!node) {
+                alert('폴더를 선택하세요.');
+                return;
+            }
+
+			pb_excel_download(node);
+		});
 
         // 예약전송
         $('#btn_reserv_send','#smsMessage').live('click',function() {
@@ -4079,6 +4124,10 @@ function submit_messages() {
             $('span.checkbox.on', 'ul#smsPurplebookTargetList li').each(function() {
                 var node_name = $('.name',$(this).parent()).text();
                 var phone_num = $('.number',$(this).parent()).attr('phonenum');
+
+				// check된 항목이 folder라면 return
+				if (!phone_num) return;
+					
                 list.push({node_name:node_name,phone_num:phone_num});
             });
 
@@ -4109,7 +4158,7 @@ function submit_messages() {
                 , dataType : "json"
                 , success : function (data) {
                     p_hide_waiting_message();
-                    pb_load_list();
+                    pb_load_list(null, true);
                     if (data.error == -1)
                         alert(data.message);
                 }
@@ -4246,7 +4295,9 @@ function submit_messages() {
 		$("body").append('<div id="pb_layer_box" style="z-index:99"><div id="pb_view_all"></div><div id="pb_result"></div><div id="pb_preview"></div></div>');
 
 
-		// 특수문자, 사진추가, 머지기능 버튼 위치설정
+		/* 
+		 * 특수문자, 사진추가, 머지기능 버튼 위치설정
+		 */
 		$("body").append('<div id="pb_left_btn_box"><div id="btn_pop_chars_box"><button id="btn_pop_chars" class="left_btn">특수문자</button></div><div id="btn_attach_pic_box"><button id="btn_attach_pic" class="left_btn">사진추가</button></div><div id="btn_delete_pic_box"><button id="btn_detach_pic" class="left_btn">사진삭제</button></div><div id="btn_pop_merge_box"><button id="btn_pop_merge" class="left_btn">머지기능</button></div></div>');
 
 		var left_button_location = $("#pb_btn_location").offset();
@@ -4260,36 +4311,15 @@ function submit_messages() {
 			"z-index":"50"
 		});
 
+		/*
+		 * END
+		 */
+
 		// 현재잔액 set
 		set_balance();
 
 		// 중복번호 set
 		pb_load_overlap();
-
-		/*
-		$("#btn_pop_chars_box").css({
-			"top":left_button_location.top + 10
-			//"left":left_button_location.left,
-		});
-
-		$("#btn_attach_pic_box").css({
-			"top":left_button_location.top + 50,
-			"left":left_button_location.left,
-		});
-
-		$("#btn_delete_pic_box").css({
-			"top":left_button_location.top + 50,
-			"left":left_button_location.left,
-		});
-
-		$("#btn_pop_merge_box").css({
-			"top":left_button_location.top + 90,
-			"left":left_button_location.left,
-		});
-		*/
-		// END
-
-		
     });
 }) (jQuery);
 

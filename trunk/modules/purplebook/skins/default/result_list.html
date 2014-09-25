@@ -45,7 +45,7 @@
 			<td>{$start_num++}</td>
 			<td>{$val->recipient_number}</td>
 			<td>{$val->scheduled_time}</td>
-			<td>{htmlspecialchars($val->text)}</td>
+			<td title="{$val->text}">{$csutil->strcut_utf8(htmlspecialchars($val->text),20,false,'..')}</td>
 			<td>{$val->status_t}</td>
 			<td>{$val->accepted_time}</td>
 			<td>{$val->result_code}:{$val->result_message}</td>

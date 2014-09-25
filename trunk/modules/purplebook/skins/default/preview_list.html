@@ -29,7 +29,7 @@
 			<td cond="$val->node_type == '2'">{$val->name}</td>
 			<td cond="$val->node_type == '1'"><a href="#" id="pb_node_id_{$val->node_id}" node_name="{$val->name}" node_route="{$val->node_route}" onClick='pb_load_preview_list("{$val->node_id}")'>{$val->name}</a></td>
 			<td>{$val->number}</td>
-			<td title="{htmlspecialchars($val->text)}">{substr(htmlspecialchars($val->text),0,22)}</td>
+			<td title="{htmlspecialchars($val->text)}">{$csutil->strcut_utf8(htmlspecialchars($val->text),20,false,'..')}</td>
 			<td>{$val->warning}</td>
 		</tr>
 	</tbody>
