@@ -33,6 +33,7 @@ class purplebookexController extends purplebookController
 		if($output && !$output->toBool()) return $output;
 	}
 
+	/* 필요없는 코드
 	function procPurplebookCancelMessages()
 	{
 		$target_msgids = Context::get('target_msgids');
@@ -66,4 +67,5 @@ class purplebookexController extends purplebookController
 		}
 		$this->setMessage('success_canceled');
 	}
+	*/
 }
