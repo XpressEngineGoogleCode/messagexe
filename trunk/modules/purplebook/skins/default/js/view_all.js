@@ -249,8 +249,6 @@ function pb_load_address(page, fix_mode, list_count){
 	search_keyword = jQuery("#pb_search_keyword").val();
 	if (search_keyword) params['search_keyword'] = search_keyword; // 검색어 설정  
 
-	console.log('tt');
-	console.log(list_count);
 	if (list_count) {
 		params['list_count'] = list_count; // 리스트 카운트
 		use_list_count = list_count;
@@ -259,10 +257,6 @@ function pb_load_address(page, fix_mode, list_count){
 	}
 
 	if (use_list_count) params['list_count'] = use_list_count;
-
-	console.log('tt-2');
-	console.log(use_list_count);
-	console.log(params['list_count']);
 
 	exec_xml('purplebook', 'getPurplebookList', params, function(ret_obj) {
 		jQuery('#pb_address_content').html(ret_obj["list_template"]);
