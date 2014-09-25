@@ -3746,14 +3746,17 @@ function submit_messages() {
 
 			layer_id = '#layer_messages';
 
+			focus_obj = $(this).parent().next().children('textarea');
+
 			exec_xml('purplebook', 'getPopupLayer', params, function(ret_obj) {
 				if (ret_obj["data"]) {
 					jQuery(layer_id).html(ret_obj["data"]);
 					if (jQuery(layer_id).css('display') == 'block') jQuery(layer_id).html('');
-					$obj = jQuery(layer_id,'#smsMessage');
 
+					$obj = jQuery(layer_id,'#smsMessage');
 					$obj.css('left', $('#layer_messages').position().left);
-					set_active_textarea($('#layer_messages').parent().next().children('textarea'));
+
+					set_active_textarea(focus_obj);
 					show_and_hide($obj, null, {show_func:pb_load_saved_messages});
 				}
 			}, response_tags);
