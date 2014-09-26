@@ -11,10 +11,10 @@
 					<div class="view_search">
 						<!-- 검색 -->
 						<span>날짜 : </span>
-						<input type="hidden" name="startdate" id="pb_result_start_date" value="{$result_start_date}"  />
-						<input type="text" class="inputDate inputTypeText search_box" value="{zdate($result_start_date,'Y-m-d')}" readonly="readonly" /> ~
-						<input type="hidden" name="enddate" id="pb_result_end_date" value="{$result_end_date}" />
-						<input type="text" class="inputDate inputTypeText search_box" value="{zdate($result_end_date,'Y-m-d')}" readonly="readonly" /> 
+						<input type="hidden" name="startdate" id="pb_result_start_date" value="{$pb_result_start_date}"  />
+						<input type="text" class="inputDate inputTypeText search_box" value="{zdate($pb_result_start_date,'Y-m-d')}" readonly="readonly" /> ~
+						<input type="hidden" name="enddate" id="pb_result_end_date" value="{$pb_result_end_date}" />
+						<input type="text" class="inputDate inputTypeText search_box" value="{zdate($pb_result_end_date,'Y-m-d')}" readonly="readonly" /> 
 						<span>받는사람번호 검색 : </span>
 						<input type="text" id="pb_result_search" value="" class="search_box" />
 						<button onClick="pb_load_result_list()" class="search">검색</button>

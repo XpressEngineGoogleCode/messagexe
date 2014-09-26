@@ -4328,7 +4328,6 @@ function submit_messages() {
 
 // popLayer 닫기
 function closeLayer(id) {
-	jQuery(id).html('');
 	$obj = jQuery(id);
 	show_and_hide($obj);
 	return false;
@@ -4356,4 +4355,14 @@ jQuery(document).ready(function (){
 	left_button_location("#btn_delete_pic_box");
 	left_button_location("#btn_pop_merge_box");
 
+});
+
+
+// 창 리사이즈시 left_button 위치 변경
+jQuery(window).resize(function () {
+	var left_button_location = jQuery("#pb_btn_location").offset();
+
+	jQuery("#pb_left_btn_box").css({
+		"left":left_button_location.left - 67,
+	});
 });
