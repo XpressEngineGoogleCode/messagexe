@@ -197,7 +197,7 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 .purplebook_right #layer_addrbook .bottomArea .btn_copy { }
 
 /* layer popup (duplications) */
-.purplebook_right #layer_overlap { bottom:40px; right:15px; width:266px; height:213px; color:#fff;}
+.purplebook_right #layer_overlap { bottom:40px; right:15px; width:266px; height:228px; color:#fff; }
 .purplebook_right #layer_overlap .title_info span { font-size:11px; }
 .purplebook_right #layer_overlap .title_info .name { margin-left:10px; }
 .purplebook_right #layer_overlap .title_info .h_number { margin-left:48px; }
@@ -208,6 +208,7 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 .purplebook_right #layer_overlap .bodyArea ul#smsPurplebookExceptList li span.name { margin: 1px 0px 0px 30px; width:55px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
 .purplebook_right #layer_overlap .bodyArea ul#smsPurplebookExceptList li span.number { margin: -1px 0px 0px 6px; width:80px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
 .purplebook_right #layer_overlap .bodyArea ul#smsPurplebookExceptList li span.count { margin: -1px 0px 0px 10px; width:38px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
+.purplebook_right #layer_overlap .bottom_text { font-size:12px; line-height:2em; }
 
 /* layer popup (bulkadd) */
 .purplebook_right #layer_mass { bottom:40px; right:15px; width:288px; height:273px; color:#fff; }
@@ -385,7 +386,7 @@ span.total { margin-bottom:3px; color:#999; }
 /* left button */
 #pb_left_button #pb_btn_location { position:absolute; top:80px; padding:0px; margin:0px; left:0px; width:0px; overflow:hidden;}
 
-#btn_pop_chars_box { background:url(../img/chars.png) no-repeat; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0;}
+#btn_pop_chars_box { background:url(../img/chars.png) no-repeat; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0; }
 #btn_attach_pic_box { background:url(../img/photo_add.png) no-repeat; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0; top:40px;}
 #btn_delete_pic_box { background:url(../img/photo_delete.png) no-repeat; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; display:none; right:0; top:40px;}
 #btn_pop_merge_box { background:url(../img/merge.png) no-repeat; padding-left:33px; width:0px; height:30px; margin:0px; overflow:hidden; position:absolute; right:0; top:80px;}
@@ -393,12 +394,13 @@ span.total { margin-bottom:3px; color:#999; }
 #pb_left_btn_box #btn_delete_pic_box .left_btn { background:#ee7283; }
 #pb_left_btn_box #btn_delete_pic_box .left_btn:after { border-right-color:#ee7283; }
 
-#pb_left_btn_box .left_btn { padding-left:8px; margin-bottom:5px; text-decoration:none; color:#fff; background:#4686ab; text-align:left; width:80px; height:30px; }
-#pb_left_btn_box .left_btn:after { border:solid transparent; border-color:transparent; border-width:5px; position:absolute; left:28px; top:10px; border-right-color:#4686ab; width:0; height:0; content:""; }
+#pb_left_btn_box .left_btn { padding-left:8px; margin:0 0 5px 5px; text-decoration:none; color:#fff; background:#4686ab; text-align:left; width:80px; height:30px; border:0; cursor:pointer; }
+#pb_left_btn_box .left_btn:after { border:solid transparent; border-color:transparent; border-width:5px; position:absolute; left:33px; top:10px; border-left:0; border-right-color:#4686ab; width:0; height:0; content:""; }
 
 /* progress bar */
 .progressBar { background:#f5f5f5; border:0; border-radius:0; height:20px; box-shadow:0 1px 2px rgba(0, 0, 0, 0.1) inset; }
 .progressBar .ui-progressbar-value { background:#5cb85c; box-shadow:0 -1px 0 rgba(0, 0, 0, 0.15) inset; border:0; border-radius:0; }
 
 /* pop_message */
-#pb_pop_message { background:#fff; padding:"10px" }
+#pb_pop_message { padding:10px; background:#333; color:#fff; }
+#pb_pop_message:after { border:solid transparent; border-color:transparent; border-width:5px; position:absolute; left:-5px; top:12px; border-left:0; border-right-color:#333; width:0; height:0; content:""; }
