@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     <grants>
-        <grant name="send" default="user">
+        <grant name="send" default="member">
             <title xml:lang="ko">발송 권한</title>
             <title xml:lang="en">Sending messages</title>
         </grant>
