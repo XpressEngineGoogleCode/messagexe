@@ -12,7 +12,7 @@ function call_pb_pop_message(id, text){
 
 	jQuery("#pb_pop_message").html(text);
 	jQuery("#pb_pop_message").css({
-		"top":message_location.top + 15,
+		"top":message_location.top + 5,
 		"left":message_location.left + 75,
 	});
 	jQuery("#pb_pop_message").fadeIn("fast");

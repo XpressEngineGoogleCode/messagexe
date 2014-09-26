@@ -771,8 +771,9 @@ class purplebookModel extends purplebook
 		//검색어 설정
 		if($vars->search_keyword) $args->s_rcpt = trim($vars->search_keyword);
 
+		$basecamp = TRUE;
 		$oTextmessageModel = &getModel('textmessage');
-		$sms = &$oTextmessageModel->getCoolSMS();
+		$sms = &$oTextmessageModel->getCoolSMS($basecamp);
 		$output = $sms->sent($args);
 
 		// 리스트 있을때

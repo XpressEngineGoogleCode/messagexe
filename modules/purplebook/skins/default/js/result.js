@@ -25,6 +25,22 @@ function pb_load_result_list(page){
 
 	// Status 검색
 	if (jQuery("#pb_result_status").val()) params['status'] = jQuery("#pb_result_status").val();
+
+	// 처음 로드 할때 현재날짜를 기준으로 검색한다.
+	if (pb_result_loaded == false) {
+		now = new Date();
+		year= now.getFullYear();
+		mon = (now.getMonth()+1)>9 ? ''+(now.getMonth()+1) : '0'+(now.getMonth()+1);
+		day = now.getDate()>9 ? ''+now.getDate() : '0'+now.getDate();
+		current_date = year + '-' + mon + '-' + day;
+
+		jQuery("#pb_result_start_date").val(current_date);
+		jQuery("#pb_result_start_date").next().val(current_date);
+		params['s_start'] = jQuery("#pb_result_start_date").val();
+	}
+
+	console.log('tt');
+	console.log(params);
 	
 	exec_xml('purplebook', 'getPurplebookResult', params, function(ret_obj) {
 		jQuery('#pb_result_list').html(ret_obj["list_template"]);
