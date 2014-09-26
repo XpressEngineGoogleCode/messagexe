@@ -4,8 +4,6 @@ jQuery(document).ready(function ($){
 		"position":"absolute",
 		"display":"none",
 		"z-index":"9999",
-		"background":"#fff",
-		"padding":"10px"
 	});
 });
 
@@ -14,8 +12,8 @@ function call_pb_pop_message(id, text){
 
 	jQuery("#pb_pop_message").html(text);
 	jQuery("#pb_pop_message").css({
-		"top":message_location.top + 30,
-		"left":message_location.left + 50,
+		"top":message_location.top + 15,
+		"left":message_location.left + 75,
 	});
 	jQuery("#pb_pop_message").fadeIn("fast");
 
