@@ -41,6 +41,8 @@ class purplebookController extends purplebook
 	{
 		$all_args = Context::getRequestVars();
 
+		debugPrint('ww-0');
+
 		if(!$this->grant->send) return new Object(-1, 'msg_not_permitted');
 		$module_srl = Context::get('module_srl');
 		$oPurplebookModel = &getModel('purplebook');
@@ -57,7 +59,9 @@ class purplebookController extends purplebook
 		{
 			$decoded = array($decoded);
 		}
-
+		debugPrint('ww-0-1');
+		debugPrint(count($decoded));
+		debugPrint($decoded);
 		$calc_point = 0;
 		$msg_arr = array();
 		$args = new StdClass();
@@ -70,6 +74,7 @@ class purplebookController extends purplebook
 			Context::set('message', Context::getLang('msg_login_required'));
 			return;
 		}
+		debugPrint('ww-0-2');
 
 		// 받는사람목록에 폴더가 들어있을 경우 풀어서 decoded에 집어넣는다
 		foreach($decoded as $k => $v)
@@ -78,8 +83,10 @@ class purplebookController extends purplebook
 			{
 				$vars->node_route = $v->node_route;
 				$vars->member_srl = $logged_info->member_srl;
-				$vars->equal_node_route = $v->node_route;
-				$output = executeQueryArray("purplebook.getPurplebookByNodeRoute", $vars);
+				$vars->page = $v->page;
+				$vars->list_count = $v->list_count;
+
+				$output = executeQueryArray("purplebook.getPurplebookListByNodeRoute", $vars);
 				if(!$output->toBool()) return $output;
 				if(!$output->data) return;
 
@@ -100,7 +107,9 @@ class purplebookController extends purplebook
 				unset($vars);
 			}
 		}
-
+		debugPrint('ww-0-3');
+		debugPrint(count($decoded));
+		
 		// 문자 세팅
 		foreach($decoded as $key => $row)
 		{
@@ -168,6 +177,9 @@ class purplebookController extends purplebook
 			if(!$first_num) $first_num = $row->recipient;
 			$extension[] = $msg_obj;
 		}
+		debugPrint('ww-1');
+		debugPrint(count($extension));
+		debugPrint($extension);
 		$args->extension = json_encode($extension);
 
 		// minus point
@@ -180,6 +192,9 @@ class purplebookController extends purplebook
 		// send messages
 		$oTextmessageController = &getController('textmessage');
 		$output = $oTextmessageController->sendMessage($args, $basecamp);
+
+		debugPrint('ww-2');
+		debugPrint($output);
 
 		$this->add('data', $output->get('data'));
 		$this->add('success_count', $output->get('success_count'));

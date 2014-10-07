@@ -1,6 +1,10 @@
 // check that already loaded
 if (!pb_preview_loaded) var pb_preview_loaded = false;
 
+// check folder route
+var use_preview_route = null;
+var use_preview_route_name = null;
+
 // 리스트 불러오기
 function pb_load_preview_list(node_id){
 	var params = new Array();
@@ -43,7 +47,7 @@ function pb_load_preview_list(node_id){
 
 	// 직접 건내받은 node_id가있으면 node_route로 만들어 getPurplebookPreview 로 보낸다.
 	node_route = null;
-	if (node_id) {
+	if (node_id && node_id != 'base') {
 		node_route = jQuery("#pb_node_id_"+node_id).attr("node_route") + node_id + ".";
 		node_name = jQuery("#pb_node_id_"+node_id).attr("node_name");
 
@@ -52,7 +56,23 @@ function pb_load_preview_list(node_id){
 			node_route = 'f.';
 			node_name = jQuery("#pb_node_id_"+node_id).attr("node_name");
 		}
+		use_preview_route = node_route;
+		use_preview_route_name = node_name;
+	} else if (node_id == 'base') {
+		// node_id 가 base면 처음 루트로 돌아가도록 use_preview_route를 null로 바꿈
+		use_preview_route = null;
+		use_preview_route_name = null;
 	}
+
+	// 기존경로가 있으면 그대로 유지해준다
+	if (use_preview_route) {
+		node_route = use_preview_route;
+		node_name = use_preview_route_name;
+	}
+
+	// 검색어 설정
+	search_keyword = null;
+	if (jQuery("#pb_preview_search").val()) search_keyword = jQuery("#pb_preview_search").val();
 
 	jQuery.ajax({
 		type : "POST"
@@ -66,6 +86,7 @@ function pb_load_preview_list(node_id){
                     , rcp_list : JSON.stringify(rcp_list)
 					, node_ids : JSON.stringify(node_ids)
 					, node_route : node_route
+					, search_keyword : search_keyword
                  }
         , dataType : "json"
 		, success : function (data) {
@@ -78,7 +99,7 @@ function pb_load_preview_list(node_id){
 
 			// 경로보여주기
 			if (node_route) {
-				jQuery("#pb_preview_nav").html('<a href="#" onClick="pb_load_preview_list()">기본</a> > <a href="#" onClick="pb_load_preview_list(' + node_route + ')">' + node_name + '</a>');
+				jQuery("#pb_preview_nav").html('<a href="#" onClick="pb_load_preview_list(\'base\')">기본</a> > <a href="#" onClick="pb_load_preview_list(' + node_route + ')">' + node_name + '</a>');
 			}
 
         }

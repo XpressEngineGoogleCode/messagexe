@@ -902,12 +902,16 @@ class purplebookModel extends purplebook
 		$preview_list = array(); 
 
 		$key = 0;
+
 		// 창 갯수로 foreach
 		foreach($vars->text as $val)
 		{
 			// 받는사람수로 foreach
 			foreach($vars->rcp_list as $v)
 			{
+				// 검색어가 있을경우 번호로 검색
+				if($vars->search_keyword && $vars->search_keyword != $v->number) continue;
+
 				// 주소록에서 추가된 것들이면
 				if($v->node_id && $node_list[$v->node_id]->node_type == '2')
 				{

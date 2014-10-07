@@ -39,9 +39,6 @@ function pb_load_result_list(page){
 		params['s_start'] = jQuery("#pb_result_start_date").val();
 	}
 
-	console.log('tt');
-	console.log(params);
-	
 	exec_xml('purplebook', 'getPurplebookResult', params, function(ret_obj) {
 		jQuery('#pb_result_list').html(ret_obj["list_template"]);
 	}, response_tags);
