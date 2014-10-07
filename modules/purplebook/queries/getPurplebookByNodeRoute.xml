@@ -1,4 +1,4 @@
-<query id="getPurplebook" action="select">
+<query id="getPurplebookByNodeRoute" action="select">
 	<tables>
 		<table name="purplebook" />
 	</tables>
