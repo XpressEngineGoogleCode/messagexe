@@ -1032,8 +1032,9 @@ function send_json(content)
 			
             pb_display_progress();
 
-			//  문자 다시호출
-			sendMessageData();
+			// 발송간격 설정이 안되있으면 문자 다시호출
+			if (!sendMessageData.send_timer) sendMessageData();
+			
         }
         , error : function (xhttp, textStatus, errorThrown) { 
             send_json.progress_count += content.length;
@@ -1083,6 +1084,12 @@ function sendMessageData() {
 
     if (sendMessageData.index >= $list.size() || sendMessageData.send_status == 'complete') {
         sendMessageData.send_status = 'complete';
+
+		if (sendMessageData.send_timer) {
+			clearInterval(sendMessageData.send_timer);
+			sendMessageData.send_timer=false;
+		}
+		
         jQuery('.text','#smsMessage #layer_status').text('접수가 완료되었습니다.');
 		jQuery('#layer_status_close','#smsMessage #layer_status').text('닫기');
 		jQuery('#btn_result','#smsMessage #layer_status').css('display','');
@@ -1094,18 +1101,14 @@ function sendMessageData() {
 		return false; 
 	}
 
-	var speed = g_send_speed;
-
-	// 발송간격설정이 체크되있으면 설정된 만큼 메시지를 잘라서 보낸다
-	if (jQuery("#message_interval_check").is(':checked')) {
-	   	var speed = jQuery("#message_send_limit").val();
-	}
+	var content_list = new Array();
 
 	// folder 먼저 집어넣기 
 	content_list = messageInputFolder();
 
 	console.log('check-1');
 	console.log(content_list.length);
+	console.log(sendMessageData.index);
 
 	// 개별 집어넣기
 	if (sendMessageData.send_status == 'f_complete') {
@@ -1115,6 +1118,7 @@ function sendMessageData() {
 	console.log('check-2');
 	console.log(content_list.length);
 	console.log(content_list);
+	console.log(sendMessageData.index);
 	
     // send to server
     //send_json.progress_count = 0;
@@ -1143,6 +1147,9 @@ function messageInput(content_list) {
 	console.log('sendMessageDisplay : ' + sendMessageData.display);
 	console.log('sendMessageSendStatus : ' + sendMessageData.send_status);
 
+	if (content_list) {
+		content_list[0]
+	}
 
 	// 주소록 폴더에서 담다가 남은게 없다면 content_list를 새로 만든다
     if (typeof(content_list)=='undefined') {
@@ -1164,6 +1171,7 @@ function messageInput(content_list) {
 
 		console.log('oh yes-1');
 		console.log(sendMessageData.index);
+		console.log(content_list.length);
 
         var callno = jQuery('.number', $li).text();
         var ref_username = jQuery('.name', $li).text();
@@ -1181,6 +1189,7 @@ function messageInput(content_list) {
         var size = jQuery('li', $content_input).size();
 
 		for (var j = 0; j < size; j++) {
+			j = sendMessageData.display;
             var $li = jQuery('li', $content_input).eq(sendMessageData.display);
             var $scr = jQuery('.phonescreen', $li);
 
@@ -1226,8 +1235,9 @@ function messageInput(content_list) {
 			// display 가 여러개일 경우 display마다 i값을 늘려준다
 			if (j > 0) i+=1;
 
-			// i 값이 speed만큼 커지면 content_list 를 리턴해준다
-			if (i >= speed - 1) return content_list;
+			// content_list 의 길이가 speed보다 커지면 리턴
+			if (parseInt(content_list.length) >= speed) return content_list;
+
         } // for
     }
 
@@ -1249,6 +1259,8 @@ function messageInputFolder() {
 
     var content_list = new Array();
 
+	if (sendMessageData.send_status == 'f_complete') return content_list;
+
 	// Folder Idx 설정
 	if (!sendMessageData.index) sendMessageData.index = 0;
 
@@ -1267,6 +1279,12 @@ function messageInputFolder() {
 	for (i = 0; i < list.size(); i++) {
 		target_list = jQuery(".pb_folder_address").eq(sendMessageData.index);
 		total_page = Math.ceil(target_list.attr('count') / speed);
+
+		console.log('check-4');
+		console.log(total_page);
+		console.log(speed);
+		console.log(target_list.attr('count'));
+		console.log(sendMessageData.page);
 
 		$content_input = jQuery('#smsPurplebookContentInput');
 		var size = jQuery('li', $content_input).size();
@@ -1298,7 +1316,7 @@ function messageInputFolder() {
 			content_list.push(content);
 
 			// 폴더의 주소록이 제한 갯수를 넘었을경우
-			if (target_list.attr('count') > speed) {
+			if (parseInt(target_list.attr('count')) > speed) {
 				sendMessageData.page += 1;
 
 				// Page가 최총 페이지에 도달하면 display를 재설정 해주고 page를 초기화 해준다.
@@ -1346,7 +1364,6 @@ function messageInputFolder() {
 }
 
 function sendMessage() {
-    if (typeof(sendMessageData.send_status)=='undefined') sendMessageData.send_status = 'sending';
     if (typeof(sendMessage.update_timer)=='undefined') sendMessage.update_timer=0;
 
     if (sendMessage.update_timer) clearInterval(sendMessage.update_timer);
@@ -1375,6 +1392,8 @@ function sendMessage() {
     // clear sending index
     sendMessageData.index = 0;
 	sendMessageData.send_status = 'sending';
+	sendMessageData.display = 0;
+	sendMessageData.page = 1;
 
     /*
     // clear progress bar
@@ -1400,15 +1419,17 @@ function sendMessage() {
 	jQuery('#layer_status_close','#smsMessage #layer_status').text('취소');
 	jQuery('#btn_result','#smsMessage #layer_status').css('display','none');
 
-	// 발송간격설정이 체크되있으면 전송간격 시간을 가져온다
+	// 발송간격설정이 체크되있으면 전송간격 시간을 가져와 SEND한다
 	if (jQuery("#message_interval_check").is(':checked')) {
-	   	g_send_interval = jQuery("#message_send_interval").val() * 1000 * 60;
+	   	g_send_interval = jQuery("#message_send_interval").val() * 100 * 60;
 
+		sendMessageData.send_timer = 0;
+		if (sendMessageData.send_timer) clearInterval(sendMessageData.send_timer);
+
+		sendMessageData.send_timer = setInterval(function() { sendMessageData();  }, g_send_interval);
 	} else {
 		sendMessageData();
 	}
-
-    
 }
 
 function get_switch_value() {
@@ -4232,22 +4253,33 @@ function submit_messages() {
 
         // cancel sending
         $('#btn_stop','#smsMessage #layer_status').click(function() {
-            if (!sendMessageData.send_status || sendMessageData.send_status == 'complete' || sendMessageData.send_status == 'sending') {
+            if (!sendMessageData.send_status && !sendMessageData.send_timer) {
                 alert('일시중지 할 수 없습니다');
                 return false;
             }
-            sendMessageData.send_status = 'pause';
-            $('.text','#smsMessage #layer_status').text('일시중지하였습니다.');
-            return false;
+
+			// sendMessageData.send_timer로 보통발송과 발송간격발송 구분
+			if (sendMessageData.send_status == 'complete') {
+				alert('이미 접수가 완료됬습니다.');
+				return false;
+			}
+			clearInterval(sendMessageData.send_timer);
+			sendMessageData.send_timer = false;
+			
+			sendMessageData.send_status = 'pause';
+
+			$('.text','#smsMessage #layer_status').text('일시중지하였습니다.');
+			return false;
+			
         });
         // continue sending
         $('#btn_continue','#smsMessage #layer_status').click(function() {
             if (sendMessageData.send_status == 'sending') {
-                alert('전송중에 있습니다');
+                alert('접수중에 있습니다');
                 return false;
             }
             if (sendMessageData.send_status == 'complete') {
-                alert('전송이 완료되었습니다');
+                alert('이미 접수가 완료됬습니다.');
                 return false;
             }
 
@@ -4256,8 +4288,15 @@ function submit_messages() {
 				g_send_interval = jQuery("#message_send_interval").val() * 1000 * 60;
 			}
 
-            sendMessageData.send_status = 'sending'; 
-			sendMessageData();
+			sendMessageData.send_status = 'sending'; 
+
+			// sendMessageData.send_timer로 보통발송과 발송간격발송 구분
+			if (jQuery("#message_interval_check").is(':checked')) {
+				g_send_interval = jQuery("#message_send_interval").val() * 100 * 60;
+				sendMessageData.send_timer = setInterval(function() { sendMessageData();  }, g_send_interval);
+			} else {
+				sendMessageData();
+			}
 
             $('.text','#smsMessage #layer_status').text('전송을 재개하였습니다.');
             return false;
