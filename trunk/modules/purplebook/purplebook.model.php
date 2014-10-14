@@ -776,6 +776,11 @@ class purplebookModel extends purplebook
 		$sms = &$oTextmessageModel->getCoolSMS($basecamp);
 		$output = $sms->sent($args);
 
+		debugPrint('result-1');
+		debugPRint($vars);
+		debugprint($args);
+		debugPRint($output);
+
 		// 리스트 있을때
 		if($output->data)
 		{
@@ -804,20 +809,24 @@ class purplebookModel extends purplebook
 				if($v->result_code != '00' && $v->result_code != '99' && $v->result_code != '60') $v->result = 'fail';
 			}
 
-			$page = $output->page;
 			// Set Contents
-			Context::set('page', $page);
-			Context::set('total_count', $output->total_count);
-			Context::set('total_page', ceil($output->total_count/$output->list_count));
 			Context::set('result_list', $output->data);
+
+			$page = $output->page;
+			$total_count = $output->total_count;
+			$total_page = ceil($output->total_count/$output->list_count);
 		}
 		else // 리스트가 없을떄
 		{
 			$page = 1;
-			Context::set('page', page);
-			Context::set('total_count', 0);
-			Context::set('total_page', 1);
+			$total_count = 0;
+			$total_page = 1;
 		}
+
+		Context::set('page', $page);
+		Context::set('total_count', $total_count);
+		Context::set('total_page', $total_page);
+		Context::set('page_navigation', new PageHandler($total_count, $total_page, $page, 10));
 
 		// 시작번호
 		$start_num = ($page - 1) * $args->count + 1;
