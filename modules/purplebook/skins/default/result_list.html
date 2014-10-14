@@ -58,9 +58,9 @@
 	<div class="pb_layer_pagination">
 		<input type="hidden" value="{page}" id="pb_layer_page" />
 		<span><a href="#" onClick="pb_load_result_list('1')" class="first">{$lang->first_page}</a></span>
-		<block loop="$i=1; $i<=$total_page; $i++">
-			<strong cond="$i==$page">{$i}</strong> 
-			<a cond="$i!=$page" href="#" onClick="pb_load_result_list({$i})">{$i}</a>
+		<block loop="$page_no=$page_navigation->getNextPage()">
+			<strong cond="$page_no==$page">{$page_no}</strong> 
+			<a cond="$page_no!=$page" href="#" onClick="pb_load_result_list({$page_no})">{$page_no}</a>
 		</block>
 		<span><a href="#" onClick="pb_load_result_list({$total_page})" class="last">{$lang->last_page}</a></span>
 	</div>

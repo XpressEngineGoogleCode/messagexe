@@ -155,7 +155,7 @@ function pb_close_address(){
 
 	jQuery('#pb_view_all').css('display','none'); // 전체보기 감추기
 
-	pb_load_list(); // 주소록 목록 새로고침
+	pb_load_list(null, true); // 주소록 목록 새로고침
 }
 
 
