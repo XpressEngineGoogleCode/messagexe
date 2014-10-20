@@ -26,7 +26,7 @@ span.checkbox.on { background-position:0px -13px; }
 .purplebook_left .purplebook_left_title .search a {position:absolute; top:0;  *top:1px; width:18px; height:18px; border:1px solid #71aee6;}
 
 /* advanced menus */
-.purplebook_left .advanced_menu { margin:0; padding:5px 0; list-style:none; position:absolute; z-index:9999; width:130px; background-color:#333; display:none; right:105px; top:327px; }
+.purplebook_left .advanced_menu { margin:0; padding:5px 0; list-style:none; position:absolute; z-index:30; width:130px; background-color:#333; display:none; right:105px; top:327px; }
 .purplebook_left .advanced_menu:after { top:10%; left:-15px; border:solid transparent; border-color:transparent; border-width:10px; border-right-color:#333; position:absolute; width:0; height:0; content:"";  }
 .purplebook_left .advanced_menu li { padding:1px; line-height:18px; }
 .purplebook_left .advanced_menu li.arrow { background:url(../img/icon_gspecial7.gif); width:10px; height:10px; position:absolute; left:0; top:30px; }
@@ -112,20 +112,20 @@ span.checkbox.on { background-position:0px -13px; }
 */
 
 /* layer popup style */
-#smsPurplebook .layer,
-#smsMessage .layer { position:absolute; display:none; padding:15px 5px 5px; border:1px solid #536b94; background:#55849f;}
-#smsPurplebook .layer .title,
-#smsMessage .layer .title { position:relative; margin-bottom:5px; height:22px;}
-#smsPurplebook .layer .title p,
-#smsMessage .layer .title p {display:inline; margin-left:10px; vertical-align:middle; color:#fff;}
-#smsPurplebook .layer .title .btn_closex,
-#smsMessage .layer .title .btn_closex { position:absolute; right:0;}
-#smsPurplebook .layer .title .total,
-#smsMessage .layer .title .total { margin-left:10px;}
-#smsPurplebook .layer .title_info,
-#smsMessage .layer .title_info { display:block; padding:5px 0 3px 17px; margin:0; line-height:1.6; border:1px solid #ddd; border-bottom:none;}
-#smsPurplebook .layer .bodyArea,
-#smsMessage .layer .bodyArea { padding:10px; background:#fff url(../img/body_area_bg.gif) repeat-x left top; border:0; overflow:auto;}
+.layer,
+.layer { position:absolute; display:none; padding:15px 5px 5px; border:1px solid #536b94; background:#55849f;}
+.layer .title,
+.layer .title { position:relative; margin-bottom:5px; height:22px;}
+.layer .title p,
+.layer .title p {display:inline; margin-left:10px; vertical-align:middle; color:#fff;}
+.layer .title .btn_closex,
+.layer .title .btn_closex { position:absolute; right:0;}
+.layer .title .total,
+.layer .title .total { margin-left:10px;}
+.layer .title_info,
+.layer .title_info { display:block; padding:5px 0 3px 17px; margin:0; line-height:1.6; border:1px solid #ddd; border-bottom:none;}
+.layer .bodyArea,
+.layer .bodyArea { padding:10px; background:#fff url(../img/body_area_bg.gif) repeat-x left top; border:0; overflow:auto;}
 
 /* layre button */
 a.close_btn { background:#222 !important; color:#fff !important; text-decoration:none; margin-top:5px; padding:5px 10px; }
@@ -142,100 +142,101 @@ span.pop_total { color:#fff; font-size:11px !important; }
 p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 
 /* layer popup (properties) */
-.purplebook_left #layer_properties { top:0px; left:200px; width:200px; height:200px; }
-.purplebook_left #layer_properties .bodyArea { height:140px;}
-.purplebook_left #layer_properties .bodyArea ul#properties_list {  height:100%; margin:0; padding:0; } 
-.purplebook_left #layer_properties .bodyArea ul#properties_list li { list-style-type:none; margin:0; padding:0; line-height:1.6;}
+#layer_properties { top:0px; left:200px; width:200px; height:200px; }
+#layer_properties .bodyArea { height:140px;}
+#layer_properties .bodyArea ul#properties_list {  height:100%; margin:0; padding:0; } 
+#layer_properties .bodyArea ul#properties_list li { list-style-type:none; margin:0; padding:0; line-height:1.6;}
 
 /* layer popup(folder share) */
-.purplebook_left #layer_share { top:0px; left:200px; width:200px; height:200px; }
-.purplebook_left #layer_share .bodyArea { height:124px;}
-.purplebook_left #layer_share .bodyArea ul#share_list {  height:100%; margin:0; padding:0; } 
-.purplebook_left #layer_share .bodyArea ul#share_list li { list-style-type:none; margin:0; padding:0; height: 21px; }
-.purplebook_left #layer_share .bodyArea ul#share_list li span.user_id { width:66px; text-overflow:ellipsis; display:inline-block; white-space:nowrap; overflow:hidden; } 
-.purplebook_left #layer_share .bodyArea ul#share_list li span.nick_name { width:66px; text-overflow:ellipsis; display:inline-block; white-space:nowrap; overflow:hidden; }
-.purplebook_left #layer_share .bodyArea ul#share_list li span.delete { cursor:pointer; text-indent:-1000em; padding:0; border:0 none; margin: 2px 0px 0px 10px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
-.purplebook_left #layer_share .bottomArea #input_user_id { width:100px; vertical-align:top; }
-.purplebook_left #layer_share .bottomArea button{ width:44px; height:20px; margin-left:2px; vertical-align:middle; background:url('../img/btn_append.gif') no-repeat; border:0 none; text-indent:-1000em; *margin-left:5px; overflow:hidden; cursor:pointer;} 
+#layer_share { top:0px; left:200px; width:200px; height:200px; }
+#layer_share .bodyArea { height:124px;}
+#layer_share .bodyArea ul#share_list {  height:100%; margin:0; padding:0; } 
+#layer_share .bodyArea ul#share_list li { list-style-type:none; margin:0; padding:0; height: 21px; }
+#layer_share .bodyArea ul#share_list li span.user_id { width:66px; text-overflow:ellipsis; display:inline-block; white-space:nowrap; overflow:hidden; } 
+#layer_share .bodyArea ul#share_list li span.nick_name { width:66px; text-overflow:ellipsis; display:inline-block; white-space:nowrap; overflow:hidden; }
+#layer_share .bodyArea ul#share_list li span.delete { cursor:pointer; text-indent:-1000em; padding:0; border:0 none; margin: 2px 0px 0px 10px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
+#layer_share .bottomArea #input_user_id { width:100px; vertical-align:top; }
+#layer_share .bottomArea button{ width:44px; height:20px; margin-left:2px; vertical-align:middle; background:url('../img/btn_append.gif') no-repeat; border:0 none; text-indent:-1000em; *margin-left:5px; overflow:hidden; cursor:pointer;} 
+#layer_share .bottomArea a { display:inline; }
 
 
 /* usage layer window */
-.purplebook_left #layer_manual { top:360px; left:0; width:500px; height:240px; }
-.purplebook_left #layer_manual .bodyArea { height:180px;}
+#layer_manual { top:360px; left:0; width:500px; height:240px; }
+#layer_manual .bodyArea { height:180px;}
 
 /* layer popup (add address) */
-.purplebook_left #layer_append { bottom:40px; right:15px; width:300px; height:140px; }
-.purplebook_left #layer_append .bodyArea #inputPurplebookName { width:80px; }
-.purplebook_left #layer_append .bodyArea #inputPurplebookPhone { width:109px; margin-left:2px; }
-.purplebook_left #layer_append .bodyArea a#btnAddAddress img { position:relative; top:5px; left:2px;}
-.purplebook_left #layer_append input.memo { width:200px; margin-top:2px; }
-.purplebook_left #layer_append { bottom:40px; right:15px; width:300px; }
-.purplebook_left #layer_append a.append_add{ position:absolute; top:10px; width:50px; height:50px; right:10px; font-size:13px; font-weight:bold; line-height:50px; text-align:center; }
-.purplebook_left #layer_append div.bodyArea{ position:relative; }
+#layer_append { bottom:40px; right:15px; width:300px; height:140px; }
+#layer_append .bodyArea #inputPurplebookName { width:80px; }
+#layer_append .bodyArea #inputPurplebookPhone { width:109px; margin-left:2px; }
+#layer_append .bodyArea a#btnAddAddress img { position:relative; top:5px; left:2px;}
+#layer_append input.memo { width:200px; margin-top:2px; }
+#layer_append { bottom:40px; right:15px; width:300px; }
+#layer_append a.append_add{ position:absolute; top:10px; width:50px; height:50px; right:10px; font-size:13px; font-weight:bold; line-height:50px; text-align:center; }
+#layer_append div.bodyArea{ position:relative; }
 
 
 
 /* layer popup (copy) */
-.purplebook_left #layer_copy { bottom:40px; right:-285px; width:266px; height:226px; }
-.purplebook_left #layer_copy .bodyArea { height:140px; }
-.purplebook_left #layer_copy .bottomArea { padding-top:0; }
-.purplebook_left #layer_copy .bottomArea a{ float:left;}
-.purplebook_left #layer_copy .bottomArea .btn_copy { }
+#layer_copy { bottom:40px; right:-285px; width:266px; height:226px; }
+#layer_copy .bodyArea { height:140px; }
+#layer_copy .bottomArea { padding-top:0; }
+#layer_copy .bottomArea a{ float:left;}
+#layer_copy .bottomArea .btn_copy { }
 
 /* layer popup (move) */
-.purplebook_left #layer_move { bottom:40px; right:-285px; width:266px; height:226px;}
-.purplebook_left #layer_move .bodyArea { height:140px; }
-.purplebook_left #layer_move .bottomArea { padding-top:5px; }
-.purplebook_left #layer_move .bottomArea a{ float:left;}
-.purplebook_left #layer_move .bottomArea .btn_move { }
+#layer_move { bottom:40px; right:-285px; width:266px; height:226px;}
+#layer_move .bodyArea { height:140px; }
+#layer_move .bottomArea { padding-top:5px; }
+#layer_move .bottomArea a{ float:left;}
+#layer_move .bottomArea .btn_move { }
 
 /* layer popup (copy to addressbook) */
-.purplebook_right #layer_addrbook { bottom:40px; left:-285px; width:266px; height:226px; }
-.purplebook_right #layer_addrbook .bodyArea { height:140px; margin:0; }
-.purplebook_right #layer_addrbook .bottomArea { padding:5px 0 0 0; margin:0; }
-.purplebook_right #layer_addrbook .bottomArea a{ float:left;}
-.purplebook_right #layer_addrbook .bottomArea .btn_copy { }
+#layer_addrbook { bottom:40px; left:-285px; width:266px; height:226px; }
+#layer_addrbook .bodyArea { height:140px; margin:0; }
+#layer_addrbook .bottomArea { padding:5px 0 0 0; margin:0; }
+#layer_addrbook .bottomArea a{ float:left;}
+#layer_addrbook .bottomArea .btn_copy { }
 
 /* layer popup (duplications) */
-.purplebook_right #layer_overlap { bottom:40px; right:15px; width:266px; height:228px; color:#fff; }
-.purplebook_right #layer_overlap .title_info span { font-size:11px; }
-.purplebook_right #layer_overlap .title_info .name { margin-left:10px; }
-.purplebook_right #layer_overlap .title_info .h_number { margin-left:48px; }
-.purplebook_right #layer_overlap .title_info .h_delete { margin-left:46px; }
-.purplebook_right #layer_overlap .bodyArea { height:134px; margin:0;}
-.purplebook_right #layer_overlap .bodyArea ul#smsPurplebookExceptList { height:100%; margin:0; padding:0; } 
-.purplebook_right #layer_overlap .bodyArea ul#smsPurplebookExceptList li { list-style-type:none; margin:0; padding:0; height: 21px; }
-.purplebook_right #layer_overlap .bodyArea ul#smsPurplebookExceptList li span.name { margin: 1px 0px 0px 30px; width:55px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
-.purplebook_right #layer_overlap .bodyArea ul#smsPurplebookExceptList li span.number { margin: -1px 0px 0px 6px; width:80px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
-.purplebook_right #layer_overlap .bodyArea ul#smsPurplebookExceptList li span.count { margin: -1px 0px 0px 10px; width:38px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
-.purplebook_right #layer_overlap .bottom_text { font-size:12px; line-height:2em; }
+#layer_overlap { bottom:40px; right:15px; width:266px; height:228px; }
+#layer_overlap .title_info span { font-size:11px; }
+#layer_overlap .title_info .name { margin-left:10px; }
+#layer_overlap .title_info .h_number { margin-left:48px; }
+#layer_overlap .title_info .h_delete { margin-left:46px; }
+#layer_overlap .bodyArea { height:134px; margin:0;}
+#layer_overlap .bodyArea ul#smsPurplebookExceptList { height:100%; margin:0; padding:0; } 
+#layer_overlap .bodyArea ul#smsPurplebookExceptList li { list-style-type:none; margin:0; padding:0; height: 21px; }
+#layer_overlap .bodyArea ul#smsPurplebookExceptList li span.name { margin: 1px 0px 0px 30px; width:55px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
+#layer_overlap .bodyArea ul#smsPurplebookExceptList li span.number { margin: -1px 0px 0px 6px; width:80px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
+#layer_overlap .bodyArea ul#smsPurplebookExceptList li span.count { margin: -1px 0px 0px 10px; width:38px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
+#layer_overlap .bottom_text { font-size:12px; line-height:2em; }
 
 /* layer popup (bulkadd) */
-.purplebook_right #layer_mass { bottom:40px; right:15px; width:288px; height:273px; color:#fff; }
-.purplebook_right #layer_mass .title_info { width:268px;}
-.purplebook_right #layer_mass .title_info .name { margin-left:10px;}
-.purplebook_right #layer_mass .title_info .h_number { margin-left:55px;}
-.purplebook_right #layer_mass .bodyArea { height:160px; overflow:hidden; margin:0; }
-.purplebook_right #layer_mass .bodyArea textarea#smsPurplebookBulkList { margin:0; height:160px; width:100%; _width:97%; padding:3px; font:8pt dotumche; border:0;}
-.purplebook_right #layer_mass .bottomArea { margin:0; padding:5px 0 0 0;}
-.purplebook_right #layer_mass .bottomArea a{ float:left; }
+#layer_mass { bottom:40px; right:15px; width:288px; height:273px; color:#fff; }
+#layer_mass .title_info { width:268px;}
+#layer_mass .title_info .name { margin-left:10px;}
+#layer_mass .title_info .h_number { margin-left:55px;}
+#layer_mass .bodyArea { height:160px; overflow:hidden; margin:0; }
+#layer_mass .bodyArea textarea#smsPurplebookBulkList { margin:0; height:160px; width:100%; _width:97%; padding:3px; font:8pt dotumche; border:0;}
+#layer_mass .bottomArea { margin:0; padding:5px 0 0 0;}
+#layer_mass .bottomArea a{ float:left; }
 /*
 .purplebook_right .layer_mass .bottomArea .btn_empty {margin-left:32px;}
 */
 
 /* layer popup (recent numbers) */
-.purplebook_right #layer_recent { top:100px; right:15px; width:226px; height:200px;  color:#fff;}
-.purplebook_right #layer_recent .title_info { width:206px;}
-.purplebook_right #layer_recent .title_info .name { margin-left:10px;}
-.purplebook_right #layer_recent .title_info .h_number { margin-left:50px;}
-.purplebook_right #layer_recent .title_info .delete { margin-left:45px;}
-.purplebook_right #layer_recent .bodyArea { height:120px; margin:0;}
-.purplebook_right #layer_recent .bodyArea ul#recent_list { overflow:auto; height:100%; margin:0; padding:0; } 
-.purplebook_right #layer_recent .bodyArea ul#recent_list li { color:#666;}
-.purplebook_right #layer_recent .bodyArea ul#recent_list li:hover { background-color:#eeeeee; cursor:pointer; }
-.purplebook_right #layer_recent .bodyArea ul#recent_list li .name { margin: 1px 0px 0px 4px; width:60px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
-.purplebook_right #layer_recent .bodyArea ul#recent_list li .phonenum { margin: -1px 0px 0px 4px; width:84px; text-overflow: ellipsis; display: inline-block; font-family: tahoma; white-space: nowrap; overflow: hidden; cursor:pointer; }
-.purplebook_right #layer_recent .bodyArea ul#recent_list li .delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 20px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
+#layer_recent { top:100px; right:15px; width:226px; height:200px;  color:#fff;}
+#layer_recent .title_info { width:206px;}
+#layer_recent .title_info .name { margin-left:10px;}
+#layer_recent .title_info .h_number { margin-left:50px;}
+#layer_recent .title_info .delete { margin-left:45px;}
+#layer_recent .bodyArea { height:120px; margin:0;}
+#layer_recent .bodyArea ul#recent_list { overflow:auto; height:100%; margin:0; padding:0; } 
+#layer_recent .bodyArea ul#recent_list li { color:#666;}
+#layer_recent .bodyArea ul#recent_list li:hover { background-color:#eeeeee; cursor:pointer; }
+#layer_recent .bodyArea ul#recent_list li .name { margin: 1px 0px 0px 4px; width:60px; text-overflow: ellipsis; display: inline-block; white-space: nowrap; overflow: hidden; cursor:pointer; }
+#layer_recent .bodyArea ul#recent_list li .phonenum { margin: -1px 0px 0px 4px; width:84px; text-overflow: ellipsis; display: inline-block; font-family: tahoma; white-space: nowrap; overflow: hidden; cursor:pointer; }
+#layer_recent .bodyArea ul#recent_list li .delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 20px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
 
 /* guide and sending message window on the bottom */
 #smsMessage { position:relative; padding:20px 0 20px 10px; margin-top:20px; background:#fff; z-index:1; clear:both; .position:none; display:inline-block; width:99%; }
@@ -246,16 +247,16 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 #smsMessage .left_button button { color:#555; border:0; font-size:11px; height:30px; width:80px; font-family:'NanumGothic'; cursor:pointer; }
 
 /* layer popup (special characters) */
-#smsMessage .left_button #layer_chars { top:-280px; *left:30px; width:256px; height:264px; }
-#smsMessage .left_button #layer_chars .bodyArea { height:210px; }
-#smsMessage .left_button #layer_chars .bodyArea ul {width:231px; overflow:hidden;clear:both;margin:0; padding:0; border-left:1px solid #dfe1de;border-top:1px solid #dfe1de; }
-#smsMessage .left_button #layer_chars .bodyArea ul li {display:inline; float:left; border-right:1px solid #dfe1de;border-bottom:1px solid #dfe1de; line-height:0;}
-#smsMessage .left_button #layer_chars .bodyArea ul li.h37 {height:37px;}
-#smsMessage .left_button #layer_chars .bodyArea ul li img{ vertical-align:top;}
+#layer_chars { top:-280px; *left:30px; width:256px; height:264px; }
+#layer_chars .bodyArea { height:210px; }
+#layer_chars .bodyArea ul {width:231px; overflow:hidden;clear:both;margin:0; padding:0; border-left:1px solid #dfe1de;border-top:1px solid #dfe1de; }
+#layer_chars .bodyArea ul li {display:inline; float:left; border-right:1px solid #dfe1de;border-bottom:1px solid #dfe1de; line-height:0;}
+#layer_chars .bodyArea ul li.h37 {height:37px;}
+#layer_chars .bodyArea ul li img{ vertical-align:top;}
 
 /* layer popup (image upload) */
-#smsMessage .left_button #layer_upload { top:-135px; *left:30px; width:400px; height:165px; }
-#smsMessage .left_button #layer_upload .bodyArea { height:115px; }
+#layer_upload { top:-135px; *left:30px; width:400px; height:165px; }
+#layer_upload .bodyArea { height:115px; }
 
 #smsMessage .msgtype_switch { position:absolute; display:none; top:-70px; left:120px; font:12px dotum; line-height:1.5em; padding:15px; background:#222; color:#fff; }
 
@@ -280,15 +281,15 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 #smsMessage .center_display .text_btn button.btn_addwindow { position:absolute; top:-73px; right:0; display:block; width:16px; height:16px; background:url(../img/plus.png) no-repeat; border: 0 none; text-indent:-1000em; cursor:pointer; outline:0; }
 
 /* layer popup (saved messages) */
-#smsMessage #layer_messages { top:-250px; width:226px; height:210px; }
-#smsMessage #layer_messages .title_info .name { margin-left:10px;}
-#smsMessage #layer_messages .title_info .h_number { margin-left:55px;}
-#smsMessage #layer_messages .bodyArea { height:160px; }
-#smsMessage #layer_messages .bodyArea ul#message_list { height:100%; margin:0; padding:2px; } 
-#smsMessage #layer_messages .bodyArea ul#message_list li { list-style-type:none; margin:0; padding:0; line-height:16px; vertical-align:middle;}
-#smsMessage #layer_messages .bodyArea ul#message_list li:hover { background-color:#eeeeee; cursor:pointer; }
-#smsMessage #layer_messages .bodyArea ul#message_list li .content { width:160px; text-overflow:ellipsis; display:inline-block; white-space: nowrap; overflow: hidden; }
-#smsMessage #layer_messages .bodyArea ul#message_list li .delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 10px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat;  vertical-align:top; height:9px; overflow: hidden; } 
+#layer_messages { top:-250px; width:226px; height:210px; }
+#layer_messages .title_info .name { margin-left:10px;}
+#layer_messages .title_info .h_number { margin-left:55px;}
+#layer_messages .bodyArea { height:160px; }
+#layer_messages .bodyArea ul#message_list { height:100%; margin:0; padding:2px; } 
+#layer_messages .bodyArea ul#message_list li { list-style-type:none; margin:0; padding:0; line-height:16px; vertical-align:middle;}
+#layer_messages .bodyArea ul#message_list li:hover { background-color:#eeeeee; cursor:pointer; }
+#layer_messages .bodyArea ul#message_list li .content { width:160px; text-overflow:ellipsis; display:inline-block; white-space: nowrap; overflow: hidden; }
+#layer_messages .bodyArea ul#message_list li .delete { cursor:pointer; text-indent: -1000em; padding:0; border:0 none; margin: 2px 0px 0px 10px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat;  vertical-align:top; height:9px; overflow: hidden; } 
 
 #smsMessage .right_button { float:left; margin-left:20px; height:196px; width:216px; }
 #smsMessage .right_button .add_info { color:#6c6b65; font-size:12px; padding:5px 10px; background:#fffef6; }
@@ -312,38 +313,37 @@ p.pop_title { font-size:13px; color:#fff; font-weight:bold; }
 #smsMessage .right_button .help img { vertical-align:middle; margin-right:5px; }
 
 /* layer popup (sendid) */
-#smsMessage #layer_sendid { top:-210px; width:226px; height:206px; color:#fff;}
-#smsMessage #layer_sendid .title_info .default { margin-left:10px;}
-#smsMessage #layer_sendid .title_info .h_number { margin-left:22px;}
-#smsMessage #layer_sendid .title_info .delete { margin-left:86px;}
-#smsMessage #layer_sendid .bodyArea { height:100px; }
-#smsMessage #layer_sendid ul#smsPurplebookCallbackList { overflow:auto; height:100%; margin:0; padding:0; } 
-#smsMessage #layer_sendid ul#smsPurplebookCallbackList li { list-style-type:none; margin:0; padding:0; height: 21px; font-size: 12px; color:#676767; }
-#smsMessage #layer_sendid ul#smsPurplebookCallbackList li span.default { cursor:pointer; padding:0; border:0 none; margin: 2px 0px 0px 26px; width: 9px; display: inline-block; background:url('../img/ico_check_off.gif') no-repeat; width:16px; height:16px; overflow: hidden; } 
-#smsMessage #layer_sendid ul#smsPurplebookCallbackList li span.default.on { background:url('../img/ico_check_on.gif') no-repeat; } 
-#smsMessage #layer_sendid ul#smsPurplebookCallbackList li span.phonenum { margin: -1px 0px 0px 30px; width:96px; text-overflow: ellipsis; display:inline-block; font-family: tahoma; white-space: nowrap; overflow: hidden; font-weight: normal; cursor:pointer; }
-#smsMessage #layer_sendid ul#smsPurplebookCallbackList li span.deleteCallback { cursor:pointer; text-indent:-1000em; padding:0; border:0 none; margin: 2px 0px 0px 20px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
-#smsMessage #layer_sendid .bottomArea { padding-top:6px; }
-#smsMessage #layer_sendid .bottomArea #smsPurplebookInputCallback { display:inline; width:100px; height:15px; padding:3px; border:1px solid #ddd; font: 12px tahoma; vertical-align:middle; color: #676767; }
-#smsMessage #layer_sendid .bottomArea button{ position:relative; width:49px; height:23px; vertical-align:middle; border:0 none; background:#000; margin-left:0; overflow:hidden; cursor:pointer;} 
-
-/* layer popup (reserv) */
-#smsMessage #layer_reserv { position:absolute; top:70px; display:none; width:200px; height:100px; padding:15px 5px 5px; color:#fff; border:0; }
-#smsMessage #layer_reserv .title_info .default { margin-left:10px;}
-#smsMessage #layer_reserv .title_info .h_number { margin-left:22px;}
-#smsMessage #layer_reserv .title_info .delete { margin-left:86px;}
-#smsMessage #layer_reserv .bodyArea { height:70px; padding:0; }
-#smsMessage #layer_reserv .bodyArea .datepickup { float:left; }
-#smsMessage #layer_reserv .bodyArea .reservtime { float:left; margin:10px 0 0 10px; display:inline; }
-#smsMessage #layer_reserv .bodyArea .reservtime #inputReservationDate { width:110px; padding:3px 2px; margin-bottom:3px;}
-#smsMessage #layer_reserv .bodyArea .reservtime select { font:8pt dotum; padding:3px 2px; }
-#smsMessage #layer_reserv .bodyArea .buts { float:right; margin:10px 10px 0 0; }
+#layer_sendid { top:-210px; width:226px; height:206px; color:#fff;}
+#layer_sendid .title_info .default { margin-left:10px;}
+#layer_sendid .title_info .h_number { margin-left:22px;}
+#layer_sendid .title_info .delete { margin-left:86px;}
+#layer_sendid .bodyArea { height:100px; }
+#layer_sendid ul#smsPurplebookCallbackList { overflow:auto; height:100%; margin:0; padding:0; } 
+#layer_sendid ul#smsPurplebookCallbackList li { list-style-type:none; margin:0; padding:0; height: 21px; font-size: 12px; color:#676767; }
+#layer_sendid ul#smsPurplebookCallbackList li span.default { cursor:pointer; padding:0; border:0 none; margin: 2px 0px 0px 26px; width: 9px; display: inline-block; background:url('../img/ico_check_off.gif') no-repeat; width:16px; height:16px; overflow: hidden; } 
+#layer_sendid ul#smsPurplebookCallbackList li span.default.on { background:url('../img/ico_check_on.gif') no-repeat; } 
+#layer_sendid ul#smsPurplebookCallbackList li span.phonenum { margin: -1px 0px 0px 30px; width:96px; text-overflow: ellipsis; display:inline-block; font-family: tahoma; white-space: nowrap; overflow: hidden; font-weight: normal; cursor:pointer; }
+#layer_sendid ul#smsPurplebookCallbackList li span.deleteCallback { cursor:pointer; text-indent:-1000em; padding:0; border:0 none; margin: 2px 0px 0px 20px; width: 9px; display: inline-block; background:url('../img/btn_delete.gif') no-repeat; height:9px; overflow: hidden; } 
+#layer_sendid .bottomArea { padding-top:6px; }
+#layer_sendid .bottomArea #smsPurplebookInputCallback { display:inline; width:100px; height:15px; padding:3px; border:1px solid #ddd; font: 12px tahoma; vertical-align:middle; color: #676767; }
+#layer_sendid .bottomArea button{ position:relative; width:49px; height:23px; vertical-align:middle; border:0 none; background:#000; margin-left:0; overflow:hidden; cursor:pointer;} 
+layer popup (reserv) */
+#layer_reserv { position:absolute; top:70px; display:none; width:200px; height:100px; padding:15px 5px 5px; color:#fff; border:0; }
+#layer_reserv .title_info .default { margin-left:10px;}
+#layer_reserv .title_info .h_number { margin-left:22px;}
+#layer_reserv .title_info .delete { margin-left:86px;}
+#layer_reserv .bodyArea { height:70px; padding:0; }
+#layer_reserv .bodyArea .datepickup { float:left; }
+#layer_reserv .bodyArea .reservtime { float:left; margin:10px 0 0 10px; display:inline; }
+#layer_reserv .bodyArea .reservtime #inputReservationDate { width:110px; padding:3px 2px; margin-bottom:3px;}
+#layer_reserv .bodyArea .reservtime select { font:8pt dotum; padding:3px 2px; }
+#layer_reserv .bodyArea .buts { float:right; margin:10px 10px 0 0; }
 
 /* layer popup (sending status) */
-#smsMessage #layer_status { top:-190px; width:250px; color:#555; line-height:1.5em; }
-#smsMessage #layer_status .bodyArea { height:100px; }
-#smsMessage #layer_status .error_code { color:red; }
-#smsMessage #layer_status .bottomArea a { float:left; width:50%; background:#000; }
+#layer_status { top:-190px; width:250px; color:#555; line-height:1.5em; }
+#layer_status .bodyArea { height:100px; }
+#layer_status .error_code { color:red; }
+#layer_status .bottomArea a { float:left; width:50%; background:#000; }
 
 
 /* tip */
@@ -371,7 +371,7 @@ span.total { margin-bottom:3px; color:#999; }
 #smsMessage button { color:#333; border:0; padding:5px 10px; }
 #smsMessage button.pink_btn { background:#ff8686; color:#fff; }
 
-#smsMessage #layer_merge { top:-100px; }
+#layer_merge { top:-100px; }
 
 /* View All */
 #pb_view_all {width:100%; height:100%; z-index:450; display:none; background:#fff;}

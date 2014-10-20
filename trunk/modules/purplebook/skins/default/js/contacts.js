@@ -40,7 +40,7 @@ function pb_initialize_advanced_menu() {
 	});
 	jQuery('#btn_share').click(function() {
 		var selected_folder = get_selected_folder();
-		if (selected_folder) pb_share_folder(selected_folders);
+		if (selected_folder) pb_share_folder(selected_folder);
 		return false;
 	});
 	jQuery('#btn_property').click(function() {
