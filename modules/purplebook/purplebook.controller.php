@@ -61,6 +61,7 @@ class purplebookController extends purplebook
 		}
 		debugPrint('ww-0-1');
 		debugPrint(count($decoded));
+		debugPrint(Context::get('deferred_payment'));
 		debugPrint($decoded);
 		$calc_point = 0;
 		$msg_arr = array();
@@ -75,6 +76,7 @@ class purplebookController extends purplebook
 			return;
 		}
 		debugPrint('ww-0-2');
+		debugPrint($decoded);
 
 		// 받는사람목록에 폴더가 들어있을 경우 풀어서 decoded에 집어넣는다
 		foreach($decoded as $k => $v)
@@ -102,13 +104,14 @@ class purplebookController extends purplebook
 					$decoded[$v2->node_id]->delay_count = $decoded[$k]->delay_count;
 					$decoded[$v2->node_id]->node_id = $v2->node_id;
 					$decoded[$v2->node_id]->file_srl = $decoded[$k]->file_srl;
+					$decoded[$v2->node_id]->reservdate = $v->reservdate;
 				}
 				unset($decoded[$k]);
 				unset($vars);
 			}
 		}
 		debugPrint('ww-0-3');
-		debugPrint(count($decoded));
+		debugPrint($decoded);
 		
 		// 문자 세팅
 		foreach($decoded as $key => $row)
@@ -181,6 +184,10 @@ class purplebookController extends purplebook
 		debugPrint(count($extension));
 		debugPrint($extension);
 		$args->extension = json_encode($extension);
+		$args->deferred_payment = Context::get('deferred_payment');
+
+		debugPrint('ww-2');
+		debugPrint($args);
 
 		// minus point
 		if($module_info->use_point=='Y')

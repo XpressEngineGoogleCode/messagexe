@@ -135,6 +135,7 @@ class purplebookModel extends purplebook
 
 		$this->add('cash', $result->get('cash'));
 		$this->add('point', $result->get('point'));
+		$this->add('deferred_payment', $result->get('deferred_payment'));
 		//$this->add('mdrop', $result["DROP"]);
 		$this->add('sms_price', '20');
 		$this->add('lms_price', '50');
