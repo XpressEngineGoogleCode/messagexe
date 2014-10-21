@@ -4,7 +4,6 @@ var max_screen = 3;
 var initial_content;
 var GROUPID_SEED_SIZE = 10;
 var timeoutHandle = null;
-var deferred_payment = "N";
 
 function getRandomNumber(range)
 {
@@ -1045,7 +1044,6 @@ function send_json(content)
                     , lms_point : g_lms_point
                     , mms_point : g_mms_point
                     , groupid_seed : send_json.groupid_seed
-					, deferred_payment : deferred_payment
                  }
         , dataType : "json"
         , success : function (data) {
@@ -1148,8 +1146,6 @@ function sendMessageData() {
 			sendMessageData.send_timer=false;
 		}
 
-		deferred_payment = 'N';
-		
         jQuery('.text','#layer_status').text('접수가 완료되었습니다.');
 		jQuery('#layer_status_close','#layer_status').text('닫기');
 		jQuery('#btn_result','#layer_status').css('display','');
@@ -1497,7 +1493,6 @@ function do_after_get_cashinfo(cashinfo)
 
 		if (!confirm(message)) return false;
 
-		deferred_payment = cashinfo.deferred_payment;
 		sendMessage();
 		return;
 	}
@@ -2867,6 +2862,11 @@ function set_balance()
 		point = add_num_comma(point);
 
 		jQuery("#pb_balance").html("현재잔액 : " + cash + "(캐쉬) " + point + "(포인트)");
+
+		if (ret_obj['deferred_payment'] == 'Y') {
+			jQuery("#pb_balance").html("후불제 회원입니다.");
+		} 
+	
 	}, response_tags);
 }
 

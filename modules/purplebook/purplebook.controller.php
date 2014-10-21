@@ -184,7 +184,6 @@ class purplebookController extends purplebook
 		debugPrint(count($extension));
 		debugPrint($extension);
 		$args->extension = json_encode($extension);
-		$args->deferred_payment = Context::get('deferred_payment');
 
 		debugPrint('ww-2');
 		debugPrint($args);
