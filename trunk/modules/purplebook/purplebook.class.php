@@ -145,6 +145,5 @@ class purplebook extends ModuleObject
         return $decoded;
     }
 }
-
 /* End of file purplebook.class.php */
 /* Location: ./modules/purplebook/purplebook.class.php */
