@@ -22,166 +22,164 @@
 <!--%load_js_plugin("ui.datepicker")-->
 <block cond="!$module_info->manual_url">{@$module_info->manual_url = "http://www.coolsms.co.kr/purplebook_manual"}</block>
 
-<div id="hearder_title">
-<p class="page_title">웹에서 보내기</p>
-</div>
+<div class="pb_container">
+	<div class="tip_box">
+		맞춤법에 어긋나는 글자는 깨져서 전송될 수 있으니 대량전송의 경우 반드시 본인폰으로 테스트 후 발송하세요.
+		<div class="btn_wrap"><a class="use_btn" id="btn_pop_manual" class="pop_menual btn_menual" href="http://www.coolsms.co.kr/Man_Sending_On_Web" onfocus="this.blur()" title="자세한 설명" target="_blank">사용방법</a></div>
+	</div>
 
-<div class="tip_box">
-	맞춤법에 어긋나는 글자는 깨져서 전송될 수 있으니 대량전송의 경우 반드시 본인폰으로 테스트 후 발송하세요.
-	<div class="btn_wrap"><a class="use_btn" id="btn_pop_manual" class="pop_menual btn_menual" href="http://www.coolsms.co.kr/Man_Sending_On_Web" onfocus="this.blur()" title="자세한 설명" target="_blank">사용방법</a></div>
-</div>
-
-<div id="smsPurplebook">
-	<div class="purplebook_left">	
-		<div class="purplebook_left_title">
-            <div class="title01">주소 목록</div>
-            <div class="title01">
-				<span class="search">
-					<input type="text" id="search_word" class="inputTypeText" value="" title="검색할 이름 혹은 전화번호를 입력" />
-					<a href="#" id="btn_search"><img src="img/btn_search.gif" alt="검색" /></a>
-				</span>
+	<div id="smsPurplebook">
+		<div class="purplebook_left">	
+			<div class="purplebook_left_title">
+				<div class="title01">주소 목록</div>
+				<div class="title01">
+					<span class="search">
+						<input type="text" id="search_word" class="inputTypeText" value="" title="검색할 이름 혹은 전화번호를 입력" />
+						<a href="#" id="btn_search"><img src="img/btn_search.gif" alt="검색" /></a>
+					</span>
+				</div>
 			</div>
-		</div>
-		<div class="left_list">
-			<div class="title_info">폴더 목록</div>
-			<div class="bodyArea"><div id="smsPurplebookTree"></div></div>
+			<div class="left_list">
+				<div class="title_info">폴더 목록</div>
+				<div class="bodyArea"><div id="smsPurplebookTree"></div></div>
+				<ul class="bottomArea">
+					<li>
+						<a id="smsPurplebookRefreshTree" href="#" title="폴더목록 새로고침">새로고침</a>
+					</li>
+					<li class="excel_down_btn">
+						<a id="btn_excel_download" href="#" title="엑셀 다운로드">엑셀 다운로드</a>
+					</li>
+					<li>
+						<a id="btn_create_folder" class="pop_menual btn_menual" href="#" onfocus="this.blur()" title="자세한 설명">폴더생성</a>
+					</li>
+					<li class="etc_btn">
+						<a id="btn_advanced_menu" class="etc" href="#" title="기타메뉴">기타메뉴</a>
+					</li>
+				</ul>
+			</div><!-- 1번 주소 폴더 목록 끝 -->
+			<ul class="advanced_menu">
+				<li><a id="btn_rename" href="#" title="">이름변경</a></li>
+				<li><a id="btn_delete" href="#" title="">삭제</a></li>
+				<li><a id="btn_share" href="#" title="">공유</a></li>
+				<li><a id="btn_property" href="#" title="">정보보기</a></li>
+				<li><a id="btn_cleanup" href="#" title="">휴지통 비우기</a></li>
+			</ul><!-- advanced menu -->
+
+			<!-- 레이어 팝업 영역 -->
+			<div class="left_select">
+				<div class="title_info"><span cond="0" class="checkbox" id="smsPurplebookToggleList" title="선택전환"></span><span class="list_count" id="smsPurplebookListCount">0</span><a href="#" class="all_view" id="pb_view_all_button">전체보기</a></div>
+				<div class="bodyArea"><ul id="smsPurplebookList"></ul></div>
+				<ul class="bottomArea">
+					<li>
+						<a class="pop_append" href="#" title="선택목록에 명단 추가">추가</a>
+					</li>
+					<li>
+						<a class="btn_delete" href="#" title="체크 명단 휴지통으로 이동">삭제</a>
+					</li>
+					<li>
+						<a class="pop_copy" href="#" title="체크 명단 특정폴더로 복사">복사</a>
+					</li>
+					<li>
+						<a class="pop_move" href="#" title="체크 명단 특정폴더로 이동">이동</a>
+					</li>
+				</ul>
+			</div><!-- 2번 주소 폴더 선택 끝 -->
+		</div><!-- 1, 2번 왼쪽 주소록 영역 끝 -->
+
+		<div class="purplebook_arrow">
+			<span class="btn_arrow_right"><a id="addRecipients" href="#" title="명단을 발송대상에 추가"><img class="pngFix" src="img/right_arrow.png" alt="명단을 발송대상에 추가" /></a></span>
+			<span class="btn_arrow_right"><a id="addFolder" href="#" title="폴더를 발송대상에 추가"><img class="pngFix" src="img/all.png" alt="폴더를 발송대상에 추가" /></a></span>
+		</div><!-- 가운데 화살표 영역 끝 -->
+
+		<div class="purplebook_right">
+			<div class="purplebook_right_title">		
+				<div class="right_title">받는사람<span class="total" id="smsPurplebookTargetListCount">(총 0/명)</span></div>
+			</div>
+			<div class="add_list">
+				<input type="text" id="inputDirectName" class="inputTypeText" maxlength="10" placeholder="이름" title="이름" value="" />
+				<input type="text" id="inputDirectNumber" maxlength="20" class="inputTypeText" placeholder="폰번호" title="폰번호" value="" />
+
+				<button class="btn_append" id="btnDirectAdd" title="받는사람에 추가">추가</button>
+				<button class="pop_recent" title="최근입력 번호목록">최근목록</button>
+			</div>
+			<div class="title_info"><span class="checkbox" id="smsPurplebookToggleTarget" title="선택전환"></span><span class="name">이름</span><span class="h_number">핸드폰</span><span class="h_delete">삭제</span></div>
+			<div class="bodyArea"><ul id="smsPurplebookTargetList"></ul></div>
 			<ul class="bottomArea">
 				<li>
-					<a id="smsPurplebookRefreshTree" href="#" title="폴더목록 새로고침">새로고침</a>
-				</li>
-				<li class="excel_down_btn">
-					<a id="btn_excel_download" href="#" title="엑셀 다운로드">엑셀 다운로드</a>
+					<a id="minusRecipients" href="#" title="선택삭제" onclick="return false;">선택삭제</a>
 				</li>
 				<li>
-					<a id="btn_create_folder" class="pop_menual btn_menual" href="#" onfocus="this.blur()" title="자세한 설명">폴더생성</a>
+					<a class="pop_addrbook" href="#" title="체크 목록 주소록에 복사" onclick="return false;">주소록이동</a>
 				</li>
-				<li class="etc_btn">
-					<a id="btn_advanced_menu" class="etc" href="#" title="기타메뉴">기타메뉴</a>
+				<li>
+					<a class="pop_mass" id="smsPurplebookAddBulk" href="#" title="메모한 목록을 붙여넣기" onclick="return false;">대량추가</a>
+				</li>
+				<li>
+					<a class="pop_overlap" href="#" title="중복번호 목록" onclick="return false;">중복번호</a>
 				</li>
 			</ul>
-		</div><!-- 1번 주소 폴더 목록 끝 -->
-		<ul class="advanced_menu">
-			<li><a id="btn_rename" href="#" title="">이름변경</a></li>
-			<li><a id="btn_delete" href="#" title="">삭제</a></li>
-			<li><a id="btn_share" href="#" title="">공유</a></li>
-			<li><a id="btn_property" href="#" title="">정보보기</a></li>
-			<li><a id="btn_cleanup" href="#" title="">휴지통 비우기</a></li>
-		</ul><!-- advanced menu -->
+		</div><!-- 오른쪽 전송 영역 끝 -->
+	</div>
+	<div id="smsPurplebook_bottom" class="pngFix"></div>
 
-		<!-- 레이어 팝업 영역 -->
-		<div class="left_select">
-			<div class="title_info"><span cond="0" class="checkbox" id="smsPurplebookToggleList" title="선택전환"></span><span class="list_count" id="smsPurplebookListCount">0</span><a href="#" class="all_view" id="pb_view_all_button">전체보기</a></div>
-			<div class="bodyArea"><ul id="smsPurplebookList"></ul></div>
-			<ul class="bottomArea">
-				<li>
-					<a class="pop_append" href="#" title="선택목록에 명단 추가">추가</a>
-				</li>
-				<li>
-					<a class="btn_delete" href="#" title="체크 명단 휴지통으로 이동">삭제</a>
-				</li>
-				<li>
-					<a class="pop_copy" href="#" title="체크 명단 특정폴더로 복사">복사</a>
-				</li>
-				<li>
-					<a class="pop_move" href="#" title="체크 명단 특정폴더로 이동">이동</a>
-				</li>
-			</ul>
-		</div><!-- 2번 주소 폴더 선택 끝 -->
-	</div><!-- 1, 2번 왼쪽 주소록 영역 끝 -->
-
-	<div class="purplebook_arrow">
-		<span class="btn_arrow_right"><a id="addRecipients" href="#" title="명단을 발송대상에 추가"><img class="pngFix" src="img/right_arrow.png" alt="명단을 발송대상에 추가" /></a></span>
-		<span class="btn_arrow_right"><a id="addFolder" href="#" title="폴더를 발송대상에 추가"><img class="pngFix" src="img/all.png" alt="폴더를 발송대상에 추가" /></a></span>
-	</div><!-- 가운데 화살표 영역 끝 -->
-
-	<div class="purplebook_right">
-		<div class="purplebook_right_title">		
-			<div class="right_title">받는사람<span class="total" id="smsPurplebookTargetListCount">(총 0/명)</span></div>
-		</div>
-		<div class="add_list">
-			<input type="text" id="inputDirectName" class="inputTypeText" maxlength="10" placeholder="이름" title="이름" value="" />
-            <input type="text" id="inputDirectNumber" maxlength="20" class="inputTypeText" placeholder="폰번호" title="폰번호" value="" />
-
-            <button class="btn_append" id="btnDirectAdd" title="받는사람에 추가">추가</button>
-            <button class="pop_recent" title="최근입력 번호목록">최근목록</button>
-		</div>
-        <div class="title_info"><span class="checkbox" id="smsPurplebookToggleTarget" title="선택전환"></span><span class="name">이름</span><span class="h_number">핸드폰</span><span class="h_delete">삭제</span></div>
-		<div class="bodyArea"><ul id="smsPurplebookTargetList"></ul></div>
-		<ul class="bottomArea">
-			<li>
-				<a id="minusRecipients" href="#" title="선택삭제" onclick="return false;">선택삭제</a>
-			</li>
-			<li>
-				<a class="pop_addrbook" href="#" title="체크 목록 주소록에 복사" onclick="return false;">주소록이동</a>
-			</li>
-			<li>
-				<a class="pop_mass" id="smsPurplebookAddBulk" href="#" title="메모한 목록을 붙여넣기" onclick="return false;">대량추가</a>
-			</li>
-			<li>
-				<a class="pop_overlap" href="#" title="중복번호 목록" onclick="return false;">중복번호</a>
-			</li>
-		</ul>
-	</div><!-- 오른쪽 전송 영역 끝 -->
-</div>
-<div id="smsPurplebook_bottom" class="pngFix"></div>
-
-<div id="smsMessage">
-    <div class="msgtype_switch">
-        90바이트가 초과되었습니다. 발송방법을 선택해 주세요.
-        <div>
-            <input type="radio" name="msgtype" id="mmsSend" value="SMS" checked="checked" /><label for="mmsSend">MMS 장문</label>
-            <input type="radio" name="msgtype" id="smsSplit" value="SMS" /><label for="smsSplit">SMS 분할</label>
-        </div>
-    </div>
-
-	<div class="left_button"  id="pb_left_button">
-		<div id="pb_btn_location"></div>
-		<input type="hidden" name="file_srl" value="" />
-		<input type="hidden" name="cancel_file_srl" value="" />
-	</div><!-- 왼쪽 버튼 끝 -->
-
-	<ul class="center_display" id="smsPurplebookContentInput">
-		<li>
-			<div class="top_btn">
-				<button class="btn_record" href="#">문자저장</button>
-				<button class="pop_messages" href="#">불러오기</button>
+	<div id="smsMessage">
+		<div class="msgtype_switch">
+			90바이트가 초과되었습니다. 발송방법을 선택해 주세요.
+			<div>
+				<input type="radio" name="msgtype" id="mmsSend" value="SMS" checked="checked" /><label for="mmsSend">MMS 장문</label>
+				<input type="radio" name="msgtype" id="smsSplit" value="SMS" /><label for="smsSplit">SMS 분할</label>
 			</div>
-			<div class="text_area" style="overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll;">
-				<div id="filepicker_preview_file_srl" class="photo"></div>
-				<textarea id="main_screen" class="phonescreen" style="overflow:hidden;">90bytes초과시 MMS로 전환됩니다.</textarea>
+		</div>
+
+		<div class="left_button"  id="pb_left_button">
+			<div id="pb_btn_location"></div>
+			<input type="hidden" name="file_srl" value="" />
+			<input type="hidden" name="cancel_file_srl" value="" />
+		</div><!-- 왼쪽 버튼 끝 -->
+
+		<ul class="center_display" id="smsPurplebookContentInput">
+			<li>
+				<div class="top_btn">
+					<button class="btn_record" href="#">문자저장</button>
+					<button class="pop_messages" href="#">불러오기</button>
+				</div>
+				<div class="text_area" style="overflow:-moz-scrollbars-vertical; overflow-x:hidden; overflow-y:scroll;">
+					<div id="filepicker_preview_file_srl" class="photo"></div>
+					<textarea id="main_screen" class="phonescreen" style="overflow:hidden;">90bytes초과시 MMS로 전환됩니다.</textarea>
+				</div>
+				<div class="text_btn">
+					<a class="btn_clear" href="#" title="내용지우기"><span>Clear</span></a>
+					<a class="btn_bytes" href="#" title="90바이트 제한"><span>0bytes</span></a>
+					<a class="close" href="#" style="visibility:hidden;"><span>close</span></a>
+					<button class="btn_addwindow" href="#" title="입력창 추가">창추가</button>
+				</div>
+			</li>
+		</ul><!-- 가운데 액정 끝 -->
+		
+		<div class="right_button">
+			<div class="add_info">
+				<span id="projectedType">SMS</span> <span id="projectedCount">0</span>건, 소요비용 <span id="projectedCost">0</span>원<br />
+				<span id="pb_balance" cond="$module_info->balance_display == 'Y'"></span>	
 			</div>
-			<div class="text_btn">
-				<a class="btn_clear" href="#" title="내용지우기"><span>Clear</span></a>
-				<a class="btn_bytes" href="#" title="90바이트 제한"><span>0bytes</span></a>
-				<a class="close" href="#" style="visibility:hidden;"><span>close</span></a>
-				<button class="btn_addwindow" href="#" title="입력창 추가">창추가</button>
+			<div class="time_interval">
+				<input type="checkbox" id="message_interval_check">
+				<label for="message_interval_check">발송간격설정</label>
+				<p><input type="text" maxlength="4" value="2400" class="input_text" id="message_send_limit" readonly />개 번호를 <input type="text" maxlength="3" value="1" class="input_text minput" id="message_send_interval" readonly />분 마다 전송</p>
 			</div>
-		</li>
-	</ul><!-- 가운데 액정 끝 -->
-	
-	<div class="right_button">
-		<div class="add_info">
-			<span id="projectedType">SMS</span> <span id="projectedCount">0</span>건, 소요비용 <span id="projectedCost">0</span>원<br />
-			<span id="pb_balance" cond="$module_info->balance_display == 'Y'"></span>	
-		</div>
-		<div class="time_interval">
-			<input type="checkbox" id="message_interval_check">
-			<label for="message_interval_check">발송간격설정</label>
-			<p><input type="text" maxlength="4" value="2400" class="input_text" id="message_send_limit" readonly />개 번호를 <input type="text" maxlength="3" value="1" class="input_text minput" id="message_send_interval" readonly />분 마다 전송</p>
-		</div>
-		<div class="add_area">
-            <input type="text" id="smsPurplebookCallback" maxlength="20" value="{$callback}" title="발신번호 입력" />
-            <button class="btn_show_layer" title="발신번호 관리">발신번호관리</button>
-		</div>
-		<div class="submit_btn">
-			<a id="pb_preview_button" href="" class="btn_booking">미리보기</a>
-            <a class="btn_forward" id="btnSimplePhoneSend" href="#">보내기</a>
-            <input type="hidden" value="0" id="smsPurplebookReservFlag" />
-		</div>
-		<div class="submit_btn">
-			<a class="btn_gray" id="btnSimplePhoneReserv" href="#">예약전송</a>
-			<a id="pb_result_button" href="" class="btn_gray">전송결과</a>
-		</div><!-- 오른쪽 버튼 끝 -->
+			<div class="add_area">
+				<input type="text" id="smsPurplebookCallback" maxlength="20" value="{$callback}" title="발신번호 입력" />
+				<button class="btn_show_layer" title="발신번호 관리">발신번호관리</button>
+			</div>
+			<div class="submit_btn">
+				<a id="pb_preview_button" href="" class="btn_booking">미리보기</a>
+				<a class="btn_forward" id="btnSimplePhoneSend" href="#">보내기</a>
+				<input type="hidden" value="0" id="smsPurplebookReservFlag" />
+			</div>
+			<div class="submit_btn">
+				<a class="btn_gray" id="btnSimplePhoneReserv" href="#">예약전송</a>
+				<a id="pb_result_button" href="" class="btn_gray">전송결과</a>
+			</div><!-- 오른쪽 버튼 끝 -->
+	</div>
 </div>
 
 <!--@if($act!='procWidgetGenerateCodeInPage')-->
