@@ -4540,10 +4540,12 @@ function submit_messages() {
 
 		var left_button_location = $("#pb_btn_location").offset();
 
+		var location_left = parseInt($("body").css("margin-left")) + parseInt($("body").css("padding-left")) + parseInt($("body").css("border-left-width"));
+
 		$("#pb_left_btn_box").css({
 			"position":"absolute",
-			"top":left_button_location.top + 10,
-			"left":left_button_location.left - 67,
+			"top":left_button_location.top + 2,
+			"left":left_button_location.left - location_left - 67,
 			"width":"100px",
 			"height":"100px",
 			"z-index":"50"
