@@ -12,7 +12,7 @@ class coolsms
 	private $api_key;
 	private	$api_secret;
 	private $host = "https://api.coolsms.co.kr";
-	private $version = 1;
+	private $version = 'sms/1.1';
 	private $path;
 	private $method;
 	private $timestamp;
