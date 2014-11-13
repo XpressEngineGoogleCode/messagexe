@@ -139,7 +139,7 @@
 			</div>
 		</div>
 		<div class="x_control-group">
-			<label class="x_control-label">게시판 확장변수 연동</label>
+			<label class="x_control-label">게시판 확장변수 연동(핸드폰)</label>
 			<div class="x_controls">
 				<label class="x_inline" for="use_extravar">
 				<select name="use_extravar">
@@ -148,9 +148,28 @@
 					<option value="2" selected="selected"|cond="$notification_info->use_extravar=='2'">두번째 확장변수</option>
 					<option value="3" selected="selected"|cond="$notification_info->use_extravar=='3'">세번째 확장변수</option>
 					<option value="4" selected="selected"|cond="$notification_info->use_extravar=='4'">네번째 확장변수</option>
+					<option value="5" selected="selected"|cond="$notification_info->use_extravar=='5'">네번째 확장변수</option>
+					<option value="6" selected="selected"|cond="$notification_info->use_extravar=='6'">네번째 확장변수</option>
 				</select>
 				<a href="#about_use_extravar_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="about_use_extravar_help" class="x_help-block" hidden>게시판 확장변수와 연동하여 게시물에 확장변수로 입력된 휴대전화로 발송되도록 설정할 수 있습니다.</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">게시판 확장변수 연동(이메일)</label>
+			<div class="x_controls">
+				<label class="x_inline" for="use_extravar_email">
+				<select name="use_extravar_email">
+					<option value="">{$lang->select}</option>
+					<option value="1" selected="selected"|cond="$notification_info->use_extravar_email=='1'">첫번째 확장변수</option>
+					<option value="2" selected="selected"|cond="$notification_info->use_extravar_email=='2'">두번째 확장변수</option>
+					<option value="3" selected="selected"|cond="$notification_info->use_extravar_email=='3'">세번째 확장변수</option>
+					<option value="4" selected="selected"|cond="$notification_info->use_extravar_email=='4'">네번째 확장변수</option>
+					<option value="5" selected="selected"|cond="$notification_info->use_extravar_email=='5'">네번째 확장변수</option>
+					<option value="6" selected="selected"|cond="$notification_info->use_extravar_email=='6'">네번째 확장변수</option>
+				</select>
+				<a href="#about_use_extravar_email_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="about_use_extravar_email_help" class="x_help-block" hidden>게시판 확장변수와 연동하여 게시물에 확장변수로 입력된 이메일로 발송되도록 설정할 수 있습니다.</p>
 			</div>
 		</div>
 	</section>

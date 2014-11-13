@@ -84,18 +84,71 @@ class notificationController extends notification
 		$oNotificationModel = &getModel('notification');
 
 		// search from member data fields
-		if(isset($config->cellphone_fieldname) && $member_info)
+		if(isset($config->cellphone_fieldname) && $member_info && $member_info->member_srl)
 		{
 			return $oNotificationModel->getConfigValue($member_info, $config->cellphone_fieldname, 'tel');
 		}
 
 		// search from authentication module table.
-		if($config->use_authdata=='Y' && $member_info)
+		if($config->use_authdata=='Y' && $member_info && $member_info->member_srl)
 		{
 			return $this->getRecipientNumberFromAuthentication($member_info->member_srl);
 		}
 
 		return NULL;
+	}
+
+	/**
+	 * get writer's email address
+	 */
+	function getEmailAddressForWriter(&$member_info, &$oDocument, &$config)
+	{
+		$emailAddress = NULL;
+		if($member_info) $emailAddress = $member_info->email_address;
+
+		// search from document's extra vars
+		if($config->use_extravar_email)
+		{
+			$emailAddress = $oDocument->getExtraValue($config->use_extravar_email);
+		}
+
+		return $emailAddress;
+	}
+
+	/**
+	 * get upper replier's email address
+	 */
+	function getEmailAddressForUpperReplier(&$upperReplier)
+	{
+		$emailAddress = NULL;
+		if($member_info) $emailAddress = $member_info->email_address;
+		if(!$emailAddress) $emailAddress = $upperReplier->email_address;
+
+		return $emailAddress;
+	}
+
+	/**
+	 * get writer's nick name
+	 */
+	function getWriterNickName(&$member_info, &$oDocument)
+	{
+		$nickName = NULL;
+		if($member_info) $nickName = $member_info->nick_name;
+		if(!$nickName) $nickName = $oDocument->getNickName();
+
+		return $nickName;
+	}
+
+	/**
+	 * get writer's nick name
+	 */
+	function getNickNameForUpperReplier(&$upperReplier, &$oDocument)
+	{
+		$nickName = NULL;
+		if($member_info) $nickName = $member_info->nick_name;
+		if(!$nickName) $nickName = $oDocument->getNickName();
+
+		return $nickName;
 	}
 
 	/**
@@ -174,21 +227,58 @@ class notificationController extends notification
 	}
 
 	/**
+	 * @return upper comment information.
+	 */
+	function getUpperComment(&$commentInfo)
+	{
+		if(!$commentInfo->parent_srl) return NULL;
+
+		// get the references of module MVC instances.
+		$oCommentModel = &getModel('comment');
+
+		// get upper replier information using parent_srl.
+		return $oCommentModel->getComment($commentInfo->parent_srl);
+	}
+
+	/**
+	 * @return the member_info object of the upper replier.
+	 */
+	function getCommentMemberInfo(&$commentInfo)
+	{
+		$memberInfo = NULL;
+
+		// get member information.
+		$oMemberModel = &getModel('member');
+		$member_srl = $commentInfo->getMemberSrl();
+		if($member_srl) $memberInfo = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
+
+		// for comment from guest
+		if(!$memberInfo)
+		{
+			$memberInfo = new stdClass();
+			$memberInfo->nick_name = $commentInfo->nick_name;
+			$memberInfo->email_address = $commentInfo->email_address;
+		}
+
+		return $memberInfo;
+	}
+
+	/**
 	 * @return the member_info object of the upper replier.
 	 */
 	function getUpperReplier(&$commentInfo)
 	{
-		if(!$commentInfo->parent_srl) return FALSE;
+		if(!$commentInfo->parent_srl) return NULL;
 
 		// get the references of module MVC instances.
-		$oCommentModel = &getModel('comment');
 		$oMemberModel = &getModel('member');
 
-		// get upper replier information using parent_srl.
-		$upperComment = $oCommentModel->getComment($commentInfo->parent_srl);
-		$member_srl = $upperComment->getMemberSrl();
+		// get upper comment
+		$upperComment = $this->getUpperComment($commentInfo);
+		if(!$upperComment) return NULL;
 
 		// get member information.
+		$member_srl = $upperComment->getMemberSrl();
 		$memberInfo = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
 
 		return $memberInfo;
@@ -197,7 +287,7 @@ class notificationController extends notification
 	/**
 	 * check for sending to upper replier
 	 */
-	function checkNotificationRequiredForUpperReplier(&$commentInfo, &$upperReplier, &$oDocumnet, &$config)
+	function checkNotificationRequiredForUpperReplier(&$commentInfo, &$upperComment, &$oDocumnet, &$config)
 	{
 		if(!$commentInfo->parent_srl) return FALSE;
 
@@ -205,7 +295,7 @@ class notificationController extends notification
 		$notificationRequired = $this->checkNotificationRequired($commentInfo, $oDocument, $config);
 
 		// 상위댓글자가 본인이면 보내지 않음
-		if($upperReplier->member_srl == $commentInfo->member_srl) $notificationRequired = FALSE;
+		if($upperComment->member_srl == $commentInfo->member_srl) $notificationRequired = FALSE;
 
 		// 게시자와 상위댓글자가 같으면 보내지 않음.(중복으로 보내지 않음)
 		if($oDocument->getMemberSrl() == $commentInfo->member_srl) $notificationRequired = FALSE;
@@ -256,10 +346,8 @@ class notificationController extends notification
 
 		$recipientNumber = $this->getRecipientNumberForWriter($member_info, $oDocument, $config);
 		$senderNumber = $config->sender_cellphone;
-		$recipientEmailAddress = NULL;
-		$recipientName = NULL;
-		if($member_info) $recipientEmailAddress = $member_info->email_address;
-		if($member_info) $recipientName = $member_info->nick_name;
+		$recipientEmailAddress = $this->getEmailAddressForWriter($member_info, $oDocument, $config);
+		$recipientName = $this->getWriterNickName($member_info, $oDocument);
 		$senderEmailAddress = $config->email_sender_address;
 		$senderName = $config->email_sender_name;
 		if(!$senderEmailAddress) $senderEmailAddress = $commentInfo->email_address;
@@ -268,8 +356,8 @@ class notificationController extends notification
 		if(!$senderName) $senderName = $recipientName;
 
 		$tmpObj->article_url = getFullUrl('','document_srl', $commentInfo->document_srl);
-		$tmpContent = $this->mergeKeywords($mailContent, $tmp_obj);
-		$tmpMessage = $this->mergeKeywords($mobileContent, $tmp_obj);
+		$tmpContent = $this->mergeKeywords($mailContent, $tmpObj);
+		$tmpMessage = $this->mergeKeywords($mobileContent, $tmpObj);
 
 		$this->sendMessages($recipientNumber, $senderNumber
 							, $recipientEmailAddress, $recipientName, $senderEmailAddress, $senderName
@@ -279,20 +367,19 @@ class notificationController extends notification
 	/**
 	 * send to upper repliers
 	 */
-	function sendToUpperReplier($upperReplier, $mobileContent, $mailContent, $title, &$commentInfo, &$config)
+	function sendToUpperReplier($upperComment, $mobileContent, $mailContent, $title, &$commentInfo, &$config)
 	{
 		// get the references of module MVC instances.
 		$oMemberModel = &getModel('member');
 
 		// get member_info
-		$member_info = $oMemberModel->getMemberInfoByMemberSrl($upperReplier->member_srl);
+		$member_info = $oMemberModel->getMemberInfoByMemberSrl($upperComment->member_srl);
+		$upperReplier = $this->getCommentMemberInfo($upperComment);
 
 		$recipientNumber = $this->getRecipientNumberForUpperReplier($member_info, $config);
 		$senderNumber = $config->sender_cellphone;
-		$recipientEmailAddress = NULL;
-		$recipientName = NULL;
-		if($member_info) $recipientEmailAddress = $member_info->email_address;
-		if($member_info) $recipientName = $member_info->nick_name;
+		$recipientEmailAddress = $upperReplier->email_address;
+		$recipientName = $upperReplier->nick_name;
 		if(!$senderEmailAddress) $senderEmailAddress = $commentInfo->email_address;
 		if(!$senderName) $senderName = $commentInfo->nick_name;
 		$senderEmailAddress = $config->email_sender_address;
@@ -344,10 +431,10 @@ class notificationController extends notification
 		}
 
 		// send to upper replier
-		$upperReplier = $this->getUpperReplier($commentInfo);
-		if($upperReplier && $this->checkNotificationRequiredForUpperReplier($commentInfo, $upperReplier, $oDocument, $config))
+		$upperComment = $this->getUpperComment($commentInfo);
+		if($upperComment && $this->checkNotificationRequiredForUpperReplier($commentInfo, $upperComment, $oDocument, $config))
 		{
-			$this->sendToUpperReplier($upperReplier, $mobileContent, $mailContent, $title, $commentInfo, $config);
+			$this->sendToUpperReplier($upperComment, $mobileContent, $mailContent, $title, $commentInfo, $config);
 		}
 	}
 

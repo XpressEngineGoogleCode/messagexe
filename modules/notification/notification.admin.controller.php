@@ -42,7 +42,10 @@
 			$extra_vars->use_authdata = Context::get('use_authdata');
 			$extra_vars->reverse_notify = Context::get('reverse_notify');
 			$extra_vars->use_extravar = Context::get('use_extravar');
+			$extra_vars->use_extravar_email = Context::get('use_extravar_email');
 			$extra_vars->force_notify = Context::get('force_notify');
+			$extra_vars->email_sender_name = Context::get('email_sender_name');
+			$extra_vars->email_sender_address = Context::get('email_sender_address');
 			$params->notification_srl = Context::get('noti_srl');
 
 			if ($params->notification_srl) {
