@@ -41,6 +41,8 @@
 			$extra_vars->cellphone_fieldname = Context::get('cellphone_fieldname');
 			$extra_vars->use_authdata = Context::get('use_authdata');
 			$extra_vars->reverse_notify = Context::get('reverse_notify');
+			$extra_vars->use_extravar = Context::get('use_extravar');
+			$extra_vars->force_notify = Context::get('force_notify');
 			$params->notification_srl = Context::get('noti_srl');
 
 			if ($params->notification_srl) {

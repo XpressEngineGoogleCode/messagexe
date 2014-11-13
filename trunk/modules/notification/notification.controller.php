@@ -2,214 +2,345 @@
 /**
  * vi:set sw=4 ts=4 noexpandtab fileencoding=utf8:
  * @class  notificationController
- * @author wiley@nurigo.net
+ * @author contact@nurigo.net
  * @brief  notificationController
  */
 class notificationController extends notification
 {
 	/**
-	 * @param $receiver contains the member information. (like a logged_info)
+	 * send SMS
 	 */
-	function sendMessages($receiver, $content, $mail_content, $title, $sender, $noticom_info, $obj)
+	function sendMobileMessage($recipientNumber, $senderNumber, $message)
 	{
 		$oTextmessageController = &getController('textmessage');
-		$oNotificationModel = &getModel('notification');
-		
-		$oDocumentModel = &getModel('document');
-		$documentSrl = array();
-		$documentSrl[0] = $obj->document_srl;
-		$output = $oDocumentModel->getDocumentExtraVarsFromDB($documentSrl);
+		if(!$oTextmessageController) return;
+
+		$args->recipient_no = $recipientNumber;
+		$args->sender_no = $senderNumber;
+		$args->content = $message;
+		$output = $oTextmessageController->sendMessage($args);
 		if(!$output->toBool()) return $output;
-		foreach($output->data as $row)
-		{
-			if($row->eid == 'phone')
-				$extra_vars1 = str_replace('|@|', '', $row->value);
-		}
-		$args->recipient_no = $extra_vars1;
-		$args->content = $content;
-	//	$output = $oTextmessageController->sendMessage($args);
-	//	if(!$output->toBool()) return $output;
-		$documentSrl = $obj->document_srl;
-		$output = $oDocumentModel->getDocument($documentSrl)->variables;
-		
+	}
+
+	/**
+	 * send email
+	 */
+	function sendMailMessage($title, $message, $recipientName, $recipientEmailAddress, $senderName, $senderEmailAddress)
+	{
 		$oMail = new Mail();
 		$oMail->setTitle($title);
-		$oMail->setContent($mail_content);
-		$oMail->setSender($sender->nick_name, $sender->email_address);
-		$oMail->setReceiptor($output->nick_name, $output->email_address);
+		$oMail->setContent($message);
+		$oMail->setSender($senderName, $senderEmailAddress);
+		$oMail->setReceiptor($recipientName, $recipientEmailAddress);
 		$oMail->send();
-	
-		// SMS to member if the authentication module connection option is activated.
-		if($noticom_info->use_authdata=='Y' && $oTextmessageController)
-		{
-			$oAuthenticationModel = &getModel('authentication');
-			if($oAuthenticationModel)
-			{
-				$authinfo = $oAuthenticationModel->getAuthenticationMember($receiver->member_srl);
-				if($authinfo)
-				{
-					$args->recipient_no = $authinfo->clue;
-					$args->sender_no = $receiver->recipient_no;
-					$args->content = $content;
-					$output = $oTextmessageController->sendMessage($args);
-					if (!$output->toBool()) return $output;
-				}
-			}
-		}
-
-		// SMS to member if the member field option is activated.
-		if(isset($noticom_info->cellphone_fieldname)&&in_array($noticom_info->sending_method,array('1','2'))&&$oTextmessageController)
-		{
-			$args->recipient_no = $oNotificationModel->getConfigValue($receiver, $noticom_info->cellphone_fieldname, 'tel');
-			$args->sender_no = $receiver->recipient_no;
-			$args->content = $content;
-			$output = $oTextmessageController->sendMessage($args);
-			if (!$output->toBool()) return $output;
-		}
-
-		// MAIL to member
-		if(in_array($noticom_info->sending_method,array('1','3')))
-		{
-			$title = $title;
-			$oMail = new Mail();
-			$oMail->setTitle($title);
-			$oMail->setContent($mail_content);
-			$oMail->setSender($sender->nick_name, $sender->email_address);
-			if($receiver->email_address)
-			{
-				$oMail->setReceiptor($receiver->nick_name, $receiver->email_address);
-				$oMail->send();
-			}
-		}
 	}
 
-	function sendMessagesToAdmin($receiver, $content, $mail_content, $title, $sender, $noticom_info)
+	/**
+	 * get phone number from authentication module's table.
+	 */
+	function getRecipientNumberFromAuthentication($member_srl)
 	{
-		$oTextmessageController = &getController('textmessage');
+		$oAuthenticationModel = &getModel('authentication');
+		if(!$oAuthenticationModel) return;
+		$authinfo = $oAuthenticationModel->getAuthenticationMember($member_srl);
+		if($authinfo) return $authinfo->clue;
+	}
 
-		// SMS to admin
-		if($noticom_info->admin_phones&&in_array($noticom_info->sending_method,array('1','2'))&&$oTextmessageController)
+	/**
+	 * get writer's phone number
+	 */
+	function getRecipientNumberForWriter(&$member_info, &$oDocument, &$config)
+	{
+		// get the references of modules' instances
+		$oNotificationModel = &getModel('notification');
+
+		// search from member data fields
+		if(isset($config->cellphone_fieldname))
 		{
-			$args->recipient_no = explode(',',$noticom_info->admin_phones);
-			$args->sender_no = $noticom_info->sender_phone;
-			$args->content = $content;
-			$output = $oTextmessageController->sendMessage($args);
-			if (!$output->toBool()) 
-			{
-				return $output;
-			}
+			return $oNotificationModel->getConfigValue($member_info, $config->cellphone_fieldname, 'tel');
 		}
 
-		// MAIL to admin
-		if($noticom_info->admin_emails&&in_array($noticom_info->sending_method,array('1','3')))
+		// search from authentication module table.
+		if($config->use_authdata=='Y')
 		{
-			$title = $title;
-			$oMail = new Mail();
-			$oMail->setTitle($title);
-			$oMail->setContent($mail_content);
-			$oMail->setSender($sender->nick_name, $sender->email_address);
-			$target_email = explode(',',$noticom_info->admin_emails);
-			foreach ($target_email as $email_address) 
-			{
-				$email_address = trim($email_address);
-				if (!$email_address) continue;
-				$oMail->setReceiptor($email_address, $email_address);
-				$oMail->send();
-			}
+			return $this->getRecipientNumberFromAuthentication($member_info->member_srl);
+		}
+
+		// search from document's extra vars
+		if($config->use_extravar)
+		{
+			return $oDocument->getExtraValue($config->use_extravar);
 		}
 	}
 
-	function processNotification(&$noticom_info,&$obj,&$sender,&$module_info) {
+	/**
+	 * get upper replier's phone number
+	 */
+	function getRecipientNumberForUpperReplier(&$member_info, &$config)
+	{
+		// get the references of modules' instances
+		$oNotificationModel = &getModel('notification');
+
+		// search from member data fields
+		if(isset($config->cellphone_fieldname))
+		{
+			return $oNotificationModel->getConfigValue($member_info, $config->cellphone_fieldname, 'tel');
+		}
+
+		// search from authentication module table.
+		if($config->use_authdata=='Y')
+		{
+			return $this->getRecipientNumberFromAuthentication($member_info->member_srl);
+		}
+	}
+
+	/**
+	 * @param $receiver contains the member information. (like a logged_info)
+	 */
+	function sendMessages($recipientNumber, $senderNumber
+							, $recipientEmailAddress, $recipientName, $senderEmailAddress, $senderName
+							, $mobileContent, $mailContent, $title, &$config)
+	{
+		// SMS
+		if(!is_array($recipientNumber)) $recipientNumber = array($recipientNumber);
+		if(in_array($config->sending_method,array('1','2')))
+		{
+			foreach($recipientNumber as $phoneNumber)
+			{
+				$this->sendMobileMessage($phoneNumber, $senderNumber, $mobileContent);
+			}
+		}
+
+		// MAIL
+		if(in_array($config->sending_method,array('1','3')))
+		{
+			$this->sendMailMessage($title, $mailContent, $recipientName, $recipientEmailAddress, $senderName, $senderEmailAddress);
+		}
+	}
+
+	/**
+	 * @return TRUE(notification required) or FALSE(notification not required)
+	 */
+	function checkNotificationRequired(&$commentInfo, &$oDocument, &$config)
+	{
+		$notificationRequired = TRUE;
+
+		// 1. 게시물의 알림이 체크되어 있으면 발송
+		if($oDocument->useNotify())
+		{
+			$notificationRequired = TRUE;
+		}
+		else
+		{
+			$notificationRequired = FALSE;
+		}
+
+		// 2. 역알림 사용이면서 현재 comment의 notify_message가 'Y'이면 발송 
+		if($config->reverse_notify == 'Y')
+		{
+			if($commentInfo->notify_message == 'Y') 
+			{
+				$notificationRequired = TRUE;
+			}
+			else
+			{
+				$notificationRequired = FALSE;
+			}
+		}
+
+		// 3. force_notify설정이 Y이면 1, 2 무시하고 무조건 보냄
+		if($config->force_notify == 'Y') $notificationRequired = TRUE;
+
+		return $notificationRequired;
+	}
+
+	/**
+	 * check for sending to writer
+	 */
+	function checkNotificationRequiredForWriter(&$commentInfo, &$oDocument, &$config)
+	{
+		// check basical things.
+		$notificationRequired = $this->checkNotificationRequired($commentInfo, $oDocument, $config);
+
+		// do not send messages if the writer and the replier is the same person.
+		if($oDocument->get('member_srl') == $commentInfo->member_srl) $notificationRequired = FALSE;
+
+		return $notificationRequired;
+	}
+
+	/**
+	 * @return the member_info object of the upper replier.
+	 */
+	function getUpperReplier(&$commentInfo)
+	{
+		if(!$commentInfo->parent_srl) return FALSE;
+
+		// get the references of module MVC instances.
+		$oCommentModel = &getModel('comment');
 		$oMemberModel = &getModel('member');
 
-		// message content
-		$sms_message = $this->mergeKeywords($noticom_info->content, $obj);
-		$sms_message = $this->mergeKeywords($sms_message, $module_info);
-		$sms_message = str_replace("&nbsp;", "", strip_tags($sms_message));
+		// get upper replier information using parent_srl.
+		$upperComment = $oCommentModel->getComment($commentInfo->parent_srl);
+		$member_srl = $upperComment->getMemberSrl();
 
-		// mail content
-		$mail_content = $this->mergeKeywords($noticom_info->mail_content, $obj);
-		$mail_content = $this->mergeKeywords($mail_content, $module_info);
+		// get member information.
+		$memberInfo = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
 
-		/**
-		 * to writer
-		 */
-		$flagSend = true;
+		return $memberInfo;
+	}
+
+	/**
+	 * check for sending to upper replier
+	 */
+	function checkNotificationRequiredForUpperReplier(&$commentInfo, &$upperReplier, &$oDocumnet, &$config)
+	{
+		if(!$commentInfo->parent_srl) return FALSE;
+
+		// check notification required.
+		$notificationRequired = $this->checkNotificationRequired($commentInfo, $oDocument, $config);
+
+		// 상위댓글자가 본인이면 보내지 않음
+		if($upperReplier->member_srl == $commentInfo->member_srl) $notificationRequired = FALSE;
+
+		// 게시자와 상위댓글자가 같으면 보내지 않음.(중복으로 보내지 않음)
+		if($oDocument->getMemberSrl() == $commentInfo->member_srl) $notificationRequired = FALSE;
+
+		return $notificationRequired;
+	}
+
+	/**
+	 * send to administrator
+	 */
+	function sendToAdministrator($mobileContent, $mailContent, $title, &$commentInfo, &$config)
+	{
+		if(!$config->admin_phones) return;
+		$recipientNumber = explode(',', $config->admin_phones);
+		$senderNumber = $config->sender_cellphone;
+		$senderEmailAddress = $config->email_sender_address;
+		$senderName = $config->email_sender_name;
+		if(!$senderEmailAddress) $senderEmailAddress = $commentInfo->email_address;
+		if(!$senderName) $senderName = $commentInfo->nick_name;
+		if(!$senderEmailAddress) $senderEmailAddress = $recipientEmailAddress;
+		if(!$senderName) $senderName = $recipientName;
+
+		$tmpObj->article_url = getFullUrl('','document_srl', $commentInfo->document_srl);
+		$tmpContent = $this->mergeKeywords($mailContent, $tmp_obj);
+		$tmpMessage = $this->mergeKeywords($mobileContent, $tmp_obj);
+
+		$this->sendMessages($recipientNumber, $senderNumber
+							, $recipientEmailAddress, $recipientName, $senderEmailAddress, $senderName
+							, $tmpMessage, $tmpContent, $title, $config, $commentInfo);
+	}
+
+	/**
+	 * sending to writer
+	 */
+	function sendToWriter($mobileContent, $mailContent, $title, &$commentInfo, &$config)
+	{
+		// get the references of module MVC instances.
+		$oMemberModel = &getModel('member');
+		$oDocumentModel = &getModel('document');
+
+		// get document info.
+		$oDocument = $oDocumentModel->getDocument($commentInfo->document_srl);
+
+		// writer's member_srl
+		$writer_member_srl = $oDocument->getMemberSrl();
+		// get member_info
+		$member_info = $oMemberModel->getMemberInfoByMemberSrl($writer_member_srl);
+		if(!$member_info) return;
+
+		$recipientNumber = $this->getRecipientNumberForWriter($member_info, $oDocument, $config);
+		$senderNumber = $config->sender_cellphone;
+		$recipientEmailAddress = $member_info->email_address;
+		$recipientName = $member_info->nick_name;
+		$senderEmailAddress = $config->email_sender_address;
+		$senderName = $config->email_sender_name;
+		if(!$senderEmailAddress) $senderEmailAddress = $commentInfo->email_address;
+		if(!$senderName) $senderName = $commentInfo->nick_name;
+		if(!$senderEmailAddress) $senderEmailAddress = $recipientEmailAddress;
+		if(!$senderName) $senderName = $recipientName;
+
+		$tmpObj->article_url = getFullUrl('','document_srl', $commentInfo->document_srl);
+		$tmpContent = $this->mergeKeywords($mailContent, $tmp_obj);
+		$tmpMessage = $this->mergeKeywords($mobileContent, $tmp_obj);
+
+		$this->sendMessages($recipientNumber, $senderNumber
+							, $recipientEmailAddress, $recipientName, $senderEmailAddress, $senderName
+							, $tmpMessage, $tmpContent, $title, $config, $commentInfo);
+	}
+
+	/**
+	 * send to upper repliers
+	 */
+	function sendToUpperReplier($upperReplier, $mobileContent, $mailContent, $title, &$commentInfo, &$config)
+	{
+		// get the references of module MVC instances.
+		$oMemberModel = &getModel('member');
+
+		// get member_info
+		$member_info = $oMemberModel->getMemberInfoByMemberSrl($writer_member_srl);
+		if(!$member_info) return;
+
+		$recipientNumber = $this->getRecipientNumberForUpperReplier($member_info, $config);
+		$senderNumber = $config->sender_cellphone;
+		$recipientEmailAddress = $member_info->email_address;
+		$recipientName = $member_info->nick_name;
+		if(!$senderEmailAddress) $senderEmailAddress = $commentInfo->email_address;
+		if(!$senderName) $senderName = $commentInfo->nick_name;
+		$senderEmailAddress = $config->email_sender_address;
+		$senderName = $config->email_sender_name;
+		if(!$senderEmailAddress) $senderEmailAddress = $recipientEmailAddress;
+		if(!$senderName) $senderName = $recipientName;
+
+		$tmpObj->article_url = getFullUrl('','document_srl', $commentInfo->document_srl).'#comment_'.$commentInfo->parent_srl;
+		$tmpContent = $this->mergeKeywords($mailContent, $tmpObj);
+		$tmpMessage = $this->mergeKeywords($mobileContent, $tmpObj);
+
+		$this->sendMessages($recipientNumber, $senderNumber
+							, $recipientEmailAddress, $recipientName, $senderEmailAddress, $senderName
+							, $tmpMessage, $tmpContent, $title, $config, $commentInfo);
+	}
+
+	/**
+	 * @param $config is an object which consists of sending_method, sender_phone, admin_phones, admin_emails, use_authdata, reverse_notify, and etc.
+	 * @param $commentInfo is an object which consists of comment_srl, content, parent_srl, user_id, nick_name, email_address, and etc.
+	 * @param $sender is an object which includes nick_name, email_address. if the user logged in, $sender equals $logged_info.
+	 * @param $module_info is a board module's instance information.
+	 */
+	function processNotification(&$config, &$commentInfo, &$module_info)
+	{
+		// get the reference of modules' instances.
+		$oMemberModel = &getModel('member');
 
 		// get document info.
 		$oDocumentModel = &getModel('document');
-		$oDocument = $oDocumentModel->getDocument($obj->document_srl);
-		// writer's member_srl
-		$document_member_srl = $oDocument->getMemberSrl();
-		// get cellphone info.
-		$receiver = $oMemberModel->getMemberInfoByMemberSrl($document_member_srl);
-		if (!$receiver) return;
-		// title
+		$oDocument = $oDocumentModel->getDocument($commentInfo->document_srl);
 		$title = $oDocument->getTitleText();
 
-		// 쪽지알림 연동이면서 notify_message가 'Y'가 아니면 보내지 않음
-		if ($oDocument->useNotify()) {
-			$flagSend = true;
-		} else {
-			$flagSend = false;
+		// message content
+		$mobileContent = $this->mergeKeywords($config->content, $commentInfo);
+		$mobileContent = $this->mergeKeywords($mobileContent, $module_info);
+		$mobileContent = str_replace("&nbsp;", "", strip_tags($mobileContent));
+
+		// mail content
+		$mailContent = $this->mergeKeywords($config->mail_content, $commentInfo);
+		$mailContent = $this->mergeKeywords($mailContent, $module_info);
+
+		// send to administrator
+		$this->sendToAdministrator($mobileContent, $mailContent, $title, $commentInfo, $config);
+
+		// send to writer
+		if($this->checkNotificationRequiredForWriter($commentInfo, $oDocument, $config))
+		{
+			$this->sendToWriter($mobileContent, $mailContent, $title, $commentInfo, $config);
 		}
 
-		// 역알림 사용이면서 현재 notify_message가 'Y'이면 발송 
-		if ($noticom_info->reverse_notify == 'Y') {
-			if ($obj->notify_message == 'Y') 
-				$flagSend = true;
-			else
-				$flagSend = false;
-		}
-
-		// 게시자 본인이면 보내지 않음
-		if ($oDocument->get('member_srl') == $obj->member_srl) $flagSend = false;
-
-		$tmp_obj->article_url = getFullUrl('','document_srl', $obj->document_srl);
-		$tmp_content = $this->mergeKeywords($mail_content, $tmp_obj);
-		$tmp_message = $this->mergeKeywords($sms_message, $tmp_obj);
-		if ($flagSend) 
-			$this->sendMessages($receiver, $tmp_message, $tmp_content, $title, $sender, $noticom_info, $obj);
-		$this->sendMessagesToAdmin($receiver, $tmp_message, $tmp_content, $title, $sender, $noticom_info);
-
-		/**
-		 * 상위 댓글자에게 알림
-		 */
-		if($obj->parent_srl) {
-			$flagSend = true;
-
-			$oCommentModel = &getModel('comment');
-			$oParent = $oCommentModel->getComment($obj->parent_srl);
-			$comment_member_srl = $oParent->getMemberSrl();
-
-			// get cellphone info.
-			$receiver = $oMemberModel->getMemberInfoByMemberSrl($comment_member_srl);
-			if (!$receiver) return;
-
-			if ($oDocument->useNotify()) {
-				$flagSend = true;
-			} else {
-				$flagSend = false;
-			}
-
-			// 역알림 사용이면서 현재 notify_message가 'Y'이면 발송 
-			if ($noticom_info->reverse_notify == 'Y') {
-				if ($obj->notify_message == 'Y') 
-					$flagSend = true;
-				else
-					$flagSend = false;
-			}
-
-			// 상위댓글자가 본인이면 보내지 않음
-			if ($comment_member_srl == $obj->member_srl) $flagSend = false;
-
-			// 게시자와 상위댓글자가 같으면 보내지 않음.(중복으로 보내지 않음)
-			if ($document_member_srl && $comment_member_srl == $document_member_srl) $flagSend = false;
-
-			$tmp_obj->article_url = getFullUrl('','document_srl', $obj->document_srl).'#comment_'.$obj->parent_srl;
-			$tmp_content = $this->mergeKeywords($mail_content, $tmp_obj);
-			$tmp_message = $this->mergeKeywords($sms_message, $tmp_obj);
-			if ($flagSend) $this->sendMessages($receiver, $tmp_message, $tmp_content, $title, $sender, $noticom_info);
+		// send to upper replier
+		$upperReplier = $this->getUpperReplier($commentInfo);
+		if($upperReplier && $this->checkNotificationRequiredForUpperReplier($commentInfo, $upperReplier, $oDocument, $config))
+		{
+			$this->sendToUpperReplier($upperReplier, $mobileContent, $mailContent, $title, $commentInfo, $config);
 		}
 	}
 
@@ -217,37 +348,27 @@ class notificationController extends notification
 	 * @brief comment registration trigger
 	 * @param $obj : comment info object
 	 **/
-	function triggerInsertComment(&$obj) {
-		$oMemberModel = &getModel('member');
+	function triggerInsertComment(&$commentInfo)
+	{
+		// get the references of modules' instances
+		$oNotificationModel = &getModel('notification');
+		$oModuleModel = &getModel('module');
+
 		// if module_srl not set, just return with success;
-		if (!$obj->module_srl) return;
+		if(!$commentInfo->module_srl) return;
 
 		// if module_srl is wrong, just return with success
-		$args->module_srl = $obj->module_srl;
-		$output = executeQuery('module.getMidInfo', $args);
-		if (!$output->toBool() || !$output->data) return;
-		$module_info = $output->data;
-		unset($args);
-		if (!$module_info) return;
-
-		// check login.
-		$sender = new StdClass();
-		$sender->nick_name = $obj->nick_name;
-		$sender->email_address = $obj->email_address;
-		$logged_info = Context::get('logged_info');
-		if ($logged_info) {
-			$sender = $logged_info;
-		}
+		$module_info = $oModuleModel->getModuleInfoByModuleSrl($commentInfo->module_srl);
+		if(!$module_info) return;
 
 		// get configuration info. no configuration? just return.
-		$oModel = &getModel('notification');
-		$noticom_info = $oModel->getNotiConfig($obj->module_srl);
-		if (!$noticom_info) return;
-		foreach ($noticom_info as $key=>$val) {
-			$this->processNotification($val,$obj,$sender,$module_info);
+		$configList = $oNotificationModel->getNotiConfig($commentInfo->module_srl);
+		if(!$configList) return;
+		foreach($configList as $config)
+		{
+			$this->processNotification($config, $commentInfo, $module_info);
 		}
-
-
 	}
 }
-?>
+/* End of file notification.controller.php */
+/* Location: ./modules/notification/notification.controller.php */

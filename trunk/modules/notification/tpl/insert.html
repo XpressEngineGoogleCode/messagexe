@@ -1,8 +1,8 @@
-<!--%import("css/phone.css")-->
-<!--%import("css/notification.css")-->
-<!--%import("css/config.css")-->
-<!--%import("js/notification.js")-->
-<!--%import("js/target.js")-->
+<load target="css/phone.css" />
+<load target="css/notification.css" />
+<load target="css/config.css" />
+<load target="js/notification.js" />
+<load target="js/target.js" />
 
 <include target="header.html" />
 
@@ -16,16 +16,15 @@
 		<h2>{$lang->general_info}</h2>
 		<div class="x_control-group">
 			<label class="x_control-label">{$lang->target_module}</label>
-				<div class="x_controls">
-					{@$id="module_srls"}
-					<input type="hidden" name="{$id}" id="{$id}" value="{$notification_info->module_srls}" />
-					<select name="_{$id}" id="_{$id}" size="8" class="w200 fl"></select>
-					<div class="midCommand">
-						<span><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></span>
-						<span><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></span>
-						<span><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></span>
-						<span><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></span>
-					
+			<div class="x_controls">
+				{@$id="module_srls"}
+				<input type="hidden" name="{$id}" id="{$id}" value="{$notification_info->module_srls}" />
+				<select name="_{$id}" id="_{$id}" size="8" class="w200 fl"></select>
+				<div class="midCommand">
+					<span><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></span>
+					<span><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></span>
+					<span><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></span>
+					<span><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></span>
 					<script type="text/javascript">
 						if(typeof(getModuleSrlList)!=='undefined') {
 							doAddWindowLoadEventLoader( function() { getModuleSrlList('{$id}'); } );
@@ -33,111 +32,149 @@
 					</script>
 					<a href="#about_target_module_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 					<p id="about_target_module_help" class="x_help-block" hidden>{$lang->about_target_module}</p>
-					</div>
 				</div>
-		
-			<div class="x_control-group">
-				<label class="x_control-label">{$lang->sending_method}</label>
-					<div class="x_controls">
-						<label class="x_inline" for="sending_method_1"><input type="radio" name="sending_method" id="sending_method_1" value="1" checked="checked"|cond="$notification_info->sending_method=='1'||!$notification_info->sending_method" />{$lang->textmessage_plus_email}</label>
-						<label class="x_inline" for="sending_method_2"><input type="radio" name="sending_method" id="sending_method_2" value="2" checked="checked"|cond="$notification_info->sending_method=='2'" />{$lang->textmessage}</label>
-						<label class="x_inline" for="sending_method_3"><input type="radio" name="sending_method" id="sending_method_3" value="3" checked="checked"|cond="$notification_info->sending_method=='3'" />{$lang->email}</label>
-					</div>
 			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->sending_method}</label>
+			<div class="x_controls">
+				<label class="x_inline" for="sending_method_1"><input type="radio" name="sending_method" id="sending_method_1" value="1" checked="checked"|cond="$notification_info->sending_method=='1'||!$notification_info->sending_method" />{$lang->textmessage_plus_email}</label>
+				<label class="x_inline" for="sending_method_2"><input type="radio" name="sending_method" id="sending_method_2" value="2" checked="checked"|cond="$notification_info->sending_method=='2'" />{$lang->textmessage}</label>
+				<label class="x_inline" for="sending_method_3"><input type="radio" name="sending_method" id="sending_method_3" value="3" checked="checked"|cond="$notification_info->sending_method=='3'" />{$lang->email}</label>
+			</div>
+		</div>
+	</section>
 
-		</section>
 	<section class="section">
 		<h2>{$lang->title_txtmsg}</h2>
-
-		<div class="x_control-group">
-			<label class="x_control-label">{$lang->cmd_cellphone}({$lang->cmd_admin})</label>
-				<div class="x_controls">
-					<input type="text" name="admin_phones" style="width:250px;" value="{$notification_info->admin_phones}" />
-					<a href="#admin_phones_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-					<p id="admin_phones_help" class="x_help-block" hidden>{$lang->multiple_phone_no}</p>
-				</div>
-		</div>
-
 		<div class="x_control-group">
 			<label class="x_control-label">{$lang->sender_cellphone}</label>
-				<div class="x_controls">
-					<input type="text" name="sender_phone" style="width:250px;" value="{$notification_info->sender_phone}" />
-					<a href="#sender_phone_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-					<p id="sender_phone_help" class="x_help-block" hidden>{$lang->sender_phone_help}</p>
-				</div>
+			<div class="x_controls">
+				<input type="text" name="sender_phone" style="width:250px;" value="{$notification_info->sender_phone}" />
+				<a href="#sender_phone_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="sender_phone_help" class="x_help-block" hidden>{$lang->sender_phone_help}</p>
+			</div>
 		</div>
-
 		<div class="x_control-group">
 			<label class="x_control-label">{$lang->content}</label>
-				<div class="x_controls">
-					<textarea rows="4" cols="8" name="content" class="pscreen" style="border:solid #eee 1px; width: 250px;">{$notification_info->content}</textarea>
-					<div>
-						<a class="btn"><span class="notiReplaceVar" var="content">{$lang->comment_content}</span></a>
-						<a class="btn"><span class="notiReplaceVar" var="user_id">{$lang->comment_userid}</span></a>
-						<a class="btn"><span class="notiReplaceVar" var="user_name">{$lang->comment_username}</span></a>
-						<a class="btn"><span class="notiReplaceVar" var="nick_name">{$lang->comment_nickname}</span></a>
-						<a class="btn"><span class="notiReplaceVar" var="browser_title">{$lang->browser_title}</span></a>
-						<a class="btn"><span class="notiReplaceVar" var="mid">{$lang->mid}</span></a>
-						<a class="btn"><span class="notiReplaceVar" var="article_url">{$lang->article_url}</span></a>
-					</div>
+			<div class="x_controls">
+				<textarea rows="4" cols="8" name="content" class="pscreen" style="border:solid #eee 1px; width: 250px;">{$notification_info->content}</textarea>
+				<div>
+					<a class="btn"><span class="notiReplaceVar" var="content">{$lang->comment_content}</span></a>
+					<a class="btn"><span class="notiReplaceVar" var="user_id">{$lang->comment_userid}</span></a>
+					<a class="btn"><span class="notiReplaceVar" var="user_name">{$lang->comment_username}</span></a>
+					<a class="btn"><span class="notiReplaceVar" var="nick_name">{$lang->comment_nickname}</span></a>
+					<a class="btn"><span class="notiReplaceVar" var="browser_title">{$lang->browser_title}</span></a>
+					<a class="btn"><span class="notiReplaceVar" var="mid">{$lang->mid}</span></a>
+					<a class="btn"><span class="notiReplaceVar" var="article_url">{$lang->article_url}</span></a>
 				</div>
+			</div>
 		</div>
 	</section>
 
 	<section class="section">
 		<h2>{$lang->title_email}</h2>
-
 		<div class="x_control-group">
-			<label class="x_control-label">{$lang->email_address}({$lang->cmd_admin})</label>
-				<div class="x_controls">
-					<input type="text" name="admin_emails" style="width:300px;" value="{$notification_info->admin_emails}" />
-					<a href="#admin_emails_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-					<p id="admin_emails_help" class="x_help-block" hidden>입력된 번호로 알림문자를 발송합니다. 콤마(,)로 구분 여러 개 입력가능</p>
-				</div>
+			<label class="x_control-label">발신자 이름</label>
+			<div class="x_controls">
+				<input type="text" name="email_sender_name" style="width:250px;" value="{$notification_info->email_sender_name}" />
+				<a href="#email_sender_name_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="email_sender_name_help" class="x_help-block" hidden>이메일 발신자 이름을 입력하세요.</p>
+			</div>
 		</div>
-
+		<div class="x_control-group">
+			<label class="x_control-label">발신자 이메일</label>
+			<div class="x_controls">
+				<input type="text" name="email_sender_address" style="width:250px;" value="{$notification_info->email_sender_address}" />
+				<a href="#email_sender_address_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="email_sender_address_help" class="x_help-block" hidden>발신자 이메일주소를 입력하세요.</p>
+			</div>
+		</div>
 		<div class="x_control-group">
 			<label class="x_control-label">{$lang->mail_content}</label>	
-				<div class="x_controls">
-					<a href="#mail_content_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-					<p id="mail_content_help" class="x_help-block" hidden>{$lang->help_mail_content}</p>
-					<div>{$editor}</div>
-				</div>
+			<div class="x_controls">
+				<a href="#mail_content_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="mail_content_help" class="x_help-block" hidden>{$lang->help_mail_content}</p>
+				<div>{$editor}</div>
+			</div>
 		</div>
-				
 	</section>
+
+	<section class="section">
+		<h2>수신자</h2>
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->cmd_cellphone}({$lang->cmd_admin})</label>
+			<div class="x_controls">
+				<input type="text" name="admin_phones" style="width:250px;" value="{$notification_info->admin_phones}" />
+				<a href="#admin_phones_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="admin_phones_help" class="x_help-block" hidden>{$lang->multiple_phone_no}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->email_address}({$lang->cmd_admin})</label>
+			<div class="x_controls">
+				<input type="text" name="admin_emails" style="width:300px;" value="{$notification_info->admin_emails}" />
+				<a href="#admin_emails_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="admin_emails_help" class="x_help-block" hidden>입력된 번호로 알림문자를 발송합니다. 콤마(,)로 구분 여러 개 입력가능</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">회원정보 연동 {$lang->cellphone_fieldname}</label>
+			<div class="x_controls">
+				<select name="cellphone_fieldname">
+					<option value="">{$lang->select}</option>
+					<option loop="$member_config->signupForm=>$item" value="{$item->name}" selected="selected"|cond="$item->name==$notification_info->cellphone_fieldname">{$item->title}</option>
+				</select>
+				<a href="#about_cellphone_fieldname_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="about_cellphone_fieldname_help" class="x_help-block" hidden>{$lang->about_cellphone_fieldname}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">인증모듈 연동</label>
+			<div class="x_controls">
+			<label class="x_inline" for="use_authdata_Y"><input type="radio" name="use_authdata" id="use_authdata_Y" value="Y" checked="checked"|cond="$notification_info->use_authdata=='Y'" />사용함</label>
+			<label class="x_inline" for="use_authdata_N"><input type="radio" name="use_authdata" id="use_authdata_N" value="N" checked="checked"|cond="!$notification_info->use_authdata || $notification_info->use_authdata=='N'" />사용안함</label>
+				<a href="#about_use_authdata_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="about_use_authdata_help" class="x_help-block" hidden>인증모듈에 의해 인증받은 전화번호를 수신번호로 사용합니다.</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">게시판 확장변수 연동</label>
+			<div class="x_controls">
+				<label class="x_inline" for="use_extravar">
+				<select name="use_extravar">
+					<option value="">{$lang->select}</option>
+					<option value="1" selected="selected"|cond="$notification_info->use_extravar=='1'">첫번째 확장변수</option>
+					<option value="2" selected="selected"|cond="$notification_info->use_extravar=='2'">두번째 확장변수</option>
+					<option value="3" selected="selected"|cond="$notification_info->use_extravar=='3'">세번째 확장변수</option>
+					<option value="4" selected="selected"|cond="$notification_info->use_extravar=='4'">네번째 확장변수</option>
+				</select>
+				<a href="#about_use_extravar_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="about_use_extravar_help" class="x_help-block" hidden>게시판 확장변수와 연동하여 게시물에 확장변수로 입력된 휴대전화로 발송되도록 설정할 수 있습니다.</p>
+			</div>
+		</div>
+	</section>
+
 	<section class="section">
 		<h2>{$lang->title_option}</h2>
-			<div class="x_control-group">
-				<label class="x_control-label">{$lang->cellphone_fieldname}</label>
-					<div class="x_controls">
-						<select name="cellphone_fieldname">
-							<option value="">{$lang->select}</option>
-							<option loop="$member_config->signupForm=>$item" value="{$item->name}" selected="selected"|cond="$item->name==$notification_info->cellphone_fieldname">{$item->title}</option>
-						</select>
-							<a href="#about_cellphone_fieldname_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-							<p id="about_cellphone_fieldname_help" class="x_help-block" hidden>{$lang->about_cellphone_fieldname}</p>
-					</div>
+		<div class="x_control-group">
+			<label class="x_control-label">역알림 사용</label>
+			<div class="x_controls">
+				<label class="x_inline" for="reverse_notify_Y"><input type="radio" name="reverse_notify" id="reverse_notify_Y" value="Y" checked="checked"|cond="$notification_info->reverse_notify=='Y'" />사용함</label>
+				<label class="x_inline" for="reverse_notify_N"><input type="radio" name="reverse_notify" id="reverse_notify_N" value="N" checked="checked"|cond="$notification_info->reverse_notify!='Y'" />사용안함</label>
+				<a href="#about_reverse_notify_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="about_reverse_notify_help" class="x_help-block" hidden>쪽지알림과 반대로 댓글자가 알림 체크를 통해 문자발송여부를 선택할 수 있습니다. 알림에 체크하여 댓글을 등록하면 게시자와 상위 댓글자에게 문자를 발송합니다.</p>
 			</div>
-
-			<div class="x_control-group">
-				<label class="x_control-label">인증모듈 연동</label>
-					<div class="x_controls">
-					<label class="x_inline" for="use_authdata_Y"><input type="radio" name="use_authdata" id="use_authdata_Y" value="Y" checked="checked"|cond="$notification_info->use_authdata=='Y'" />사용함</label>
-					<label class="x_inline" for="use_authdata_N"><input type="radio" name="use_authdata" id="use_authdata_N" value="N" checked="checked"|cond="!$notification_info->use_authdata || $notification_info->use_authdata=='N'" />사용안함</label>
-						<a href="#about_use_authdata_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-						<p id="about_use_authdata_help" class="x_help-block" hidden>인증모듈에 의해 인증받은 전화번호를 수신번호로 사용합니다.</p>
-					</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">알림 체크</label>
+			<div class="x_controls">
+				<label class="x_inline" for="force_notify_N"><input type="radio" name="force_notify" id="force_notify_N" value="Y" checked="checked"|cond="$notification_info->force_notify!='Y'" />게시물에 알림 체크가 있을 때만 발송</label>
+				<label class="x_inline" for="force_notify_Y"><input type="radio" name="force_notify" id="force_notify_Y" value="N" checked="checked"|cond="$notification_info->force_notify=='Y'" />게시물에 알림 체크 여부를 무시하고 무조건 발송</label>
+				<a href="#about_force_notify_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="about_force_notify_help" class="x_help-block" hidden>댓글 대상의 게시물의 알림 체크 여부에 따라서 발송하거나 발송하지 않거나를 설정할 수 있습니다.</p>
 			</div>
-			<div class="x_control-group">
-				<label class="x_control-label">역알림 사용</label>
-					<div class="x_controls">
-					<label class="x_inline" for="reverse_notify_Y"><input type="radio" name="reverse_notify" id="reverse_notify_Y" value="Y" checked="checked"|cond="$notification_info->reverse_notify=='Y'" />사용함</label>
-			<label class="x_inline" for="reverse_notify_N"><input type="radio" name="reverse_notify" id="reverse_notify_N" value="N" checked="checked"|cond="$notification_info->reverse_notify!='Y'" />사용안함</label>
-						<a href="#about_reverse_notify_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-						<p id="about_reverse_notify_help" class="x_help-block" hidden>쪽지알림과 반대로 댓글자가 알림 체크를 통해 문자발송여부를 선택할 수 있습니다. 알림에 체크하여 댓글을 등록하면 게시자와 상위 댓글자에게 문자를 발송합니다.</p>
-					</div>
-			</div>
+		</div>
 	</section>
 
 	<div class="x_clearfix btnArea">
