@@ -169,8 +169,8 @@
 		<div class="x_control-group">
 			<label class="x_control-label">알림 체크</label>
 			<div class="x_controls">
-				<label class="x_inline" for="force_notify_N"><input type="radio" name="force_notify" id="force_notify_N" value="Y" checked="checked"|cond="$notification_info->force_notify!='Y'" />게시물에 알림 체크가 있을 때만 발송</label>
-				<label class="x_inline" for="force_notify_Y"><input type="radio" name="force_notify" id="force_notify_Y" value="N" checked="checked"|cond="$notification_info->force_notify=='Y'" />게시물에 알림 체크 여부를 무시하고 무조건 발송</label>
+				<label class="x_inline" for="force_notify_N"><input type="radio" name="force_notify" id="force_notify_N" value="N" checked="checked"|cond="$notification_info->force_notify!='Y'" />게시물에 알림 체크가 있을 때만 발송</label>
+				<label class="x_inline" for="force_notify_Y"><input type="radio" name="force_notify" id="force_notify_Y" value="Y" checked="checked"|cond="$notification_info->force_notify=='Y'" />게시물에 알림 체크 여부를 무시하고 무조건 발송</label>
 				<a href="#about_force_notify_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="about_force_notify_help" class="x_help-block" hidden>댓글 대상의 게시물의 알림 체크 여부에 따라서 발송하거나 발송하지 않거나를 설정할 수 있습니다.</p>
 			</div>
