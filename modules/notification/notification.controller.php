@@ -55,13 +55,13 @@ class notificationController extends notification
 		$oNotificationModel = &getModel('notification');
 
 		// search from member data fields
-		if(isset($config->cellphone_fieldname))
+		if(isset($config->cellphone_fieldname) && $member_info)
 		{
 			return $oNotificationModel->getConfigValue($member_info, $config->cellphone_fieldname, 'tel');
 		}
 
 		// search from authentication module table.
-		if($config->use_authdata=='Y')
+		if($config->use_authdata=='Y' && $member_info)
 		{
 			return $this->getRecipientNumberFromAuthentication($member_info->member_srl);
 		}
@@ -71,6 +71,8 @@ class notificationController extends notification
 		{
 			return $oDocument->getExtraValue($config->use_extravar);
 		}
+
+		return NULL;
 	}
 
 	/**
@@ -82,16 +84,18 @@ class notificationController extends notification
 		$oNotificationModel = &getModel('notification');
 
 		// search from member data fields
-		if(isset($config->cellphone_fieldname))
+		if(isset($config->cellphone_fieldname) && $member_info)
 		{
 			return $oNotificationModel->getConfigValue($member_info, $config->cellphone_fieldname, 'tel');
 		}
 
 		// search from authentication module table.
-		if($config->use_authdata=='Y')
+		if($config->use_authdata=='Y' && $member_info)
 		{
 			return $this->getRecipientNumberFromAuthentication($member_info->member_srl);
 		}
+
+		return NULL;
 	}
 
 	/**
@@ -107,6 +111,7 @@ class notificationController extends notification
 		{
 			foreach($recipientNumber as $phoneNumber)
 			{
+				if(!$phoneNumber) continue;
 				$this->sendMobileMessage($phoneNumber, $senderNumber, $mobileContent);
 			}
 		}
@@ -163,7 +168,7 @@ class notificationController extends notification
 		$notificationRequired = $this->checkNotificationRequired($commentInfo, $oDocument, $config);
 
 		// do not send messages if the writer and the replier is the same person.
-		if($oDocument->get('member_srl') == $commentInfo->member_srl) $notificationRequired = FALSE;
+		if($commentInfo->member_srl != 0 && $oDocument->get('member_srl') == $commentInfo->member_srl) $notificationRequired = FALSE;
 
 		return $notificationRequired;
 	}
@@ -224,8 +229,8 @@ class notificationController extends notification
 		if(!$senderName) $senderName = $recipientName;
 
 		$tmpObj->article_url = getFullUrl('','document_srl', $commentInfo->document_srl);
-		$tmpContent = $this->mergeKeywords($mailContent, $tmp_obj);
-		$tmpMessage = $this->mergeKeywords($mobileContent, $tmp_obj);
+		$tmpContent = $this->mergeKeywords($mailContent, $tmpObj);
+		$tmpMessage = $this->mergeKeywords($mobileContent, $tmpObj);
 
 		$this->sendMessages($recipientNumber, $senderNumber
 							, $recipientEmailAddress, $recipientName, $senderEmailAddress, $senderName
@@ -248,12 +253,13 @@ class notificationController extends notification
 		$writer_member_srl = $oDocument->getMemberSrl();
 		// get member_info
 		$member_info = $oMemberModel->getMemberInfoByMemberSrl($writer_member_srl);
-		if(!$member_info) return;
 
 		$recipientNumber = $this->getRecipientNumberForWriter($member_info, $oDocument, $config);
 		$senderNumber = $config->sender_cellphone;
-		$recipientEmailAddress = $member_info->email_address;
-		$recipientName = $member_info->nick_name;
+		$recipientEmailAddress = NULL;
+		$recipientName = NULL;
+		if($member_info) $recipientEmailAddress = $member_info->email_address;
+		if($member_info) $recipientName = $member_info->nick_name;
 		$senderEmailAddress = $config->email_sender_address;
 		$senderName = $config->email_sender_name;
 		if(!$senderEmailAddress) $senderEmailAddress = $commentInfo->email_address;
@@ -279,13 +285,14 @@ class notificationController extends notification
 		$oMemberModel = &getModel('member');
 
 		// get member_info
-		$member_info = $oMemberModel->getMemberInfoByMemberSrl($writer_member_srl);
-		if(!$member_info) return;
+		$member_info = $oMemberModel->getMemberInfoByMemberSrl($upperReplier->member_srl);
 
 		$recipientNumber = $this->getRecipientNumberForUpperReplier($member_info, $config);
 		$senderNumber = $config->sender_cellphone;
-		$recipientEmailAddress = $member_info->email_address;
-		$recipientName = $member_info->nick_name;
+		$recipientEmailAddress = NULL;
+		$recipientName = NULL;
+		if($member_info) $recipientEmailAddress = $member_info->email_address;
+		if($member_info) $recipientName = $member_info->nick_name;
 		if(!$senderEmailAddress) $senderEmailAddress = $commentInfo->email_address;
 		if(!$senderName) $senderName = $commentInfo->nick_name;
 		$senderEmailAddress = $config->email_sender_address;
