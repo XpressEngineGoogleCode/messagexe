@@ -170,9 +170,13 @@ class notificationController extends notification
 		}
 
 		// MAIL
+		if(!is_array($recipientEmailAddress)) $recipientEmailAddress = array($recipientEmailAddress);
 		if(in_array($config->sending_method,array('1','3')))
 		{
-			$this->sendMailMessage($title, $mailContent, $recipientName, $recipientEmailAddress, $senderName, $senderEmailAddress);
+			foreach($recipientEmailAddress as $emailAddress)
+			{
+				$this->sendMailMessage($title, $mailContent, $recipientName, $emailAddress, $senderName, $senderEmailAddress);
+			}
 		}
 	}
 
@@ -287,7 +291,7 @@ class notificationController extends notification
 	/**
 	 * check for sending to upper replier
 	 */
-	function checkNotificationRequiredForUpperReplier(&$commentInfo, &$upperComment, &$oDocumnet, &$config)
+	function checkNotificationRequiredForUpperReplier(&$commentInfo, &$upperComment, &$oDocument, &$config)
 	{
 		if(!$commentInfo->parent_srl) return FALSE;
 
@@ -311,19 +315,19 @@ class notificationController extends notification
 		if(!$config->admin_phones) return;
 		$recipientNumber = explode(',', $config->admin_phones);
 		$senderNumber = $config->sender_cellphone;
+		$recipientEmailAddress = explode(',', $config->admin_emails);
 		$senderEmailAddress = $config->email_sender_address;
 		$senderName = $config->email_sender_name;
 		if(!$senderEmailAddress) $senderEmailAddress = $commentInfo->email_address;
 		if(!$senderName) $senderName = $commentInfo->nick_name;
 		if(!$senderEmailAddress) $senderEmailAddress = $recipientEmailAddress;
-		if(!$senderName) $senderName = $recipientName;
 
 		$tmpObj->article_url = getFullUrl('','document_srl', $commentInfo->document_srl);
 		$tmpContent = $this->mergeKeywords($mailContent, $tmpObj);
 		$tmpMessage = $this->mergeKeywords($mobileContent, $tmpObj);
 
 		$this->sendMessages($recipientNumber, $senderNumber
-							, $recipientEmailAddress, $recipientName, $senderEmailAddress, $senderName
+							, $recipientEmailAddress, NULL, $senderEmailAddress, $senderName
 							, $tmpMessage, $tmpContent, $title, $config, $commentInfo);
 	}
 
