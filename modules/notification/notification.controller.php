@@ -314,7 +314,7 @@ class notificationController extends notification
 	{
 		if(!$config->admin_phones) return;
 		$recipientNumber = explode(',', $config->admin_phones);
-		$senderNumber = $config->sender_cellphone;
+		$senderNumber = $config->sender_phone;
 		$recipientEmailAddress = explode(',', $config->admin_emails);
 		$senderEmailAddress = $config->email_sender_address;
 		$senderName = $config->email_sender_name;
@@ -349,7 +349,7 @@ class notificationController extends notification
 		$member_info = $oMemberModel->getMemberInfoByMemberSrl($writer_member_srl);
 
 		$recipientNumber = $this->getRecipientNumberForWriter($member_info, $oDocument, $config);
-		$senderNumber = $config->sender_cellphone;
+		$senderNumber = $config->sender_phone;
 		$recipientEmailAddress = $this->getEmailAddressForWriter($member_info, $oDocument, $config);
 		$recipientName = $this->getWriterNickName($member_info, $oDocument);
 		$senderEmailAddress = $config->email_sender_address;
@@ -381,7 +381,7 @@ class notificationController extends notification
 		$upperReplier = $this->getCommentMemberInfo($upperComment);
 
 		$recipientNumber = $this->getRecipientNumberForUpperReplier($member_info, $config);
-		$senderNumber = $config->sender_cellphone;
+		$senderNumber = $config->sender_phone;
 		$recipientEmailAddress = $upperReplier->email_address;
 		$recipientName = $upperReplier->nick_name;
 		if(!$senderEmailAddress) $senderEmailAddress = $commentInfo->email_address;
