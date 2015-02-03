@@ -151,9 +151,9 @@ class authenticationModel extends authentication
 		return $string;
 	}
 
-	function getErrorMessage($error_message)
+	function getErrorMessage($error_code)
 	{
-		switch($error_message)
+		switch($error_code)
 		{
 			case "InvalidAPIKey":
 				$error_message = "문자메시지 모듈의 관리자 설정을 확인해주세요.";
@@ -167,7 +167,11 @@ class authenticationModel extends authentication
 			case "InternalError":
 				$error_message = "서버오류";
 				break;
+			default:
+				$error_message = "메시지 전송 오류";
+				break;
 		}
+		$error_message = sprintf("%s(%s)", $error_message, $error_code);
 
 		return $error_message;
 	}
