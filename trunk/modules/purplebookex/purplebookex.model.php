@@ -49,15 +49,7 @@ class purplebookexModel extends purplebookModel
 	function getPurplebookCashInfo($args=false)
 	{
 		if(!Context::get('logged_info')) return new Object(-1,'msg_login_required');
-		/*
-		$sms = &$oTextmessageModel->getCoolSMS($args);
-		// connect
-		if (!$sms->connect()) {
-			// cannot connect
-			return new Object(-1, 'cannot connect to server.');
-		}
-		// get cash info		 
-		*/
+		
 		$oTextmessageModel = &getModel('textmessage');
 		$basecamp = true;
 
@@ -66,6 +58,7 @@ class purplebookexModel extends purplebookModel
 
 		$this->add('cash', $result->get('cash'));
 		$this->add('point', $result->get('point'));
+		$this->add('deferred_payment', $result->get('deferred_payment'));
 		$this->add('sms_price', $result->get('sms_price'));
 		$this->add('lms_price', $result->get('lms_price'));
 		$this->add('mms_price', $result->get('mms_price'));
