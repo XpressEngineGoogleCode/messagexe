@@ -63,6 +63,11 @@ class purplebookexModel extends purplebookModel
 		$this->add('lms_price', $result->get('lms_price'));
 		$this->add('mms_price', $result->get('mms_price'));
 	}
+
+	function getPurplebookResult()
+	{
+		parent::getPurplebookResult(TRUE);
+	}
 }
 /* End of file purplebook.model.php */
 /* Location: ./modules/purplebook/purplebook.model.php */
