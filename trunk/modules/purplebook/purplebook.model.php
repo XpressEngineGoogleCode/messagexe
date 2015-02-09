@@ -712,7 +712,7 @@ class purplebookModel extends purplebook
 	}
 
 	// 전송결과 템플릿 가져오기
-	function getPurplebookResult()
+	function getPurplebookResult($basecamp = FALSE)
 	{
 		$logged_info = Context::get('logged_info');
 		if(!$logged_info) return new Object(-1, 'msg_not_logged');
@@ -772,7 +772,6 @@ class purplebookModel extends purplebook
 		//검색어 설정
 		if($vars->search_keyword) $args->s_rcpt = trim($vars->search_keyword);
 
-		$basecamp = TRUE;
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS($basecamp);
 		$output = $sms->sent($args);
