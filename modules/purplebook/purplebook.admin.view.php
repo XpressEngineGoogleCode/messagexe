@@ -1,6 +1,5 @@
 <?php
 /**
- * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookAdminView
  * @author NURIGO(contact@nurigo.net)
  * @brief  purplebookAdminView
@@ -11,7 +10,8 @@ class purplebookAdminView extends purplebook
 	{
 		// module_srl이 있으면 미리 체크하여 존재하는 모듈이면 module_info 세팅
 		$module_srl = Context::get('module_srl');
-		if(!$module_srl && $this->module_srl) {
+		if(!$module_srl && $this->module_srl) 
+		{
 			$module_srl = $this->module_srl;
 			Context::set('module_srl', $module_srl);
 		}
@@ -19,12 +19,16 @@ class purplebookAdminView extends purplebook
 		$oModuleModel = &getModel('module');
 
 		// module_srl이 넘어오면 해당 모듈의 정보를 미리 구해 놓음
-		if($module_srl) {
+		if($module_srl) 
+		{
 			$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
-			if(!$module_info) {
+			if(!$module_info) 
+			{
 				Context::set('module_srl','');
 				$this->act = 'list';
-			} else {
+			} 
+			else 
+			{
 				ModuleModel::syncModuleToSite($module_info);
 				$this->module_info = $module_info;
 				Context::set('module_info',$module_info);
@@ -36,6 +40,9 @@ class purplebookAdminView extends purplebook
 		$this->setTemplatePath($this->module_path.'tpl');
 	}
 
+	/**
+	 * show module instance
+	 */
 	function dispPurplebookAdminModInstList()
 	{
 		$output = executeQueryArray('purplebook.getModInstList');
@@ -51,6 +58,9 @@ class purplebookAdminView extends purplebook
 		$this->setTemplateFile('modinstlist');
 	}
 
+	/**
+	 * show insert module instance
+	 */
 	function dispPurplebookAdminInsertModInst()
 	{
 		// 스킨 목록을 구해옴
@@ -73,9 +83,10 @@ class purplebookAdminView extends purplebook
 	}
 
 	/**
-	 * @brief display the grant information
-	 **/
-	function dispPurplebookAdminGrantInfo() {
+	 * display the grant information
+	 */
+	function dispPurplebookAdminGrantInfo() 
+	{
 		// get the grant infotmation from admin module
 		$oModuleAdminModel = &getAdminModel('module');
 		$grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);

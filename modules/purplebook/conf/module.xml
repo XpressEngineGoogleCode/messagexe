@@ -17,7 +17,6 @@
 
 		<action name="procPurplebookAdminInsertModInst" type="controller" standalone="true" />
 		<action name="procPurplebookAdminDeleteModInst" type="controller" standalone="true" />
-		<action name="procPurplebookAdminUpdateSubnodeCount" type="controller" standalone="true" />
 
 		<!-- for member -->
 		<action name="dispPurplebookIndex" type="view" index="true" />

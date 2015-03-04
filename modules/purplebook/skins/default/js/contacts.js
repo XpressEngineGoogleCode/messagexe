@@ -62,3 +62,17 @@ function pb_initialize_advanced_menu() {
 		pb_initialize_advanced_menu();
 	});
 }) (jQuery);
+
+// 휴지통 비우기
+function clearTrash() {
+	if (!confirm('휴지통을 비우시겠습니까?')) return false;
+	var params = new Array();
+	params['node_id'] = 't.';
+	var response_tags = new Array('error','message');
+	exec_xml('purplebook', 'procPurplebookDeleteNode', params, function() {
+		var obj = document.getElementById('node_2');
+		jQuery('#smsPurplebookTree').jstree('refresh',obj);
+		alert('휴지통을 비웠습니다'); 
+	}, response_tags);
+	return false;
+}

@@ -1,6 +1,8 @@
+/**
+ * @fileoverview image file handling
+ */
 
-;(function($) {
-
+(function($) {
     var defaults = {
     };
 
@@ -88,5 +90,18 @@
 
     // XE에 담기
     $.extend(window.XE, {'filepicker' : filepicker});
-
 }) (jQuery);
+
+/**
+ * 파일업로드 창에서 파일 선택시
+ */
+function filepicker_selected() {
+	jQuery('.text_area','#smsMessage').scrollTop(60);
+	jQuery('#btn_attach_pic_box').hide();
+	jQuery('#btn_delete_pic_box').show();
+	jQuery('#mmsSend','#smsMessage').attr('checked','checked');
+	update_screen();
+
+	$obj = jQuery('#layer_upload');
+	show_and_hide($obj);
+}

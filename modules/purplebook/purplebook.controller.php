@@ -1,6 +1,5 @@
 <?php
 /**
- * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookController
  * @author NURIGO(contact@nurigo.net)
  * @brief  purplebookController
@@ -13,6 +12,9 @@ class purplebookController extends purplebook
 		$this->config = $oModel->getModuleConfig();
 	}
 
+	/**
+	 * minus point 
+	 */
 	function minusPoint($point) 
 	{
 		$logged_info = Context::get('logged_info');
@@ -35,13 +37,11 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief procPurplebookSendMsg
-	 **/
+	 * send messages
+	 */
 	function procPurplebookSendMsg($args=FALSE) 
 	{
 		$all_args = Context::getRequestVars();
-
-		debugPrint('ww-0');
 
 		if(!$this->grant->send) return new Object(-1, 'msg_not_permitted');
 		$module_srl = Context::get('module_srl');
@@ -59,15 +59,12 @@ class purplebookController extends purplebook
 		{
 			$decoded = array($decoded);
 		}
-		debugPrint('ww-0-1');
-		debugPrint(count($decoded));
-		debugPrint(Context::get('deferred_payment'));
-		debugPrint($decoded);
+
 		$calc_point = 0;
 		$msg_arr = array();
 		$args = new StdClass();
 		$extension = array();
-		$delimiter = $this->getDelimiter();
+		$delimiter = $oPurplebookModel->getDelimiter();
 
 		$logged_info = Context::get('logged_info');
 		if(!$logged_info)
@@ -75,8 +72,6 @@ class purplebookController extends purplebook
 			Context::set('message', Context::getLang('msg_login_required'));
 			return;
 		}
-		debugPrint('ww-0-2');
-		debugPrint($decoded);
 
 		// 받는사람목록에 폴더가 들어있을 경우 풀어서 decoded에 집어넣는다
 		foreach($decoded as $k => $v)
@@ -110,8 +105,6 @@ class purplebookController extends purplebook
 				unset($vars);
 			}
 		}
-		debugPrint('ww-0-3');
-		debugPrint($decoded);
 		
 		// 문자 세팅
 		foreach($decoded as $key => $row)
@@ -180,13 +173,7 @@ class purplebookController extends purplebook
 			if(!$first_num) $first_num = $row->recipient;
 			$extension[] = $msg_obj;
 		}
-		debugPrint('ww-1');
-		debugPrint(count($extension));
-		debugPrint($extension);
 		$args->extension = json_encode($extension);
-
-		debugPrint('ww-2');
-		debugPrint($args);
 
 		// minus point
 		if($module_info->use_point=='Y')
@@ -199,9 +186,6 @@ class purplebookController extends purplebook
 		$oTextmessageController = &getController('textmessage');
 		$output = $oTextmessageController->sendMessage($args, $basecamp);
 
-		debugPrint('ww-2');
-		debugPrint($output);
-
 		$this->add('data', $output->get('data'));
 		$this->add('success_count', $output->get('success_count'));
 		$this->add('failure_count', $output->get('failure_count'));
@@ -210,9 +194,9 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief 주소록 등록
+	 * 주소록 등록
 	 * @param[in] node_id, user_id, node_route, node_name, node_type, phone_num
-	 **/
+	 */
 	function insertPurplebook(&$args) 
 	{
 		$args->node_id = getNextSequence();
@@ -222,9 +206,9 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief node_id의 node_route를 구해서 node_route로 검색하여 하위 폴더 갯수를 구하여 업댓.
+	 * node_id의 node_route를 구해서 node_route로 검색하여 하위 폴더 갯수를 구하여 업댓.
 	 * @param[in] node_id : 업댓할 node_id
-	 **/
+	 */
 	function updateSubfolder($member_srl, $node_id) 
 	{
 		$subfolder = 0;
@@ -261,9 +245,9 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief node_id의 node_route를 구해서 node_route로 검색하여 하위 명단 갯수를 구하여 업댓
+	 * node_id의 node_route를 구해서 node_route로 검색하여 하위 명단 갯수를 구하여 업댓
 	 * @param[in] node_id : 업댓할 node_id
-	 **/
+	 */
 	function updateSubnode($member_srl, $node_id) 
 	{
 		$subnode = 0;
@@ -288,10 +272,10 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief 주소록 수정
+	 * 주소록 수정
 	 * @param[in] 대상필드: node_id
 	 * @param[in] 수정필드: node_route, node_name, node_type, phone_num
-	 **/
+	 */
 	function updatePurplebook($args) 
 	{
 		if(!$args->node_id)
@@ -301,10 +285,10 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief 주소록 명단 삭제
+	 * 주소록 명단 삭제
 	 * @param[in] member_srl
 	 * @param[in] node_id
-	 **/
+	 */
 	function deletePurplebook($args) 
 	{
 		$query_id = 'purplebook.deletePurplebook';
@@ -312,130 +296,8 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief 
-	 **/
-	function checkTime($ft_hour, $ft_min, $tt_hour, $tt_min) 
-	{
-		$cur_dt = getdate();
-		$cur_dt_hour = $cur_dt["hours"];
-		$cur_dt_min = $cur_dt["minutes"];
-		$cur_dt_hourmin = $cur_dt_hour * 100 + $cur_dt_min;
-
-		$ft_hourmin = intval($ft_hour) * 100 + intval($ft_min);
-		$tt_hourmin = intval($tt_hour) * 100 + intval($tt_min);
-
-		if($ft_hourmin < $tt_hourmin) {
-			if($cur_dt_hourmin >= $ft_hourmin && $cur_dt_hourmin <= $tt_hourmin) return TRUE;
-		} else {
-			if($cur_dt_hourmin >= $ft_hourmin || $cur_dt_hourmin <= $tt_hourmin) return TRUE;
-		}
-
-		return FALSE;
-	}
-
-	/**
-	 * @brief
-	 **/
-	function checkWeekday(&$obj)
-	{
-		$dt = getdate();
-		$wday = $dt["wday"];
-
-		switch($wday) {
-			case 1:
-				if($obj->mon == "Y") return TRUE;
-			case 2:
-				if($obj->tue == "Y") return TRUE;
-			case 3:
-				if($obj->wed == "Y") return TRUE;
-			case 4:
-				if($obj->thu == "Y") return TRUE;
-			case 5:
-				if($obj->fri == "Y") return TRUE;
-			case 6:
-				if($obj->sat == "Y") return TRUE;
-			case 7:
-				if($obj->sun == "Y") return TRUE;
-		}
-
-		return FALSE;
-	}
-
-
-
-	function getMsgType($msgtype, &$msg) 
-	{
-		$oModel = &getModel('purplebook');
-		$config = $oModel->getModuleConfig();
-		switch(strtoupper($msgtype))
-		{
-			case 'SMS': 
-			default:
-				$msgtype = 'SMS';
-				break;
-			case 'LMS':
-			case 'AUTO':
-				require_once('purplebook.utility.php');
-				$csutil = new CSUtility();
-				if($csutil->strlen_utf8($msg->content, TRUE) > $config->limit_bytes)
-					$msgtype = 'LMS';
-				else
-					$msgtype = 'SMS';
-				break;
-			case 'MMS':
-				if(count($msg->attachment) > 0) {
-					$msgtype = 'MMS';
-				} else {
-					require_once('purplebook.utility.php');
-					$csutil = new CSUtility();
-					if($csutil->strlen_utf8($msg->content, TRUE) > $config->limit_bytes)
-						$msgtype = 'LMS';
-					else
-						$msgtype = 'SMS';
-				}
-				break;
-		}
-		return $msgtype;
-	}
-
-	function getCallbackNumber($callback_number_type, $callback_number_direct, $member_srl, $member_phonenum=FALSE) 
-	{
-		$oMemberModel = &getModel('member');
-		$oModel = &getModel('purplebook');
-		$config = $oModel->getModuleConfig();
-		$callback_number = "";
-		switch($callback_number_type)
-		{
-			case 'self':
-				return 'self';
-			case 'writer':
-				if($member_srl) {
-					$member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
-					if(!isset($config->cellphone_fieldname)) break;
-					if($member_info->{$config->cellphone_fieldname}) {
-						$phonenum = $member_info->{$config->cellphone_fieldname};
-						if(is_array($phonenum)) $phonenum = join($phonenum);
-					}
-					if($phonenum) {
-						$callback_number = $phonenum;
-					}
-				}
-				if($member_phonenum) {
-					$callback_number = $member_phonenum;
-				}
-				break;
-			case 'basic':
-				$callback_number = $config->callback;
-				break;
-			case 'direct':
-				$callback_number = $callback_number_direct;
-				break;
-		}
-		$callback_number = str_replace('|@|', '', $callback_number);
-
-		return $callback_number;
-	}
-
+	 * image file handling
+	 */
 	function procPurplebookFilePicker()
 	{
 		$oPurplebookModel = &getModel('purplebook');
@@ -470,7 +332,6 @@ class purplebookController extends purplebook
 			Context::set('message', Context::getLang('msg_invalid_file_format'));
 			return;
 		}
-
 
 		// 파일 정보 구함
 		list($width, $height, $type, $attrs) = @getimagesize($source_file);
@@ -534,7 +395,6 @@ class purplebookController extends purplebook
 		elseif($type == 2) $ext = 'jpg';
 		else $ext = 'gif';
 
-
 		// insert
 		$args->file_srl = $file_srl;
 		$args->member_srl = $logged_info->member_srl;
@@ -549,8 +409,9 @@ class purplebookController extends purplebook
 	}
 
 	/**
+	 * check permission
 	 * @return true : has permission, false : no permission
-	 **/
+	 */
 	function checkPermission($node_id) 
 	{
 		// login check
@@ -565,6 +426,9 @@ class purplebookController extends purplebook
 		return TRUE;
 	}
 
+	/**
+	 * node name update
+	 */
 	function procPurplebookUpdateName() 
 	{
 		// login check
@@ -584,6 +448,9 @@ class purplebookController extends purplebook
 		return $output;
 	}
 
+	/**
+	 * phone number update
+	 */
 	function procPurplebookUpdatePhone() 
 	{
 		// login check
@@ -604,8 +471,8 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief copy nodes
-	 **/
+	 * copy nodes
+	 */
 	function procPurplebookCopy() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -642,11 +509,15 @@ class purplebookController extends purplebook
 				$args->node_name = $output->data->node_name;
 				$args->node_type = $output->data->node_type;
 				$args->phone_num = str_replace('-', '', $output->data->phone_num);
-				$this->insertPurplebook($args);
+				$output = $this->insertPurplebook($args);
+				if(!$output->toBool()) return $output;
 			}
 		}
 	}
 
+	/**
+	 * save message
+	 */
 	function procPurplebookSaveMessage() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -659,8 +530,8 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief 주소록 Node 추가
-	 **/
+	 * 주소록 Node 추가
+	 */
 	function procPurplebookAddNode() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -668,8 +539,7 @@ class purplebookController extends purplebook
 
 		$parent_node = Context::get('parent_node');
 		// deny adding to trashcan and folder shared
-		if(in_array($parent_node, array('t.','s.')))
-			return new Object(-1, 'msg_cannot_create_folder');
+		if(in_array($parent_node, array('t.','s.'))) return new Object(-1, 'msg_cannot_create_folder');
 
 		// get node_route
 		if(in_array($parent_node, array('f.','t.','s.')))
@@ -702,7 +572,8 @@ class purplebookController extends purplebook
 		$args->memo2 = Context::get('memo2');
 		$args->memo3 = Context::get('memo3');
 
-		$this->insertPurplebook($args);
+		$output = $this->insertPurplebook($args);
+		if(!$output->toBool()) return $output;
 
 		if(!in_array($parent_node, array('f.','t.','s.')))
 		{
@@ -718,8 +589,8 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief 전체보기창 Excel로 주소록에 추가
-	 **/
+	 * 전체보기창 Excel로 주소록에 추가
+	 */
 	function procPurplebookExcelLoad()
 	{
 		$logged_info = Context::get('logged_info');
@@ -792,7 +663,8 @@ class purplebookController extends purplebook
 			$args->memo3 = $array_test['memo3'][$i];
 
 			// purplebook table에 업로드
-			$this->insertPurplebook($args);
+			$output = $this->insertPurplebook($args);
+			if(!$output->toBool()) return $output;
 
 			$list[] = $args;
 		}
@@ -807,8 +679,8 @@ class purplebookController extends purplebook
 
 
 	/**
-	 * @brief 주소록 Node 추가
-	 **/
+	 * 주소록 Node List 추가
+	 */
 	function procPurplebookAddList() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -849,7 +721,8 @@ class purplebookController extends purplebook
 			$args->phone_num = str_replace('-', '', $obj->phone_num);
 
 			$list[] = $args;
-			$this->insertPurplebook($args);
+			$output = $this->insertPurplebook($args);
+			if(!$output->toBool()) return $output;
 		}
 
 		if(!in_array($parent_node, array('f.','t.','s.')))
@@ -861,8 +734,8 @@ class purplebookController extends purplebook
 	}
 
 	/**
-	 * @brief 주소록
-	 **/
+	 * 주소록 이름 변경
+	 */
 	function procPurplebookRenameNode() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -881,61 +754,57 @@ class purplebookController extends purplebook
 		return $output;
 	}
 
-	function copyNode($member_srl, $node_id, $parent_id) 
+	/**
+	 * move node
+	 */
+	function procPurplebookMoveNode() 
 	{
-		// get destination
-		$args->node_id = $parent_id;
-		$args->member_srl = $member_srl;
-		$output = executeQuery('purplebook.getPurplebook', $args);
-		if(!$output->toBool()) return $output;
-		$dest_node = $output->data;
+		$logged_info = Context::get('logged_info');
+		if(!$logged_info) return new Object(-1, 'msg_log_required');
 
-		// new route
-		$new_args->node_id = $node_id;
-		$new_args->node_route = $dest_node->node_route . $dest_node->node_id . '.';
+		$parent_id = Context::get('parent_id');
+		$node_id = Context::get('node_id');
+		$copy = Context::get('copy');
 
-		// get current node
-		unset($args);
-		$args->node_id = $node_id;
-		$args->member_srl = $member_srl;
-		$output = executeQuery('purplebook.getPurplebook', $args);
-		if(!$output->toBool()) return $output;
-		$current = $output->data;
-
-		// copy current node
-		unset($args);
-		$args = clone($current);
-		$args->node_route = $new_args->node_route;
-		$output = $this->insertPurplebook($args);
-		if(!$output->toBool()) return $output;
-		$new_node_id = $output->node_id;
-
-		// copy children
-		$search_args->member_srl = $member_srl;
-		$search_args->node_route = $current->node_route . $current->node_id . '.';
-		//$search_args->node_type = '2';
-		$output = executeQueryArray('purplebook.getPurplebookChildrenByNodeRoute', $search_args);
-		if(!$output->toBool()) return $output;
-		$new_route = $new_args->node_route . $new_node_id . '.';
-		if($output->data)
+		// check permission for parent_id
+		if(!in_array($parent_id,array('f.','s.','t.')))
 		{
-			foreach($output->data as $no => $val)
-			{
-				$val->node_route = $new_route;
-				$old_node_id = $val->node_id;
-				if($val->node_type = '1' && $val->subfolder > 0)
-				{
-					$new_node_id = $res->node_id;
-					$this->copyNode($member_srl, $old_node_id, $new_node_id);
-				}
-				else
-				{
-					$res = $this->insertPurplebook($val);
-				}
-			}
+			if(!$this->checkPermission($parent_id)) return new Object(-1, 'msg_no_permission');
 		}
 
-		if($parent_id) $this->updateSubfolder($member_srl, $parent_id);
+		// check permission for node_id
+		if(!$this->checkPermission($node_id)) return new Object(-1, 'msg_no_permission');
+
+		if(!$copy)
+		{
+			// move
+			$this->moveNode($node_id, $parent_id);
+		}
+	}
+
+	/**
+	 * move node list
+	 */
+	function procPurplebookMoveList() 
+	{
+		$logged_info = Context::get('logged_info');
+		if(!$logged_info) return new Object(-1, 'msg_log_required');
+
+		$parent_id = Context::get('parent_id');
+		$node_list = $this->getJSON('node_list');
+
+		// check permission for parent_id
+		if(!in_array($parent_id,array('f.','s.','t.')))
+		{
+			if(!$this->checkPermission($parent_id)) return new Object(-1, 'msg_no_permission');
+		}
+
+		foreach ($node_list as $node_id)
+		{
+			// check permission for node_id
+			if(!$this->checkPermission($node_id)) return new Object(-1, 'msg_no_permission');
+			$this->moveNode($node_id, $parent_id);
+		}
 	}
 
 	function moveNode($node_id, $parent_id) 
@@ -993,78 +862,9 @@ class purplebookController extends purplebook
 		if($parent_id) $this->updateSubfolder($logged_info->member_srl, $parent_id);
 	}
 
-	function procPurplebookMoveNode() 
-	{
-		$logged_info = Context::get('logged_info');
-		if(!$logged_info) return new Object(-1, 'msg_log_required');
-
-		$parent_id = Context::get('parent_id');
-		$node_id = Context::get('node_id');
-		$copy = Context::get('copy');
-
-		// check permission for parent_id
-		if(!in_array($parent_id,array('f.','s.','t.')))
-		{
-			if(!$this->checkPermission($parent_id)) return new Object(-1, 'msg_no_permission');
-			/*
-			$args->node_id = $parent_id;
-			$output = executeQuery('purplebook.getNodeInfoByNodeId',$args);
-			if(!$output->toBool() || !$output->data) return $output;
-			if($output->data->member_srl != $logged_info->member_srl) return new Object(-1, 'msg_no_permission');
-			 */
-		}
-
-		// check permission for node_id
-		if(!$this->checkPermission($node_id)) return new Object(-1, 'msg_no_permission');
-
-		if($copy)
-		{
-			//$this->copyNode($logged_info->user_id, $node_id, $parent_id);
-		}
-		else
-		{
-			// move
-			$this->moveNode($node_id, $parent_id);
-		}
-	}
-
-	function procPurplebookMoveList() 
-	{
-		$logged_info = Context::get('logged_info');
-		if(!$logged_info) return new Object(-1, 'msg_log_required');
-
-		$parent_id = Context::get('parent_id');
-		$node_list = $this->getJSON('node_list');
-
-		// check permission for parent_id
-		if(!in_array($parent_id,array('f.','s.','t.')))
-		{
-			if(!$this->checkPermission($parent_id)) return new Object(-1, 'msg_no_permission');
-		/*
-			$args->node_id = $parent_id;
-			$output = executeQuery('purplebook.getNodeInfoByNodeId',$args);
-			if(!$output->toBool() || !$output->data) return $output;
-			if($output->data->member_srl != $logged_info->member_srl) return new Object(-1, 'msg_no_permission');
-		 */
-		}
-
-		foreach ($node_list as $node_id)
-		{
-			// check permission for node_id
-			if(!$this->checkPermission($node_id)) return new Object(-1, 'msg_no_permission');
-			/*
-			$args->node_id = $node_id;
-			$output = executeQuery('purplebook.getNodeInfoByNodeId',$args);
-			if(!$output->toBool() || !$output->data) return $output;
-			if($output->data->member_srl != $logged_info->member_srl) return new Object(-1, 'msg_no_permission');
-			 */
-			$this->moveNode($node_id, $parent_id);
-		}
-	}
-
 	/**
-	 * @brief 주소록 Node 삭제
-	 **/
+	 * 주소록 Node 삭제
+	 */
 	function procPurplebookDeleteNode() 
 	{
 		$node_id = Context::get('node_id');
@@ -1135,6 +935,9 @@ class purplebookController extends purplebook
 		}
 	}
 
+	/**
+	 * 주소록 공유
+	 */
 	function procPurplebookShareNode() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -1183,6 +986,9 @@ class purplebookController extends purplebook
 		$this->setMessage('msg_folder_shared');
 	}
 
+	/**
+	 * 주소록 공유 해제
+	 */
 	function procPurplebookUnshareNode() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -1216,6 +1022,9 @@ class purplebookController extends purplebook
 		$this->setMessage('msg_folder_unshared');
 	}
 
+	/**
+	 * 발신번호 저장
+	 */
 	function procPurplebookSaveCallbackNumber() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -1234,8 +1043,14 @@ class purplebookController extends purplebook
 		return executeQuery('purplebook.insertCallbackNumber', $args);
 	}
 
+	/**
+	 * 저장된 발신번호 삭제
+	 */
 	function procPurplebookDeleteCallbackNumber() 
 	{
+		$logged_info = Context::get('logged_info');
+		if(!Context::get('is_logged') || !$logged_info) return new Object(-1, 'login_required');
+
 		$callback_srl = Context::get('callback_srl');
 		if(!$callback_srl) return new Object(-1, 'msg_invalid_request');
 
@@ -1243,6 +1058,9 @@ class purplebookController extends purplebook
 		return executeQuery('purplebook.deleteCallbackNumber', $args);
 	}
 
+	/**
+	 * defalt callbacknumber set
+	 */
 	function procPurplebookSetDefaultCallbackNumber() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -1261,6 +1079,9 @@ class purplebookController extends purplebook
 		return $output;
 	}
 
+	/**
+	 * 받는사람목록 최근목록에 저장
+	 */
 	function procPurplebookSaveReceiverNumber() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -1287,6 +1108,9 @@ class purplebookController extends purplebook
 		}
 	}
 
+	/**
+	 * 최근목록 리스트 삭제
+	 */
 	function procPurplebookDeleteReceiverNumber() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -1302,6 +1126,9 @@ class purplebookController extends purplebook
 		$this->setMessage('success_deleted');
 	}
 
+	/**
+	 * 최근 메시지 삭제
+	 */
 	function procPurplebookDeleteMessage() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -1313,7 +1140,9 @@ class purplebookController extends purplebook
 		if(!$output->toBool()) return $output;
 		$this->setMessage('success_deleted');
 	}
-	
+	/**
+	 * excel download
+	 */
 	function procPurplebookPurplebookDownload() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -1353,15 +1182,9 @@ class purplebookController extends purplebook
 		$this->setTemplateFile('purplebook_download');
 	}
 
-	function getDelimiter()
-	{
-		for ($i = 0; $i < 5; $i++) {
-			$result = $result . "@" . mt_rand(1, 9);
-		}
-		return $result;
-	}
-
-	// 주소록 업데이트
+	/**
+	 *  주소록 업데이트
+	 */
 	function procPurplebookUpdateList()
 	{
 		// 강제적으로 요청을 JSON으로 한다.
@@ -1393,7 +1216,9 @@ class purplebookController extends purplebook
 		}
 	}
 	
-	// 주소록 개별 업데이트
+	/**
+	 *  주소록 개별 업데이트
+	 */
 	function procPurplebookUpdate()
 	{
 		$logged_info = Context::get('logged_info');
@@ -1412,7 +1237,9 @@ class purplebookController extends purplebook
 		if(!$output->toBool()) return new Object(-1, 'query error : updatePurplebook, line 1339');
 	}
 
-	// node_ids 로 개별 삭제
+	/**
+	 * node_ids 로 개별 삭제
+	 */
 	function procPurplebookDelete()
 	{
 		$vars = Context::getRequestVars();
@@ -1428,7 +1255,9 @@ class purplebookController extends purplebook
 		}
 	}
 
-	// 예약취소
+	/**
+	 * 예약취소
+	 */
 	function procPurplebookCancelMsg()
 	{
 		$oTextMessageController = &getController('textmessage');

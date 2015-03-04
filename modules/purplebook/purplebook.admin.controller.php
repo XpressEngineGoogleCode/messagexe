@@ -1,16 +1,14 @@
 <?php
 /**
- * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookAdminController
  * @author NURIGO(contact@nurigo.net)
  * @brief  purplebookAdminController
  */
 class purplebookAdminController extends purplebook
 {
-	function init() 
-	{
-	}
-
+	/**
+	 * insert/update module
+	 */
 	function procPurplebookAdminInsertModInst() 
 	{
 		// module 모듈의 model/controller 객체 생성
@@ -44,7 +42,11 @@ class purplebookAdminController extends purplebook
 		$this->setRedirectUrl($redirectUrl);
 	}
 
-	function procPurplebookAdminDeleteModInst() {
+	/**
+	 * delete module
+	 */
+	function procPurplebookAdminDeleteModInst() 
+	{
 		$module_srl = Context::get('module_srl');
 
 		$oModuleController = &getController('module');
@@ -57,108 +59,6 @@ class purplebookAdminController extends purplebook
 
 		$returnUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPurplebookAdminModInstList');
 		$this->setRedirectUrl($returnUrl);
-	}
-
-
-	function updateSubnodeCount() 
-	{
-		// extract all subfolder
-		$args->node_type = '1';
-		$output = executeQueryArray('purplebook.getPurplebookAllSubnode', $args);
-		if (!$output->toBool()) return new Object(-1, 'msg_invalid_request');
-		$count=0;
-		foreach ($output->data as $no => $val) {
-			// get subfolder count
-			unset($args);
-			$args->node_route = $val->node_route . $val->node_id . '.';
-			$args->node_id = $val->node_id;
-			$out1 = executeQuery('purplebook.getSubfolder', $args);
-			if (!$out1->toBool()) return new Object(-1, 'msg_error_occured');
-			$subfolder = $out1->data->subfolder;
-
-			// get subnode count
-			unset($args);
-			$args->node_route = $val->node_route . $val->node_id . '.';
-			$out2 = executeQuery('purplebook.getSubnode', $args);
-			if (!$out2->toBool()) return new Object(-1, 'msg_error_occured');
-			$subnode = $out2->data->subnode;
-
-			// update subfolder count
-			unset($args);
-			$args->node_id = $val->node_id;
-			$args->subfolder = $subfolder;
-			$out = executeQuery('purplebook.updateSubfolder', $args);
-			if (!$out->toBool()) return new Object(-1, 'msg_error_occured');
-
-			// update subnode count
-			unset($args);
-			$args->node_id = $val->node_id;
-			$args->subnode = $subnode;
-			$out = executeQuery('purplebook.updateSubnode', $args);
-			if (!$out->toBool()) return new Object(-1, 'msg_error_occured');
-
-			$count++;
-		}
-		return $count;
-	}
-
-	function updateMemberSrl()
-	{
-		$oMemberModel = &getModel('member');
-
-		$output = executeQueryArray('purplebook.getAllNodes');
-		if (!$output->toBool()) return $output;
-
-		$count=0;
-		if ($output->data) {
-			foreach ($output->data as $no => $val) {
-				$node_id = $val->node_id;
-				$user_id = $val->user_id;
-				$member_info = $oMemberModel->getMemberInfoByUserId($user_id);       
-				if ($member_info) {
-					$args->node_id = $node_id;
-					$args->member_srl = $member_info->member_srl;
-					executeQuery('purplebook.updateNodeMemberSrl', $args);
-					unset($member_info);
-				}
-				$count++;
-			}
-		}
-		return $count;
-	}
-
-	function updateNodeRoute()
-	{
-		$oMemberModel = &getModel('member');
-
-		$output = executeQueryArray('purplebook.getAllNodes');
-		if (!$output->toBool()) return $output;
-
-		$count=0;
-		if ($output->data) {
-			foreach ($output->data as $no => $val) {
-				$node_id = $val->node_id;
-				$node_route = $val->node_route;
-				if (!in_array(substr($node_route,0,2),array('f.','s.','t.')) && substr($node_route,0,1)=='.') {
-					$node_route = 'f' . $node_route;
-					$args->node_id = $node_id;
-					$args->node_route = $node_route;
-					executeQuery('purplebook.updateNodeRoute', $args);
-					$count++;
-				}
-			}
-		}
-		return $count;
-	}
-
-	function procPurplebookAdminUpdateSubnodeCount()
-	{
-		$count1 = $this->updateMemberSrl();
-		$this->add('update1_count', $count1);
-		$count2 = $this->updateSubnodeCount();
-		$this->add('update2_count', $count2);
-		$count3 = $this->updateNodeRoute();
-		$this->add('update3_count', $count3);
 	}
 }
 /* End of file purplebook.admin.controller.php */

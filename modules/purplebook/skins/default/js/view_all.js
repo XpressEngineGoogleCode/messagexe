@@ -1,4 +1,11 @@
-// check that already loaded
+/**
+ * @fileoverview 주소록 전체보기
+ * @requires address.html
+ */
+
+/**
+ * check that already loaded
+ */
 if (!pb_already_loaded) var pb_already_loaded = false;
 
 var use_work_mode = "off"; // 작업모드 on/off
@@ -7,7 +14,9 @@ var use_list_count = null; // list_view_count 유지
 var use_page = 1; // 페이지 유지
 var update_dialog = null; // 개별수정창
 
-// 개별수정폼 보여주기
+/**
+ * 개별수정폼 보여주기
+ */
 function pb_update_form(node_id){
 	if (!node_id) return false;
 
@@ -26,7 +35,9 @@ function pb_update_form(node_id){
 	jQuery("#update_address_modal").attr("tabindex", -1).focus();
 }
 
-// 개별 수정 처리
+/**
+ * 개별수정 처리
+ */
 function pb_update_address(){
 	params = new Array();
 	params['node_id'] = jQuery("#pb_update_address_form input[name=node_id]").val();
@@ -38,29 +49,41 @@ function pb_update_address(){
 
 	response_tags = new Array('error','message');
 	exec_xml('purplebook', 'procPurplebookUpdate', params, function(ret_obj){
-		// 화면에 업데이트된 리스트 새로고침 
+		/**
+		 * 화면에 업데이트된 리스트 새로고침 
+		 */
 		pb_load_address(null);
 
-		// 전체보기 Status와 History에 글올리기
+		/**
+		 * 전체보기 Status와 History에 글올리기
+		 */
 		pb_set_address_status("수정이 완료되었습니다. ");
 
-		// 기존 폼 제거
+		/**
+		 * 기존 폼 제거
+		 */
 		jQuery('#update_address_modal').remove();
 	}, response_tags);
 	return false;
 }
 
-// 작업모드중 페이지 떠날시 물음
+/**
+ * 작업모드중 페이지 떠날시 물음
+ */
 jQuery(window).bind('beforeunload', function(){
 	if (use_work_mode == "on") return 'Are you sure you want to navigate away from this page?';
 });
 
-// 수정모드에서 인풋박스에 변경사항 있을시 작업모드로 On
+/**
+ * 수정모드에서 인풋박스에 변경사항 있을시 작업모드로 On
+ */
 function pb_change_value(){
 	use_work_mode = "on";
 }
 
-// 수정모드에서 저장
+/**
+ * 수정모드에서 저장
+ */
 function pb_save_address(){
 	jQuery("#pb_fix_mode_form").ajaxSubmit({
 		dataType : 'json',
@@ -93,7 +116,9 @@ function pb_save_address(){
 
 }
 
-// 카운터 업데이트
+/**
+ * 카운터 업데이트
+ */
 function pb_update_address_count(total_count){
      var total = jQuery('#pb_address_list tr').length;
 
@@ -101,7 +126,9 @@ function pb_update_address_count(total_count){
      else jQuery('#pb_count').text(' (' + total + ' 명)');
 }
 
-// 폴더주소록 보여주기&숨기기
+/**
+ * 폴더주소록 보여주기&숨기기
+ */
 function pb_address_show(){
 	$obj = jQuery("#pb_view_all");
 	if ($obj.css('display') == 'block') jQuery($obj.html(''));
@@ -115,17 +142,23 @@ function pb_address_show(){
 	jQuery('body,html').animate({scrollTop: 0}, 300);
 }
 
-// 창 리사이즈할때 마다 갱신
+/**
+ * 창 리사이즈할때 마다 갱신
+ */
 jQuery(window).resize(function () {
 	if (jQuery('#pb_view_all').css('display') == 'block') pb_address_resize();
 });
  
-// 스크롤할때마다 위치 갱신
+/**
+ * 스크롤할때마다 위치 갱신
+ */
 jQuery(window).scroll(function () {
 	if (jQuery('#pb_view_all').css('display') == 'block') pb_address_resize();
 });
 
-// 폴더주소록 창 사이즈 구하기 
+/**
+ * 폴더주소록 창 사이즈 구하기 
+ */
 function pb_address_resize(size_change){
 	var dialHeight = jQuery(document).height();
 	var dialWidth = jQuery(window).width();
@@ -141,9 +174,13 @@ function pb_address_resize(size_change){
 	jQuery('#pb_view_all').css('position', 'absolute');
 }
 
-// 전체화면 닫기
-function pb_close_address(){
-	// 작업모드일때 페이지 이동시 물어봄
+/**
+ * 전체화면 닫기
+ */
+function pb_close_address() {
+	/**
+	 * 작업모드일때 페이지 이동시 물어봄
+	 */
 	if (use_work_mode == "on") {
 		if (confirm("작업중입니다. 페이지를 떠나시겠습니까?")) {
 		}
@@ -159,9 +196,11 @@ function pb_close_address(){
 }
 
 
-//전체보기 추가 폼, 히스토리 감추기/보이기
+/**
+ * 전체보기 추가 폼, 히스토리 감추기/보이기
+ */
 var pb_overlap_menu = '';
-function pb_address_menu(id){
+function pb_address_menu(id) {
 	jQuery("#pb_add_address_excel").css('display','none');
 	jQuery("#pb_add_address_direct").css('display','none');
 	jQuery("#pb_address_history").css('display','none');
@@ -178,15 +217,21 @@ function pb_address_menu(id){
 }
 
 
-// 숨겨진 메뉴들 닫기(개별추가,엑셀추가 등)
-function closeFullMenu(id){
+/**
+ * 숨겨진 메뉴들 닫기(개별추가,엑셀추가 등)
+ */
+function closeFullMenu(id) {
 	jQuery(id).css('display','none');
 	pb_overlap_menu = '';
 }
 
-// 전체보기 리스트 불러오기
-function pb_load_address(page, fix_mode, list_count){
-	// 작업모드일때 페이지 이동시 물어봄
+/**
+ * 전체보기 리스트 불러오기
+ */
+function pb_load_address(page, fix_mode, list_count) {
+	/**
+	 * 작업모드일때 페이지 이동시 물어봄
+	 */
 	if (use_work_mode == "on") {
 		if (confirm("작업중입니다. 페이지를 떠나시겠습니까?")) {
 		} else {
@@ -263,8 +308,10 @@ function pb_load_address(page, fix_mode, list_count){
 	}, response_tags);
 }
 
-// 주소록에 명단 추가
-function pb_address_append(){
+/**
+ * 주소록에 명단 추가
+ */
+function pb_address_append() {
 	var node_name = jQuery('#inputFullAddressName').val();
 	var phone_num = jQuery('#inputFullAddressNumber').val();
 	var memo1 = jQuery('#inputFullAddressMemo1').val();
@@ -341,8 +388,10 @@ function pb_address_append(){
 	});
 }
 
-// 전체보기 Status와 History에 글올리기
-function pb_set_address_status(message){
+/**
+ * 전체보기 Status와 History에 글올리기
+ */
+function pb_set_address_status(message) {
 	if (!message) return;
 
 	var now = new Date();
@@ -360,25 +409,36 @@ function pb_set_address_status(message){
 }
 
 jQuery(document).ready(function($){
-
-	// tipsy 다시호출
+	/**
+	 * tipsy 다시호출
+	 */
 	jQuery('input, a, img, button').filter(function(index){ return !jQuery(this).hasClass('help'); }).tipsy(); 
 
-	// pbe_address 창 사이즈구하기
+	/**
+	 * pbe_address 창 사이즈구하기
+	 */
 	pb_address_resize(); 
 
-	// 전체보기 리스트 불러오기
+	/**
+	 * 전체보기 리스트 불러오기
+	 */
 	pb_load_address("1", false); 
 
-	// 전체보기창 보여주기
+	/**
+	 * 전체보기창 보여주기
+	 */
 	pb_address_show();  
 
-	// check that already loaded
+	/**
+	 * check that already loaded
+	 */
 	if (pb_already_loaded) return;
 	pb_already_loaded = true;
 
-	// 개별 삭제
-	jQuery("#pb_btn_address_delete").live('click', function(){
+	/**
+	 * 개별 삭제
+	 */
+	jQuery(document).on('click', "#pb_btn_address_delete", function() {
 		node_id = jQuery(this).attr('node_id');
 		if (!node_id) return false;
 
@@ -396,19 +456,25 @@ jQuery(document).ready(function($){
 		}, response_tags);
 	});
 
-	// 체크박스 설정 
-	jQuery('#pb_address_list .checkbox').live('click', function(){
+	/**
+	 * 체크박스 설정 
+	 */
+	jQuery(document).on('click', '#pb_address_list .checkbox', function() {
 		jQuery(jQuery(this)).toggleClass("on");
 	});
 
-	// 리스트 카운트 
-	jQuery("#pb_list_count").live("change", function(){
+	/**
+	 * 리스트 카운트 
+	 */
+	jQuery(document).on("change", "#pb_list_count", function() {
 		list_count = jQuery('#pb_list_count option:selected').val();
 		pb_load_address(null, null, list_count);
 	});
 
-	// 체크된 목록 삭제
-	jQuery("#pb_address_delete").live('click', function(){
+	/**
+	 * 체크된 목록 삭제
+	 */
+	jQuery(document).on('click', "#pb_address_delete", function() {
 		var list = new Array();
 
 		jQuery('span.checkbox.on', '#pb_address_list').each(function(){
@@ -435,24 +501,32 @@ jQuery(document).ready(function($){
 					alert(data.message);
 				}
 
-				// 화면에 업데이트된 리스트 새로고침 
+				/**
+				 * 화면에 업데이트된 리스트 새로고침 
+				 */
 				pb_load_address(null);
 
-				// 전체보기 Status와 History에 글올리기
+				/**
+				 * 전체보기 Status와 History에 글올리기
+				 */
 				pb_set_address_status("삭제가 완료되었습니다. ");
 
 			}
 			, error : function (xhttp, textStatus, errorThrown){ 
 				alert(errorThrown + " " + textStatus); 
 
-				// 전체보기 Status와 History에 글올리기
+				/**
+				 * 전체보기 Status와 History에 글올리기
+				 */
 				pb_set_address_status("삭제 실패.");
 			}
 		});
 	});
 
-	// 전체보기 검색기능
-	jQuery('#btn_pb_search_keyword').live('click',function(){
+	/**
+	 * 전체보기 검색기능
+	 */
+	jQuery(document).on('click', '#btn_pb_search_keyword', function() {
 		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
 
 		if (selected_folders.length > 0) {
@@ -463,8 +537,10 @@ jQuery(document).ready(function($){
 		}		
 	});
 
-	// view_all.html에서 엑셀로 주소록에 명단 추가
-	jQuery('#btnAddFullAddressExcel').live('click',function (){
+	/**
+	 * view_all.html에서 엑셀로 주소록에 명단 추가
+	 */
+	jQuery(document).on('click', '#btnAddFullAddressExcel', function () {
 		var selected_folders = jQuery('#smsPurplebookTree').jstree('get_selected');
 		if (selected_folders.length != 1) {
 			alert('선택된 폴더가 없습니다.');
@@ -502,18 +578,22 @@ jQuery(document).ready(function($){
 		return false;
 	});
 
-	// 개별등록 
-	jQuery('#btnAddFullAddress').live('click',function(){
+	/**
+	 * 개별등록 
+	 */
+	jQuery(document).on('click', '#btnAddFullAddress', function() {
 		pb_address_append();
 		return false;
 	});
 
-	// 체크박스 전체선택/해제
-	jQuery('#smsPurplebookToggleListFull').live('click', function(){
+	/**
+	 * 체크박스 전체선택/해제
+	 */
+	jQuery(document).on('click', '#smsPurplebookToggleListFull', function() {
 		if (jQuery(this).hasClass('on')) {
 			jQuery(this).removeClass("on");
 			jQuery('.checkbox', '#pb_address_list td').removeClass("on");
-		} else{
+		} else {
 			jQuery(this).addClass("on");
 			jQuery('.checkbox', '#pb_address_list td').addClass("on");
 			return false;

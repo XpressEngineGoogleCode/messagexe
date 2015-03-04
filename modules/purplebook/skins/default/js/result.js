@@ -1,8 +1,14 @@
-// check that already loaded
+/**
+ * @fileoverview 전송결과
+ * @requires result.html
+ */
+
+/** @define {boolean} permission을 이용해 코드가 중복되지 않도록 한다. */
 if (!pb_result_loaded) var pb_result_loaded = false;
 
-
-// 리스트 불러오기
+/**
+ * 리스트 불러오기
+ */
 function pb_load_result_list(page){
 	var params = new Array();
 	var response_tags = new Array('error','message','data','list_template');
@@ -36,7 +42,11 @@ function pb_load_result_list(page){
 
 		jQuery("#pb_result_start_date").val(current_date);
 		jQuery("#pb_result_start_date").next().val(current_date);
+		jQuery("#pb_result_end_date").val(current_date);
+		jQuery("#pb_result_end_date").next().val(current_date);
+
 		params['s_start'] = jQuery("#pb_result_start_date").val();
+		params['s_end'] = jQuery("#pb_result_end_date").val();
 	}
 
 	exec_xml('purplebook', 'getPurplebookResult', params, function(ret_obj) {
@@ -44,18 +54,24 @@ function pb_load_result_list(page){
 	}, response_tags);
 }
 
-// 창 리사이즈할때 마다 갱신
+/**
+ * 창 리사이즈할때 마다 갱신
+ */
 jQuery(window).resize(function () {
 	if (jQuery('#pb_result').css('display') == 'block') pb_result_resize();
 });
  
-// 스크롤할때마다 위치 갱신
+/**
+ * 스크롤할때마다 위치 갱신
+ */
 jQuery(window).scroll(function () {
 	if (jQuery('#pb_result').css('display') == 'block') pb_result_resize();
 });
 
-//  창 사이즈 구하기 
-function pb_result_resize(size_change){
+/**
+ * 창 사이즈 구하기 
+ */
+function pb_result_resize(size_change) {
 	var dialHeight = jQuery(document).height();
 	var dialWidth = jQuery(window).width();
 
@@ -67,8 +83,10 @@ function pb_result_resize(size_change){
 	jQuery('#pb_result').css('position', 'absolute');
 }
 
-// 전송결과 보여주기&숨기기
-function pb_result_show(){
+/**
+ * 전송결과 보여주기&숨기기
+ */
+function pb_result_show() {
 	$obj = jQuery("#pb_result");
 	if ($obj.css('display') == 'block') jQuery($obj.html(''));
 
@@ -81,36 +99,52 @@ function pb_result_show(){
 	jQuery('body,html').animate({scrollTop: 0}, 300);
 }
 
-// 전송결과 닫기
-function pb_close_result(){
+/**
+ * 전송결과 닫기
+ */
+function pb_close_result() {
 	jQuery('#pb_result').css('display','none'); // 전송결과 감추기
 }
 
+/**
+ * 새로고침
+ */
 function pb_result_reload(){
 	pb_load_result_list();
 	alert('새로고침했습니다.');
 }
 
 jQuery(document).ready(function($){
-
-	// tipsy 다시호출
+	/**
+	 * tipsy 다시호출
+	 */
 	jQuery('input, a, img, button','.pb_header').filter(function(index){ return !jQuery(this).hasClass('help'); }).tipsy(); 
 
-	// pbe_address 창 사이즈구하기
+	/**
+	 * pbe_address 창 사이즈구하기
+	 */
 	pb_result_resize(); 
 
-	// 리스트 불러오기
+	/**
+	 * 리스트 불러오기
+	 */
 	pb_load_result_list("1"); 
 
-	// 전체보기창 보여주기
+	/**
+	 * 전체보기창 보여주기
+	 */
 	pb_result_show();  
 
-	// check that already loaded
+	/**
+	 * check that already loaded
+	 */
 	if (pb_result_loaded) return;
 	pb_result_loaded = true;
 
-	// 체크된 목록 예약취소 
-	jQuery("#pb_reserve_cancel").live('click', function(){
+	/**
+	 * 체크된 목록 예약취소 
+	 */
+	jQuery(document).on('click', "#pb_reserve_cancel", function(){
 		var list = new Array();
 
 		jQuery('span.checkbox.on', '#pb_result_list').each(function(){
@@ -150,19 +184,25 @@ jQuery(document).ready(function($){
 		});
 	});
 
-	// 리스트 카운트 
-	jQuery("#pb_result_count").live("change", function(){
+	/**
+	 * 리스트 카운트 
+	 */
+	jQuery(document).on("change", "#pb_result_count", function(){
 		list_count = jQuery('#pb_result_count option:selected').val();
 		pb_load_result_list();
 	});
 
-	// 상태
-	jQuery("#pb_result_status").live("change", function(){
+	/**
+	 * 상태
+	 */
+	jQuery(document).on("change", "#pb_result_status", function(){
 		pb_load_result_list(1);
 	});
 
-	// 체크박스 전체선택/해제
-	jQuery('#toggleSendResultList').live('click', function(){
+	/**
+	 * 체크박스 전체선택/해제
+	 */
+	jQuery(document).on('click', '#toggleSendResultList', function(){
 		if (jQuery(this).hasClass('on')) {
 			jQuery(this).removeClass("on");
 			jQuery('.checkbox', '#pb_result_list td').removeClass("on");
@@ -173,8 +213,10 @@ jQuery(document).ready(function($){
 		}
 	});
 
-	// 체크박스 설정 
-	jQuery('#pb_result_list .checkbox').live('click', function(){
+	/**
+	 * 체크박스 설정 
+	 */
+	jQuery(document).on('click', '#pb_result_list .checkbox', function(){
 		jQuery(jQuery(this)).toggleClass("on");
 	});
 });

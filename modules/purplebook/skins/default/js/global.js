@@ -1,4 +1,7 @@
-/* vi:set ts=4 sw=4 expandtab enc=utf8: */
+/**
+ * @fileoverview 해외전송을 위해 country code를 모아둔 곳
+ */
+
 global_flag = true; // first defined in cellphone.js
 
 var country_codes = [
