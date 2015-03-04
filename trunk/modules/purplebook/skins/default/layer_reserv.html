@@ -1,3 +1,5 @@
+<script src="{getUrl()}modules/purplebook/skins/default/js/reserv.js"></script>
+
 <div class="title">
 	<p class="pop_title">예약전송하기</p>
 	<span class="btn_closex">
@@ -9,16 +11,16 @@
 	<div id="smsReservationInputDate"></div>
 </div> -->
 <div class="reservtime">
-	<input id="inputReservationDate" class="inputTypeText" value="{zdate('Ymd', date('Y-m-d'))}" /><br />
+	<input id="inputReservationDate" class="inputTypeText" value="{date('Y-m-d')}" /><br />
 	<select id="inputReservationHour">
-		<!--@for($i = 0;$i < 24; $i++)-->
-		<option value="{$i}"<!--@if(intval(date('H'))==$i)--> selected="selected"<!--@end-->>{$i}</option>
-		<!--@end-->
+		<block loop="$i=0; $i<24; $i++">
+			<option value="{$i}" selected="selected"|cond="intval(date('H')) == $i">{$i}</option>
+		</block>
 	</select>시 
 	<select id="inputReservationMinute">
-		<!--@for($i = 0;$i < 60; $i++)-->
-		<option value="{$i}"<!--@if(intval(date('i'))==$i)--> selected="selected"<!--@end-->>{$i}</option>
-		<!--@end-->
+		<block loop="$i=0; $i<60; $i++">
+			<option value="{$i}" selected="selected"|cond="intval(date('i')) == $i">{$i}</option>
+		</block>
 	</select>분
 </div>
 <span class="buts">

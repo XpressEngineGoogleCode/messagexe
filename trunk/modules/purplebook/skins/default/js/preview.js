@@ -1,12 +1,18 @@
-// check that already loaded
+/**
+ * check that already loaded
+ */
 if (!pb_preview_loaded) var pb_preview_loaded = false;
 
-// check folder route
+/**
+ * check folder route
+ */
 var use_preview_route = null;
 var use_preview_route_name = null;
 
-// 리스트 불러오기
-function pb_load_preview_list(node_id){
+/**
+ * 리스트 불러오기
+ */
+function pb_load_preview_list(node_id) {
 	var params = new Array();
 	var response_tags = new Array('error','message','data','list_template');
 
@@ -14,29 +20,37 @@ function pb_load_preview_list(node_id){
 	var text = new Array(); // 문자내용
 	var node_ids = new Array(); // node_ids 
 
-	// 보내는창 갯수
+	/**
+	 * 보내는창 갯수
+	 */
 	p_screen = jQuery('li','#smsPurplebookContentInput');
 
-	// 창별로 문자내용 정렬
+	/**
+	 * 창별로 문자내용 정렬
+	 */
 	for(var i = 0; i < p_screen.size(); i++){
 		context = jQuery('.phonescreen','#smsPurplebookContentInput')[i];
 		if (!jQuery(context).val()) return;
 
 		text[i] = jQuery(context).val();
 
-		// 받는사람들 
+		/**
+		 * 받는사람들 
+		 */
 		list = jQuery('li','#smsPurplebookTargetList');
 		for(var p = 0; p < list.size(); p++){
 			li = list.eq(p);
-
-			// number, name, no_id set
 			rcp_list[p] = new Object();
 
-			// node_id가 있으면
+			/**
+			 * node_id가 있으면
+			 */
 			if (li.attr('node_id')) {
 			   	rcp_list[p]['node_id'] = li.attr('node_id');
 
-				// 창이 여러개일때 중복체크
+				/**
+				 * 창이 여러개일때 중복체크
+				 */
 				if (jQuery.inArray(li.attr('node_id'), node_ids) == -1) node_ids.push(li.attr('node_id'));
 			}
 
@@ -110,18 +124,24 @@ function pb_load_preview_list(node_id){
 	});
 }
 
-// 창 리사이즈할때 마다 갱신
+/**
+ * 창 리사이즈할때 마다 갱신
+ */
 jQuery(window).resize(function () {
 	if (jQuery('#pb_preview').css('display') == 'block') pb_preview_resize();
 });
  
-// 스크롤할때마다 위치 갱신
+/**
+ * 스크롤할때마다 위치 갱신
+ */
 jQuery(window).scroll(function () {
 	if (jQuery('#pb_preview').css('display') == 'block') pb_preview_resize();
 });
 
-//  창 사이즈 구하기 
-function pb_preview_resize(size_change){
+/**
+ * 창 사이즈 구하기 
+ */
+function pb_preview_resize(size_change) {
 	var dialHeight = jQuery(document).height();
 	var dialWidth = jQuery(window).width();
 
@@ -133,8 +153,10 @@ function pb_preview_resize(size_change){
 	jQuery('#pb_preview').css('position', 'absolute');
 }
 
-// 미리보기 보여주기&숨기기
-function pb_preview_show(){
+/**
+ * 미리보기 보여주기&숨기기
+ */
+function pb_preview_show() {
 	$obj = jQuery("#pb_preview");
 	if ($obj.css('display') == 'block') jQuery($obj.html(''));
 
@@ -148,27 +170,37 @@ function pb_preview_show(){
 	jQuery('body,html').animate({scrollTop: 0}, 300);
 }
 
-// 미리보기 닫기
-function pb_close_preview(){
+/**
+ * 미리보기 닫기
+ */
+function pb_close_preview() {
 	jQuery('#pb_preview').css('display','none'); // 미리보기 감추기
 }
 
 jQuery(document).ready(function($){
-
-	// tipsy 다시호출
+	/**
+	 * tipsy 다시호출
+	 */
 	jQuery('input, a, img, button','.pb_header').filter(function(index){ return !jQuery(this).hasClass('help'); }).tipsy(); 
 
-	// pbe_address 창 사이즈구하기
+	/**
+	 * pbe_address 창 사이즈구하기
+	 */
 	pb_preview_resize(); 
 
-	// 리스트 불러오기
+	/**
+	 * 리스트 불러오기
+	 */
 	pb_load_preview_list(); 
 
-	// 전체보기창 보여주기
+	/**
+	 * 전체보기창 보여주기
+	 */
 	pb_preview_show();  
 
-	// check that already loaded
+	/**
+	 * check that already loaded
+	 */
 	if (pb_preview_loaded) return;
 	pb_preview_loaded = true;
-
 });

@@ -1,17 +1,11 @@
 <?php
 /**
- * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookModel
  * @author NURIGO(contact@nurigo.net)
  * @brief  purplebookModel
  */
 class purplebookModel extends purplebook
 {
-
-	function init()
-	{
-	}
-
 	/**
 	 * 모듈 환경설정값 가져오기
 	 */
@@ -42,6 +36,9 @@ class purplebookModel extends purplebook
 		return $GLOBALS['__purplebook_config__'];
 	}
 
+	/**
+	 * 모듈 Instance 설정값 가져오기
+	 */
 	function getModuleInstConfig($module_srl)
 	{
 		$oModuleModel = &getModel('module');
@@ -54,51 +51,26 @@ class purplebookModel extends purplebook
 		return $module_info;
 	}
 
-	/*
-	function getPurplebookStatusListByMessageId()
+	/**
+	 * address list 가져오기
+	 */
+	function getAddressList($args) 
 	{
-		$oTextmessageModel = &getModel('textmessage');
-		$oTextmessageController = &getController('textmessage');
-
-		// message ids
-		$message_ids_arr = explode(',', Context::get('message_ids'));
-
-		$sms = $oTextmessageModel->getCoolSMS();
-		$result_array = Array();
-
-		foreach($message_ids_arr as $message_id)
-		{
-			if(!$message_id) return;
-			$option->mid = $message_id;
-			$result = $sms->sent($option);
-
-			$args->message_id = $message_id;
-			$args->status = $result->data[0]->status;
-			$args->resultcode = $result->data[0]->result_code;
-			$args->carrier = $result->data[0]->carrier;
-			$args->senddate = $result->data[0]->sent_time;
-
-			$result_array[] = $args;
-
-			unset($args);
-		}
-
-		$this->add('data', $result_array);
-	}
-	*/
-
-	function getAddressList($args) {
 		$query_id = 'purplebook.getPurplebookList';
 		return executeQueryArray($query_id, $args);
 	}
 
-	function getPurplebookListPaging($args) {
+	/**
+	 * 주소록 리스트 가져오기
+	 */
+	function getPurplebookListPaging($args) 
+	{
 		$query_id = 'purplebook.getPurplebookListPaging';
 		return executeQueryArray($query_id, $args);
 	}
 
 	/**
-	 * @brief 전체 검색
+	 * 전체 검색
 	 */
 	function getPurplebookSearch()
 	{
@@ -123,8 +95,8 @@ class purplebookModel extends purplebook
 	}
 
 	/**
-	 * @brief CashInfo 가져오기 - Content-Type: JSON
-	 **/
+	 * CashInfo 가져오기 - Content-Type: JSON
+	 */
 	function getPurplebookCashInfo($args=false)
 	{
 		$config = $this->getModuleConfig($args);
@@ -143,8 +115,8 @@ class purplebookModel extends purplebook
 	}
 
 	/**
-	 * @brief System Point 가져오기
-	 **/
+	 * System Point 가져오기
+	 */
 	function getPurplebookPointInfo()
 	{
 		$logged_info = Context::get('logged_info');
@@ -157,6 +129,9 @@ class purplebookModel extends purplebook
 		$this->add('msg_not_enough_point', Context::getLang('msg_not_enough_point'));
 	}
 
+	/**
+	 * 공유된 node 가져오기
+	 */
 	function getSharedNodes($member_srl)
 	{
 		$args->share_member = $member_srl;
@@ -165,8 +140,8 @@ class purplebookModel extends purplebook
 	}
 
 	/**
-	 * @brief 주소록
-	 **/
+	 * 주소록 리스트 가져오기
+	 */
 	function getPurplebookList()
 	{
 		$node_id = Context::get('node_id');
@@ -305,15 +280,6 @@ class purplebookModel extends purplebook
 		$args->node_route = $node_route;
 		$args->node_type = $node_type;
 
-		/*
-		if ($node_type == '1') {
-			$query_id = 'purplebook.getFolderList';
-		} else {
-			$query_id = 'purplebook.getPurplebookList';
-		}
-		$output = executeQueryArray($query_id, $args);
-		 */
-
 		// 검색어가 있을시
 		if(Context::get('search_keyword'))
 		{
@@ -407,6 +373,9 @@ class purplebookModel extends purplebook
 		}
 	}
 
+	/**
+	 * 저장된 발신번호 가져오기
+	 */
 	function getPurplebookCallbackNumbers() 
 	{
 		$logged_info = Context::get('logged_info');
@@ -417,6 +386,9 @@ class purplebookModel extends purplebook
 		$this->add('data', $output->data);
 	}
 
+	/**
+	 * 기본 발신번호 가져오기
+	 */
 	function getDefaultCallbackNumber()
 	{
 		$logged_info = Context::get('logged_info');
@@ -428,6 +400,9 @@ class purplebookModel extends purplebook
 		return false;
 	}
 
+	/**
+	 * 공유된 유저들 가져오기
+	 */
 	function getPurplebookSharedUsers()
 	{
 		$logged_info = Context::get('logged_info');
@@ -447,6 +422,9 @@ class purplebookModel extends purplebook
 		$this->add('data',$output->data);
 	}
 
+	/**
+	 * root folder name 가져오기
+	 */
 	function getRootFolderName($node_id)
 	{
 		switch($node_id) {
@@ -460,6 +438,9 @@ class purplebookModel extends purplebook
 		}
 	}
 
+	/**
+	 * 해당 node 정보가져오기
+	 */
 	function getPurplebookProperties()
 	{
 		$logged_info = Context::get('logged_info');
@@ -613,6 +594,9 @@ class purplebookModel extends purplebook
 		$this->add('data',$data);
 	}
 
+	/**
+	 * 최근번호 가져오기
+	 */
 	function getPurplebookLatestNumbers()
 	{
 		$logged_info = Context::get('logged_info');
@@ -638,6 +622,9 @@ class purplebookModel extends purplebook
 		$this->add('data', $latest_numbers);
 	}
 
+	/**
+	 * 저장된 메시지들 가져오기(머지기능)
+	 */
 	function getPurplebookSavedMessages()
 	{
 		$logged_info = Context::get('logged_info');
@@ -661,6 +648,9 @@ class purplebookModel extends purplebook
 		$this->add('data', $latest_messages);
 	}
 
+	/**
+	 * folder 가져오기
+	 */
 	function getPurplebookSearchFolder()
 	{
 		$logged_info = Context::get('logged_info');
@@ -686,7 +676,9 @@ class purplebookModel extends purplebook
 		$this->add('data', $data);
 	}
 
-	// 전체보기 개별수정폼 템플릿 가져오기
+	/**
+	 * 전체보기 개별수정폼 템플릿 가져오기
+	 */
 	function getPurplebookUpdateAddress()
 	{
 		$logged_info = Context::get('logged_info');
@@ -711,7 +703,10 @@ class purplebookModel extends purplebook
 		$this->add('list_template', $data); // 템플릿파일 설정
 	}
 
-	// 전송결과 템플릿 가져오기
+	/**
+	 * 전송결과 템플릿 가져오기
+	 * @param boolean $basecamp TRUE면 로그인한 유저의 정보를 토대로 한다.
+	 */
 	function getPurplebookResult($basecamp = FALSE)
 	{
 		$logged_info = Context::get('logged_info');
@@ -735,12 +730,12 @@ class purplebookModel extends purplebook
 		// 검색날짜가 있으면
 		if($vars->s_start)
 		{
-			$args->s_start = $vars->s_start;
+			$args->s_start = $vars->s_start . " 00:00:00";
 			Context::set('pb_result_start_date', $vars->s_start);
 		}
 		if($vars->s_end)
 		{
-			$args->s_end = $vars->s_end;
+			$args->s_end = $vars->s_end . " 23:59:59";
 			Context::set('pb_result_end_date', $vars->s_end);
 		}
 
@@ -775,11 +770,6 @@ class purplebookModel extends purplebook
 		$oTextmessageModel = &getModel('textmessage');
 		$sms = &$oTextmessageModel->getCoolSMS($basecamp);
 		$output = $sms->sent($args);
-
-		debugPrint('result-1');
-		debugPRint($vars);
-		debugprint($args);
-		debugPRint($output);
 
 		// 리스트 있을때
 		if($output->data)
@@ -845,7 +835,9 @@ class purplebookModel extends purplebook
 		$this->add('list_template', $data); // 템플릿파일 설정
 	}
 
-	// 미리보기 템플릿 가져오기
+	/**
+	 * 미리보기 템플릿 가져오기
+	 */
 	function getPurplebookPreview()
 	{
 		$logged_info = Context::get('logged_info');
@@ -1001,7 +993,9 @@ class purplebookModel extends purplebook
 		$this->add('list_template', $data); // 템플릿파일 설정
 	}
 
-	// 레이어 템플릿 가져오기
+	/**
+	 * 레이어 템플릿 가져오기
+	 */
 	function getPopupLayer()
 	{
 		$logged_info = Context::get('logged_info');
@@ -1019,11 +1013,15 @@ class purplebookModel extends purplebook
 
 		$data = $oTemplate->compile($path, $file_name);
 
+		debugPrint('hay-1');
+		debugPRint($data);
+
 		$this->add('data', $data);
 	}
 
-
-	// 해당 node_id에 속해있는 address 카운트 구하기
+	/**
+	 * 해당 node_id에 속해있는 address 카운트 구하기
+	 */
 	function getPurplebookListCount()
 	{
 		$logged_info = Context::get('logged_info');
@@ -1039,7 +1037,9 @@ class purplebookModel extends purplebook
 		$this->add('data', $output->data->list_count);
 	}
 
-	// NdoeRoute로 purplebook 리스트 가져오기
+	/**
+	 * NdoeRoute로 purplebook 리스트 가져오기
+	 */
 	function getPurplebookListByNodeRoute()
 	{
 		$logged_info = Context::get('logged_info');
@@ -1053,6 +1053,15 @@ class purplebookModel extends purplebook
 		if(!$output->toBool()) return $output;
 
 		$this->add('data', $output->data);
+	}
+
+	function getDelimiter()
+	{
+		for ($i = 0; $i < 5; $i++) 
+		{
+			$result = $result . "@" . mt_rand(1, 9);
+		}
+		return $result;
 	}
 }
 /* End of file purplebook.model.php */

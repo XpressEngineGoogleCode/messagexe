@@ -1,6 +1,5 @@
 <?php
 /**
- * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookView
  * @author NURIGO(contact@nurigo.net)
  * @brief  purplebookView
@@ -20,6 +19,9 @@ class purplebookView extends purplebook
 		$this->setTemplatePath($this->module_path."skins/{$this->module_info->skin}");
 	}
 
+	/**
+	 * purplebook 기본화면
+	 */
 	function dispPurplebookIndex()
 	{
 		global $lang;
@@ -40,6 +42,9 @@ class purplebookView extends purplebook
 		$this->setTemplateFile('address');
 	}
 
+	/**
+	 * excel download page
+	 */
 	function dispPurplebookExcelDownload() 
 	{
 		$download_fields = Context::get('download_fields');
@@ -139,9 +144,10 @@ class purplebookView extends purplebook
 	}
 
 	/**
-	 * @brief 주소록
-	 **/
-	function dispPurplebookPurplebookListPaging() {
+	 * 주소록 paging 리스트 
+	 */
+	function dispPurplebookPurplebookListPaging() 
+	{
 		$logged_info = Context::get('logged_info');
 		if (!$logged_info)
 			return new Object(-1, 'msg_not_logged');
@@ -181,7 +187,11 @@ class purplebookView extends purplebook
 		Context::set('data', $data);
 	}
 
-	function dispPurplebookFilePicker(){
+	/**
+	 * image file select 창
+	 */
+	function dispPurplebookFilePicker()
+	{
 		$logged_info = Context::get('logged_info');
 		if(!$logged_info) {
 			Context::set('message', Context::getLang('msg_login_required'));

@@ -1,6 +1,5 @@
 <?php
 /**
- * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebook
  * @author NURIGO(contact@nurigo.net)
  * @brief  purplebook
@@ -50,7 +49,7 @@ class purplebook extends ModuleObject
 
     /**
      * @brief 업데이트(업그레이드)
-     **/
+     */
     function moduleUpdate()
     {
         $oDB = &DB::getInstance();
@@ -86,7 +85,7 @@ class purplebook extends ModuleObject
 
     /**
      * @brief 캐시파일 재생성
-     **/
+     */
     function recompileCache()
     {
     }

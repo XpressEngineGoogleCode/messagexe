@@ -1,13 +1,16 @@
 <?php
 /**
- * vi:set sw=4 ts=4 noexpandtab fileencoding=utf-8:
  * @class  purplebookAdminModel
  * @author NURIGO(contact@nurigo.net)
  * @brief  purplebookAdminModel
  */
 class purplebookAdminModel extends purplebook
 {
-	function getPurplebookAdminDeleteModInst() {
+	/**
+	 * module delete form 가져오기
+	 */
+	function getPurplebookAdminDeleteModInst() 
+	{
 		$oModuleModel = &getModel('module');
 
 		$module_srl = Context::get('module_srl');
