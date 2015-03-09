@@ -1,9 +1,0 @@
-<query id="getMXEAllMappingData" action="select">
-	<tables>
-		<table name="mobilemessage_mapping" />
-	</tables>
-	<columns>
-		<column name="*" />
-	</columns>
-	<conditions />
-</query>
