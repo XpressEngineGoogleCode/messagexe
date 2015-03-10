@@ -10,7 +10,7 @@ function submit_messages() {
 	$current = get_active_textarea();
 
 	/**
-	 *내용을 입력하였는지 검사
+	 * 내용을 입력하였는지 검사
 	 */
 	if (!$current.val() || $current.val() == initial_content) {
 		alert("내용을 입력해 주세요.");
@@ -19,7 +19,7 @@ function submit_messages() {
 	}
 
 	/**
-	 *발신전화번호 검사
+	 * 발신전화번호 검사
 	 */
 	var sNum = jQuery('#smsPurplebookCallback').val();
 	if (!checkCallbackNumber(sNum)) {
@@ -29,12 +29,12 @@ function submit_messages() {
 	}		
 
 	/**
-	 *받는사람 번호 구성
+	 * 받는사람 번호 구성
 	 */
 	var r_num = list_counting();
 
 	/**
-	 *받는사람이 없을 경우
+	 * 받는사람이 없을 경우
 	 */
 	if (r_num == 0) {
 		alert('받는사람을 입력하세요');
@@ -192,12 +192,12 @@ function sendMessageData() {
 	/**
 	 * 발송대상에 있던 folder를 쪼개서 content_list에 넣는다
 	 */
-	content_list = messageInputFolder();
+	content_list = getFolderMessageList();
 
 	/**
 	 * folder집어넣기가 완료되면 개별발송건들을 content_list에 넣는다
 	 */
-	if (sendMessageData.send_status == 'f_complete') content_list = messageInput(content_list);
+	if (sendMessageData.send_status == 'f_complete') content_list = getMessageList(content_list);
 
 	/**
 	 *  첫번째 스크린 문자내용을 집어 넣는다
@@ -218,7 +218,7 @@ function sendMessageData() {
 /**
  * 발송대상의 content 정보를 받아서 형식에 맞게 고쳐준다
  */
-function messageInput(content_list) {
+function getMessageList(content_list) {
 	var speed = g_send_speed;
 
 	/**
@@ -318,7 +318,7 @@ function messageInput(content_list) {
 /**
  * 발송대상에 폴더가 있을 경우 정보를 받아서 형식에 맞게 고쳐준다
  */
-function messageInputFolder() {
+function getFolderMessageList() {
 	var speed = g_send_speed;
 
 	/**
@@ -461,10 +461,7 @@ function sendMessage() {
 	 * clear status text
 	 */
 	jQuery('.text','#layer_status').text('전송중입니다...');
-	/**
-	 * clear status
-	 */
-	jQuery('.status','#smsPurplebookTargetList li').remove();
+
 	/**
 	 * clear send_json attributes
 	 */
@@ -490,7 +487,7 @@ function sendMessage() {
 	params['g_mid'] = g_mid;
 	params['layer_name'] = 'layer_status';
 
-	layer_id = '#layer_status';
+	var layer_id = '#layer_status';
 
 	/**
 	 *  문자 전송 상태창 띄우기
@@ -562,38 +559,41 @@ function completeGetPointInfo(ret_obj, response_tags) {
 	mms_avail = calc_mms(obj, mms_point);
 
 	var count = list_counting();
-	if (getMsgType() == "sms") {
+	switch (getMsgType()) {
+		case "sms" : 
+			var content = get_all_content();
+			bytes = getTextBytes(content)[0];
+			npages = Math.ceil(bytes / 90);
 
-		var content = get_all_content();
-		bytes = getTextBytes(content)[0];
-		npages = Math.ceil(bytes / 90);
-
-		if ((count * npages) > sms_avail) {
-			alert(ret_obj['msg_not_enough_point'] + "\n"
+			if ((count * npages) > sms_avail) {
+				alert(ret_obj['msg_not_enough_point'] + "\n"
+						+ "현재 포인트: " + point + "\n"
+						+ word_send + "가능 SMS 건수: " + sms_avail  + "\n"
+						+ word_send + "예정 SMS 건수: " + (count * npages)
+					 );
+				return false;
+			}
+			break;
+		case "lms" :
+			if (count > lms_avail) {
+				alert(ret_obj['msg_not_enough_point'] + "\n"
 					+ "현재 포인트: " + point + "\n"
-					+ word_send + "가능 SMS 건수: " + sms_avail  + "\n"
-					+ word_send + "예정 SMS 건수: " + (count * npages)
-				 );
-			return false;
-		}
-	} else if (getMsgType() == 'lms') {
-		if (count > lms_avail) {
-			alert(ret_obj['msg_not_enough_point'] + "\n"
-				+ "현재 포인트: " + point + "\n"
-				+ word_send + "가능 LMS 건수: " + lms_avail  + "\n"
-				+ word_send + "예정 LMS 건수: " + count
-				);
-			return false;
-		}
-	} else {
-		if (count > mms_avail) {
-			alert(ret_obj['msg_not_enough_point'] + "\n"
-				+ "현재 포인트: " + point + "\n"
-				+ word_send + "가능 MMS 건수: " + mms_avail  + "\n"
-				+ word_send + "예정 MMS 건수: " + count
-				);
-			return false;
-		}
+					+ word_send + "가능 LMS 건수: " + lms_avail  + "\n"
+					+ word_send + "예정 LMS 건수: " + count
+					);
+				return false;
+			}
+			break;
+		case "mms" :
+			if (count > mms_avail) {
+				alert(ret_obj['msg_not_enough_point'] + "\n"
+					+ "현재 포인트: " + point + "\n"
+					+ word_send + "가능 MMS 건수: " + mms_avail  + "\n"
+					+ word_send + "예정 MMS 건수: " + count
+					);
+				return false;
+			}
+			break;
 	}
 	get_cashinfo();
 }
@@ -602,10 +602,6 @@ function completeGetPointInfo(ret_obj, response_tags) {
  * 사용자 캐쉬가져오기
  */
 function get_cashinfo() {
-	var obj = new Object();
-	obj.cash = 0;
-	obj.point = 0;
-
 	var params = new Array();
 	var response_tags = new Array('error','message','cash','point','sms_price','lms_price','mms_price','deferred_payment');
 	exec_xml('purplebook', 'getPurplebookCashInfo', params, completeGetCashInfo, response_tags);
