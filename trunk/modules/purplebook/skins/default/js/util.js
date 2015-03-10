@@ -94,9 +94,11 @@ function checkPhoneFormat(str) {
  * 전화번호 길이 검사
  */
 function checkCallbackNumber(str) {
-	if (str.length < 7) {
+	var num_check=/^[0-9]*$/;
+	if(!num_check.test(str) || str.length < 7) {
 		return false;
 	}
+
 	return true;
 }
 
