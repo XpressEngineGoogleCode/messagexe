@@ -86,12 +86,12 @@ function date_format(date_str) {
  * 전화번호 포멧 검사
  */
 function checkPhoneFormat(str) {
-	var reg = new RegExp("^[01]|^[++]|^[00][0-9](-)?[0-9]{3,4}(-)?[0-9]{4}$")
+	var reg = new RegExp("^[01]|^[++]|^[00][0-9](-)?[0-9]{3,4}(-)?[0-9]{4}$");
 	return reg.test(str)
 }
 
 /**
- * 전화번호 길이 검사
+ * 전화번호 길이 및 숫자인지 검사
  */
 function checkCallbackNumber(str) {
 	var num_check=/^[0-9]*$/;

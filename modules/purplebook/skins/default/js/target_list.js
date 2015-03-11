@@ -32,6 +32,12 @@
 				$('#inputDirectNumber').focus();
 				return false;
 			}
+
+			if(!checkPhoneFormat(new_num)) {
+				if (!confirm("유효하지 않은 전화번호입니다 (" + new_num + ")\n계속 진행하시겠습니까?"))
+				return false;
+			}
+
 			addNum(new_num, ref_name);
 			updateExceptListCount();
 			scrollBottomTargetList();
@@ -102,12 +108,17 @@
 			 * 최상위 폴더가 들어오면 node_id에 node_route가 들어오기 때문에 처리를 해줘야한다.
 			 */
 			if(node_id == 'f') params['node_route'] = node_id + ".";
-
+			list = jQuery(".pb_folder_address");
 			exec_xml('purplebook', 'getPurplebookListCount', params, function(ret_obj) {
 				/**
-				 * 이상이 없을 경우 추가 (개별선택, 삭제 이벤트 포함)
+				 * 이상이 없을 경우 추가 (개별선택, 삭제 이벤트 포함) 
+				 * 메시지 보낼때 폴더먼저 보내기 때문에 폴더는 항상 리스트 위쪽으로
 				 */
-				$('#smsPurplebookTargetList').append('<li class="pb_folder_address" id="folder_' + node_id + '" ' + 'node_id=' + node_id + ' count=' + ret_obj["data"] + ' node_route=' + params['node_route'] + '><span class="checkbox"></span><span class="name">' + f_name + '</span><span class="number">(' + ret_obj["data"] + '명)' + '</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
+				if(list.size() > 0) {
+					list.eq(list.size() - 1).after('<li class="pb_folder_address" id="folder_' + node_id + '" ' + 'node_id=' + node_id + ' count=' + ret_obj["data"] + ' node_route=' + params['node_route'] + '><span class="checkbox"></span><span class="name">' + f_name + '</span><span class="number">(' + ret_obj["data"] + '명)' + '</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
+				} else {
+					$('#smsPurplebookTargetList').prepend('<li class="pb_folder_address" id="folder_' + node_id + '" ' + 'node_id=' + node_id + ' count=' + ret_obj["data"] + ' node_route=' + params['node_route'] + '><span class="checkbox"></span><span class="name">' + f_name + '</span><span class="number">(' + ret_obj["data"] + '명)' + '</span><span class="delete" title="삭제">삭제</span><span class="statusBox"></span></li>');
+				}
 			}, response_tags);
 	   
 			return 0;
@@ -118,8 +129,7 @@
 		 */
 		function add_folder_to_recipient() {
 			var t = $('#smsPurplebookTree').jstree("get_selected");
-			if (t.length == 0)
-			{
+			if (t.length == 0) {
 				alert('체크된 폴더가 없습니다.\n왼쪽 폴더목록에서 체크박스에 체크하세요.');
 				return;
 			}
