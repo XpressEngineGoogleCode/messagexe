@@ -55,10 +55,7 @@ class purplebookController extends purplebook
 		$decoded = $this->getJSON('data');
 
 		$error_count=0;
-		if(!is_array($decoded))
-		{
-			$decoded = array($decoded);
-		}
+		if(!is_array($decoded)) $decoded = array($decoded);
 
 		$calc_point = 0;
 		$msg_arr = array();
@@ -73,12 +70,17 @@ class purplebookController extends purplebook
 			return;
 		}
 
+		foreach($decoded as $k => $v)
+		{
+			 $node_route[] = $v->node_route;
+		}
+
 		// 받는사람목록에 폴더가 들어있을 경우 풀어서 decoded에 집어넣는다
 		foreach($decoded as $k => $v)
 		{
 			if($v->node_route)
 			{
-				$vars->node_route = $v->node_route;
+				$vars->node_route = $node_route;
 				$vars->member_srl = $logged_info->member_srl;
 				$vars->page = $v->page;
 				$vars->list_count = $v->list_count;
@@ -173,7 +175,6 @@ class purplebookController extends purplebook
 			if(!$first_num) $first_num = $row->recipient;
 			$extension[] = $msg_obj;
 		}
-		$args->extension = json_encode($extension);
 
 		// minus point
 		if($module_info->use_point=='Y')
@@ -182,15 +183,47 @@ class purplebookController extends purplebook
 			if(!$output->toBool()) return $output;
 		}
 
-		// send messages
-		$oTextmessageController = &getController('textmessage');
-		$output = $oTextmessageController->sendMessage($args, $basecamp);
+		// 메시지 갯수가 limit을 넘긴다면
+		if(count($extension) > 1000) 
+		{
+			$index = 0;
+			foreach($extension as $key => $val)
+			{
+				if($key % 1000 == 0) $index++;
+				$new_extension[$index][] = $val;
+			}
 
-		$this->add('data', $output->get('data'));
-		$this->add('success_count', $output->get('success_count'));
-		$this->add('failure_count', $output->get('failure_count'));
-		$this->add('alert_message', $output->getMessage());
-		if($output->get('error_code')) $this->add('error_code', $output->get('error_code'));
+			foreach($new_extension as $val) 
+			{
+				$args->extension = json_encode($val);
+
+				// send messages
+				$oTextmessageController = &getController('textmessage');
+				$output = $oTextmessageController->sendMessage($args, $basecamp);
+				$success_count += $output->get('success_count');
+				$failure_count += $output->get('failure_count');
+				$alert_message = $output->getMessage();
+				if($output->get('error_code')) $error_code = $output->get('error_code');
+			}
+			$this->add('success_count', $success_count);
+			$this->add('failure_count', $failure_count);
+			$this->add('alert_message', $alert_message);
+			if($error_code) $this->add('error_code', $error_code);
+		}
+		else
+		{
+			$args->extension = json_encode($extension);
+
+			// send messages
+			$oTextmessageController = &getController('textmessage');
+			$output = $oTextmessageController->sendMessage($args, $basecamp);
+
+			//$this->add('data', $output->get('data'));
+			$this->add('success_count', $output->get('success_count'));
+			$this->add('failure_count', $output->get('failure_count'));
+			$this->add('alert_message', $output->getMessage());
+			if($output->get('error_code')) $this->add('error_code', $output->get('error_code'));
+		}
 	}
 
 	/**

@@ -164,7 +164,7 @@ function sendMessageData() {
 	 */
 	if (sendMessageData.index >= $list.size() || sendMessageData.send_status == 'complete') {
 		sendMessageData.send_status = 'complete';
-
+		sendMessageData.list_status = 'f_complete';
 		/**
 		 * 전송간격 시간대 별로 전송하는 것 종료
 		 */
@@ -197,7 +197,7 @@ function sendMessageData() {
 	/**
 	 * folder집어넣기가 완료되면 개별발송건들을 content_list에 넣는다
 	 */
-	if (sendMessageData.send_status == 'f_complete') content_list = getMessageList(content_list);
+	if (sendMessageData.list_status == 'f_complete') content_list = getMessageList(content_list);
 
 	/**
 	 *  첫번째 스크린 문자내용을 집어 넣는다
@@ -335,20 +335,10 @@ function getFolderMessageList() {
 
 	var content_list = new Array();
 
-	if (sendMessageData.send_status == 'f_complete') return content_list;
+	if (sendMessageData.list_status == 'f_complete') return content_list;
 
 	/**
-	 * Folder Idx 설정
-	 */
-	if (!sendMessageData.index) sendMessageData.index = 0;
-
-	/**
-	 * sendMessageData.display 설정
-	 */
-	if (!sendMessageData.display) sendMessageData.display = 0;
-
-	/**
-	 * page 설정
+	 * Folder page 설정
 	 */
 	if (!sendMessageData.page) sendMessageData.page = 1;
 
@@ -356,13 +346,19 @@ function getFolderMessageList() {
 	 * folder list 가 없다면 완료처리 한다.
 	 */
 	if (list.size() == 0) {
-		sendMessageData.send_status = 'f_complete';
+		sendMessageData.list_status = 'f_complete';
 		return content_list;
 	}
 
+	/**
+	 * 전체 카운트 및 페이지 구하기
+	 */
+	var total_count	= 0;
+	var index = 0;
 	for (i = 0; i < list.size(); i++) {
-		target_list = jQuery(".pb_folder_address").eq(sendMessageData.index);
-		total_page = Math.ceil(target_list.attr('count') / speed);
+		index = i;
+		target_list = jQuery(".pb_folder_address").eq(i);
+		total_count = total_count + parseInt(target_list.attr('count'));
 
 		$content_input = jQuery('#smsPurplebookContentInput');
 		var size = jQuery('li', $content_input).size();
@@ -403,44 +399,18 @@ function getFolderMessageList() {
 		 * content push
 		 */
 		content_list.push(content);
-
-		/**
-		 * 폴더의 주소록이 제한 갯수를 넘었을경우
-		 */
-		if (parseInt(target_list.attr('count')) > speed) {
-			sendMessageData.page += 1;
-
-			/**
-			 * Page가 최총 페이지에 도달하면 다음폴더로 이동
-			 */
-			if (sendMessageData.page > total_page) {
-				sendMessageData.page = 1;
-				sendMessageData.index += 1;
-			}
-
-			/**
-			 * 마지막 폴더일경우 완료처리를 해준다
-			 */
-			if (sendMessageData.index >= list.size()) {
-				sendMessageData.send_status= 'f_complete';
-				sendMessageData.index = 0;
-			}
-
-			return content_list;
-		}
-
-		sendMessageData.index += 1;
-
-		/**
-		 * 마지막 폴더일경우 완료처리를 해준다
-		 */
-		if (sendMessageData.index >= list.size()) {
-			sendMessageData.send_status= 'f_complete';
-			sendMessageData.index = 0;
-		}
-
-		return content_list;
 	}
+	
+	var total_page = Math.ceil(total_count / speed);
+	sendMessageData.page++;
+
+	if (sendMessageData.page > total_page) {
+		sendMessageData.page = 1;
+		sendMessageData.list_status = 'f_complete';
+		sendMessageData.index = index;
+	}
+
+	return content_list;
 }
 
 /**
@@ -513,7 +483,7 @@ function sendMessage() {
 	 */
 	if (jQuery("#message_interval_check").is(':checked')) {
 		g_send_interval = jQuery("#message_send_interval").val() * 1000 * 60;
-		sendMessageData.send_timer = setInterval(function() { sendMessageData();  }, g_send_interval);
+		sendMessageData.send_timer = setInterval(function() { sendMessageData(); }, g_send_interval);
 	} else {
 		sendMessageData();
 	}
