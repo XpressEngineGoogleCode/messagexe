@@ -93,6 +93,7 @@ function send_json(content) {
 		, dataType : "json"
 		, success : function (data) {
 			size = content.length;
+			console.log("progress");
 			for (var i = 0; i < size; i++) {
 				if (content[i]["count"]) {
 					send_json.progress_count += parseInt(content[i]["list_count"]);
@@ -164,7 +165,7 @@ function sendMessageData() {
 	 */
 	if (sendMessageData.index >= $list.size() || sendMessageData.send_status == 'complete') {
 		sendMessageData.send_status = 'complete';
-		sendMessageData.list_status = 'f_complete';
+		sendMessageData.list_status = null;
 		/**
 		 * 전송간격 시간대 별로 전송하는 것 종료
 		 */
