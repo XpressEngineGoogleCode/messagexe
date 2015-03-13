@@ -65,6 +65,8 @@ if (!status_javascript_permission) {
 				return false;
 			}
 
+			$('.text','#layer_status').text('전송을 재개하였습니다.');
+
 			/**
 			 * 발송간격설정이 체크되있으면 전송간격 시간을 가져온다
 			 */
@@ -83,8 +85,6 @@ if (!status_javascript_permission) {
 			} else {
 				sendMessageData();
 			}
-
-			$('.text','#layer_status').text('전송을 재개하였습니다.');
 			return false;
 		});
 

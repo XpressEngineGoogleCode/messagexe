@@ -1013,9 +1013,6 @@ class purplebookModel extends purplebook
 
 		$data = $oTemplate->compile($path, $file_name);
 
-		debugPrint('hay-1');
-		debugPRint($data);
-
 		$this->add('data', $data);
 	}
 

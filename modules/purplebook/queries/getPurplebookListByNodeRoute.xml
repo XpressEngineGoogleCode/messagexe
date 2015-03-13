@@ -7,11 +7,11 @@
 	</columns>
 	<conditions>
 		<condition operation="equal" column="member_srl" var="member_srl" notnull="notnull" pipe="and" />
-		<condition operation="equal" column="node_route" var="node_route" notnull="notnull" pipe="and" />
+		<condition operation="in" column="node_route" var="node_route" notnull="notnull" pipe="and" />
 		<condition operation="equal" column="node_type" var="node_type" pipe="and" />
 	</conditions>
 	<navigation>
-		<index var="sort_index" default="node_name" order="asc" />
+		<index var="sort_index" default="node_id" order="asc" />
 		<list_count var="list_count" default="10" />
 		<page_count var="page_count" default="10" />
 		<page var="page" default="1" />
