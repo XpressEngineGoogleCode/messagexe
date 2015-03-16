@@ -1,8 +1,0 @@
-<query id="deleteRecentReceiversByRegdate" action="delete">
-	<tables>
-		<table name="purplebook_receivers" />
-	</tables>
-	<conditions>
-		<condition operation="less" column="regdate" var="regdate" notnull="notnull" />
-	</conditions>
-</query>
